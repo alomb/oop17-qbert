@@ -1,4 +1,4 @@
-package model.utilities;
+package qbert.model.utilities;
 
 /**
  * A Class representing a 2 dimensional position.
