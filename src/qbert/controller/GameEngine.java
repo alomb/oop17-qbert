@@ -1,5 +1,7 @@
 package qbert.controller;
 
+import qbert.view.Scene;
+
 /**
  *
  */
@@ -21,6 +23,9 @@ public class GameEngine {
      * 
      */
     public void setup() {
+        Scene view = new Scene(800, 800);
+        view.render();
+
         this.running = true;
         this.stopped = false;
     }
