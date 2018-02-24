@@ -5,7 +5,7 @@ import model.utilities.Position2D;
 /**
  * An interface representing a game object.
  */
-public interface Character {
+public interface Character extends GameObject{
 
     /**
      * @return
