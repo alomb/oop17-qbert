@@ -1,5 +1,6 @@
 package qbert.controller;
 
+import qbert.model.Level;
 import qbert.view.Scene;
 
 /**
@@ -23,7 +24,8 @@ public class GameEngine {
      * 
      */
     public void setup() {
-        Scene view = new Scene(800, 800);
+        Level gameLevel = new Level();
+        Scene view = new Scene(gameLevel, 800, 800);
         view.render();
 
         this.running = true;
