@@ -1,6 +1,6 @@
 package qbert.model;
 
-import model.utilities.Position2D;
+import qbert.model.utilities.Position2D;
 
 public class CharacterImpl implements Character {
 

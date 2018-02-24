@@ -2,7 +2,7 @@ package qbert.model;
 
 import java.awt.image.BufferedImage;
 
-import model.utilities.Position2D;
+import qbert.model.utilities.Position2D;
 
 /**
  *
