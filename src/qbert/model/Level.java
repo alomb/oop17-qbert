@@ -40,18 +40,25 @@ public class Level {
         tiles = new HashMap<>();
         
         //TODO: Utilizzare un metodo di creazione dei tile migliore
+        int intialX = 288;
+        int initialY = 17;
+        int offsetX = 0;
+        int offsetY = 0;
         this.tempTileList = new ArrayList<>();
         for (int i = 1; i <= this.mapHeight; i++) {
             Map<Integer, Tile> tmpMap = new HashMap<>();
+            offsetX = -41 * (i - 1);
             for (int j = 1; j <= this.mapHeight; j++) {
                 if (j <= i) {
                     //Creazione di tile con colore "casuale"
-                    Tile tmpTile = new Tile(i * 100, j * 70, j % 3);
+                    Tile tmpTile = new Tile(intialX + offsetX, initialY + offsetY, j % 3);
                     tmpMap.put(j, tmpTile);
                     this.tempTileList.add(tmpTile);
+                    offsetX += 82;
                 }
                 tiles.put(i, tmpMap);
             }
+            offsetY += 71;
         }
     }
     
