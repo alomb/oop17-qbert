@@ -63,10 +63,18 @@ public class Scene {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+
+            //TODO: Migliorare rendering
             g.drawImage(level.getBackground(), 40, 40, this);
+
             level.getEntities().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
                 g.drawImage(c.getSprite(), 100, 100, this);
+            });
+
+            level.getTiles().stream().forEach(e -> {
+                GraphicComponent c = e.getGraphicComponent();
+                g.drawImage(c.getSprite(), (int) c.getPosition().getX(), (int) c.getPosition().getY(), this);
             });
         }
     }

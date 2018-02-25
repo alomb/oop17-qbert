@@ -12,6 +12,8 @@ public class GameEngine {
 
     private boolean running;
     private boolean stopped;
+    
+    private Scene gameScene;
 
     /**
      * 
@@ -25,8 +27,7 @@ public class GameEngine {
      */
     public void setup() {
         Level gameLevel = new Level();
-        Scene view = new Scene(gameLevel, 800, 800);
-        view.render();
+        this.gameScene = new Scene(gameLevel, 800, 800);
 
         this.running = true;
         this.stopped = false;
@@ -82,6 +83,6 @@ public class GameEngine {
      * 
      */
     private void gameRender() {
-
+        this.gameScene.render();
     }
 }

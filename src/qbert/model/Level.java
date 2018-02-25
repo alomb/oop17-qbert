@@ -19,6 +19,7 @@ public class Level {
     private List<Character> gameCharacters;
     private int mapHeight = 7;
     private BufferedImage background;
+    private List<Tile> tempTileList;
 
     public Level() {
         this.createLevelTiles();
@@ -37,11 +38,17 @@ public class Level {
 
     private void createLevelTiles() {
         tiles = new HashMap<>();
+        
+        //TODO: Utilizzare un metodo di creazione dei tile migliore
+        this.tempTileList = new ArrayList<>();
         for (int i = 1; i <= this.mapHeight; i++) {
             Map<Integer, Tile> tmpMap = new HashMap<>();
             for (int j = 1; j <= this.mapHeight; j++) {
                 if (j <= i) {
-                    tmpMap.put(j, new Tile(i * 10, j * 10));
+                    //Creazione di tile con colore "casuale"
+                    Tile tmpTile = new Tile(i * 100, j * 70, j % 3);
+                    tmpMap.put(j, tmpTile);
+                    this.tempTileList.add(tmpTile);
                 }
                 tiles.put(i, tmpMap);
             }
@@ -59,5 +66,10 @@ public class Level {
 
     public List<Character> getEntities() {
         return this.gameCharacters;
+    }
+    
+    public List<Tile> getTiles() {
+        //TODO: Ottenere lista da struttura dati "this.tiles"
+        return this.tempTileList;
     }
 }

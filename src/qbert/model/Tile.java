@@ -16,10 +16,10 @@ public class Tile implements GameObject {
     /**
      * 
      */
-    public Tile(final double x, final double y) {
+    public Tile(final double x, final double y, int color) {
+        this.color = color;
         this.graphicComponent = new TileGraphicComponent(this);
         this.graphicComponent.setPosition(new Position2D(x, y));
-        this.color = 0;
     }
 
     @Override
@@ -35,5 +35,13 @@ public class Tile implements GameObject {
     @Override
     public String toString() {
         return "Tile [Color: " + this.color + "]";
+    }
+    
+    public int getColor() {
+        return this.color;
+    }
+
+    public GraphicComponent getGraphicComponent() {
+        return this.graphicComponent;
     }
 }
