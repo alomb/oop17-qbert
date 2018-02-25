@@ -1,5 +1,7 @@
 package qbert.view;
 
+import qbert.view.animations.Animation;
+
 public interface CharacterGraphicComponent extends GraphicComponent {
 
     /**

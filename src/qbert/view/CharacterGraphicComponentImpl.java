@@ -3,6 +3,9 @@ package qbert.view;
 import java.awt.image.BufferedImage;
 
 import qbert.model.utilities.Position2D;
+import qbert.view.animations.Animation;
+import qbert.view.animations.AnimationImpl;
+import qbert.view.animations.StandingAnimation;
 
 public class CharacterGraphicComponentImpl implements CharacterGraphicComponent {
 
@@ -17,7 +20,6 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
     public CharacterGraphicComponentImpl(final BufferedImage sprite, final Position2D startSpritePos) {
         this.sprite = sprite;
         this.spritePos = startSpritePos;
-        this.animation = new AnimationImpl(startSpritePos);
     }
 
     @Override
@@ -63,6 +65,10 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
     @Override
     public Animation getCurrentAnimation() {
         return this.animation;
+    }
+    
+    public void setStandingAnimation() {
+        this.animation = new StandingAnimation(this.spritePos);
     }
 
     @Override

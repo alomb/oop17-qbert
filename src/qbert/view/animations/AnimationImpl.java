@@ -1,8 +1,8 @@
-package qbert.view;
+package qbert.view.animations;
 
 import qbert.model.utilities.Position2D;
 
-public class AnimationImpl implements Animation{
+public abstract class AnimationImpl implements Animation{
 
     private Position2D currentPos;
     private Position2D targetPos;
@@ -10,7 +10,6 @@ public class AnimationImpl implements Animation{
 
     public AnimationImpl(final Position2D startPos) {
         this.currentPos = startPos;
-        this.targetPos = new Position2D(startPos.getX(), startPos.getY() + 50);
     }
 
     @Override
@@ -51,7 +50,5 @@ public class AnimationImpl implements Animation{
     }
 
     @Override
-    public void calculateNext() {
-        this.currentPos.setY(this.currentPos.getY() + this.animationSpeed);
-    }
+    public abstract void calculateNext();
 }
