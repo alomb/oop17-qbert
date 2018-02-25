@@ -4,9 +4,9 @@ import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
 
 /**
- * An interface representing a game object.
+ * An interface representing a visible and movable game object.
  */
-public interface Character extends GameObject{
+public interface Character extends GameObject {
 
     /**
      * @return

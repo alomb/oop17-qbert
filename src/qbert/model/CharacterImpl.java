@@ -1,5 +1,6 @@
 package qbert.model;
 
+import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
 
@@ -10,11 +11,12 @@ public class CharacterImpl implements Character {
     private float characterSpeed;
 
     private CharacterGraphicComponent graphics;
+    private CharacterState state;
 
-    public CharacterImpl(final CharacterGraphicComponent graphics, final Position2D startPos, final float speed) {
-        this.graphics = graphics;
+    public CharacterImpl(final Position2D startPos, final float speed, final CharacterGraphicComponent graphics) {
         this.currentPos = startPos;
         this.characterSpeed = speed;
+        this.graphics = graphics;
     }
 
     @Override
@@ -57,9 +59,20 @@ public class CharacterImpl implements Character {
         this.graphics = graphics;
     }
 
+    public CharacterState getState() {
+        return this.state;
+    }
+
+    public void setState(final CharacterState state) {
+        this.state = state;
+    }
+
+    public boolean isMoving() {
+        return this.currentPos.equals(this.nextPos);
+    }
+
     @Override
     public void update(final float dt) {
-        final float animationSpeed = dt * characterSpeed;
-        graphics.updateGraphics(animationSpeed);
+        this.state.update(dt);
     }
 }
