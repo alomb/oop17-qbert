@@ -3,11 +3,15 @@ package qbert.model;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+
+import qbert.model.utilities.Position2D;
+import qbert.view.CharacterGraphicComponentImpl;
 
 public class Level {
 

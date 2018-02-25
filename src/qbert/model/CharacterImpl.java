@@ -1,6 +1,7 @@
 package qbert.model;
 
 import qbert.model.utilities.Position2D;
+import qbert.view.CharacterGraphicComponent;
 
 public class CharacterImpl implements Character {
 
@@ -8,21 +9,26 @@ public class CharacterImpl implements Character {
     private Position2D nextPos;
     private float characterSpeed;
 
+    private CharacterGraphicComponent graphics;
+
+    public CharacterImpl(final CharacterGraphicComponent graphics, final Position2D startPos, final float speed) {
+        this.graphics = graphics;
+        this.currentPos = startPos;
+        this.characterSpeed = speed;
+    }
+
     @Override
     public Position2D getCurrentPosition() {
-        // TODO Auto-generated method stub
         return this.currentPos;
     }
 
     @Override
     public void setCurrentPosition(final Position2D currentGridPos) {
-        // TODO Auto-generated method stub
         this.currentPos = currentGridPos;
     }
 
     @Override
     public Position2D getNextPosition() {
-        // TODO Auto-generated method stub
         return this.nextPos;
     }
 
@@ -42,7 +48,18 @@ public class CharacterImpl implements Character {
     }
 
     @Override
+    public CharacterGraphicComponent getGraphicComponent() {
+        return this.graphics;
+    }
+
+    @Override
+    public void setGraphicComponent(final CharacterGraphicComponent graphics) {
+        this.graphics = graphics;
+    }
+
+    @Override
     public void update(final float dt) {
-        
+        final float animationSpeed = dt * characterSpeed;
+        graphics.updateGraphics(animationSpeed);
     }
 }

@@ -1,6 +1,7 @@
 package qbert.model;
 
 import qbert.model.utilities.Position2D;
+import qbert.view.CharacterGraphicComponent;
 
 /**
  * An interface representing a game object.
@@ -26,6 +27,16 @@ public interface Character extends GameObject{
      * @param speed
      */
     void setSpeed(float speed);
+
+    /**
+     * @return
+     */
+    CharacterGraphicComponent getGraphicComponent();
+
+    /**
+     * @param graphics
+     */
+    void setGraphicComponent(CharacterGraphicComponent graphics);
 
     /**
      * @param dt

@@ -1,4 +1,4 @@
-package qbert.model;
+package qbert.view;
 
 import qbert.model.utilities.Position2D;
 
@@ -38,9 +38,9 @@ public interface Animation {
     boolean hasFinished();
 
     /**
-     * @param dt
+     * @param animationSpeed
      */
-    Position2D updateAnimation(float dt);
+    Position2D updateAnimation(float animationSpeed);
 
     /**
      * 
