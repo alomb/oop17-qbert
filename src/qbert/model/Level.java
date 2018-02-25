@@ -23,6 +23,8 @@ public class Level {
     public Level() {
         this.createLevelTiles();
         this.importBackground();
+
+        this.gameCharacters = new ArrayList<>();
     }
 
     public Tile getTile(final int x, final int y) {
@@ -39,7 +41,7 @@ public class Level {
             Map<Integer, Tile> tmpMap = new HashMap<>();
             for (int j = 1; j <= this.mapHeight; j++) {
                 if (j <= i) {
-                    tmpMap.put(j, new Tile(10, 10));
+                    tmpMap.put(j, new Tile(i * 10, j * 10));
                 }
                 tiles.put(i, tmpMap);
             }
@@ -53,5 +55,9 @@ public class Level {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Character> getEntities() {
+        return this.gameCharacters;
     }
 }

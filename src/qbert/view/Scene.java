@@ -63,7 +63,11 @@ public class Scene {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(level.getBackground(), 40, 40, this); // see javadoc for more info on the parameters            
+            g.drawImage(level.getBackground(), 40, 40, this);
+            level.getEntities().stream().forEach(e -> {
+                GraphicComponent c = e.getGraphicComponent();
+                g.drawImage(c.getSprite(), 100, 100, this);
+            });
         }
     }
 }

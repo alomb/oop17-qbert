@@ -1,20 +1,24 @@
 package qbert.model;
 
 import qbert.model.utilities.Position2D;
+import qbert.view.GraphicComponent;
+import qbert.view.TileGraphicComponent;
 
 /**
  * .
  */
 public class Tile implements GameObject {
 
-    private Position2D position;
     private int color;
+    private Position2D position;
+    private GraphicComponent graphicComponent;
 
     /**
      * 
      */
     public Tile(final double x, final double y) {
-        this.position = new Position2D(x, y);
+        this.graphicComponent = new TileGraphicComponent(this);
+        this.graphicComponent.setPosition(new Position2D(x, y));
         this.color = 0;
     }
 
