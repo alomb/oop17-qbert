@@ -96,4 +96,13 @@ public class Position2D {
     public String toString() {
         return "P2d(" + x + "," + y + ")";
     }
+
+    /**
+     * @param other other {@link Position2D}
+     * @return the distance from two points
+     */
+    public int distance(final Position2D other) {
+        return (int) Math.sqrt((other.getX() - this.getX()) * (other.getX() - this.getX())
+                + (other.getY() - this.getY()) * (other.getY() - this.getY()));
+    }
 }

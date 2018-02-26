@@ -12,7 +12,9 @@ public abstract class AnimationImpl implements Animation{
         this.currentPos = startPos;
     }
 
-    @Override
+    /**
+     * @return the animation speed
+     */
     public float getAnimationSpeed() {
         return this.animationSpeed;
     }
@@ -27,12 +29,16 @@ public abstract class AnimationImpl implements Animation{
         this.currentPos = currentPosition;
     }
 
-    @Override
+    /**
+     * @return the final position of the {@link AnimationImpl}
+     */
     public Position2D getTargetPosition() {
         return this.targetPos;
     }
 
-    @Override
+    /**
+     * @param targetPosition the final position of the {@link AnimationImpl}
+     */
     public void setTargetPosition(final Position2D targetPosition) {
         this.targetPos = targetPosition;
     }
@@ -49,6 +55,8 @@ public abstract class AnimationImpl implements Animation{
         return this.currentPos;
     }
 
-    @Override
+    /**
+     * function to personalize the animation behavior.
+     */
     public abstract void calculateNext();
 }
