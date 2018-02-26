@@ -57,7 +57,7 @@ public class Scene {
         }
 
         public void render() {
-            this.paintComponent(level.getBackground().getGraphics());
+            this.paintComponent(this.getGraphics());
         }
 
         @Override

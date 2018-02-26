@@ -1,5 +1,7 @@
 package qbert.model;
 
+import java.util.Random;
+
 import qbert.model.utilities.Position2D;
 import qbert.view.GraphicComponent;
 import qbert.view.TileGraphicComponent;
@@ -16,8 +18,10 @@ public class Tile implements GameObject {
     /**
      * 
      */
-    public Tile(final double x, final double y, int color) {
-        this.color = color;
+    public Tile(final double x, final double y) {
+        Random rand = new Random();
+        //Generation of random color
+        this.color = rand.nextInt(3);
         this.graphicComponent = new TileGraphicComponent(this);
         this.graphicComponent.setPosition(new Position2D(x, y));
     }
@@ -30,11 +34,6 @@ public class Tile implements GameObject {
     @Override
     public void setCurrentPosition(Position2D currentGridPos) {
         this.position = currentGridPos;
-    }
-
-    @Override
-    public String toString() {
-        return "Tile [Color: " + this.color + "]";
     }
     
     public int getColor() {

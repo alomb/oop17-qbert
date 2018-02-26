@@ -12,7 +12,7 @@ public class GameEngine {
 
     private boolean running;
     private boolean stopped;
-    
+
     private Scene gameScene;
 
     /**

@@ -11,26 +11,39 @@ import qbert.model.utilities.Position2D;
 
 public class TileGraphicComponent implements GraphicComponent {
 
-    private BufferedImage sprite;
+    private BufferedImage[] sprites;
+    private URL[] resources = {
+        this.getClass().getResource("/temp_tile_yellow.png"),
+        this.getClass().getResource("/temp_tile_red.png"),
+        this.getClass().getResource("/temp_tile_green.png"),
+    };
     private int spriteHeight;
-    private int spriteWidth;    
+    private int spriteWidth;
 
     private Tile tile;
     private Position2D spritePos;
-    
+
     public TileGraphicComponent(Tile tile) {
+        this.sprites = new BufferedImage[3];
+        try {
+            int i = 0;
+            for (URL res : this.resources) {
+                this.sprites[i++] = ImageIO.read(res);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         this.tile = tile;
     }
-    
+
     @Override
     public BufferedImage getSprite() {
-        this.colorChange(this.tile.getColor());
-        return this.sprite;
+        return this.sprites[tile.getColor()];
     }
 
     @Override
     public void setSprite(BufferedImage newSprite) {
-        this.sprite = newSprite;
+        return;
     }
 
     @Override
@@ -51,7 +64,7 @@ public class TileGraphicComponent implements GraphicComponent {
     @Override
     public void setSpriteHeight(int spriteHeight) {
         this.spriteHeight = spriteHeight;
-        
+
     }
 
     @Override
@@ -62,26 +75,5 @@ public class TileGraphicComponent implements GraphicComponent {
     @Override
     public void setSpriteWidth(int spriteWidth) {
         this.spriteWidth = spriteWidth;
-    }
-
-    private void colorChange(int color) {
-        //TODO: Trovare un metodo per caricare tutte le immagini disponibili una volta sola
-        URL spriteUrl = null;
-        switch (color) {
-        case 0: //Red
-            spriteUrl = this.getClass().getResource("/temp_tile_red.png");
-            break;
-        case 1: //Green
-            spriteUrl = this.getClass().getResource("/temp_tile_green.png");
-            break;
-        case 2: //Yellow
-            spriteUrl = this.getClass().getResource("/temp_tile_yellow.png");
-            break;
-        }
-        try {
-            this.sprite = ImageIO.read(spriteUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
