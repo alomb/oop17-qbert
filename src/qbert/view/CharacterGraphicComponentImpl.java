@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.Animation;
-import qbert.view.animations.AnimationImpl;
+import qbert.view.animations.StraightAnimation;
 import qbert.view.animations.StandingAnimation;
 
 public class CharacterGraphicComponentImpl implements CharacterGraphicComponent {

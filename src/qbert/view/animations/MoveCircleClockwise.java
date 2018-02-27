@@ -2,7 +2,7 @@ package qbert.view.animations;
 
 import qbert.model.utilities.Position2D;
 
-public class MoveCircleClockWise implements Animation{
+public class MoveCircleClockwise implements Animation{
 
     private Position2D currentPos;
     private final int radius;
@@ -16,7 +16,7 @@ public class MoveCircleClockWise implements Animation{
      * @param startAngle the first angle
      * @param targetAngle the last angle
      */
-    public MoveCircleClockWise(final Position2D centerPos, final int startAngle, final int targetAngle) {
+    public MoveCircleClockwise(final Position2D centerPos, final int startAngle, final int targetAngle) {
         this.centerPos = centerPos;
         this.radius = this.getCurrentPosition().distance(this.centerPos);
 

@@ -2,13 +2,13 @@ package qbert.view.animations;
 
 import qbert.model.utilities.Position2D;
 
-public abstract class AnimationImpl implements Animation{
+public abstract class StraightAnimation implements Animation{
 
     private Position2D currentPos;
     private Position2D targetPos;
     private float animationSpeed;
 
-    public AnimationImpl(final Position2D startPos) {
+    public StraightAnimation(final Position2D startPos) {
         this.currentPos = startPos;
     }
 
@@ -30,14 +30,14 @@ public abstract class AnimationImpl implements Animation{
     }
 
     /**
-     * @return the final position of the {@link AnimationImpl}
+     * @return the final position of the {@link StraightAnimation}
      */
     public Position2D getTargetPosition() {
         return this.targetPos;
     }
 
     /**
-     * @param targetPosition the final position of the {@link AnimationImpl}
+     * @param targetPosition the final position of the {@link StraightAnimation}
      */
     public void setTargetPosition(final Position2D targetPosition) {
         this.targetPos = targetPosition;

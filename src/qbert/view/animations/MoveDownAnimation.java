@@ -2,7 +2,7 @@ package qbert.view.animations;
 
 import qbert.model.utilities.Position2D;
 
-public class MoveDownAnimation extends AnimationImpl{
+public class MoveDownAnimation extends StraightAnimation{
 
     public MoveDownAnimation(Position2D startPos, Position2D targetPos) {
         super(startPos);
