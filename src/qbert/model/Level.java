@@ -21,9 +21,14 @@ public class Level {
     private BufferedImage background;
     private List<Tile> tempTileList;
 
+    private int level;
+    private int round;
+
     public Level() {
         this.createLevelTiles();
         this.importBackground();
+        this.level = 1;
+        this.round = 1;
 
         this.gameCharacters = new ArrayList<>();
     }
@@ -31,7 +36,7 @@ public class Level {
     public Tile getTile(final int x, final int y) {
         return tiles.get(x).get(y);
     }
-    
+
     public BufferedImage getBackground() {
         return this.background;
     }
@@ -73,9 +78,17 @@ public class Level {
     public List<Character> getEntities() {
         return this.gameCharacters;
     }
-    
+
     public List<Tile> getTiles() {
         //TODO: Ottenere lista da struttura dati "this.tiles"
         return this.tempTileList;
+    }
+
+    public void spawn(Character entity) {
+        this.gameCharacters.add(entity);
+    }
+
+    public int getRound() {
+        return ((this.level - 1) * 3) + this.round;
     }
 }
