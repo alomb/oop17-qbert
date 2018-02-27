@@ -1,14 +1,9 @@
-package qbert.models;
+package qbert.model;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 
-import javax.imageio.ImageIO;
-
-public class Game  {
+public class Game {
 
     private Toolkit t; 
     private Dimension d;
@@ -26,7 +21,8 @@ public class Game  {
         return screenHeight;
     }
     
-    public int getScreenHeight() {
-        return screenHeight;
+    public int getScreenWidth() {
+        return screenWidth;
     }
+    
 }
