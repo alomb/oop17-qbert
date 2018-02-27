@@ -72,7 +72,7 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
 
     @Override
     public void updateGraphics(final float graphicsSpeed) {
-        this.animation.updateAnimation(graphicsSpeed);
+        this.setPosition(this.animation.updateAnimation(graphicsSpeed));
     }
 
 }

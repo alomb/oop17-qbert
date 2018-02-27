@@ -17,6 +17,10 @@ public abstract class WaitTimerState implements CharacterState {
         return this.character;
     }
 
+    public int getTriggerTime() {
+        return this.triggerTime;
+    }
+
     @Override
     public void update(final float dt) {
         if (this.triggerTime <= this.elapsedTime) {

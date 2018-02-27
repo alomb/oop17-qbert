@@ -39,6 +39,11 @@ public interface Character extends GameObject {
     void setGraphicComponent(CharacterGraphicComponent graphics);
 
     /**
+     * @return
+     */
+    boolean isMoving();
+
+    /**
      * @param dt
      */
     void update(float dt);
