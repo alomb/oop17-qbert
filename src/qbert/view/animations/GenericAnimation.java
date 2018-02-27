@@ -2,13 +2,13 @@ package qbert.view.animations;
 
 import qbert.model.utilities.Position2D;
 
-public abstract class StraightAnimation implements Animation{
+public abstract class GenericAnimation implements Animation{
 
     private Position2D currentPos;
     private Position2D targetPos;
     private float animationSpeed;
 
-    public StraightAnimation(final Position2D startPos) {
+    public GenericAnimation(final Position2D startPos) {
         this.currentPos = startPos;
     }
 
