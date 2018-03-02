@@ -4,14 +4,16 @@ import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
 
-public abstract class CharacterImpl implements Character {
+public class CharacterImpl implements Character {
 
     private Position2D currentPos;
     private Position2D nextPos;
     private float characterSpeed;
 
     private CharacterGraphicComponent graphics;
-    private CharacterState state;
+
+    private CharacterState standingState;
+    private CharacterState currentState;
 
     public CharacterImpl(final Position2D startPos, final float speed, final CharacterGraphicComponent graphics) {
         this.currentPos = startPos;
@@ -64,5 +66,28 @@ public abstract class CharacterImpl implements Character {
         return this.currentPos.equals(this.nextPos);
     }
 
-    public abstract void update(final float dt);
+    @Override
+    public CharacterState getCurrentState() {
+        return this.currentState;
+    }
+
+    @Override
+    public void setCurrentState(final CharacterState state) {
+        this.currentState = state;
+    }
+
+    @Override
+    public CharacterState getStandingState() {
+        return this.standingState;
+    }
+
+    @Override
+    public void setStandingState(final CharacterState state) {
+        this.standingState = state;
+    }
+
+    @Override
+    public void update(final float dt) {
+        this.currentState.update(dt);
+    }
 }

@@ -1,5 +1,6 @@
 package qbert.model;
 
+import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
 
@@ -9,42 +10,62 @@ import qbert.view.CharacterGraphicComponent;
 public interface Character extends GameObject {
 
     /**
-     * @return
+     * @return the {@link Position2D} where the {@link Character} is moving
      */
     Position2D getNextPosition();
 
     /**
-     * @param nextGridPos
+     * @param nextGridPos the {@link Position2D} where the {@link Character} is moving
      */
     void setNextPosition(Position2D nextGridPos);
 
     /**
-     * @return
+     * @return the {@link Character} movement speed
      */
     float getSpeed();
 
     /**
-     * @param speed
+     * @param speed the new {@link Character} movement speed
      */
     void setSpeed(float speed);
 
     /**
-     * @return
+     * @return the {@link CharacterGraphicComponent} of this {@link Character}
      */
     CharacterGraphicComponent getGraphicComponent();
 
     /**
-     * @param graphics
+     * @param graphics the new {@link CharacterGraphicComponent} of this {@link Character}
      */
     void setGraphicComponent(CharacterGraphicComponent graphics);
 
     /**
-     * @return
+     * @return true if the {@link Character} is moving
      */
     boolean isMoving();
 
     /**
-     * @param dt
+     * @return the current {@link CharacterState}
+     */
+    CharacterState getCurrentState();
+
+    /**
+     * @param state the new current {@link CharacterState} 
+     */
+    void setCurrentState(CharacterState state);
+
+    /**
+     * @return the standing {@link CharacterState}
+     */
+    CharacterState getStandingState();
+
+    /**
+     * @param state the new standing {@link CharacterState}
+     */
+    void setStandingState(CharacterState state);
+
+    /**
+     * @param dt the time passed since the last game cycle
      */
     void update(float dt);
 }

@@ -14,6 +14,7 @@ public class GameEngine {
     private boolean stopped;
 
     private Scene gameScene;
+    private Level gameLevel;
 
     /**
      * 
@@ -26,7 +27,7 @@ public class GameEngine {
      * 
      */
     public void setup() {
-        Level gameLevel = new Level();
+        this.gameLevel = new Level();
         this.gameScene = new Scene(gameLevel, 800, 800);
 
         this.running = true;
