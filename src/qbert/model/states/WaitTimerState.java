@@ -25,6 +25,7 @@ public abstract class WaitTimerState implements CharacterState {
     public void update(final float dt) {
         if (this.triggerTime <= this.elapsedTime) {
             this.conclude();
+            this.elapsedTime = 0;
         } else {
             this.elapsedTime += dt;
         }

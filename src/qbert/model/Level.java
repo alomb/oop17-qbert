@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
@@ -19,7 +20,6 @@ public class Level {
     private List<Character> gameCharacters;
     private int mapHeight = 7;
     private BufferedImage background;
-    private List<Tile> tempTileList;
 
     private int level;
     private int round;
@@ -45,24 +45,14 @@ public class Level {
         tiles = new HashMap<>();
         
         //TODO: Utilizzare un metodo di creazione dei tile migliore
-        int intialX = 288;
-        int initialY = 17;
-        int offsetX = 0;
-        int offsetY = 0;
-        this.tempTileList = new ArrayList<>();
         for (int i = 1; i <= this.mapHeight; i++) {
             Map<Integer, Tile> tmpMap = new HashMap<>();
-            offsetX = -41 * (i - 1);
             for (int j = 1; j <= this.mapHeight; j++) {
                 if (j <= i) {
-                    Tile tmpTile = new Tile(intialX + offsetX, initialY + offsetY);
-                    tmpMap.put(j, tmpTile);
-                    this.tempTileList.add(tmpTile);
-                    offsetX += 82;
+                    tmpMap.put(j, new Tile(j, i));
                 }
                 tiles.put(i, tmpMap);
             }
-            offsetY += 71;
         }
     }
 
@@ -81,7 +71,14 @@ public class Level {
 
     public List<Tile> getTiles() {
         //TODO: Ottenere lista da struttura dati "this.tiles"
-        return this.tempTileList;
+        return this.tiles
+                .entrySet()
+                .stream()
+                .flatMap((Map.Entry<Integer, Map<Integer, Tile>> me) -> me.getValue()
+                        .entrySet()
+                        .stream()
+                        .map(Map.Entry::getValue))
+                .collect(Collectors.toList());
     }
 
     public void spawn(Character entity) {

@@ -18,6 +18,8 @@ public abstract class WaitAnimationState implements CharacterState{
     public void update(final float dt) {
         if (!this.character.getGraphicComponent().getCurrentAnimation().hasFinished()) {
             this.character.getGraphicComponent().updateGraphics(dt * this.character.getSpeed());
+        } else {
+            this.conclude();
         }
     }
 
