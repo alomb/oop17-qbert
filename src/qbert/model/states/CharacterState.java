@@ -1,5 +1,8 @@
 package qbert.model.states;
 
+/**
+ * The interface for a {@link Character} generic state. 
+ */
 public interface CharacterState {
 
     /**
