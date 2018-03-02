@@ -1,6 +1,8 @@
 package qbert.controller;
 
+import qbert.model.Game;
 import qbert.model.Level;
+import qbert.model.mapping.Mapper;
 import qbert.view.Scene;
 
 /**
@@ -26,11 +28,14 @@ public class GameEngine {
      * 
      */
     public void setup() {
+        Game game = new Game();
+        Mapper mapper = new Mapper(game.getScreenWidth(), game.getScreenHeight());
         Level gameLevel = new Level();
-        this.gameScene = new Scene(gameLevel, 800, 800);
+        this.gameScene = new Scene(gameLevel, mapper, 800, 800);
 
         this.running = true;
         this.stopped = false;
+        this.gameRender();
     }
 
     /**

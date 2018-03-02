@@ -11,18 +11,20 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import qbert.model.Level;
+import qbert.model.mapping.Mapper;
+import qbert.model.utilities.Position2D;
 
 public class Scene {    
     private final JFrame frame;
     private final ScenePanel panel;
     private final Level level;
 
-    public Scene(final Level level, final int w, final int h) {
+    public Scene(final Level level, final Mapper mapper, final int w, final int h) {
         this.frame = new JFrame("Qbert Test");
         this.frame.setSize(w,h);
         this.frame.setMinimumSize(new Dimension(w, h));
         this.frame.setResizable(false);
-        this.panel = new ScenePanel(level, w, h);
+        this.panel = new ScenePanel(level, mapper, w, h);
         this.frame.getContentPane().add(this.panel);
         this.frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(final WindowEvent ev) {
@@ -48,7 +50,9 @@ public class Scene {
     }
     
     public class ScenePanel extends JPanel {
-        public ScenePanel(final Level level, final int w, final int h) {
+        Mapper mapper;
+        public ScenePanel(final Level level, final Mapper mapper, final int w, final int h) {
+            this.mapper = mapper;
             setSize(w, h);
             this.setBackground(Color.black);
             setFocusable(true);
@@ -74,7 +78,8 @@ public class Scene {
 
             level.getTiles().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
-                g.drawImage(c.getSprite(), (int) c.getPosition().getX(), (int) c.getPosition().getY(), this);
+                Position2D pos = mapper.getPhysical(c.getPosition());
+                g.drawImage(c.getSprite(), (int) pos.getX(), (int) pos.getY(), this);
             });
         }
     }

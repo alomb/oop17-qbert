@@ -18,6 +18,6 @@ public final class QBertLauncher {
     public static void main(final String[] args) {
         GameEngine test = new GameEngine();
         test.setup();
-        test.mainLoop();
+        //test.mainLoop();
     }
 }
