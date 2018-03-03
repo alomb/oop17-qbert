@@ -28,7 +28,7 @@ public abstract class WaitTimerState implements CharacterState {
     }
 
     /**
-     * @return the timer duration time
+     * @return the timer duration
      */
     public int getTriggerTime() {
         return this.triggerTime;

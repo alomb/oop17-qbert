@@ -60,11 +60,6 @@ public interface Character extends GameObject {
     CharacterState getStandingState();
 
     /**
-     * @param state the new standing {@link CharacterState}
-     */
-    void setStandingState(CharacterState state);
-
-    /**
      * @param dt the time passed since the last game cycle
      */
     void update(float dt);

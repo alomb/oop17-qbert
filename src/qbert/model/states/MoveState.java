@@ -59,7 +59,6 @@ public abstract class MoveState extends WaitAnimationState {
         public DownLeft(final Character character) {
             super(character);
             this.getCharacter().getGraphicComponent().setMoveDownLeftAnimation();
-            System.out.println("MovingL");
         }
     }
 
@@ -74,7 +73,6 @@ public abstract class MoveState extends WaitAnimationState {
         public DownRight(final Character character) {
             super(character);
             this.getCharacter().getGraphicComponent().setMoveDownRightAnimation();
-            System.out.println("MovingR");
         }
     }
 
