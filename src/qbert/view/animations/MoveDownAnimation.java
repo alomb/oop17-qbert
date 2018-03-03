@@ -2,9 +2,16 @@ package qbert.view.animations;
 
 import qbert.model.utilities.Position2D;
 
-public class MoveDownAnimation extends GenericAnimation{
+/**
+ * Animation for moving the sprite downward.
+ */
+public class MoveDownAnimation extends GenericAnimation {
 
-    public MoveDownAnimation(Position2D startPos, Position2D targetPos) {
+    /**
+     * @param startPos the first {@link Position2D}
+     * @param targetPos the last {@link Position2D}
+     */
+    public MoveDownAnimation(final Position2D startPos, final Position2D targetPos) {
         super(startPos);
         this.setTargetPosition(targetPos);
     }

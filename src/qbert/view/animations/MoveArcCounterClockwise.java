@@ -2,6 +2,9 @@ package qbert.view.animations;
 
 import qbert.model.utilities.Position2D;
 
+/**
+ * Animation to move the character in a counterclockwise arc.
+ */
 public class MoveArcCounterClockwise extends GenericAnimation {
 
     private final double radius;
@@ -10,6 +13,10 @@ public class MoveArcCounterClockwise extends GenericAnimation {
     private int currentAngle;
     private final int targetAngle = -180;
 
+    /**
+     * @param startPos the first {@link Position2D}
+     * @param targetPos the last {@link Position2D}
+     */
     public MoveArcCounterClockwise(final Position2D startPos, final Position2D targetPos) {
         super(startPos);
         this.setTargetPosition(targetPos);

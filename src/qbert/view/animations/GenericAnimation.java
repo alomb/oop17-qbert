@@ -2,12 +2,18 @@ package qbert.view.animations;
 
 import qbert.model.utilities.Position2D;
 
-public abstract class GenericAnimation implements Animation{
+/**
+ * A generic implementation of {@link Animation} interface.
+ */
+public abstract class GenericAnimation implements Animation {
 
     private Position2D currentPos;
     private Position2D targetPos;
     private float animationSpeed;
 
+    /**
+     * @param startPos the first {@link Position2D}
+     */
     public GenericAnimation(final Position2D startPos) {
         this.currentPos = startPos;
     }

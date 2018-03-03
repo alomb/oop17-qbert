@@ -2,9 +2,16 @@ package qbert.view.animations;
 
 import qbert.model.utilities.Position2D;
 
+/**
+ * Animation for moving the sprite upward.
+ */
 public class MoveUpAnimation extends GenericAnimation {
 
-    public MoveUpAnimation(Position2D startPos, Position2D targetPos) {
+    /**
+     * @param startPos the first {@link Position2D}
+     * @param targetPos the last {@link Position2D}
+     */
+    public MoveUpAnimation(final Position2D startPos, final Position2D targetPos) {
         super(startPos);
         this.setTargetPosition(targetPos);
     }
