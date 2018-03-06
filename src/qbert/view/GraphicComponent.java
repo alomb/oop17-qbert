@@ -6,7 +6,7 @@ import qbert.model.utilities.Position2D;
 
 /**
  * This interface models a generic graphic component containing information on the sprite 
- * and its position in the panel (pixels).
+ * and its position in the scene (pixels).
  */
 public interface GraphicComponent {
 
@@ -49,5 +49,4 @@ public interface GraphicComponent {
      * @param newPos the new sprite position ({@link Position2D}) in the space 
      */
     void setPosition(Position2D newPos);
-
 }

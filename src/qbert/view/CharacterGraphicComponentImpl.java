@@ -8,9 +8,11 @@ import qbert.view.animations.Jump;
 import qbert.view.animations.MoveDownAnimation;
 import qbert.view.animations.StandingAnimation;
 
+/**
+ * A generic implementation of {@link CharacterGraphicComponent}.
+ */
 public class CharacterGraphicComponentImpl implements CharacterGraphicComponent {
 
-    /*TODO: Replace magic numbers in animations written for testing in correct numbers*/
     private BufferedImage sprite;
     private int spriteHeight;
     private int spriteWidth;
@@ -19,6 +21,10 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
 
     private Animation animation;
 
+    /**
+     * @param sprite the {@link BufferedImage} containing the {@link Character}'s sprite
+     * @param startSpritePos the first position (physic) of the {@link Character}
+     */
     public CharacterGraphicComponentImpl(final BufferedImage sprite, final Position2D startSpritePos) {
         this.sprite = sprite;
         this.spritePos = startSpritePos;
@@ -40,7 +46,7 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
     }
 
     @Override
-    public void setSpriteHeight(int spriteHeight) {
+    public void setSpriteHeight(final int spriteHeight) {
         this.spriteHeight = spriteHeight;
     }
 
@@ -69,9 +75,22 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
         return this.animation;
     }
 
+    /**
+     * This method provide extension classes to modify the private field animation.
+     * @param animation the new animation to set
+     */
+    public void setCurrentAnimation(final Animation animation) {
+        this.animation = animation;
+    }
+
     @Override
     public void setStandingAnimation() {
         this.animation = new StandingAnimation(this.spritePos);
+    }
+
+    @Override
+    public void setSpawnPosToCurrentPos() {
+        /*TODO: complete this method*/
     }
 
     @Override
@@ -81,26 +100,31 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
 
     @Override
     public void setFallAnimation() {
+        /*TODO: Fix values*/
         this.animation = new MoveDownAnimation(this.spritePos, new Position2D(this.spritePos.getX(), this.spritePos.getY() + 100));
     }
 
     @Override
     public void setMoveDownLeftAnimation() {
+        /*TODO: Fix values*/
         this.animation = new Jump.DownLeft(this.spritePos, new Position2D(this.spritePos.getX() - 50, this.spritePos.getY() + 50));
     }
 
     @Override
     public void setMoveDownRightAnimation() {
+        /*TODO: Fix values*/
         this.animation = new Jump.DownRight(this.spritePos, new Position2D(this.spritePos.getX() + 50, this.spritePos.getY() + 50));
     }
 
     @Override
     public void setMoveUpLeftAnimation() {
+        /*TODO: Fix values*/
         this.animation = new Jump.UpLeft(this.spritePos, new Position2D(this.spritePos.getX() - 50, this.spritePos.getY() - 50));
     }
 
     @Override
     public void setMoveUpRightAnimation() {
+        /*TODO: Fix values*/
         this.animation = new Jump.UpRight(this.spritePos, new Position2D(this.spritePos.getX() + 50, this.spritePos.getY() - 50));
     }
 

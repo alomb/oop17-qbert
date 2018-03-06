@@ -21,9 +21,8 @@ public class RedBall extends CharacterImpl {
      */
     public RedBall(final Position2D startPos, final float speed, final CharacterGraphicComponent graphics, final int standingTime) {
         super(startPos, speed, graphics);
-        this.setCurrentState(new MoveState.Fall(this));
+        this.setCurrentState(new MoveState.Spawn(this));
         this.standingTime = standingTime;
-        //this.setStandingState(new SimpleStandingState(this, standingTime));
     }
 
     @Override

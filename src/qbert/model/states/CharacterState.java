@@ -7,7 +7,7 @@ public interface CharacterState {
 
     /**
      * This function update the state of the relative {@link CharacterState}.
-     * @param dt the time passed since the last game cycle
+     * @param dt the time passed since the last game cycle multiplied by the {@link Character} speed
      */
     void update(float dt);
 
