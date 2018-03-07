@@ -11,32 +11,26 @@ import qbert.model.utilities.Position2D;
 public abstract class Jump extends GenericAnimation {
 
     private final Queue<Animation> animations;
+    private static final int QUEUESIZE = 2;
 
     /**
      * @param startPos the first {@link Position2D}
      * @param targetPos the last {@link Position2D}
      */
     public Jump(final Position2D startPos, final Position2D targetPos) {
-        super(startPos);
-        this.setTargetPosition(targetPos);
-        this.animations = new ArrayBlockingQueue<>(2);
-    }
-
-    @Override
-    public final boolean hasFinished() {
-        return this.animations.isEmpty();
+        super(startPos, targetPos);
+        this.animations = new ArrayBlockingQueue<>(QUEUESIZE);
     }
 
     @Override
     public final void calculateNext() {
-        if (!this.hasFinished()) {
-            if (this.animations.peek().hasFinished()) {
-                @SuppressWarnings("unused")
-                final Animation polledAnimation = this.animations.poll();
+        if (!this.animations.isEmpty()) {
+            if (!this.animations.peek().hasFinished()) {
+                this.animations.remove();
             }
-            final Animation currentAnimation = this.animations.peek();
-            if (currentAnimation != null) {
-                this.setCurrentPosition(currentAnimation.updateAnimation(this.getAnimationSpeed()));
+            /*In all cases updates the animation if it's not finished or the next if is present.*/
+            if (!this.animations.isEmpty()) {
+                this.setCurrentPosition(this.animations.peek().updateAnimation(this.getAnimationSpeed()));
             }
         }
     }
@@ -61,8 +55,8 @@ public abstract class Jump extends GenericAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(targetPos.getX(), startPos.getY());
 
-            this.getAnimations().add(new MoveArcClockwise(startPos, intermediatePosition));
-            this.getAnimations().add(new MoveDownAnimation(intermediatePosition, targetPos));
+            this.getAnimations().add(new Move.ArcClockwise(startPos, intermediatePosition));
+            this.getAnimations().add(new Move.Down(intermediatePosition, targetPos));
         }
     }
 
@@ -79,8 +73,8 @@ public abstract class Jump extends GenericAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(targetPos.getX(), startPos.getY());
 
-            this.getAnimations().add(new MoveArcCounterClockwise(startPos, intermediatePosition));
-            this.getAnimations().add(new MoveDownAnimation(intermediatePosition, targetPos));
+            this.getAnimations().add(new Move.ArcCounterclockwise(startPos, intermediatePosition));
+            this.getAnimations().add(new Move.Down(intermediatePosition, targetPos));
         }
     }
 
@@ -97,8 +91,8 @@ public abstract class Jump extends GenericAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new MoveUpAnimation(startPos, intermediatePosition));
-            this.getAnimations().add(new MoveArcClockwise(intermediatePosition, targetPos));
+            this.getAnimations().add(new Move.Up(startPos, intermediatePosition));
+            this.getAnimations().add(new Move.ArcClockwise(intermediatePosition, targetPos));
 
         }
     }
@@ -116,8 +110,8 @@ public abstract class Jump extends GenericAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new MoveUpAnimation(startPos, intermediatePosition));
-            this.getAnimations().add(new MoveArcCounterClockwise(intermediatePosition, targetPos));
+            this.getAnimations().add(new Move.Up(startPos, intermediatePosition));
+            this.getAnimations().add(new Move.ArcCounterclockwise(intermediatePosition, targetPos));
         }
     }
 }

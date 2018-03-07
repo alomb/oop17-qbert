@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.Animation;
 import qbert.view.animations.Jump;
-import qbert.view.animations.MoveDownAnimation;
+import qbert.view.animations.Move;
 import qbert.view.animations.StandingAnimation;
 
 /**
@@ -95,13 +95,13 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
 
     @Override
     public void setSpawnAnimation() {
-        this.animation = new MoveDownAnimation(this.spritePos, new Position2D(this.spritePos.getX(), this.spritePos.getY() + 100));
+        this.animation = new Move.Down(this.spritePos, new Position2D(this.spritePos.getX(), this.spritePos.getY() + 100));
     }
 
     @Override
     public void setFallAnimation() {
         /*TODO: Fix values*/
-        this.animation = new MoveDownAnimation(this.spritePos, new Position2D(this.spritePos.getX(), this.spritePos.getY() + 100));
+        this.animation = new Move.Down(this.spritePos, new Position2D(this.spritePos.getX(), this.spritePos.getY() + 100));
     }
 
     @Override

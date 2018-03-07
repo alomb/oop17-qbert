@@ -8,14 +8,16 @@ import qbert.model.utilities.Position2D;
 public abstract class GenericAnimation implements Animation {
 
     private Position2D currentPos;
-    private Position2D targetPos;
+    private final Position2D targetPos;
     private float animationSpeed;
 
     /**
      * @param startPos the first {@link Position2D}
+     * @param targetPos the last {@link Position2D}
      */
-    public GenericAnimation(final Position2D startPos) {
+    public GenericAnimation(final Position2D startPos, final Position2D targetPos) {
         this.currentPos = startPos;
+        this.targetPos = targetPos;
     }
 
     /**
@@ -25,44 +27,44 @@ public abstract class GenericAnimation implements Animation {
         return this.animationSpeed;
     }
 
-    @Override
-    public Position2D getCurrentPosition() {
+    /**
+     * @return the current {@link Position2D} of the animation
+     */
+    protected final Position2D getCurrentPosition() {
         return this.currentPos;
     }
 
-    @Override
-    public void setCurrentPosition(final Position2D currentPosition) {
+    /**
+     * @param currentPosition set the current {@link Position2D} of the animation
+     */
+    protected final void setCurrentPosition(final Position2D currentPosition) {
         this.currentPos = currentPosition;
     }
 
     /**
-     * @return the final position of the {@link StraightAnimation}
+     * @return the the last {@link Position2D} of the animation
      */
-    public Position2D getTargetPosition() {
+    protected Position2D getTargetPosition() {
         return this.targetPos;
     }
 
-    /**
-     * @param targetPosition the final position of the {@link StraightAnimation}
-     */
-    public void setTargetPosition(final Position2D targetPosition) {
-        this.targetPos = targetPosition;
-    }
-
     @Override
-    public boolean hasFinished() {
+    public final boolean hasFinished() {
         return this.targetPos.equals(currentPos);
     }
 
     @Override
-    public Position2D updateAnimation(final float animationSpeed) {
+    public final Position2D updateAnimation(final float animationSpeed) {
         this.animationSpeed = animationSpeed;
-        this.calculateNext();
+        if (!this.hasFinished()) {
+            this.calculateNext();
+        }
         return this.currentPos;
     }
 
     /**
-     * function to personalize the animation behavior.
+     * This method must be implemented by concrete animation classes to personalize the animation.
+     * It is called in updateAnimation(), when hasFinished() return false.
      */
-    public abstract void calculateNext();
+    protected abstract void calculateNext();
 }

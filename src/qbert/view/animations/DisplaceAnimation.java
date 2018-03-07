@@ -12,14 +12,11 @@ public class DisplaceAnimation extends GenericAnimation {
      * @param targetPos the last {@link Position2D}
      */
     public DisplaceAnimation(final Position2D startPos, final Position2D targetPos) {
-        super(startPos);
-        this.setTargetPosition(targetPos);
+        super(startPos, targetPos);
     }
 
     @Override
     public final void calculateNext() {
-        if (!this.hasFinished()) {
-            this.setCurrentPosition(this.getTargetPosition());
-        }
+        this.setCurrentPosition(this.getTargetPosition());
     }
 }
