@@ -5,9 +5,9 @@ import qbert.model.utilities.Position2D;
 /**
  * The basic animation for straight and curvilinear movements. 
  */
-public final class Move {
+public final class MoveAnimation {
 
-    private Move() {
+    private MoveAnimation() {
         throw new UnsupportedOperationException();
     }
 
@@ -92,7 +92,7 @@ public final class Move {
                 this.currentAngle = ArcClockwise.TARGETANGLE;
                 this.setCurrentPosition(this.getTargetPosition());
             } else {
-                this.setCurrentPosition(Move.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
+                this.setCurrentPosition(MoveAnimation.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
             }
         }
     }
@@ -127,7 +127,7 @@ public final class Move {
                 this.currentAngle = ArcCounterclockwise.TARGETANGLE;
                 this.setCurrentPosition(this.getTargetPosition());
             } else {
-                this.setCurrentPosition(Move.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
+                this.setCurrentPosition(MoveAnimation.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
             }
         }
     }

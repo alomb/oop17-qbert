@@ -55,8 +55,8 @@ public abstract class Jump extends GenericAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(targetPos.getX(), startPos.getY());
 
-            this.getAnimations().add(new Move.ArcClockwise(startPos, intermediatePosition));
-            this.getAnimations().add(new Move.Down(intermediatePosition, targetPos));
+            this.getAnimations().add(new MoveAnimation.ArcClockwise(startPos, intermediatePosition));
+            this.getAnimations().add(new MoveAnimation.Down(intermediatePosition, targetPos));
         }
     }
 
@@ -73,8 +73,8 @@ public abstract class Jump extends GenericAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(targetPos.getX(), startPos.getY());
 
-            this.getAnimations().add(new Move.ArcCounterclockwise(startPos, intermediatePosition));
-            this.getAnimations().add(new Move.Down(intermediatePosition, targetPos));
+            this.getAnimations().add(new MoveAnimation.ArcCounterclockwise(startPos, intermediatePosition));
+            this.getAnimations().add(new MoveAnimation.Down(intermediatePosition, targetPos));
         }
     }
 
@@ -91,8 +91,8 @@ public abstract class Jump extends GenericAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new Move.Up(startPos, intermediatePosition));
-            this.getAnimations().add(new Move.ArcClockwise(intermediatePosition, targetPos));
+            this.getAnimations().add(new MoveAnimation.Up(startPos, intermediatePosition));
+            this.getAnimations().add(new MoveAnimation.ArcClockwise(intermediatePosition, targetPos));
 
         }
     }
@@ -110,8 +110,8 @@ public abstract class Jump extends GenericAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new Move.Up(startPos, intermediatePosition));
-            this.getAnimations().add(new Move.ArcCounterclockwise(intermediatePosition, targetPos));
+            this.getAnimations().add(new MoveAnimation.Up(startPos, intermediatePosition));
+            this.getAnimations().add(new MoveAnimation.ArcCounterclockwise(intermediatePosition, targetPos));
         }
     }
 }
