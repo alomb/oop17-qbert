@@ -2,9 +2,15 @@ package qbert.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -51,7 +57,24 @@ public class Scene {
     
     public class ScenePanel extends JPanel {
         Mapper mapper;
+        Font custom;
         public ScenePanel(final Level level, final Mapper mapper, final int w, final int h) {
+            
+            //Temporary location of font loader for testing purposes
+
+            // This font is < 35Kb.
+            try {
+                String fName = "C:\\Users\\Alessandro\\eclipse-workspace\\qbert\\res\\ARCADE_N.ttf";
+                File fontFile = new File(fName);
+                this.custom = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(18.0f);
+                GraphicsEnvironment ge = 
+                    GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(this.custom);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            
+            
             this.mapper = mapper;
             setSize(w, h);
             this.setBackground(Color.black);
@@ -61,7 +84,7 @@ public class Scene {
         }
 
         public void render() {
-            this.paintComponent(this.getGraphics());
+            this.repaint();
         }
 
         @Override
@@ -71,16 +94,23 @@ public class Scene {
             //TODO: Migliorare rendering
             g.drawImage(level.getBackground(), 40, 40, this);
 
-            level.getEntities().stream().forEach(e -> {
-                GraphicComponent c = e.getGraphicComponent();
-                g.drawImage(c.getSprite(), 100, 100, this);
-            });
-
             level.getTiles().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
                 Position2D pos = mapper.getPhysical(c.getPosition());
                 g.drawImage(c.getSprite(), (int) pos.getX(), (int) pos.getY(), this);
             });
+
+            level.getEntities().stream().forEach(e -> {
+                GraphicComponent c = e.getGraphicComponent();
+                g.drawImage(c.getSprite(), 100, 100, this);
+            });
+            
+            //Tests for text rendering
+            g.setColor(new Color(255, 255, 255));
+            g.setFont(this.custom);
+            g.drawString("Qbert",40,40);
+            g.drawString("Level: " + ((level.getRound() + 2) / 3),40,70);
+            g.drawString("Round: " + ((level.getRound() + 2) % 3 + 1),40,110);
         }
     }
 }

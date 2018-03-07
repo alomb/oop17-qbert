@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 
 import qbert.model.utilities.Position2D;
+import qbert.view.CharacterGraphicComponent;
 import qbert.view.CharacterGraphicComponentImpl;
 
 public class Level {
@@ -27,9 +28,8 @@ public class Level {
     public Level() {
         this.createLevelTiles();
         this.importBackground();
-        this.level = 1;
-        this.round = 1;
-
+        this.level = 5;
+        this.round = 2;
         this.gameCharacters = new ArrayList<>();
     }
 
@@ -43,7 +43,7 @@ public class Level {
 
     private void createLevelTiles() {
         tiles = new HashMap<>();
-        
+
         //TODO: Utilizzare un metodo di creazione dei tile migliore
         for (int i = 1; i <= this.mapHeight; i++) {
             Map<Integer, Tile> tmpMap = new HashMap<>();
@@ -65,12 +65,23 @@ public class Level {
         }
     }
 
+    //TODO: Move in specific class and refactor
+    private BufferedImage tempLoader(String path) {
+        BufferedImage res = null;
+        final URL spriteUrl = this.getClass().getResource(path);
+        try {
+            res = ImageIO.read(spriteUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
     public List<Character> getEntities() {
         return this.gameCharacters;
     }
 
     public List<Tile> getTiles() {
-        //TODO: Ottenere lista da struttura dati "this.tiles"
         return this.tiles
                 .entrySet()
                 .stream()
