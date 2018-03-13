@@ -20,6 +20,7 @@ public class Level {
     private Map<Integer, Map<Integer, Tile>> tiles;
     private List<Character> gameCharacters;
     private int mapHeight = 7;
+    private int points = 0;
     private BufferedImage background;
 
     private int level;
@@ -98,5 +99,9 @@ public class Level {
 
     public int getRound() {
         return ((this.level - 1) * 3) + this.round;
+    }
+
+    public int getPoints() {
+        return this.points;
     }
 }

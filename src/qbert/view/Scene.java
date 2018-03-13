@@ -27,7 +27,7 @@ public class Scene {
 
     public Scene(final Level level, final Mapper mapper, final int w, final int h) {
         this.frame = new JFrame("Qbert Test");
-        this.frame.setSize(w,h);
+        this.frame.setSize(w, h);
         this.frame.setMinimumSize(new Dimension(w, h));
         this.frame.setResizable(false);
         this.panel = new ScenePanel(level, mapper, w, h);
@@ -88,11 +88,11 @@ public class Scene {
         }
 
         @Override
-        protected void paintComponent(Graphics g) {
+        protected void paintComponent(final Graphics g) {
             super.paintComponent(g);
 
             //TODO: Migliorare rendering
-            g.drawImage(level.getBackground(), 40, 40, this);
+            g.drawImage(level.getBackground(), (int) mapper.getMapPos().getX(), (int)  mapper.getMapPos().getY(), this);
 
             level.getTiles().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
@@ -104,13 +104,14 @@ public class Scene {
                 GraphicComponent c = e.getGraphicComponent();
                 g.drawImage(c.getSprite(), 100, 100, this);
             });
-            
+
             //Tests for text rendering
             g.setColor(new Color(255, 255, 255));
             g.setFont(this.custom);
             g.drawString("Qbert",40,40);
-            g.drawString("Level: " + ((level.getRound() + 2) / 3),40,70);
-            g.drawString("Round: " + ((level.getRound() + 2) % 3 + 1),40,110);
+            g.drawString("Level: " + ((level.getRound() + 2) / 3), 40, 70);
+            g.drawString("Round: " + ((level.getRound() + 2) % 3 + 1), 40, 110);
+            g.drawString("Points: " + level.getPoints(), 40, 150);
         }
     }
 }

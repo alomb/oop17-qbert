@@ -29,10 +29,14 @@ public class GameEngine {
      * 
      */
     public void setup() {
+        //TODO: Remove
+        int windowWidth = 1500;
+        int windowHeight = 1000;
+        
         Game game = new Game();
-        Mapper mapper = new Mapper(game.getScreenWidth(), game.getScreenHeight());
+        Mapper mapper = new Mapper(game.getScreenWidth(), game.getScreenHeight(), windowWidth, windowHeight);
         Level gameLevel = new Level();
-        this.gameScene = new Scene(gameLevel, mapper, 800, 800);
+        this.gameScene = new Scene(gameLevel, mapper, windowWidth, windowHeight);
 
         this.running = true;
         this.stopped = false;
