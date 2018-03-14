@@ -31,18 +31,18 @@ public class Level {
 
     public Level() {
         this.createLevelTiles();
-        
+
         //Da spostare in classe apposita
         this.importBackground();
-        
+
         this.level = 5;
         this.round = 2;
-        
+
         //Forse da spostare in classe Game
         this.points = 0;
-        
+
         this.gameCharacters = new ArrayList<>();
-        
+
         //Info da importare da classe esterna
         this.colorsNumber = 1;
         this.reversableColors = true;
@@ -126,6 +126,19 @@ public class Level {
             if (this.reversableColors) {
                 t.resetColor();
             }
+        }
+    }
+
+    public void observeGameStatus() {
+        int coloredTiles = 0;
+        for (Tile t : this.getTiles()) {
+            if (t.getColor() == this.colorsNumber) {
+                coloredTiles++;
+            }
+        }
+
+        if (coloredTiles == this.getTiles().stream().count()) {
+            System.out.println("Win");
         }
     }
 }

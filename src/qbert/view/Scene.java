@@ -47,6 +47,7 @@ public class Scene {
                         level.changeColor(t);
                     }
                 });
+                level.observeGameStatus();
             }
         });
 
