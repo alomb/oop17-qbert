@@ -19,11 +19,13 @@ public class Tile implements GameObject {
      * 
      */
     public Tile(final double x, final double y) {
-        Random rand = new Random();
-        //Generation of random color
-        this.color = rand.nextInt(3);
+        this.color = 0;
+
+        //Temporary management of graphic component generation
         this.graphicComponent = new TileGraphicComponent(this);
         this.graphicComponent.setPosition(new Position2D(x, y));
+        this.graphicComponent.setSpriteHeight(41);
+        this.graphicComponent.setSpriteWidth(71);
     }
 
     @Override
@@ -35,12 +37,20 @@ public class Tile implements GameObject {
     public void setCurrentPosition(Position2D currentGridPos) {
         this.position = currentGridPos;
     }
-    
+
     public int getColor() {
         return this.color;
     }
 
     public GraphicComponent getGraphicComponent() {
         return this.graphicComponent;
+    }
+    
+    public void incrementColor() {
+        this.color++;
+    }
+    
+    public void resetColor() {
+        this.color = 0;
     }
 }

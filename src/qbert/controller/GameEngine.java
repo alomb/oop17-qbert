@@ -32,7 +32,7 @@ public class GameEngine {
         //TODO: Remove
         int windowWidth = 1500;
         int windowHeight = 1000;
-        
+
         Game game = new Game();
         Mapper mapper = new Mapper(game.getScreenWidth(), game.getScreenHeight(), windowWidth, windowHeight);
         Level gameLevel = new Level();

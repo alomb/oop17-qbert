@@ -16,13 +16,13 @@ public class Game {
         screenHeight = d.height;
         screenWidth = d.width;
     }
-    
+
     public int getScreenHeight() {
         return screenHeight;
     }
-    
+
     public int getScreenWidth() {
         return screenWidth;
     }
-    
+
 }

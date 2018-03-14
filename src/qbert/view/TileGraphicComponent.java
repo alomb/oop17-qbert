@@ -69,7 +69,7 @@ public class TileGraphicComponent implements GraphicComponent {
 
     @Override
     public int getSpriteWidth() {
-        return this.spriteHeight;
+        return this.spriteWidth;
     }
 
     @Override

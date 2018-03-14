@@ -20,18 +20,32 @@ public class Level {
     private Map<Integer, Map<Integer, Tile>> tiles;
     private List<Character> gameCharacters;
     private int mapHeight = 7;
-    private int points = 0;
+    private int points;
     private BufferedImage background;
 
+    //Game settings
     private int level;
     private int round;
+    private int colorsNumber;
+    private boolean reversableColors;
 
     public Level() {
         this.createLevelTiles();
+        
+        //Da spostare in classe apposita
         this.importBackground();
+        
         this.level = 5;
         this.round = 2;
+        
+        //Forse da spostare in classe Game
+        this.points = 0;
+        
         this.gameCharacters = new ArrayList<>();
+        
+        //Info da importare da classe esterna
+        this.colorsNumber = 1;
+        this.reversableColors = true;
     }
 
     public Tile getTile(final int x, final int y) {
@@ -103,5 +117,15 @@ public class Level {
 
     public int getPoints() {
         return this.points;
+    }
+
+    public void changeColor(Tile t) {
+        if (t.getColor() < this.colorsNumber) {
+            t.incrementColor();
+        } else {
+            if (this.reversableColors) {
+                t.resetColor();
+            }
+        }
     }
 }

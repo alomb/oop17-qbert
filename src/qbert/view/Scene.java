@@ -6,12 +6,15 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -31,6 +34,23 @@ public class Scene {
         this.frame.setMinimumSize(new Dimension(w, h));
         this.frame.setResizable(false);
         this.panel = new ScenePanel(level, mapper, w, h);
+
+        // Evento di click temporaneo (Simulazione di passaggio di Qbert)
+        this.panel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                level.getTiles().stream().forEach(t -> {
+                    GraphicComponent c = t.getGraphicComponent();
+                    Position2D pos = mapper.getPhysical(c.getPosition());
+                    if (e.getX() >= pos.getX() && e.getX() <= pos.getX() + c.getSpriteWidth()
+                        && e.getY() >= pos.getY() && e.getY() <= pos.getY() + c.getSpriteHeight()) {
+                        level.changeColor(t);
+                    }
+                });
+            }
+        });
+
+
         this.frame.getContentPane().add(this.panel);
         this.frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(final WindowEvent ev) {
