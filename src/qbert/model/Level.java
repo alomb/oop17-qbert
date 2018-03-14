@@ -1,5 +1,6 @@
 package qbert.model;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -21,9 +22,11 @@ public class Level {
     private List<Character> gameCharacters;
     private int mapHeight = 7;
     private int points;
+    private int lives;
     private BufferedImage background;
+    private BufferedImage lifeSprite;
 
-    //Game settings
+    //Level settings
     private int level;
     private int round;
     private int colorsNumber;
@@ -33,19 +36,26 @@ public class Level {
         this.createLevelTiles();
 
         //Da spostare in classe apposita
-        this.importBackground();
+        this.background = this.tempLoader("/background.png");
+        this.lifeSprite = this.tempLoader("/life.png");
 
-        this.level = 5;
-        this.round = 2;
+        this.level = 1;
+        this.round = 1;
+        this.lives = 3;
 
         //Forse da spostare in classe Game
         this.points = 0;
 
         this.gameCharacters = new ArrayList<>();
-
+        this.reset();
+    }
+    
+    public void reset() {
         //Info da importare da classe esterna
         this.colorsNumber = 1;
         this.reversableColors = true;
+        
+        this.resetLevelTiles();
     }
 
     public Tile getTile(final int x, final int y) {
@@ -69,6 +79,12 @@ public class Level {
                 tiles.put(i, tmpMap);
             }
         }
+    }
+
+    private void resetLevelTiles() {
+        this.getTiles().stream().forEach(t -> {
+            t.resetColor();
+        });
     }
 
     private void importBackground() {
@@ -111,8 +127,20 @@ public class Level {
         this.gameCharacters.add(entity);
     }
 
-    public int getRound() {
+    public void score(int points) {
+        this.points += points;
+    }
+
+    public int getStage() {
         return ((this.level - 1) * 3) + this.round;
+    }
+
+    public int getLevel() {
+        return this.level;
+    }
+
+    public int getRound() {
+        return this.round;
     }
 
     public int getPoints() {
@@ -138,7 +166,25 @@ public class Level {
         }
 
         if (coloredTiles == this.getTiles().stream().count()) {
-            System.out.println("Win");
+            this.nextStage();
+            this.reset();
+        }
+    }
+
+    public int getLives() {
+        return this.lives;
+    }
+
+    public BufferedImage getLifeSprite() {
+        return this.lifeSprite;
+    }
+    
+    public void nextStage() {
+        if (this.round > 2) {
+            this.round = 1;
+            this.level++;
+        } else {
+            this.round++;
         }
     }
 }

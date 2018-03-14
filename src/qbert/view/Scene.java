@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -45,6 +46,7 @@ public class Scene {
                     if (e.getX() >= pos.getX() && e.getX() <= pos.getX() + c.getSpriteWidth()
                         && e.getY() >= pos.getY() && e.getY() <= pos.getY() + c.getSpriteHeight()) {
                         level.changeColor(t);
+                        level.score(50);
                     }
                 });
                 level.observeGameStatus();
@@ -77,16 +79,16 @@ public class Scene {
     }
     
     public class ScenePanel extends JPanel {
-        Mapper mapper;
-        Font custom;
+        private Mapper mapper; //Temp Position
+        private Font custom; //Temp Position
+
         public ScenePanel(final Level level, final Mapper mapper, final int w, final int h) {
-            
+
             //Temporary location of font loader for testing purposes
 
-            // This font is < 35Kb.
             try {
-                String fName = "C:\\Users\\Alessandro\\eclipse-workspace\\qbert\\res\\ARCADE_N.ttf";
-                File fontFile = new File(fName);
+                URL url = getClass().getResource("/arcade_n.ttf");
+                File fontFile = new File(url.getPath());
                 this.custom = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(18.0f);
                 GraphicsEnvironment ge = 
                     GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -94,8 +96,7 @@ public class Scene {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            
-            
+
             this.mapper = mapper;
             setSize(w, h);
             this.setBackground(Color.black);
@@ -130,9 +131,23 @@ public class Scene {
             g.setColor(new Color(255, 255, 255));
             g.setFont(this.custom);
             g.drawString("Qbert",40,40);
-            g.drawString("Level: " + ((level.getRound() + 2) / 3), 40, 70);
-            g.drawString("Round: " + ((level.getRound() + 2) % 3 + 1), 40, 110);
-            g.drawString("Points: " + level.getPoints(), 40, 150);
+            
+            g.drawString("Level:", 40, 70);
+            g.drawString("" + level.getLevel(), 200, 70);
+            
+            g.drawString("Round:", 40, 110);
+            g.drawString("" + level.getRound(), 200, 110);
+            
+            g.drawString("Score:", 40, 150);
+            g.drawString("" + level.getPoints(), 200, 150);
+            
+            g.drawString("Lives: ", 40, 190);
+            for (int i = 0, posX = 0; i < level.getLives(); i++, posX += 30) {
+                g.drawImage(level.getLifeSprite(), 200 + posX, 190 - level.getLifeSprite().getHeight(), this);
+            }
+
+            g.drawString("Max Score:", 1000, 40);
+            g.drawString("1500", 1200, 40);
         }
     }
 }
