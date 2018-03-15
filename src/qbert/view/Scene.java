@@ -106,8 +106,9 @@ public class Scene {
                         Position2D pos = mapper.getPhysical(c.getPosition());
                         if (e.getX() >= pos.getX() && e.getX() <= pos.getX() + c.getSpriteWidth()
                             && e.getY() >= pos.getY() && e.getY() <= pos.getY() + c.getSpriteHeight()) {
-                            level.step(t);
-                            level.score(50);
+                            if (level.step(t)) {
+                                level.score(50);
+                            }
                         }
                     });
                     level.observeGameStatus();
@@ -163,23 +164,20 @@ public class Scene {
             // Info rendering
             g.setColor(new Color(255, 255, 255));
             g.setFont(this.custom);
-            g.drawString("Qbert",40,40);
+            g.drawString("Player:", 40, 40);
+            g.drawString("" + level.getPoints(), 40, 80);
 
-            g.drawString("Level:", 40, 70);
-            g.drawString("" + level.getLevel(), 200, 70);
+            g.drawString("Level:", 1200, 300);
+            g.drawString("" + level.getLevel(), 1400, 300);
 
-            g.drawString("Round:", 40, 110);
-            g.drawString("" + level.getRound(), 200, 110);
+            g.drawString("Round:", 1200, 330);
+            g.drawString("" + level.getRound(), 1400, 330);
 
-            g.drawString("Score:", 40, 150);
-            g.drawString("" + level.getPoints(), 200, 150);
-
-            g.drawString("Lives: ", 40, 190);
-            for (int i = 0, posX = 0; i < level.getLives(); i++, posX += 30) {
-                g.drawImage(this.lifeSprite, 200 + posX, 190 - this.lifeSprite.getHeight(), this);
+            for (int i = 0, posY = 0; i < level.getLives(); i++, posY += this.lifeSprite.getHeight() + 10) {
+                g.drawImage(this.lifeSprite, 60, 190 + posY, this);
             }
 
-            g.drawString("Max Score:", 1000, 40);
+            g.drawString("Hi-Score:", 1000, 40);
             g.drawString("1500", 1200, 40);
         }
     }

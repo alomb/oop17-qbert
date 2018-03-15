@@ -116,13 +116,15 @@ public class Level {
         return this.points;
     }
 
-    public void step(Tile t) {
+    public boolean step(Tile t) {
         if (t.getColor() < this.colorsNumber) {
             t.incrementColor();
+            return true;
         } else {
             if (this.reversableColors) {
                 t.resetColor();
             }
+            return false;
         }
     }
 
@@ -160,7 +162,6 @@ public class Level {
     public void death() {
         if (this.lives > 1) {
             this.lives--;
-            this.reset();
         } else {
             System.exit(0);
         }
