@@ -23,8 +23,6 @@ public class Level {
     private int mapHeight = 7;
     private int points;
     private int lives;
-    private BufferedImage background;
-    private BufferedImage lifeSprite;
 
     //Level settings
     private int level;
@@ -34,10 +32,6 @@ public class Level {
 
     public Level() {
         this.createLevelTiles();
-
-        //Da spostare in classe apposita
-        this.background = this.tempLoader("/background.png");
-        this.lifeSprite = this.tempLoader("/life.png");
 
         this.level = 1;
         this.round = 1;
@@ -49,21 +43,17 @@ public class Level {
         this.gameCharacters = new ArrayList<>();
         this.reset();
     }
-    
+
     public void reset() {
         //Info da importare da classe esterna
         this.colorsNumber = 1;
         this.reversableColors = true;
-        
+
         this.resetLevelTiles();
     }
 
     public Tile getTile(final int x, final int y) {
         return tiles.get(x).get(y);
-    }
-
-    public BufferedImage getBackground() {
-        return this.background;
     }
 
     private void createLevelTiles() {
@@ -85,27 +75,6 @@ public class Level {
         this.getTiles().stream().forEach(t -> {
             t.resetColor();
         });
-    }
-
-    private void importBackground() {
-        final URL mapSpriteUrl = this.getClass().getResource("/background.png");
-        try {
-            this.background = ImageIO.read(mapSpriteUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //TODO: Move in specific class and refactor
-    private BufferedImage tempLoader(String path) {
-        BufferedImage res = null;
-        final URL spriteUrl = this.getClass().getResource(path);
-        try {
-            res = ImageIO.read(spriteUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return res;
     }
 
     public List<Character> getEntities() {
@@ -147,7 +116,7 @@ public class Level {
         return this.points;
     }
 
-    public void changeColor(Tile t) {
+    public void step(Tile t) {
         if (t.getColor() < this.colorsNumber) {
             t.incrementColor();
         } else {
@@ -157,6 +126,7 @@ public class Level {
         }
     }
 
+    //Game?
     public void observeGameStatus() {
         int coloredTiles = 0;
         for (Tile t : this.getTiles()) {
@@ -166,7 +136,7 @@ public class Level {
         }
 
         if (coloredTiles == this.getTiles().stream().count()) {
-            this.nextStage();
+            this.changeStage();
             this.reset();
         }
     }
@@ -175,16 +145,24 @@ public class Level {
         return this.lives;
     }
 
-    public BufferedImage getLifeSprite() {
-        return this.lifeSprite;
-    }
-    
-    public void nextStage() {
+    public void changeStage() {
+        if (level == 9 && round == 3) {
+            System.exit(0);
+        }
         if (this.round > 2) {
             this.round = 1;
             this.level++;
         } else {
             this.round++;
+        }
+    }
+
+    public void death() {
+        if (this.lives > 1) {
+            this.lives--;
+            this.reset();
+        } else {
+            System.exit(0);
         }
     }
 }
