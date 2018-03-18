@@ -158,7 +158,7 @@ public class Scene {
 
             level.getEntities().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
-                g.drawImage(c.getSprite(), 100, 100, this);
+                g.drawImage(c.getSprite(), (int) c.getPosition().getX(), (int) c.getPosition().getY(), this);
             });
 
             // Info rendering
