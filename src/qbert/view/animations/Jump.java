@@ -25,10 +25,10 @@ public abstract class Jump extends GenericAnimation {
     @Override
     public final void calculateNext() {
         if (!this.animations.isEmpty()) {
-            if (!this.animations.peek().hasFinished()) {
+            if (this.animations.peek().hasFinished()) {
                 this.animations.remove();
             }
-            /*In all cases updates the animation if it's not finished or the next if is present.*/
+            /*In all cases updates the animation if it's not finished, or the next one, if it isn't the last.*/
             if (!this.animations.isEmpty()) {
                 this.setCurrentPosition(this.animations.peek().updateAnimation(this.getAnimationSpeed()));
             }
