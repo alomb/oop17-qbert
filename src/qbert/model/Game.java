@@ -30,8 +30,10 @@ public class Game {
         Dimensions.spawingHeight = -100;
         Dimensions.spawingPointLeft = new Position2D((Dimensions.screenWidth/2)-this.loadImg("/blueTile.png").getWidth(),-100);
         Dimensions.spawingPointRight = new Position2D((Dimensions.screenWidth/2),-100);
+        Dimensions.spawingQBert = new Position2D((Dimensions.screenWidth/2)-this.loadImg("/blueTile.png").getWidth()/2,-100);
         Dimensions.heightCube = this.loadImg("/background.png").getHeight()/7;
         Dimensions.heightTile = this.loadImg("/blueTile.png").getHeight();
+        Dimensions.widthTile = this.loadImg("/blueTile.png").getWidth();
         Dimensions.widthTile = this.loadImg("/blueTile.png").getWidth();
     }
     

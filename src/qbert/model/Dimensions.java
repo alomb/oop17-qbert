@@ -15,5 +15,6 @@ public class Dimensions {
     public static int heightCube;
     public static int heightTile;
     public static int widthTile;
+    public static Position2D spawingQBert;
 
 }
