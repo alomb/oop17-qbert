@@ -2,6 +2,7 @@ package qbert.view;
 
 import java.awt.image.BufferedImage;
 
+import qbert.model.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.Animation;
 import qbert.view.animations.Jump;
@@ -20,6 +21,11 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
     private Position2D spritePos;
 
     private Animation animation;
+    
+    private final int jumpWidth = Dimensions.widthTile;
+    private final int jumpHeight = Dimensions.heightCube;
+    private Position2D spawnPos;
+    private Position2D landPos;
 
     /**
      * @param sprite the {@link BufferedImage} containing the {@link Character}'s sprite
@@ -27,6 +33,13 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
      */
     public CharacterGraphicComponentImpl(final BufferedImage sprite, final Position2D startSpritePos) {
         this.sprite = sprite;
+        
+        this.spriteHeight = sprite.getHeight();
+        this.spriteWidth = sprite.getWidth();
+
+        this.spawnPos = startSpritePos;
+        this.landPos = new Position2D(this.spawnPos.getX(), (Dimensions.screenHeight - Dimensions.heightBackground)/2 + Dimensions.heightCube - this.spriteHeight);
+        
         this.spritePos = startSpritePos;
     }
 
@@ -90,42 +103,37 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
 
     @Override
     public void setSpawnPosToCurrentPos() {
-        /*TODO: complete this method*/
+        this.spawnPos = new Position2D(this.spritePos.getX(), this.spritePos.getY());
     }
 
     @Override
     public void setSpawnAnimation() {
-        this.animation = new MoveAnimation.Down(this.spritePos, new Position2D(this.spritePos.getX(), this.spritePos.getY() + 100));
+        this.animation = new MoveAnimation.Down(this.spawnPos, this.landPos);
     }
 
     @Override
     public void setFallAnimation() {
-        /*TODO: Fix values*/
-        this.animation = new MoveAnimation.Down(this.spritePos, new Position2D(this.spritePos.getX(), this.spritePos.getY() + 100));
+        this.animation = new MoveAnimation.Down(this.spritePos, new Position2D(this.spritePos.getX(), Dimensions.deathHeight));
     }
 
     @Override
     public void setMoveDownLeftAnimation() {
-        /*TODO: Fix values*/
-        this.animation = new Jump.DownLeft(this.spritePos, new Position2D(this.spritePos.getX() - 50, this.spritePos.getY() + 50));
+        this.animation = new Jump.DownLeft(this.spritePos, new Position2D(this.spritePos.getX() - this.jumpWidth/2, this.spritePos.getY() + this.jumpHeight));
     }
 
     @Override
     public void setMoveDownRightAnimation() {
-        /*TODO: Fix values*/
-        this.animation = new Jump.DownRight(this.spritePos, new Position2D(this.spritePos.getX() + 50, this.spritePos.getY() + 50));
+        this.animation = new Jump.DownRight(this.spritePos, new Position2D(this.spritePos.getX() + this.jumpWidth/2, this.spritePos.getY() + this.jumpHeight));
     }
 
     @Override
     public void setMoveUpLeftAnimation() {
-        /*TODO: Fix values*/
-        this.animation = new Jump.UpLeft(this.spritePos, new Position2D(this.spritePos.getX() - 50, this.spritePos.getY() - 50));
+        this.animation = new Jump.UpLeft(this.spritePos, new Position2D(this.spritePos.getX() - this.jumpWidth/2, this.spritePos.getY() - this.jumpHeight));
     }
 
     @Override
     public void setMoveUpRightAnimation() {
-        /*TODO: Fix values*/
-        this.animation = new Jump.UpRight(this.spritePos, new Position2D(this.spritePos.getX() + 50, this.spritePos.getY() - 50));
+        this.animation = new Jump.UpRight(this.spritePos, new Position2D(this.spritePos.getX() + this.jumpWidth/2, this.spritePos.getY() - this.jumpHeight));
     }
 
     @Override
