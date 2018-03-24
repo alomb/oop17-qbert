@@ -31,6 +31,7 @@ public class Level {
     private boolean reversableColors;
 
     public Level() {
+        
         this.createLevelTiles();
 
         this.level = 1;
@@ -41,7 +42,7 @@ public class Level {
         this.points = 0;
 
         this.gameCharacters = new ArrayList<>();
-        this.reset();
+        //this.reset();
     }
 
     public void reset() {
@@ -165,5 +166,9 @@ public class Level {
         } else {
             System.exit(0);
         }
+    }
+    
+    public void update( float elapsed) {
+        
     }
 }
