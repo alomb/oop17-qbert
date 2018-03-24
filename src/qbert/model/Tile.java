@@ -24,8 +24,6 @@ public class Tile implements GameObject {
         //Temporary management of graphic component generation
         this.graphicComponent = new TileGraphicComponent(this);
         this.graphicComponent.setPosition(new Position2D(x, y));
-        this.graphicComponent.setSpriteHeight(41);
-        this.graphicComponent.setSpriteWidth(71);
     }
 
     @Override

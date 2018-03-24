@@ -6,40 +6,31 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
+import qbert.model.Sprites;
 import qbert.model.Tile;
 import qbert.model.utilities.Position2D;
 
 public class TileGraphicComponent implements GraphicComponent {
 
-    private BufferedImage[] sprites;
-    private URL[] resources = {
-        this.getClass().getResource("/blueTile.png"),
-        this.getClass().getResource("/yellowTile.png"),
-        this.getClass().getResource("/pinkTile.png"),
-    };
-    private int spriteHeight;
-    private int spriteWidth;
-
     private Tile tile;
     private Position2D spritePos;
 
     public TileGraphicComponent(Tile tile) {
-        this.sprites = new BufferedImage[3];
-        try {
-        
-            int i = 0;
-            for (URL res : this.resources) {
-                this.sprites[i++] = ImageIO.read(res);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         this.tile = tile;
     }
 
     @Override
     public BufferedImage getSprite() {
-        return this.sprites[tile.getColor()];
+        switch (tile.getColor()) {
+            case 0:
+                return Sprites.blueTile;
+            case 1:
+                return Sprites.yellowTile;
+            case 2:
+                return Sprites.pinkTile;
+            default:
+                return Sprites.blueTile;
+        }
     }
 
     @Override
@@ -59,22 +50,21 @@ public class TileGraphicComponent implements GraphicComponent {
 
     @Override
     public int getSpriteHeight() {
-        return this.spriteHeight;
+        return this.getSprite().getHeight();
     }
 
     @Override
     public void setSpriteHeight(int spriteHeight) {
-        this.spriteHeight = spriteHeight;
-
+        return;
     }
 
     @Override
     public int getSpriteWidth() {
-        return this.spriteWidth;
+        return this.getSprite().getWidth();
     }
 
     @Override
     public void setSpriteWidth(int spriteWidth) {
-        this.spriteWidth = spriteWidth;
+        return;
     }
 }
