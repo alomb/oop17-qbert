@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
+import qbert.model.states.DeathState;
 import qbert.model.states.MoveState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
@@ -43,7 +44,19 @@ public class Level {
         this.points = 0;
 
         this.gameCharacters = new ArrayList<>();
-        //this.reset();
+        this.reset();
+
+        /* Temp RedBall Spawn */
+        BufferedImage res = null;
+        final URL spriteUrl = this.getClass().getResource("/redBallStanding.png");
+        try {
+            res = ImageIO.read(spriteUrl);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CharacterGraphicComponent g = new CharacterGraphicComponentImpl(res, new Position2D(719, 227));
+        Character ball = new RedBall(new Position2D(6, 6), 0.5f, g, 1);
+        this.spawn(ball);
     }
 
     public void reset() {
@@ -170,24 +183,18 @@ public class Level {
     }
 
     public void update(float elapsed) {
-        this.getEntities().stream().forEach(e -> {
+        System.out.println(this.gameCharacters.size());
+        this.gameCharacters = this.gameCharacters.stream().peek(e -> {
+            e.update(elapsed);
+
             Position2D logicalPos = e.getCurrentPosition();
             //Checking if entity is outside the map
-            if (logicalPos.getX() < 0 || logicalPos.getX() < 0 /*|| logicalPos.getX() > ? */) {
-                e.setCurrentState(new MoveState.Fall(e));
+            if (logicalPos.getY() < 0 /* || logicalPos.getX() < 0|| logicalPos.getX() > ? */) {
+                if (!(e.getCurrentState() instanceof MoveState.Fall) && !(e.getCurrentState() instanceof DeathState)) {
+                    System.out.println("Setting fall");
+                    e.setCurrentState(new MoveState.Fall(e));
+                }
             }
-
-            //Removing dead entities
-            /*if (e.getCurrentState() instanceof MoveState.Dead) {
-                
-            }*/
-
-            //Check if entity has just landed
-            /*if (e.getCurrentState instanceof MoveState.Landed) {
-                
-            }*/
-
-            e.update(elapsed);
-        });
+        }).filter(e -> !(e.getCurrentState() instanceof DeathState)).collect(Collectors.toList());
     }
 }
