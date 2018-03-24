@@ -34,9 +34,6 @@ public class Game {
         Sprites.qbertFrontStanding = loadImg("/QbertFrontStanding.png"); 
         Sprites.redBallMoving = loadImg("/redBallMoving.png"); 
         Sprites.redBallStanding = loadImg("/redBallStanding.png"); 
-        Sprites.tempTileRed = loadImg("/temp_tile_red.png"); 
-        Sprites.tempTileGreen = loadImg("/temp_tile_green.png"); 
-        Sprites.tempTileYellow = loadImg("/temp_tile_yellow.png"); 
         
         Dimensions.screenHeight = d.height;
         Dimensions.screenWidth = d.width;
@@ -47,6 +44,7 @@ public class Game {
         Dimensions.spawingPointLeft = new Position2D((Dimensions.screenWidth/2)-Sprites.blueTile.getWidth(),-500);
         Dimensions.spawingPointRight = new Position2D((Dimensions.screenWidth/2),-500);
         Dimensions.spawingQBert = new Position2D((Dimensions.screenWidth/2)-Sprites.blueTile.getWidth()/2,-500);
+        Dimensions.heightBackground = Sprites.background.getHeight();
         Dimensions.heightCube = Sprites.background.getHeight()/7;
         Dimensions.heightTile = Sprites.blueTile.getHeight();
         Dimensions.widthTile = Sprites.blueTile.getWidth();
