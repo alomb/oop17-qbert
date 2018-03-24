@@ -13,9 +13,9 @@ public class TileGraphicComponent implements GraphicComponent {
 
     private BufferedImage[] sprites;
     private URL[] resources = {
-        this.getClass().getResource("/temp_tile_yellow.png"),
-        this.getClass().getResource("/temp_tile_red.png"),
-        this.getClass().getResource("/temp_tile_green.png"),
+        this.getClass().getResource("/blueTile.png"),
+        this.getClass().getResource("/yellowTile.png"),
+        this.getClass().getResource("/pinkTile.png"),
     };
     private int spriteHeight;
     private int spriteWidth;
@@ -26,6 +26,7 @@ public class TileGraphicComponent implements GraphicComponent {
     public TileGraphicComponent(Tile tile) {
         this.sprites = new BufferedImage[3];
         try {
+        
             int i = 0;
             for (URL res : this.resources) {
                 this.sprites[i++] = ImageIO.read(res);
