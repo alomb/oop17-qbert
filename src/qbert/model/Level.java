@@ -54,8 +54,9 @@ public class Level {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        CharacterGraphicComponent g = new CharacterGraphicComponentImpl(res, new Position2D(719, 227));
-        Character ball = new RedBall(new Position2D(6, 6), 0.5f, g, 1);
+        CharacterGraphicComponent g = new CharacterGraphicComponentImpl(res, new Position2D(719, -100));
+        
+        Character ball = new RedBall(new Position2D(6, 6), 0.35f, g, 1);
         this.spawn(ball);
     }
 
@@ -183,17 +184,19 @@ public class Level {
     }
 
     public void update(float elapsed) {
-        System.out.println(this.gameCharacters.size());
         this.gameCharacters = this.gameCharacters.stream().peek(e -> {
             e.update(elapsed);
 
             Position2D logicalPos = e.getCurrentPosition();
             //Checking if entity is outside the map
-            if (logicalPos.getY() < 0 /* || logicalPos.getX() < 0|| logicalPos.getX() > ? */) {
+            if (logicalPos.getY() < 0 || logicalPos.getX() + logicalPos.getY() == 14 || logicalPos.getY() - logicalPos.getX() == 2) {
                 if (!(e.getCurrentState() instanceof MoveState.Fall) && !(e.getCurrentState() instanceof DeathState)) {
-                    System.out.println("Setting fall");
                     e.setCurrentState(new MoveState.Fall(e));
                 }
+            }
+            
+            if (e.getCurrentState() instanceof DeathState) {
+                //Notify Spawner
             }
         }).filter(e -> !(e.getCurrentState() instanceof DeathState)).collect(Collectors.toList());
     }
