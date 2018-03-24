@@ -5,9 +5,8 @@ import qbert.model.Character;
 /**
  * An implementation of the {@link CharacterState} interface used to wait the duration of a timer.
  */
-public abstract class WaitTimerState implements CharacterState {
+public abstract class WaitTimerState extends CharacterStateImpl {
 
-    private final Character character;
     private final int triggerTime;
     private int elapsedTime;
 
@@ -16,15 +15,8 @@ public abstract class WaitTimerState implements CharacterState {
      * @param triggerTime the timer duration time
      */
     public WaitTimerState(final Character character, final int triggerTime) {
-        this.character = character;
+        super(character);
         this.triggerTime = triggerTime;
-    }
-
-    /**
-     * @return the {@link Character} associated with this {@link CharacterState}
-     */
-    public Character getCharacter() {
-        return this.character;
     }
 
     /**

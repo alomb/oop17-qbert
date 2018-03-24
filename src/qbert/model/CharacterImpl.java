@@ -82,4 +82,55 @@ public abstract class CharacterImpl implements Character {
     public void update(final float dt) {
         this.currentState.update(dt);
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Float.floatToIntBits(characterSpeed);
+        result = prime * result + ((currentPos == null) ? 0 : currentPos.hashCode());
+        result = prime * result + ((currentState == null) ? 0 : currentState.hashCode());
+        result = prime * result + ((nextPos == null) ? 0 : nextPos.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CharacterImpl other = (CharacterImpl) obj;
+        if (Float.floatToIntBits(characterSpeed) != Float.floatToIntBits(other.characterSpeed)) {
+            return false;
+        }
+        if (currentPos == null) {
+            if (other.currentPos != null) {
+                return false;
+            }
+        } else if (!currentPos.equals(other.currentPos)) {
+            return false;
+        }
+        if (currentState == null) {
+            if (other.currentState != null) {
+                return false;
+            }
+        } else if (!currentState.equals(other.currentState)) {
+            return false;
+        }
+        if (nextPos == null) {
+            if (other.nextPos != null) {
+                return false;
+            }
+        } else if (!nextPos.equals(other.nextPos)) {
+            return false;
+        }
+        return true;
+    }
+
 }

@@ -57,5 +57,4 @@ public interface CharacterGraphicComponent extends GraphicComponent {
      * @param graphicsSpeed the graphics' speed calculated from the time passed since the last game cycle 
      */
     void updateGraphics(float graphicsSpeed);
-
 }

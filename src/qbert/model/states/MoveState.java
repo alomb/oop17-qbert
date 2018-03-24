@@ -16,9 +16,7 @@ public abstract class MoveState extends WaitAnimationState {
     }
 
     @Override
-    public final void conclude() {
-        this.getCharacter().setCurrentState(this.getCharacter().getStandingState());
-    }
+    public abstract void conclude();
 
     /**
      * The {@link CharacterState} for spawning.
@@ -31,6 +29,11 @@ public abstract class MoveState extends WaitAnimationState {
         public Spawn(final Character character) {
             super(character);
             this.getCharacter().getGraphicComponent().setSpawnAnimation();
+        }
+
+        @Override
+        public final void conclude() {
+            this.getCharacter().setCurrentState(this.getCharacter().getStandingState());
         }
     }
 
@@ -46,6 +49,11 @@ public abstract class MoveState extends WaitAnimationState {
             super(character);
             this.getCharacter().getGraphicComponent().setFallAnimation();
         }
+
+        @Override
+        public final void conclude() {
+            this.getCharacter().setCurrentState(new DeathState(this.getCharacter()));
+        }
     }
 
     /**
@@ -59,6 +67,11 @@ public abstract class MoveState extends WaitAnimationState {
         public DownLeft(final Character character) {
             super(character);
             this.getCharacter().getGraphicComponent().setMoveDownLeftAnimation();
+        }
+
+        @Override
+        public final void conclude() {
+            this.getCharacter().setCurrentState(this.getCharacter().getStandingState());
         }
     }
 
@@ -74,6 +87,11 @@ public abstract class MoveState extends WaitAnimationState {
             super(character);
             this.getCharacter().getGraphicComponent().setMoveDownRightAnimation();
         }
+
+        @Override
+        public final void conclude() {
+            this.getCharacter().setCurrentState(this.getCharacter().getStandingState());
+        }
     }
 
     /**
@@ -88,6 +106,11 @@ public abstract class MoveState extends WaitAnimationState {
             super(character);
             this.getCharacter().getGraphicComponent().setMoveUpRightAnimation();
         }
+
+        @Override
+        public final void conclude() {
+            this.getCharacter().setCurrentState(this.getCharacter().getStandingState());
+        }
     }
 
     /**
@@ -101,6 +124,11 @@ public abstract class MoveState extends WaitAnimationState {
         public UpLeft(final Character character) {
             super(character);
             this.getCharacter().getGraphicComponent().setMoveUpLeftAnimation();
+        }
+
+        @Override
+        public final void conclude() {
+            this.getCharacter().setCurrentState(this.getCharacter().getStandingState());
         }
     }
 }
