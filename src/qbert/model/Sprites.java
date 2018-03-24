@@ -12,8 +12,8 @@ public class Sprites {
     public static BufferedImage yellowTile; 
     public static BufferedImage life; 
     public static BufferedImage qbertFrontMoving; 
-    public static BufferedImage qbertFrontStanding; 
-    public static BufferedImage redBallMoving; 
-    public static BufferedImage redBallStanding; 
+    public static BufferedImage qbertFrontStanding;
+    public static BufferedImage RedBallMoving; 
+    public static BufferedImage RedBallStanding; 
 }
 

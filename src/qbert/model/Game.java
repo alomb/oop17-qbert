@@ -32,8 +32,8 @@ public class Game {
         Sprites.brownBackground = loadImg("/brownBackground.png"); 
         Sprites.qbertFrontMoving = loadImg("/QbertFrontMoving.png"); 
         Sprites.qbertFrontStanding = loadImg("/QbertFrontStanding.png"); 
-        Sprites.redBallMoving = loadImg("/redBallMoving.png"); 
-        Sprites.redBallStanding = loadImg("/redBallStanding.png"); 
+        Sprites.RedBallMoving = loadImg("/redBallMoving.png"); 
+        Sprites.RedBallStanding = loadImg("/redBallStanding.png"); 
         
         Dimensions.screenHeight = d.height;
         Dimensions.screenWidth = d.width;
