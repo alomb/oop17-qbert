@@ -2,6 +2,7 @@ package qbert.controller;
 
 import qbert.model.Game;
 import qbert.model.Level;
+import qbert.model.Dimensions;
 import qbert.model.mapping.Mapper;
 import qbert.view.Scene;
 
@@ -16,7 +17,7 @@ public class GameEngine {
     private boolean stopped;
 
     private Scene gameScene;
-    private Level gameLevel;
+    private Game game;
 
     /**
      * 
@@ -33,10 +34,10 @@ public class GameEngine {
         int windowWidth = 1500;
         int windowHeight = 1000;
 
-        Game game = new Game();
-        Mapper mapper = new Mapper(game.getScreenWidth(), game.getScreenHeight(), windowWidth, windowHeight);
-        Level gameLevel = new Level();
-        this.gameScene = new Scene(gameLevel, mapper, windowWidth, windowHeight);
+        game = new Game();
+        Mapper mapper = new Mapper(Dimensions.getScreenWidth(), Dimensions.getScreenHeight(), windowWidth, windowHeight);
+        
+        this.gameScene = new Scene(game.getLevel(), mapper, windowWidth, windowHeight);
 
         this.running = true;
         this.stopped = false;
@@ -85,7 +86,7 @@ public class GameEngine {
      */
     private void gameUpdate(final float elapsed) {
         if (!this.stopped) {
-
+            game.update(elapsed);
         }
     }
 

@@ -7,22 +7,23 @@ public class Game {
 
     private Toolkit t; 
     private Dimension d;
-    private int screenHeight;
-    private int screenWidth;
+    
+    private Level gameLevel;
    
     public Game() {
+        gameLevel = new Level();
+        
         t = Toolkit.getDefaultToolkit();
         d = t.getScreenSize();
-        screenHeight = d.height;
-        screenWidth = d.width;
+        Dimensions.screenHeight = d.height;
+        Dimensions.screenWidth = d.width;
     }
-
-    public int getScreenHeight() {
-        return screenHeight;
+    
+    public Level getLevel() {
+        return gameLevel;
     }
-
-    public int getScreenWidth() {
-        return screenWidth;
+    
+    public void update( float elapsed) {
+        gameLevel.update(elapsed);
     }
-
 }
