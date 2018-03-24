@@ -15,10 +15,5 @@ public class Sprites {
     public static BufferedImage qbertFrontStanding; 
     public static BufferedImage redBallMoving; 
     public static BufferedImage redBallStanding; 
-    public static BufferedImage tempTileRed; 
-    public static BufferedImage tempTileGreen; 
-    public static BufferedImage tempTileYellow;
-    
-    
 }
 
