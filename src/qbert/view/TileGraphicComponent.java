@@ -13,9 +13,9 @@ public class TileGraphicComponent implements GraphicComponent {
 
     private BufferedImage[] sprites;
     private URL[] resources = {
-        this.getClass().getResource("/temp_tile_yellow.png"),
-        this.getClass().getResource("/temp_tile_red.png"),
-        this.getClass().getResource("/temp_tile_green.png"),
+        this.getClass().getResource("/blueTile.png"),
+        this.getClass().getResource("/yellowTile.png"),
+        this.getClass().getResource("/pinkTile.png"),
     };
     private int spriteHeight;
     private int spriteWidth;
@@ -33,6 +33,7 @@ public class TileGraphicComponent implements GraphicComponent {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        System.out.println("Width: " + this.sprites[0].getWidth() + ", Height: " + this.sprites[0].getHeight());
         this.tile = tile;
     }
 

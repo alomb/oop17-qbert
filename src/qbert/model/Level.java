@@ -46,7 +46,7 @@ public class Level {
 
     public void reset() {
         //Info da importare da classe esterna
-        this.colorsNumber = 1;
+        this.colorsNumber = 2;
         this.reversableColors = true;
 
         this.resetLevelTiles();
