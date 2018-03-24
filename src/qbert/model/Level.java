@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 
+import qbert.model.states.MoveState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
 import qbert.view.CharacterGraphicComponentImpl;
@@ -167,8 +168,26 @@ public class Level {
             System.exit(0);
         }
     }
-    
-    public void update( float elapsed) {
-        
+
+    public void update(float elapsed) {
+        this.getEntities().stream().forEach(e -> {
+            Position2D logicalPos = e.getCurrentPosition();
+            //Checking if entity is outside the map
+            if (logicalPos.getX() < 0 || logicalPos.getX() < 0 /*|| logicalPos.getX() > ? */) {
+                e.setCurrentState(new MoveState.Fall(e));
+            }
+
+            //Removing dead entities
+            /*if (e.getCurrentState() instanceof MoveState.Dead) {
+                
+            }*/
+
+            //Check if entity has just landed
+            /*if (e.getCurrentState instanceof MoveState.Landed) {
+                
+            }*/
+
+            e.update(elapsed);
+        });
     }
 }

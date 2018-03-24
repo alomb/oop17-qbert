@@ -26,6 +26,7 @@ public class TileGraphicComponent implements GraphicComponent {
     public TileGraphicComponent(Tile tile) {
         this.sprites = new BufferedImage[3];
         try {
+        
             int i = 0;
             for (URL res : this.resources) {
                 this.sprites[i++] = ImageIO.read(res);
@@ -33,7 +34,6 @@ public class TileGraphicComponent implements GraphicComponent {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("Width: " + this.sprites[0].getWidth() + ", Height: " + this.sprites[0].getHeight());
         this.tile = tile;
     }
 
