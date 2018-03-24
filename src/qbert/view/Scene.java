@@ -92,7 +92,7 @@ public class Scene {
             this.mapper = mapper;
 
             //Temporary Sprite Loading
-            this.background = this.tempLoader("/background.png");
+            this.background = this.tempLoader("/blueBackground.png");
             this.lifeSprite = this.tempLoader("/life.png");
 
 
