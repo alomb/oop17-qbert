@@ -31,9 +31,11 @@ public class Level {
     private int round;
     private int colorsNumber;
     private boolean reversableColors;
+    
+    private int totalTime = 0;
+    private boolean spawned = false;
 
     public Level() {
-        
         this.createLevelTiles();
 
         this.level = 1;
@@ -45,18 +47,6 @@ public class Level {
 
         this.gameCharacters = new ArrayList<>();
         this.reset();
-
-        /* Temp RedBall Spawn */
-        BufferedImage res = null;
-        final URL spriteUrl = this.getClass().getResource("/redBallStanding.png");
-        try {
-            res = ImageIO.read(spriteUrl);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        CharacterGraphicComponent g = new CharacterGraphicComponentImpl(res, new Position2D(719, 227));
-        Character ball = new RedBall(new Position2D(6, 6), 0.5f, g, 1);
-        this.spawn(ball);
     }
 
     public void reset() {
@@ -183,17 +173,28 @@ public class Level {
     }
 
     public void update(float elapsed) {
-        System.out.println(this.gameCharacters.size());
+        this.totalTime += elapsed;
+        if (this.totalTime > 1000 && !this.spawned) {
+            this.spawned = true;
+            /* Temp RedBall Spawn */
+            CharacterGraphicComponent g = new CharacterGraphicComponentImpl(Sprites.RedBallStanding, new Position2D(719, 270));
+            Character ball = new RedBall(new Position2D(6, 6), 0.35f, g, 1);
+            this.spawn(ball);
+        }
         this.gameCharacters = this.gameCharacters.stream().peek(e -> {
             e.update(elapsed);
 
             Position2D logicalPos = e.getCurrentPosition();
             //Checking if entity is outside the map
-            if (logicalPos.getY() < 0 /* || logicalPos.getX() < 0|| logicalPos.getX() > ? */) {
+            if (logicalPos.getY() < 0 || logicalPos.getX() + logicalPos.getY() == 14 || logicalPos.getY() - logicalPos.getX() == 2) {
                 if (!(e.getCurrentState() instanceof MoveState.Fall) && !(e.getCurrentState() instanceof DeathState)) {
-                    System.out.println("Setting fall");
                     e.setCurrentState(new MoveState.Fall(e));
                 }
+            }
+            
+            if (e.getCurrentState() instanceof DeathState) {
+                //Notify Spawner
+                this.spawned = false;
             }
         }).filter(e -> !(e.getCurrentState() instanceof DeathState)).collect(Collectors.toList());
     }
