@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import qbert.model.Level;
+import qbert.model.Sprites;
 import qbert.model.mapping.Mapper;
 import qbert.model.utilities.Position2D;
 
@@ -92,8 +93,8 @@ public class Scene {
             this.mapper = mapper;
 
             //Temporary Sprite Loading
-            this.background = this.tempLoader("/blueBackground.png");
-            this.lifeSprite = this.tempLoader("/life.png");
+            this.background = Sprites.blueBackground;
+            this.lifeSprite = Sprites.life;
 
 
             //TODO: Remove
@@ -111,7 +112,7 @@ public class Scene {
                             }
                         }
                     });
-                    level.observeGameStatus();
+                    level.checkStatus();
                 }
             });
 
@@ -125,18 +126,6 @@ public class Scene {
                 }
             });
             this.add(sim1);
-        }
-
-        //TODO: Move in specific class and refactor
-        private BufferedImage tempLoader(String path) {
-            BufferedImage res = null;
-            final URL spriteUrl = this.getClass().getResource(path);
-            try {
-                res = ImageIO.read(spriteUrl);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return res;
         }
 
         public void render() {

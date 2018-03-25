@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import qbert.model.Dimensions;
 import qbert.model.Tile;
 import qbert.model.utilities.Position2D;
 
@@ -15,7 +16,7 @@ public class Mapper {
     //TODO: Calculate from sprite dimensions
     private int tileWidth = 43;
     private int tileHeight = 74;
-    private int mapWidth = 576;
+    private int mapWidth = 601;
     private int mapHeight = 499;
 
     private int windowWidth;
@@ -27,8 +28,8 @@ public class Mapper {
     private int topY;
     
     //TODO: Remove
-    private int errorY = 23;
-    private int errorX = -12;
+    private int errorY = -6;
+    private int errorX = -43;
 
 
     public Mapper(int screenWidth, int screenHeight, int windowWidth, int windowHeight) {
@@ -42,15 +43,24 @@ public class Mapper {
         this.topY = (this.windowHeight - this.mapHeight) / 2;
     }
 
+//    public Position2D getPhysical(Position2D logicPos) {
+//        int oldX = (int) logicPos.getX();
+//        int oldY = (int) logicPos.getY();
+//        int newX = this.centerX + (-tileWidth) * (oldY - 1) + (tileWidth * 2) * (oldX - 1) - this.errorX;
+//        int newY = this.topY + tileHeight * (oldY - 1) - this.errorY;
+//
+//        return new Position2D(newX, newY);
+//    }
+
     public Position2D getPhysical(Position2D logicPos) {
         int oldX = (int) logicPos.getX();
         int oldY = (int) logicPos.getY();
-        int newX = this.centerX + (-tileWidth) * (oldY - 1) + (tileWidth * 2) * (oldX - 1) - this.errorX;
-        int newY = this.topY + tileHeight * (oldY - 1) - this.errorY;
+        int newX = this.topX + (this.tileWidth * (oldX + 1)) + this.errorX;
+        int newY = this.topY + Dimensions.heightBackground - (this.tileHeight * (oldY + 1)) + this.errorY;
 
         return new Position2D(newX, newY);
     }
-    
+  
     public Position2D getMapPos() {
         return new Position2D(this.topX, this.topY);
     }
