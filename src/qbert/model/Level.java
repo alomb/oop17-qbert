@@ -250,8 +250,8 @@ public final class Level {
             this.spawned = true;
 
             /* Temp RedBall Spawn */
-            CharacterGraphicComponent g = new CharacterGraphicComponentImpl(Sprites.RedBallStanding, new Position2D(719, 270));
-            Character ball = new RedBall(new Position2D(6, 6), 0.35f, g, 1000);
+            CharacterGraphicComponent g = new CharacterGraphicComponentImpl(Sprites.RedBallStanding, Dimensions.spawingPointLeft);
+            Character ball = new RedBall(new Position2D(5, 5), 0.35f, g, 1000);
             this.spawn(ball);
         }
         
@@ -261,14 +261,12 @@ public final class Level {
             Position2D logicalPos = e.getCurrentPosition();
             //Check if entity is just landed 
             if (e.getCurrentState() instanceof LandState) {
-                this.step(this.getTile((int) logicalPos.getX(), (int) logicalPos.getY()));
-                e.setCurrentState(e.getStandingState());
-            }
-            
-            //Checking if entity is outside the map
-            if (logicalPos.getY() < 0 || logicalPos.getX() + logicalPos.getY() == 14 || logicalPos.getY() - logicalPos.getX() == 2) {
-                if (!(e.getCurrentState() instanceof MoveState.Fall) && !(e.getCurrentState() instanceof DeathState)) {
+                //Checking if entity is outside the map
+                if (logicalPos.getY() < 0 || logicalPos.getX() + logicalPos.getY() == 14 || logicalPos.getY() - logicalPos.getX() == 2) {
                     e.setCurrentState(new MoveState.Fall(e));
+                } else {
+                    this.step(this.getTile((int) logicalPos.getX(), (int) logicalPos.getY()));
+                    e.setCurrentState(e.getStandingState());
                 }
             }
             
