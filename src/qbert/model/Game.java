@@ -37,13 +37,13 @@ public class Game {
         
         Dimensions.screenHeight = d.height;
         Dimensions.screenWidth = d.width;
-        Dimensions.windowHeight = 1000;
-        Dimensions.windowWidth = 1500;
+        Dimensions.windowHeight = Dimensions.screenHeight*3/4;
+        Dimensions.windowWidth = Dimensions.screenWidth*3/4;
         Dimensions.deathHeight = Dimensions.windowHeight+200;
         Dimensions.spawingHeight = -100;
-        Dimensions.spawingPointLeft = new Position2D((Dimensions.screenWidth/2)-Sprites.blueTile.getWidth(),-500);
-        Dimensions.spawingPointRight = new Position2D((Dimensions.screenWidth/2),-500);
-        Dimensions.spawingQBert = new Position2D((Dimensions.screenWidth/2)-Sprites.blueTile.getWidth()/2,-500);
+        Dimensions.spawingPointLeft = new Position2D((Dimensions.windowWidth/2)-Sprites.blueTile.getWidth(),-500);
+        Dimensions.spawingPointRight = new Position2D((Dimensions.windowWidth/2),-500);
+        Dimensions.spawingQBert = new Position2D((Dimensions.windowWidth/2)-Sprites.blueTile.getWidth()/2,-500);
         Dimensions.backgroundHeight = Sprites.background.getHeight();
         Dimensions.cubeHeight = Sprites.background.getHeight()/7;
         Dimensions.tileHeight = Sprites.blueTile.getHeight();
