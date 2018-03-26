@@ -10,10 +10,10 @@ public class Dimensions {
     public static int windowWidth;
     public static int deathHeight;
     public static int spawingHeight;
-    public static int heightCube;
-    public static int heightTile;
-    public static int widthTile;
-    public static int heightBackground;
+    public static int cubeHeight;
+    public static int tileHeight;
+    public static int tileWidth;
+    public static int backgroundHeight;
     public static Position2D spawingPointLeft;
     public static Position2D spawingPointRight;
     public static Position2D spawingQBert;

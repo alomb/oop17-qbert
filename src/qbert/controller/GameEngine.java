@@ -1,7 +1,6 @@
 package qbert.controller;
 
 import qbert.model.Game;
-import qbert.model.Level;
 import qbert.model.Dimensions;
 import qbert.model.mapping.Mapper;
 import qbert.view.Scene;
