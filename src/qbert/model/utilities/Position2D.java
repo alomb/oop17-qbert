@@ -15,6 +15,8 @@ public class Position2D {
 
     /**
      * Constructor receiving the two coordinate.
+     * @param x the horizontal coordinate
+     * @param y the vertical coordinate
      */
     public Position2D(final double x, final double y){
         this.x = x;
@@ -31,28 +33,28 @@ public class Position2D {
     }
 
     /**
-     * @return
+     * @return the x coordinate
      */
     public double getX() {
         return this.x;
     }
 
     /**
-     * @param x
+     * @param x the new horizontal coordinate
      */
     public void setX(final double x) {
         this.x = x;
     }
 
     /**
-     * @return
+     * @return the y coordinate
      */
     public double getY() {
         return this.y;
     }
 
     /**
-     * @param y
+     * @param y the new vertical coordinate
      */
     public void setY(final double y) {
         this.y = y;

@@ -25,7 +25,7 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
     private final int jumpWidth = Dimensions.widthTile;
     private final int jumpHeight = Dimensions.heightCube;
     private Position2D spawnPos;
-    private Position2D landPos;
+    private final Position2D landPos;
 
     /**
      * @param sprite the {@link BufferedImage} containing the {@link Character}'s sprite
@@ -37,10 +37,9 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
         this.spriteHeight = sprite.getHeight();
         this.spriteWidth = sprite.getWidth();
 
-        this.spawnPos = startSpritePos;
-        this.landPos = new Position2D(this.spawnPos.getX(), (Dimensions.screenHeight - Dimensions.heightBackground)/2 + Dimensions.heightCube - this.spriteHeight);
-        
-        this.spritePos = startSpritePos;
+        this.spritePos = new Position2D(startSpritePos);
+        this.spawnPos = new Position2D(startSpritePos);
+        this.landPos = new Position2D(this.spawnPos.getX(), (Dimensions.windowHeight - Dimensions.heightBackground)/2 + Dimensions.heightCube - this.spriteHeight); 
     }
 
     @Override
