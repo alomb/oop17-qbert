@@ -56,7 +56,7 @@ public class Mapper {
         int oldX = (int) logicPos.getX();
         int oldY = (int) logicPos.getY();
         int newX = this.topX + (this.tileWidth * (oldX + 1)) + this.errorX;
-        int newY = this.topY + Dimensions.heightBackground - (this.tileHeight * (oldY + 1)) + this.errorY;
+        int newY = this.topY + Dimensions.backgroundHeight - (this.tileHeight * (oldY + 1)) + this.errorY;
 
         return new Position2D(newX, newY);
     }

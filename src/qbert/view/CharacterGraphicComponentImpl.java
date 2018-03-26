@@ -22,8 +22,8 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
 
     private Animation animation;
     
-    private final int jumpWidth = Dimensions.widthTile;
-    private final int jumpHeight = Dimensions.heightCube;
+    private final int jumpWidth = Dimensions.tileWidth;
+    private final int jumpHeight = Dimensions.cubeHeight;
     private Position2D spawnPos;
     private final Position2D landPos;
 
