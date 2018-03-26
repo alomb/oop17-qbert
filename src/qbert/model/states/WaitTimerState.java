@@ -38,5 +38,4 @@ public abstract class WaitTimerState extends CharacterStateImpl {
 
     @Override
     public abstract void conclude();
-
 }

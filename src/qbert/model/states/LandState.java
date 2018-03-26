@@ -25,5 +25,4 @@ public class LandState extends CharacterStateImpl {
     public void conclude() {
 
     }
-
 }

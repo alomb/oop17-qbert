@@ -7,8 +7,6 @@ import qbert.model.Character;
  */
 public abstract class WaitAnimationState extends CharacterStateImpl {
 
-
-
     /**
      * @param character {@link Character} associated with this {@link CharacterState} 
      */
@@ -16,10 +14,8 @@ public abstract class WaitAnimationState extends CharacterStateImpl {
         super(character);
     }
 
-
-
     @Override
-    public void update(final float dt) {
+    public final void update(final float dt) {
         if (!this.getCharacter().getGraphicComponent().getCurrentAnimation().hasFinished()) {
             this.getCharacter().getGraphicComponent().updateGraphics(dt * this.getCharacter().getSpeed());
         } else {

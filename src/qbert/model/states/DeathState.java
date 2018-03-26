@@ -24,5 +24,4 @@ public class DeathState extends CharacterStateImpl {
     public void conclude() {
 
     }
-
 }
