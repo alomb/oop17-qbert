@@ -39,7 +39,7 @@ public class CharacterGraphicComponentImpl implements CharacterGraphicComponent 
 
         this.spritePos = new Position2D(startSpritePos);
         this.spawnPos = new Position2D(startSpritePos);
-        this.landPos = new Position2D(this.spawnPos.getX(), (Dimensions.windowHeight - Dimensions.heightBackground)/2 + Dimensions.heightCube - this.spriteHeight); 
+        this.landPos = new Position2D(this.spawnPos.getX(), (Dimensions.windowHeight - Dimensions.backgroundHeight)/2 + Dimensions.cubeHeight - this.spriteHeight); 
     }
 
     @Override
