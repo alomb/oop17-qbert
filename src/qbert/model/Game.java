@@ -45,8 +45,8 @@ public class Game {
         Dimensions.spawingQBert = new Position2D((Dimensions.windowWidth/2)-Sprites.blueTile.getWidth()/2,-500);
         Dimensions.backgroundHeight = Sprites.blueBackground.getHeight();
         Dimensions.backgroundWidth = Sprites.blueBackground.getWidth();
-        Dimensions.topX = (Dimensions.windowWidth-Dimensions.backgroundWidth)/2;
-        Dimensions.topY = (Dimensions.windowHeight-Dimensions.backgroundHeight)/2;
+        Dimensions.backgroundX = (Dimensions.windowWidth-Dimensions.backgroundWidth)/2;
+        Dimensions.backgroundY = (Dimensions.windowHeight-Dimensions.backgroundHeight)/2;
         Dimensions.cubeHeight = Sprites.blueBackground.getHeight()/7;
         Dimensions.tileHeight = Sprites.blueTile.getHeight();
         Dimensions.tileWidth = Sprites.blueTile.getWidth();

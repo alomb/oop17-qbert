@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import qbert.model.Dimensions;
 import qbert.model.Level;
 import qbert.model.Sprites;
 import qbert.model.mapping.Mapper;
@@ -137,7 +138,7 @@ public class Scene {
             super.paintComponent(g);
 
             // Level components rendering
-            g.drawImage(this.background, (int) mapper.getMapPos().getX(), (int)  mapper.getMapPos().getY(), this);
+            g.drawImage(level.getBackground(), Dimensions.backgroundX, Dimensions.backgroundY, this);
 
             level.getTiles().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();

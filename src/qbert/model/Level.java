@@ -1,16 +1,11 @@
 package qbert.model;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import javax.imageio.ImageIO;
 
 import qbert.model.states.DeathState;
 import qbert.model.states.LandState;
@@ -29,6 +24,7 @@ public final class Level {
     private Spawner spawner;
 
     //Level settings
+    private BufferedImage background;
     private int level;
     private int round;
     private int colorsNumber;
@@ -55,12 +51,17 @@ public final class Level {
         //Info da importare da classe esterna
         this.colorsNumber = 2;
         this.reversableColors = true;
+        this.background = Sprites.blueBackground;
 
         this.resetLevelTiles();
     }
 
     public Tile getTile(final int x, final int y) {
         return tiles.get(x).get(y);
+    }
+    
+    public BufferedImage getBackground() {
+        return this.background;
     }
 
     private void createLevelTiles() {
@@ -131,17 +132,6 @@ public final class Level {
         tmp = new HashMap<>();
         tmp.put(0, new Tile(12, 0));
         tiles.put(12, tmp);
-
-        //TODO: Utilizzare un metodo di creazione dei tile migliore
-//        for (int i = 1; i <= this.mapHeight; i++) {
-//            Map<Integer, Tile> tmpMap = new HashMap<>();
-//            for (int j = 1; j <= this.mapHeight; j++) {
-//                if (j <= i) {
-//                    tmpMap.put(j, new Tile(j, i));
-//                }
-//                tiles.put(i, tmpMap);
-//            }
-//        }
     }
 
     private void resetLevelTiles() {
@@ -244,7 +234,7 @@ public final class Level {
         }
     }
 
-    public void update(float elapsed) {
+    public void update(final float elapsed) {
         this.totalTime += elapsed;
         if (this.totalTime > 1000 && !this.spawned) {
             this.spawned = true;

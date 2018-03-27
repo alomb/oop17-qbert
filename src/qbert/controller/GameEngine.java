@@ -30,7 +30,7 @@ public class GameEngine {
      */
     public void setup() {
         game = new Game();
-        Mapper mapper = new Mapper(Dimensions.screenWidth, Dimensions.screenHeight, Dimensions.windowWidth, Dimensions.windowHeight);
+        Mapper mapper = new Mapper();
         
         this.gameScene = new Scene(game.getLevel(), mapper, Dimensions.windowWidth, Dimensions.windowHeight);
 
