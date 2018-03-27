@@ -22,8 +22,7 @@ public class Game {
         
         t = Toolkit.getDefaultToolkit();
         d = t.getScreenSize();
-        
-        Sprites.background = loadImg("/background.png"); 
+         
         Sprites.blueTile = loadImg("/blueTile.png");
         Sprites.pinkTile = loadImg("/pinkTile.png");
         Sprites.yellowTile = loadImg("/yellowTile.png");
@@ -44,8 +43,8 @@ public class Game {
         Dimensions.spawingPointLeft = new Position2D((Dimensions.windowWidth/2)-Sprites.blueTile.getWidth(),-500);
         Dimensions.spawingPointRight = new Position2D((Dimensions.windowWidth/2),-500);
         Dimensions.spawingQBert = new Position2D((Dimensions.windowWidth/2)-Sprites.blueTile.getWidth()/2,-500);
-        Dimensions.backgroundHeight = Sprites.background.getHeight();
-        Dimensions.cubeHeight = Sprites.background.getHeight()/7;
+        Dimensions.backgroundHeight = Sprites.blueBackground.getHeight();
+        Dimensions.cubeHeight = Sprites.blueBackground.getHeight()/7;
         Dimensions.tileHeight = Sprites.blueTile.getHeight();
         Dimensions.tileWidth = Sprites.blueTile.getWidth();
         Dimensions.tileWidth = Sprites.blueTile.getWidth();

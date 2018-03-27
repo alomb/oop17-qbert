@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 public class Sprites {
     
-    public static BufferedImage background;
     public static BufferedImage blueBackground; 
     public static BufferedImage brownBackground; 
     public static BufferedImage blueTile;
