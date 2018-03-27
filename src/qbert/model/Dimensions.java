@@ -14,6 +14,9 @@ public class Dimensions {
     public static int tileHeight;
     public static int tileWidth;
     public static int backgroundHeight;
+    public static int backgroundWidth;
+    public static int topX;
+    public static int topY;
     public static Position2D spawingPointLeft;
     public static Position2D spawingPointRight;
     public static Position2D spawingQBert;
