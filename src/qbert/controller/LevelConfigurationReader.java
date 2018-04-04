@@ -1,9 +1,6 @@
 package qbert.controller;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -16,39 +13,30 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import qbert.model.Level;
-import qbert.model.Sprites;
-import qbert.model.utilities.Position2D;
-import qbert.view.CharacterGraphicComponent;
-import qbert.view.CharacterGraphicComponentImpl;
-import qbert.model.Character;
-import qbert.model.Dimensions;
-
-import java.util.Random;
 
 /**
  *
  */
 public class LevelConfigurationReader {
     
-    private final List<Character> levelCharacters;
     private final Map<String, EnemyInfo> mapInfo;
+    private int colorsNumber;
+    private boolean reversable;
 
     public LevelConfigurationReader() {
-        this.levelCharacters = new ArrayList<>();
         this.mapInfo = new HashMap<>();
     }
     
-    public List<Character> readLevelConfiguration(final Level l) throws JDOMException {
+    public void readLevelConfiguration(final Level l) throws JDOMException {
         try {
             final SAXBuilder builder = new SAXBuilder();
-            final Document document = builder.build("/levelconfig.xml");
+            final Document document = builder.build("res/levelconfig.xml");
 
             final Element root = document.getRootElement();
             final Element level = root.getChild("LEVEL" + l.getLevel());
             final Element round = level.getChild("ROUND" + l.getRound());
-            final int colorsNumber = Integer.valueOf(round.getAttributeValue("colors"));
-            final boolean reversable = Boolean.parseBoolean(round.getAttributeValue("reversable"));
-            /* settare colorsNumber e reversable del livello */
+            this.colorsNumber = Integer.valueOf(round.getAttributeValue("colors"));
+            this.reversable = Boolean.parseBoolean(round.getAttributeValue("reversable"));
 
             final List<Element> children = round.getChildren();
             final Iterator<Element> it = children.iterator();
@@ -57,60 +45,53 @@ public class LevelConfigurationReader {
                 final Element character = (Element) it.next();
                 final String name = character.getName();
                 final float speed = Float.valueOf(character.getAttributeValue("speed"));
-
                 final int quantity = Integer.valueOf(character.getAttributeValue("quantity"));
                 final int spawningTime = Integer.valueOf(character.getAttributeValue("spawningTime"));
                 final int standingTime = Integer.valueOf(character.getAttributeValue("standingTime"));
                 
-                this.mapInfo.put(name, this.new EnemyInfo(quantity, spawningTime, standingTime));
-
-                final Position2D randomPos = new Random().nextInt(2) == 0 ? Dimensions.spawingPointLeft : Dimensions.spawingPointRight;
-                
-                /* */
-                switch(name) {
-                case "RedBall":
-                    try {
-                        final Class<?> cl = Class.forName(name);
-                        final Constructor<?> cns = cl.getConstructor(Position2D.class, Float.class, CharacterGraphicComponent.class, Integer.class);
-                        this.levelCharacters.add((Character) cns.newInstance(randomPos, speed, new CharacterGraphicComponentImpl(Sprites.RedBallStanding, randomPos), standingTime));
-                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-                            | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    break;
-                    
-                default:
-                
-                }
+                this.mapInfo.put(name, this.new EnemyInfo(speed, quantity, spawningTime, standingTime));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        return Collections.unmodifiableList(levelCharacters);
     }
-    
     
     public Map<String, EnemyInfo> getMapInfo() {
         return  Collections.unmodifiableMap(mapInfo);
     }
     
+    public int getColorsNumber() {
+        return this.colorsNumber;
+    }
+    
+    public boolean isReversable() {
+        return this.reversable;
+    }
     
     /* */
     public final class EnemyInfo {
         
+        final private float speed;
         private int currentQuantity;
         private final int totalQuantity;
         private final int spawningTime;
         private final int standingTime;
         
+        private int elapsedTime;
+        
         /* package protected */
-        EnemyInfo(final int quantity, final int spawningTime, final int standingTime) {
+        EnemyInfo(final float speed, final int quantity, final int spawningTime, final int standingTime) {
+            this.speed = speed;
             this.currentQuantity = 0;
             this.totalQuantity = quantity;
             this.spawningTime = spawningTime;
             this.standingTime = standingTime;
+            
+            this.elapsedTime = 0;
+        }
+        
+        public float getSpeed() {
+            return this.speed;
         }
         
         public int getCurrentQuantity() {
@@ -129,12 +110,24 @@ public class LevelConfigurationReader {
             return this.standingTime;
         }
         
+        public int getElapsedTime() {
+            return this.elapsedTime;
+        }
+        
         public void incCurrentQuantity() {
             this.currentQuantity++;
         }
         
         public void decCurrentQuantity() {
             this.currentQuantity--;
+        }
+        
+        public void resetElapsedTime() {
+            this.elapsedTime = 0;
+        }
+        
+        public void incElapsedTime(final float dt) {
+            this.elapsedTime += dt;
         }
     }
 
