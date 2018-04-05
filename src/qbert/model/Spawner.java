@@ -12,7 +12,8 @@ import qbert.controller.LevelConfigurationReader;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
 import qbert.view.CharacterGraphicComponentImpl;
-import qbert.view.QBertGraphicComponent;
+import qbert.view.DownwardCGC;
+import qbert.view.DownwardUpwardCGC;
 
 public class Spawner {
     
@@ -31,11 +32,11 @@ public class Spawner {
         }
         this.mapInfo = lcr.getMapInfo();
     }
-    
+
     public void spawnQbert() {
-        level.spawn(new Qbert(Dimensions.spawingQBert, 0.35f, new QBertGraphicComponent(Sprites.qbertFrontStanding, Dimensions.spawingQBert)));
+        level.spawn(new Qbert(Dimensions.spawingQBert, 0.35f, new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Dimensions.spawingQBert)));
     }
-    
+
     public void update(final float dt) {
         for (final Map.Entry<String, LevelConfigurationReader.EnemyInfo> entry : mapInfo.entrySet()) {
             if (entry.getValue().getSpawningTime() <= entry.getValue().getElapsedTime()) {
@@ -46,7 +47,7 @@ public class Spawner {
                     try {
                         final Class<?> cl = Class.forName("qbert.model." + entry.getKey());
                         final Constructor<?> cns = cl.getConstructor(Position2D.class, Float.class, CharacterGraphicComponent.class, Integer.class);
-                        final Character character = (Character) cns.newInstance(logicalPos, entry.getValue().getSpeed(), new CharacterGraphicComponentImpl(Sprites.RedBallStanding, randomPos), entry.getValue().getStandingTime());
+                        final Character character = (Character) cns.newInstance(logicalPos, entry.getValue().getSpeed(), new DownwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, randomPos), entry.getValue().getStandingTime());
                         level.spawn(character); 
                     } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
                             | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -60,11 +61,11 @@ public class Spawner {
             }
         }
     }
-    
+
     public int getColorsNumber() {
         return this.lcr.getColorsNumber();
     }
-    
+
     public boolean isReverable() {
         return this.lcr.isReversable();
     }

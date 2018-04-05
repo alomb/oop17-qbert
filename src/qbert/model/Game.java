@@ -18,7 +18,7 @@ public class Game {
    
     public Game() {
         
-        gameLevel = new Level();
+
         
         t = Toolkit.getDefaultToolkit();
         d = t.getScreenSize();
@@ -51,6 +51,8 @@ public class Game {
         Dimensions.tileHeight = Sprites.blueTile.getHeight();
         Dimensions.tileWidth = Sprites.blueTile.getWidth();
         Dimensions.tileWidth = Sprites.blueTile.getWidth();
+        
+        gameLevel = new Level();
     }
     
     public Level getLevel() {

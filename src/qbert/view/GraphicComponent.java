@@ -26,19 +26,9 @@ public interface GraphicComponent {
     int getSpriteHeight();
 
     /**
-     * @param spriteHeight the new sprite height
-     */
-    void setSpriteHeight(int spriteHeight);
-
-    /**
      * @return the current sprite width
      */
     int getSpriteWidth();
-
-    /**
-     * @param spriteWidth the new sprite width
-     */
-    void setSpriteWidth(int spriteWidth);
 
     /**
      * @return the current sprite position ({@link Position2D}) in the space 

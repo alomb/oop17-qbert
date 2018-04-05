@@ -93,7 +93,7 @@ public abstract class CharacterImpl implements Character {
         result = prime * result + ((nextPos == null) ? 0 : nextPos.hashCode());
         return result;
     }
-*/
+
     @Override
     public boolean equals(final Object obj) {
         if (this == obj) {
@@ -132,5 +132,5 @@ public abstract class CharacterImpl implements Character {
         }
         return true;
     }
-
+*/
 }
