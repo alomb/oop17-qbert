@@ -61,7 +61,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         }
 
         if (!this.right) {
-            this.flipOnXImage();
+            this.flipOnYImage();
         }
 
         this.setCurrentAnimation(new StandingAnimation(this.getPosition()));
@@ -70,6 +70,8 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
     @Override
     public final void setSpawnAnimation() {
         this.setSprite(this.frontStandSprite);
+        this.right = true;
+        this.front = true;
         this.setCurrentAnimation(new DisplaceAnimation(this.getPosition(), this.getSpawnPosition()));
     }
 
@@ -82,7 +84,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         }
 
         if (!this.right) {
-            this.flipOnXImage();
+            this.flipOnYImage();
         }
 
         this.setCurrentAnimation(new MoveAnimation.Down(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.deathHeight)));
@@ -93,7 +95,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.setSprite(this.frontMoveSprite);
         this.front = true;
         this.right = false;
-        this.flipOnXImage();
+        this.flipOnYImage();
         this.setCurrentAnimation(new Jump.DownLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
     }
 
@@ -110,7 +112,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.setSprite(this.backMoveSprite);
         this.front = false;
         this.right = false;
-        this.flipOnXImage();
+        this.flipOnYImage();
         this.setCurrentAnimation(new Jump.UpLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() - this.jumpHeight)));
     }
 
@@ -122,7 +124,10 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.setCurrentAnimation(new Jump.UpRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() - this.jumpHeight)));
     }
 
-    private void flipOnXImage() {
+    /**
+     * A method to flip on Y axis the current sprite.
+     */
+    private void flipOnYImage() {
         final AffineTransform transformation = AffineTransform.getScaleInstance(-1, 1);
         transformation.translate(-this.getSpriteWidth(), 0);
         final AffineTransformOp operation = new AffineTransformOp(transformation, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
