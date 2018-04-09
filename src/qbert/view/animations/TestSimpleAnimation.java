@@ -1,11 +1,12 @@
 package qbert.view.animations;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.Test;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import org.junit.Test;
 import qbert.model.utilities.Position2D;
 
 /**
@@ -54,21 +55,20 @@ public class TestSimpleAnimation {
         final int size = this.random.nextInt(5) + 10;
 
         for (int i = 0; i < size; i++) {
-            final Position2D target = new Position2D(source.getX(), this.random.nextInt(5) + source.getY());
-            final MoveAnimation.Down anim = new MoveAnimation.Down(source, target);
-            while (!anim.hasFinished()) {
-                source = anim.updateAnimation(TestSimpleAnimation.SPEED);
-            }
-            assertEquals(source, target);
-        }
+            final Position2D targetDown = new Position2D(source.getX(), this.random.nextInt(10) + source.getY());
+            final Position2D targetUp = new Position2D(source.getX(), source.getY() - this.random.nextInt(10));
+            Animation anim = new MoveAnimation.Down(source, targetDown);
 
-        for (int i = 0; i < size; i++) {
-            final Position2D target = new Position2D(source.getX(), source.getY() - this.random.nextInt(10));
-            final MoveAnimation.Up anim = new MoveAnimation.Up(source, target);
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }
-            assertEquals(source, target);
+            assertEquals(source, targetDown);
+
+            anim = new MoveAnimation.Up(source, targetUp);
+            while (!anim.hasFinished()) {
+                source = anim.updateAnimation(TestSimpleAnimation.SPEED);
+            }
+            assertEquals(source, targetUp);
         }
     }
 
@@ -82,20 +82,29 @@ public class TestSimpleAnimation {
 
         for (int i = 0; i < size; i++) {
             final Position2D target = new Position2D(source.getX() + this.random.nextInt(20), source.getY());
-            final MoveAnimation.ArcClockwise anim = new MoveAnimation.ArcClockwise(source, target);
-            while (!anim.hasFinished()) {
-                source = anim.updateAnimation(TestSimpleAnimation.SPEED);
-            }
-            assertEquals(source, target);
-        }
+            final Position2D targetCounter = new Position2D(source.getX() - this.random.nextInt(20), source.getY());
+            Animation anim = new MoveAnimation.ArcClockwise(source, target);
 
-        for (int i = 0; i < size; i++) {
-            final Position2D target = new Position2D(source.getX() - this.random.nextInt(20), source.getY());
-            final MoveAnimation.ArcCounterclockwise anim = new MoveAnimation.ArcCounterclockwise(source, target);
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }
             assertEquals(source, target);
+
+            anim = new MoveAnimation.ArcCounterclockwise(source, targetCounter);
+            while (!anim.hasFinished()) {
+                source = anim.updateAnimation(TestSimpleAnimation.SPEED);
+            }
+            assertEquals(source, targetCounter);
         }
+    }
+
+    /**
+     * Test {@link StandingAnimation}.
+     */
+    @Test
+    public void testStandingAnimation() {
+        final Position2D source = returnRandomPosition2D();
+        final Animation anim = new StandingAnimation(source);
+        assertTrue(anim.hasFinished());
     }
 }

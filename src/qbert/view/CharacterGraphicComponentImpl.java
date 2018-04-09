@@ -18,7 +18,7 @@ public abstract class CharacterGraphicComponentImpl implements CharacterGraphicC
 
     /**
      * @param sprite the {@link BufferedImage} containing the {@link Character}'s current sprite
-     * @param startSpritePos the first position (physic) of the {@link Character}
+     * @param startSpritePos the first position (physic) of the {@link Character} and also the spawn position
      */
     public CharacterGraphicComponentImpl(final BufferedImage sprite, final Position2D startSpritePos) {
         this.sprite = sprite;
