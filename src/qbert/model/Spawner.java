@@ -30,7 +30,7 @@ public class Spawner {
     }
     
     public void spawnQbert() {
-        level.spawn(new Qbert(Dimensions.spawingQBert, 0.35f, new QBertGraphicComponent(Sprites.qbertFrontStanding, Dimensions.spawingQBert)));
+        level.spawn(new Qbert(Dimensions.spawningQBert, 0.35f, new QBertGraphicComponent(Sprites.qbertFrontStanding, Dimensions.spawningQBert)));
     }
     
     public void update(final float dt) {

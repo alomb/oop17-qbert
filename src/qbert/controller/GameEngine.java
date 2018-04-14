@@ -26,9 +26,10 @@ public class GameEngine {
     }
 
     /**
+     * @throws Exception 
      * 
      */
-    public void setup() {
+    public void setup() throws Exception {
         game = new Game();
         Mapper mapper = new Mapper(Dimensions.screenWidth, Dimensions.screenHeight, Dimensions.windowWidth, Dimensions.windowHeight);
         

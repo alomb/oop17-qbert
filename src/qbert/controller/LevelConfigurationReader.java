@@ -64,7 +64,7 @@ public class LevelConfigurationReader {
                 
                 this.mapInfo.put(name, this.new EnemyInfo(quantity, spawningTime, standingTime));
 
-                final Position2D randomPos = new Random().nextInt(2) == 0 ? Dimensions.spawingPointLeft : Dimensions.spawingPointRight;
+                final Position2D randomPos = new Random().nextInt(2) == 0 ? Dimensions.spawningPointLeft : Dimensions.spawningPointRight;
                 
                 /* */
                 switch(name) {

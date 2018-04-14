@@ -250,7 +250,7 @@ public final class Level {
             this.spawned = true;
 
             /* Temp RedBall Spawn */
-            CharacterGraphicComponent g = new CharacterGraphicComponentImpl(Sprites.RedBallStanding, Dimensions.spawingPointLeft);
+            CharacterGraphicComponent g = new CharacterGraphicComponentImpl(Sprites.RedBallStanding, Dimensions.spawningPointLeft);
             Character ball = new RedBall(new Position2D(5, 5), 0.35f, g, 1000);
             this.spawn(ball);
         }
