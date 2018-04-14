@@ -54,17 +54,7 @@ public class TileGraphicComponent implements GraphicComponent {
     }
 
     @Override
-    public void setSpriteHeight(int spriteHeight) {
-        return;
-    }
-
-    @Override
     public int getSpriteWidth() {
         return this.getSprite().getWidth();
-    }
-
-    @Override
-    public void setSpriteWidth(int spriteWidth) {
-        return;
     }
 }

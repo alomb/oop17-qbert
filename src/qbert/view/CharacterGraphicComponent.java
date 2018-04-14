@@ -1,5 +1,6 @@
 package qbert.view;
 
+import qbert.model.utilities.Position2D;
 import qbert.view.animations.Animation;
 
 /**
@@ -8,9 +9,24 @@ import qbert.view.animations.Animation;
 public interface CharacterGraphicComponent extends GraphicComponent {
 
     /**
+     * @return the current {@link Character} spawn position in the space
+     */
+    Position2D getSpawnPosition();
+
+    /**
+     * @param newPos the new sprite spawn position ({@link Position2D}) in the space
+     */
+    void setSpawnPosition(Position2D newPos);
+
+    /**
      * @return the current {@link Animation}
      */
     Animation getCurrentAnimation();
+
+    /**
+     * @param animation the new animation to set
+     */
+    void setCurrentAnimation(Animation animation);
 
     /**
      * Set the {@link Character} relative standing animation.

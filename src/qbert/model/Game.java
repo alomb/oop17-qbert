@@ -32,11 +32,12 @@ public class Game {
     
     private Level gameLevel;
    
-    public Game() throws Exception {
+    public Game() {
         
         t = Toolkit.getDefaultToolkit();
         d = t.getScreenSize();
          
+        try {
           Sprites.blueTile = loadImg("res/svg/TileBlue.svg","res/png/TileBlue.png");
           Sprites.pinkTile = loadImg("res/svg/TilePink.svg","res/png/TilePink.png");
           Sprites.yellowTile = loadImg("res/svg/TileYellow.svg","res/png/TileYellow.png");
@@ -46,7 +47,10 @@ public class Game {
           Sprites.qbertFrontMoving = loadImg("res/svg/QbertFrontMove.svg","res/png/QbertFrontMove.png"); 
           Sprites.qbertFrontStanding = loadImg("res/svg/QbertFrontStand.svg","res/png/QbertFrontStand.png"); 
           Sprites.RedBallMoving = loadImg("res/svg/RedBallMove.svg","res/png/RedBallMove.png"); 
-          Sprites.RedBallStanding = loadImg("res/svg/RedBallStand.svg","res/png/RedBallStand.png"); 
+          Sprites.RedBallStanding = loadImg("res/svg/RedBallStand.svg","res/png/RedBallStand.png");
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
 //        
 //        Sprites.blueTile = loadImg("/blueTile.png");
 //        Sprites.pinkTile = loadImg("/pinkTile.png");
