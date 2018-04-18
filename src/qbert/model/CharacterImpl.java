@@ -18,6 +18,7 @@ public abstract class CharacterImpl implements Character {
         this.currentPos = startPos;
         this.characterSpeed = speed;
         this.graphics = graphics;
+        this.nextPos = new Position2D(startPos);
     }
 
     @Override
@@ -62,7 +63,7 @@ public abstract class CharacterImpl implements Character {
 
     @Override
     public boolean isMoving() {
-        return this.currentPos.equals(this.nextPos);
+        return !this.currentPos.equals(this.nextPos);
     }
 
     @Override
