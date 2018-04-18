@@ -13,6 +13,7 @@ import qbert.model.states.MoveState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
 import qbert.view.CharacterGraphicComponentImpl;
+import qbert.view.DownwardUpwardCGC;
 
 public final class Level {
 
@@ -29,9 +30,6 @@ public final class Level {
     private int round;
     private int colorsNumber;
     private boolean reversableColors;
-    
-    private int totalTime = 0;
-    private boolean spawned = false;
 
     public Level() {
         this.createLevelTiles();
@@ -42,15 +40,16 @@ public final class Level {
 
         //Forse da spostare in classe Game
         this.points = 0;
-
         this.gameCharacters = new ArrayList<>();
-        
+
         /* SPAWNER */
         spawner = new Spawner(this);
-        
+        CharacterGraphicComponent qg = new DownwardUpwardCGC(Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, 
+                new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Dimensions.tileHeight / 2)
+        );
+        Qbert q = new Qbert(new Position2D(6, 6), 0.35f, qg);
+        this.spawnQbert(q);
         this.reset();
-        
-        spawner.spawnQbert();
     }
 
     public void reset() {
@@ -64,7 +63,7 @@ public final class Level {
     public Tile getTile(final int x, final int y) {
         return tiles.get(x).get(y);
     }
-    
+
     public BufferedImage getBackground() {
         return this.background;
     }
@@ -244,23 +243,9 @@ public final class Level {
     }
 
     public void update(final float elapsed) {
-        this.totalTime += elapsed;
-        
         /* SPAWNER */
         spawner.update(elapsed);
-        
-        if (this.totalTime > 1000 && !this.spawned) {
-            this.spawned = true;
-
-            /* Temp RedBall Spawn 
-            CharacterGraphicComponent g = new CharacterGraphicComponentImpl(Sprites.RedBallStanding, Dimensions.spawingPointLeft);
-            Character ball = new RedBall(new Position2D(5, 5), 0.35f, g, 1000);
-            this.spawn(ball);
-            */
-           
-             
-        }
-        
+        qbert.update(elapsed);
         //Update Entities
         this.gameCharacters = this.gameCharacters.stream().peek(e -> {
             e.update(elapsed);
@@ -275,10 +260,9 @@ public final class Level {
                     e.setCurrentState(e.getStandingState());
                 }
             }
-            
+
             if (e.getCurrentState() instanceof DeathState) {
                 //Notify Spawner
-                this.spawned = false;
             }
         }).filter(e -> !(e.getCurrentState() instanceof DeathState)).collect(Collectors.toList());
     }

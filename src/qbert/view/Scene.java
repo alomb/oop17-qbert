@@ -161,6 +161,8 @@ public class Scene {
                 g.drawImage(c.getSprite(), (int) c.getPosition().getX(), (int) c.getPosition().getY(), this);
             });
 
+            g.drawImage(level.getQBert().getGraphicComponent().getSprite(), (int)level.getQBert().getGraphicComponent().getPosition().getX(), (int)level.getQBert().getGraphicComponent().getPosition().getY(), this);
+
             // Info rendering
             g.setColor(new Color(255, 255, 255));
             g.setFont(this.custom);
