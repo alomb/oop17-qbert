@@ -12,7 +12,6 @@ import qbert.model.states.LandState;
 import qbert.model.states.MoveState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
-import qbert.view.CharacterGraphicComponentImpl;
 import qbert.view.DownwardUpwardCGC;
 
 public final class Level {
@@ -36,15 +35,17 @@ public final class Level {
 
         //Forse da spostare in classe Game
         this.points = 0;
-        this.gameCharacters = new ArrayList<>();
 
-        /* SPAWNER */
-        spawner = new Spawner(this);
+        this.gameCharacters = new ArrayList<>();
+        this.spawner = new Spawner(this);
+
+        //Test qbert spawn
         CharacterGraphicComponent qg = new DownwardUpwardCGC(Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, 
                 new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Dimensions.tileHeight / 2)
         );
         Qbert q = new Qbert(new Position2D(6, 6), 0.35f, qg);
         this.spawnQbert(q);
+
         this.reset();
     }
 
@@ -171,10 +172,6 @@ public final class Level {
         this.points += points;
     }
 
-    public int getStage() {
-        return ((this.level - 1) * 3) + this.round;
-    }
-
     public int getLevel() {
         return this.level;
     }
@@ -197,7 +194,7 @@ public final class Level {
         }
 
         if (coloredTiles == this.getTiles().stream().count()) {
-            this.changeStage();
+            this.changeRound();
             this.reset();
         }
     }
@@ -206,7 +203,7 @@ public final class Level {
         return this.lives;
     }
 
-    public void changeStage() {
+    public void changeRound() {
         if (level == 9 && round == 3) {
             System.exit(0);
         }

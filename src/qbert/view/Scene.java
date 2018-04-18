@@ -3,23 +3,18 @@ package qbert.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -78,7 +73,6 @@ public class Scene {
         // Temp Variables
         private Mapper mapper;
         private Font custom; 
-        private BufferedImage background;
         private BufferedImage lifeSprite;
 
         public ScenePanel(final Level level, final Mapper mapper, final int w, final int h) {
@@ -104,7 +98,6 @@ public class Scene {
             this.mapper = mapper;
 
             //Temporary Sprite Loading
-            this.background = Sprites.blueBackground;
             this.lifeSprite = Sprites.life;
 
             // Qbert Death Simulation
