@@ -107,26 +107,6 @@ public class Scene {
             this.background = Sprites.blueBackground;
             this.lifeSprite = Sprites.life;
 
-
-            //TODO: Remove
-            // Qbert Movement Simulation
-            this.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    level.getTiles().stream().forEach(t -> {
-                        GraphicComponent c = t.getGraphicComponent();
-                        Position2D pos = mapper.getPhysical(c.getPosition());
-                        if (e.getX() >= pos.getX() && e.getX() <= pos.getX() + c.getSpriteWidth()
-                            && e.getY() >= pos.getY() && e.getY() <= pos.getY() + c.getSpriteHeight()) {
-                            if (level.step(t)) {
-                                level.score(50);
-                            }
-                        }
-                    });
-                    level.checkStatus();
-                }
-            });
-
             // Qbert Death Simulation
             JButton sim1 = new JButton("Simulate Qbert's Death");
             sim1.addActionListener(new ActionListener() {

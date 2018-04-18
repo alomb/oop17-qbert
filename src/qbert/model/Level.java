@@ -25,15 +25,11 @@ public final class Level {
     private Spawner spawner;
 
     //Level settings
-    private BufferedImage background;
+    private LevelSettings settings;
     private int level;
     private int round;
-    private int colorsNumber;
-    private boolean reversableColors;
 
     public Level() {
-        this.createLevelTiles();
-
         this.level = 1;
         this.round = 1;
         this.lives = 3;
@@ -53,11 +49,9 @@ public final class Level {
     }
 
     public void reset() {
-        this.colorsNumber = spawner.getColorsNumber();
-        this.reversableColors = spawner.isReverable();
-        this.background = Sprites.blueBackground;
+        this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReverable(), Sprites.blueBackground);
 
-        this.resetLevelTiles();
+        this.createLevelTiles(settings);
     }
 
     public Tile getTile(final int x, final int y) {
@@ -65,77 +59,79 @@ public final class Level {
     }
 
     public BufferedImage getBackground() {
-        return this.background;
+        return this.settings.getBackgroundImage();
     }
 
-    private void createLevelTiles() {
+    private void createLevelTiles(LevelSettings settings) {
         tiles = new HashMap<>();
         Map<Integer, Tile> tmp = new HashMap<>();
-        tmp.put(0, new Tile(0, 0));
+        tmp.put(0, new Tile(0, 0, settings));
         tiles.put(0, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(1, 1));
+        tmp.put(1, new Tile(1, 1, settings));
         tiles.put(1, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(2, 0));
-        tmp.put(2, new Tile(2, 2));
+        tmp.put(0, new Tile(2, 0, settings));
+        tmp.put(2, new Tile(2, 2, settings));
         tiles.put(2, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(3, 1));
-        tmp.put(3, new Tile(3, 3));
+        tmp.put(1, new Tile(3, 1, settings));
+        tmp.put(3, new Tile(3, 3, settings));
         tiles.put(3, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(4, 0));
-        tmp.put(2, new Tile(4, 2));
-        tmp.put(4, new Tile(4, 4));
+        tmp.put(0, new Tile(4, 0, settings));
+        tmp.put(2, new Tile(4, 2, settings));
+        tmp.put(4, new Tile(4, 4, settings));
         tiles.put(4, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(5, 1));
-        tmp.put(3, new Tile(5, 3));
-        tmp.put(5, new Tile(5, 5));
+        tmp.put(1, new Tile(5, 1, settings));
+        tmp.put(3, new Tile(5, 3, settings));
+        tmp.put(5, new Tile(5, 5, settings));
         tiles.put(5, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(6, 0));
-        tmp.put(2, new Tile(6, 2));
-        tmp.put(4, new Tile(6, 4));
-        tmp.put(6, new Tile(6, 6));
+        tmp.put(0, new Tile(6, 0, settings));
+        tmp.put(2, new Tile(6, 2, settings));
+        tmp.put(4, new Tile(6, 4, settings));
+        tmp.put(6, new Tile(6, 6, settings));
         tiles.put(6, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(7, 1));
-        tmp.put(3, new Tile(7, 3));
-        tmp.put(5, new Tile(7, 5));
+        tmp.put(1, new Tile(7, 1, settings));
+        tmp.put(3, new Tile(7, 3, settings));
+        tmp.put(5, new Tile(7, 5, settings));
         tiles.put(7, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(8, 0));
-        tmp.put(2, new Tile(8, 2));
-        tmp.put(4, new Tile(8, 4));
+        tmp.put(0, new Tile(8, 0, settings));
+        tmp.put(2, new Tile(8, 2, settings));
+        tmp.put(4, new Tile(8, 4, settings));
         tiles.put(8, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(9, 1));
-        tmp.put(3, new Tile(9, 3));
+        tmp.put(1, new Tile(9, 1, settings));
+        tmp.put(3, new Tile(9, 3, settings));
         tiles.put(9, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(10, 0));
-        tmp.put(2, new Tile(10, 2));
+        tmp.put(0, new Tile(10, 0, settings));
+        tmp.put(2, new Tile(10, 2, settings));
         tiles.put(10, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(11, 1));
+        tmp.put(1, new Tile(11, 1, settings));
         tiles.put(11, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(12, 0));
+        tmp.put(0, new Tile(12, 0, settings));
         tiles.put(12, tmp);
+
+        this.resetLevelTiles();
     }
 
     private void resetLevelTiles() {
@@ -191,23 +187,11 @@ public final class Level {
         return this.points;
     }
 
-    public boolean step(Tile t) {
-        if (t.getColor() < this.colorsNumber) {
-            t.incrementColor();
-            return true;
-        } else {
-            if (this.reversableColors) {
-                t.resetColor();
-            }
-            return false;
-        }
-    }
-
     //Game?
     public void checkStatus() {
         int coloredTiles = 0;
         for (Tile t : this.getTiles()) {
-            if (t.getColor() == this.colorsNumber) {
+            if (t.getColor() == this.settings.getColorNumber()) {
                 coloredTiles++;
             }
         }
