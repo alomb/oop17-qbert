@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -23,6 +25,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import qbert.controller.GameEngine;
+import qbert.input.MoveDown;
+import qbert.input.MoveLeft;
+import qbert.input.MoveRight;
+import qbert.input.MoveUp;
 import qbert.model.Dimensions;
 import qbert.model.Level;
 import qbert.model.Sprites;
@@ -33,8 +40,9 @@ public class Scene {
     private final JFrame frame;
     private final ScenePanel panel;
     private final Level level;
+    private final GameEngine controller;
 
-    public Scene(final Level level, final Mapper mapper, final int w, final int h) {
+    public Scene(final Level level, final Mapper mapper, final int w, final int h, final GameEngine controller) {
         this.frame = new JFrame("Qbert Test");
         this.frame.setSize(w, h);
         this.frame.setMinimumSize(new Dimension(w, h));
@@ -53,6 +61,7 @@ public class Scene {
         this.frame.pack();
         this.frame.setVisible(true);
         this.level = level;
+        this.controller = controller;
     }
 
     public void render() {
@@ -65,7 +74,7 @@ public class Scene {
         }
     }
 
-    public class ScenePanel extends JPanel {
+    public class ScenePanel extends JPanel implements KeyListener {
         // Temp Variables
         private Mapper mapper;
         private Font custom; 
@@ -75,6 +84,7 @@ public class Scene {
         public ScenePanel(final Level level, final Mapper mapper, final int w, final int h) {
             this.setSize(w, h);
             this.setBackground(Color.black);
+            this.addKeyListener(this);
             setFocusable(true);
             setFocusTraversalKeysEnabled(false);
             requestFocusInWindow(); 
@@ -169,6 +179,29 @@ public class Scene {
 
             g.drawString("Hi-Score:", 1000, 40);
             g.drawString("1500", 1200, 40);
+        }
+
+        @Override
+        public void keyTyped(final KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(final KeyEvent e) {
+            if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_KP_UP) {
+                Scene.this.controller.notifyCommand(new MoveUp());
+            } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_KP_DOWN) {
+                Scene.this.controller.notifyCommand(new MoveDown());
+            } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_KP_RIGHT) {
+                Scene.this.controller.notifyCommand(new MoveRight());
+            } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_KP_LEFT) {
+                Scene.this.controller.notifyCommand(new MoveLeft());
+            }
+        }
+
+        @Override
+        public void keyReleased(final KeyEvent e) {
+
         }
     }
 }

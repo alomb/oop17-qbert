@@ -1,12 +1,11 @@
 package qbert.controller;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -14,80 +13,122 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import qbert.model.Level;
-import qbert.model.Sprites;
-import qbert.model.utilities.Position2D;
-import qbert.view.CharacterGraphicComponent;
-import qbert.view.CharacterGraphicComponentImpl;
-import qbert.model.Character;
-import qbert.model.Dimensions;
 
-import java.util.Random;
-
+/**
+ *
+ */
 public class LevelConfigurationReader {
     
-    private LevelConfigurationReader() {
-        
+    private final Map<String, EnemyInfo> mapInfo;
+    private int colorsNumber;
+    private boolean reversable;
+
+    public LevelConfigurationReader() {
+        this.mapInfo = new HashMap<>();
     }
     
-    public static List<Character> readLevelConfiguration(final Level l) throws JDOMException {
-        List<Character> levelCharacters = new ArrayList<>();
-        //Map<String, >
-
+    public void readLevelConfiguration(final Level l) throws JDOMException {
         try {
-            SAXBuilder builder = new SAXBuilder();
-            Document document = builder.build("/levelconfig.xml");
+            final SAXBuilder builder = new SAXBuilder();
+            final Document document = builder.build("res/levelconfig.xml");
 
-            Element root = document.getRootElement();
-            Element level = root.getChild("LEVEL" + l.getLevel());
-            Element round = level.getChild("ROUND" + l.getRound());
-            int colors = Integer.valueOf(round.getAttributeValue("colors"));
-            int reversable = Integer.valueOf(round.getAttributeValue("reversable"));
-            
-            List<Element> children = round.getChildren();
-            Iterator<Element> it = children.iterator();
-            
+            final Element root = document.getRootElement();
+            final Element level = root.getChild("LEVEL" + l.getLevel());
+            final Element round = level.getChild("ROUND" + l.getRound());
+            this.colorsNumber = Integer.valueOf(round.getAttributeValue("colors"));
+            this.reversable = Boolean.parseBoolean(round.getAttributeValue("reversable"));
+
+            final List<Element> children = round.getChildren();
+            final Iterator<Element> it = children.iterator();
+
             while (it.hasNext()) {
-                Element character = (Element) it.next();
-                String name = character.getName();
-                float speed = Float.valueOf(character.getAttributeValue("speed"));
-                String sprite = character.getAttributeValue("graphics") + "Moving"; 
+                final Element character = (Element) it.next();
+                final String name = character.getName();
+                final float speed = Float.valueOf(character.getAttributeValue("speed"));
+                final int quantity = Integer.valueOf(character.getAttributeValue("quantity"));
+                final int spawningTime = Integer.valueOf(character.getAttributeValue("spawningTime"));
+                final int standingTime = Integer.valueOf(character.getAttributeValue("standingTime"));
                 
-                int quantity = Integer.valueOf(character.getAttributeValue("quantity"));
-                int spawningTime = Integer.valueOf(character.getAttributeValue("spawningTime"));
-                int standingTime = Integer.valueOf(character.getAttributeValue("standingTime"));
-                
-                if (name.equals("RedBall")) {
-                    Position2D randomPos = new Random().nextInt(2) == 0 ? Dimensions.spawingPointLeft : Dimensions.spawingPointRight;
-                    Class<?> cl;
-                    try {
-                        cl = Class.forName(name);
-                        final Constructor<?> cns = cl.getConstructor(Position2D.class, CharacterGraphicComponent.class, Integer.class);
-                        levelCharacters.add((Character) cns.newInstance(randomPos, new CharacterGraphicComponentImpl(Sprites.RedBallStanding, randomPos), standingTime));
-                    
-                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (InstantiationException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (IllegalAccessException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (IllegalArgumentException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (InvocationTargetException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-               }
-               
+                this.mapInfo.put(name, this.new EnemyInfo(speed, quantity, spawningTime, standingTime));
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public Map<String, EnemyInfo> getMapInfo() {
+        return  Collections.unmodifiableMap(mapInfo);
+    }
+    
+    public int getColorsNumber() {
+        return this.colorsNumber;
+    }
+    
+    public boolean isReversable() {
+        return this.reversable;
+    }
+    
+    /* */
+    public final class EnemyInfo {
         
-        return Collections.unmodifiableList(levelCharacters);
+        final private float speed;
+        private int currentQuantity;
+        private final int totalQuantity;
+        private final int spawningTime;
+        private final int standingTime;
+        
+        private int elapsedTime;
+        
+        /* package protected */
+        EnemyInfo(final float speed, final int quantity, final int spawningTime, final int standingTime) {
+            this.speed = speed;
+            this.currentQuantity = 0;
+            this.totalQuantity = quantity;
+            this.spawningTime = spawningTime;
+            this.standingTime = standingTime;
+            
+            this.elapsedTime = 0;
+        }
+        
+        public float getSpeed() {
+            return this.speed;
+        }
+        
+        public int getCurrentQuantity() {
+            return this.currentQuantity;
+        }
+        
+        public int getTotalQuantity() {
+            return this.totalQuantity;
+        }
+        
+        public int getSpawningTime() {
+            return this.spawningTime;
+        }
+        
+        public int getStandingTime() {
+            return this.standingTime;
+        }
+        
+        public int getElapsedTime() {
+            return this.elapsedTime;
+        }
+        
+        public void incCurrentQuantity() {
+            this.currentQuantity++;
+        }
+        
+        public void decCurrentQuantity() {
+            this.currentQuantity--;
+        }
+        
+        public void resetElapsedTime() {
+            this.elapsedTime = 0;
+        }
+        
+        public void incElapsedTime(final float dt) {
+            this.elapsedTime += dt;
+        }
     }
 
 }

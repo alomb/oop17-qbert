@@ -82,7 +82,7 @@ public abstract class CharacterImpl implements Character {
     public void update(final float dt) {
         this.currentState.update(dt);
     }
-
+/*
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -132,5 +132,5 @@ public abstract class CharacterImpl implements Character {
         }
         return true;
     }
-
+*/
 }

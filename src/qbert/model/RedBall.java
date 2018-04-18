@@ -19,7 +19,7 @@ public class RedBall extends CharacterImpl {
      * @param graphics the {@link Character}'s {@link CharacterGraphicComponent}
      * @param standingTime the time passed on standing state
      */
-    public RedBall(final Position2D startPos, final float speed, final CharacterGraphicComponent graphics, final int standingTime) {
+    public RedBall(final Position2D startPos, final Float speed, final CharacterGraphicComponent graphics, final Integer standingTime) {
         super(startPos, speed, graphics);
         this.setCurrentState(new MoveState.Spawn(this));
         this.standingTime = standingTime;

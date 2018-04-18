@@ -1,6 +1,10 @@
 package qbert.controller;
 
 import qbert.model.Game;
+
+import java.util.Optional;
+
+import qbert.input.Command;
 import qbert.model.Dimensions;
 import qbert.model.mapping.Mapper;
 import qbert.view.Scene;
@@ -17,22 +21,24 @@ public class GameEngine {
 
     private Scene gameScene;
     private Game game;
+    private Optional<Command> currentCommand;
 
     /**
      * 
      */
     public GameEngine() {
-
+        this.currentCommand = Optional.empty();
     }
 
     /**
+     * @throws Exception 
      * 
      */
-    public void setup() {
+    public void setup() throws Exception {
         game = new Game();
         Mapper mapper = new Mapper();
-        
-        this.gameScene = new Scene(game.getLevel(), mapper, Dimensions.windowWidth, Dimensions.windowHeight);
+
+        this.gameScene = new Scene(game.getLevel(), mapper, Dimensions.windowWidth, Dimensions.windowHeight, this);
 
         this.running = true;
         this.stopped = false;
@@ -73,7 +79,10 @@ public class GameEngine {
      * 
      */
     private void processInput() {
-
+        if (this.currentCommand.isPresent()) {
+            this.currentCommand.get().execute(this.game);
+            this.currentCommand = Optional.empty();
+        }
     }
 
     /**
@@ -90,5 +99,12 @@ public class GameEngine {
      */
     private void gameRender() {
         this.gameScene.render();
+    }
+
+    /**
+     * @param command
+     */
+    public void notifyCommand(final Command command) {
+        this.currentCommand = Optional.of(command);
     }
 }

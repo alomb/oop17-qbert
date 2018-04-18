@@ -1,46 +1,73 @@
 package qbert.model;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.List;
-import java.util.Timer;
-
-import javax.imageio.ImageIO;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 import org.jdom2.JDOMException;
 
 import qbert.controller.LevelConfigurationReader;
 import qbert.model.utilities.Position2D;
-import qbert.view.QBertGraphicComponent;
-
-import java.util.List;
+import qbert.view.CharacterGraphicComponent;
+import qbert.view.CharacterGraphicComponentImpl;
+import qbert.view.DownwardCGC;
+import qbert.view.DownwardUpwardCGC;
 
 public class Spawner {
+    
     private final Level level;
-    private List<Character> charactersToSpawn;
+    private Map<String, LevelConfigurationReader.EnemyInfo> mapInfo;
+    final LevelConfigurationReader lcr;
     
     public Spawner(final Level level) {
         this.level = level;
+        this.mapInfo = new HashMap<>();
+        this.lcr = new LevelConfigurationReader();
         try {
-            this.charactersToSpawn = LevelConfigurationReader.readLevelConfiguration(level);
+            lcr.readLevelConfiguration(level);
         } catch (JDOMException e) {
             e.printStackTrace();
         }
-        this.spawning();
+        this.mapInfo = lcr.getMapInfo();
     }
-    
-    public void spawning() {
-        final URL spriteUrl = this.getClass().getResource("/QbertFrontStanding.png");
-        try {
-            level.spawn(new Qbert(Dimensions.spawingQBert, 0.35f, new QBertGraphicComponent(ImageIO.read(spriteUrl), Dimensions.spawingQBert)));
-            //level.spawn(new RedBall(Dimensions.spawingPointRight, 0.34f, new QBertGraphicComponent(ImageIO.read(spriteUrl), Dimensions.spawingPointRight), 1000));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } 
-        
-        for (Character character : charactersToSpawn) {
-            level.spawn(character);
+
+    public void spawnQbert() {
+        /*TODO: Change with correct sprites*/
+        level.spawn(new Qbert(Dimensions.spawningQBert, 0.35f, new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.RedBallStanding, Sprites.RedBallStanding, Dimensions.spawningQBert)));
+    }
+
+    public void update(final float dt) {
+        for (final Map.Entry<String, LevelConfigurationReader.EnemyInfo> entry : mapInfo.entrySet()) {
+            if (entry.getValue().getSpawningTime() <= entry.getValue().getElapsedTime()) {
+                entry.getValue().resetElapsedTime();
+                if (entry.getValue().getCurrentQuantity() < entry.getValue().getTotalQuantity()) {
+                    final Position2D randomPos = new Random().nextInt(2) == 0 ? Dimensions.spawningPointLeft : Dimensions.spawningPointRight;
+                    final Position2D logicalPos = randomPos == Dimensions.spawningPointLeft ? new Position2D(5, 5) : new Position2D(7, 5);
+                    try {
+                        final Class<?> cl = Class.forName("qbert.model." + entry.getKey());
+                        final Constructor<?> cns = cl.getConstructor(Position2D.class, Float.class, CharacterGraphicComponent.class, Integer.class);
+                        final Character character = (Character) cns.newInstance(logicalPos, entry.getValue().getSpeed(), new DownwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, randomPos), entry.getValue().getStandingTime());
+                        level.spawn(character); 
+                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
+                            | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                entry.getValue().incCurrentQuantity();
+            } else {
+                entry.getValue().incElapsedTime(dt);
+            }
         }
     }
 
+    public int getColorsNumber() {
+        return this.lcr.getColorsNumber();
+    }
+
+    public boolean isReverable() {
+        return this.lcr.isReversable();
+    }
 }

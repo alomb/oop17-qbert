@@ -44,13 +44,18 @@ public final class Level {
         this.points = 0;
 
         this.gameCharacters = new ArrayList<>();
+        
+        /* SPAWNER */
+        spawner = new Spawner(this);
+        
         this.reset();
+        
+        spawner.spawnQbert();
     }
 
     public void reset() {
-        //Info da importare da classe esterna
-        this.colorsNumber = 2;
-        this.reversableColors = true;
+        this.colorsNumber = spawner.getColorsNumber();
+        this.reversableColors = spawner.isReverable();
         this.background = Sprites.blueBackground;
 
         this.resetLevelTiles();
@@ -138,6 +143,10 @@ public final class Level {
         this.getTiles().stream().forEach(t -> {
             t.resetColor();
         });
+    }
+
+    public Character getQBert() {
+        return this.qbert;
     }
 
     public List<Character> getEntities() {
@@ -236,13 +245,20 @@ public final class Level {
 
     public void update(final float elapsed) {
         this.totalTime += elapsed;
+        
+        /* SPAWNER */
+        spawner.update(elapsed);
+        
         if (this.totalTime > 1000 && !this.spawned) {
             this.spawned = true;
 
-            /* Temp RedBall Spawn */
+            /* Temp RedBall Spawn 
             CharacterGraphicComponent g = new CharacterGraphicComponentImpl(Sprites.RedBallStanding, Dimensions.spawingPointLeft);
             Character ball = new RedBall(new Position2D(5, 5), 0.35f, g, 1000);
             this.spawn(ball);
+            */
+           
+             
         }
         
         //Update Entities
