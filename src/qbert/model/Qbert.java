@@ -25,14 +25,14 @@ public class Qbert extends CharacterImpl {
     }
 
     @Override
-    public void land(final Tile t) {
+    public final void land(final Tile t) {
         t.incrementColor();
     }
 
     /**
      * The {@link CharacterState} used to manage {@link Qbert} when it's standing.
      */
-    private final class QbertStandingState implements CharacterState {
+    public final class QbertStandingState implements CharacterState {
 
         /**
          * Sets the spawn position to be the current one and starts the standing animation.
