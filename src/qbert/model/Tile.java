@@ -43,11 +43,11 @@ public class Tile implements GameObject {
     public GraphicComponent getGraphicComponent() {
         return this.graphicComponent;
     }
-    
+
     public void incrementColor() {
         this.color++;
     }
-    
+
     public void resetColor() {
         this.color = 0;
     }

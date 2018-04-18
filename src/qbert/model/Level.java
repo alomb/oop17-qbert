@@ -243,9 +243,21 @@ public final class Level {
     }
 
     public void update(final float elapsed) {
-        /* SPAWNER */
         spawner.update(elapsed);
+
         qbert.update(elapsed);
+        Position2D qLogicalPos = qbert.getCurrentPosition();
+        //Check if entity is just landed 
+        if (qbert.getCurrentState() instanceof LandState) {
+            //Checking if entity is outside the map
+            if (qLogicalPos.getY() < 0 || qLogicalPos.getX() + qLogicalPos.getY() == 14 || qLogicalPos.getY() - qLogicalPos.getX() == 2) {
+                qbert.setCurrentState(new MoveState.Fall(qbert));
+            } else {
+                qbert.land(this.getTile((int) qLogicalPos.getX(), (int) qLogicalPos.getY()));
+                qbert.setCurrentState(qbert.getStandingState());
+            }
+        }
+
         //Update Entities
         this.gameCharacters = this.gameCharacters.stream().peek(e -> {
             e.update(elapsed);
@@ -256,7 +268,7 @@ public final class Level {
                 if (logicalPos.getY() < 0 || logicalPos.getX() + logicalPos.getY() == 14 || logicalPos.getY() - logicalPos.getX() == 2) {
                     e.setCurrentState(new MoveState.Fall(e));
                 } else {
-                    this.step(this.getTile((int) logicalPos.getX(), (int) logicalPos.getY()));
+                    e.land(this.getTile((int) logicalPos.getX(), (int) logicalPos.getY()));
                     e.setCurrentState(e.getStandingState());
                 }
             }
