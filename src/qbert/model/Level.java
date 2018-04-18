@@ -156,6 +156,10 @@ public final class Level {
         });
     }
 
+    public Character getQBert() {
+        return this.qbert;
+    }
+
     public List<Character> getEntities() {
         return this.gameCharacters;
     }
