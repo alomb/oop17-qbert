@@ -83,6 +83,11 @@ public abstract class CharacterImpl implements Character {
     public void update(final float dt) {
         this.currentState.update(dt);
     }
+
+    @Override
+    public void land(final Tile t) {
+        //Do nothing
+    }
 /*
     @Override
     public int hashCode() {

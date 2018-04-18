@@ -14,12 +14,14 @@ public class Tile implements GameObject {
     private int color;
     private Position2D position;
     private GraphicComponent graphicComponent;
+    private LevelSettings settings;
 
     /**
      * 
      */
-    public Tile(final double x, final double y) {
+    public Tile(final double x, final double y, final LevelSettings settings) {
         this.color = 0;
+        this.settings = settings;
 
         //Temporary management of graphic component generation
         this.graphicComponent = new TileGraphicComponent(this);
@@ -43,9 +45,15 @@ public class Tile implements GameObject {
     public GraphicComponent getGraphicComponent() {
         return this.graphicComponent;
     }
-    
+
     public void incrementColor() {
-        this.color++;
+        if (this.color < this.settings.getColorNumber()) {
+            this.color++;
+        } else {
+            if (this.settings.getColorReversable()) {
+                this.resetColor();
+            }
+        }
     }
     
     public void resetColor() {

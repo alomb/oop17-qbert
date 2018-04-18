@@ -63,4 +63,6 @@ public interface Character extends GameObject {
      * @param dt the time passed since the last game cycle
      */
     void update(float dt);
+
+    void land(Tile t);
 }

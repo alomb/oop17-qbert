@@ -24,6 +24,11 @@ public class Qbert extends CharacterImpl {
         return new QbertStandingState();
     }
 
+    @Override
+    public void land(final Tile t) {
+        t.incrementColor();
+    }
+
     /**
      * The {@link CharacterState} used to manage {@link Qbert} when it's standing.
      */
