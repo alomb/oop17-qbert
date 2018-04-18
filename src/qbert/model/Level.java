@@ -29,30 +29,23 @@ public final class Level {
     private int round;
 
     public Level() {
+        //Forse da spostare in classe Game
+        this.points = 0;
+        
         this.level = 1;
         this.round = 1;
         this.lives = 3;
 
-        //Forse da spostare in classe Game
-        this.points = 0;
-
         this.gameCharacters = new ArrayList<>();
         this.spawner = new Spawner(this);
-
-        //Test qbert spawn
-        CharacterGraphicComponent qg = new DownwardUpwardCGC(Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, 
-                new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Dimensions.tileHeight / 2)
-        );
-        Qbert q = new Qbert(new Position2D(6, 6), 0.35f, qg);
-        this.spawnQbert(q);
 
         this.reset();
     }
 
     public void reset() {
         this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReverable(), Sprites.blueBackground);
-
         this.createLevelTiles(settings);
+        this.spawnQbert();
     }
 
     public Tile getTile(final int x, final int y) {
@@ -163,9 +156,18 @@ public final class Level {
     public void spawn(Character entity) {
         this.gameCharacters.add(entity);
     }
-    
+
     public void spawnQbert(Qbert qbert) {
         this.qbert = qbert;
+    }
+
+    //Test qbert spawn
+    public void spawnQbert() {
+        CharacterGraphicComponent qg = new DownwardUpwardCGC(Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, 
+                new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Dimensions.tileHeight / 2)
+        );
+        Qbert q = new Qbert(new Position2D(6, 6), 0.35f, qg);
+        this.spawnQbert(q);
     }
 
     public void score(int points) {
@@ -218,6 +220,7 @@ public final class Level {
     public void death() {
         if (this.lives > 1) {
             this.lives--;
+            this.spawnQbert();
         } else {
             System.exit(0);
         }
@@ -236,7 +239,12 @@ public final class Level {
             } else {
                 qbert.land(this.getTile((int) qLogicalPos.getX(), (int) qLogicalPos.getY()));
                 qbert.setCurrentState(qbert.getStandingState());
+                this.checkStatus();
             }
+        }
+
+        if (qbert.getCurrentState() instanceof DeathState) {
+            this.death();
         }
 
         //Update Entities
@@ -256,6 +264,11 @@ public final class Level {
 
             if (e.getCurrentState() instanceof DeathState) {
                 //Notify Spawner
+            }
+
+            if (qbert.getCurrentPosition().getX() == e.getCurrentPosition().getX() && 
+                    qbert.getCurrentPosition().getY() == e.getCurrentPosition().getY()) {
+                this.death();
             }
         }).filter(e -> !(e.getCurrentState() instanceof DeathState)).collect(Collectors.toList());
     }
