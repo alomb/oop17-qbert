@@ -1,5 +1,6 @@
 package qbert.input;
 
+import qbert.model.Character;
 import qbert.model.Game;
 import qbert.model.states.MoveState;
 
@@ -10,6 +11,9 @@ public class MoveUp implements Command {
 
     @Override
     public void execute(final Game game) {
-        game.getLevel().getQBert().setCurrentState(new MoveState.UpRight(game.getLevel().getQBert()));
+        final Character qbert = game.getLevel().getQBert();
+        if (!qbert.isMoving()) {
+            qbert.setCurrentState(new MoveState.UpRight(qbert));
+        }
     }
 }
