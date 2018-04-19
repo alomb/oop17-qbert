@@ -11,7 +11,7 @@ import qbert.model.states.QbertStandingState;
 public class MoveUp implements Command {
 
     @Override
-    public void execute(final Game game) {
+    public final void execute(final Game game) {
         final Character qbert = game.getLevel().getQBert();
         if (qbert.getCurrentState() instanceof QbertStandingState) {
             qbert.setCurrentState(new MoveState.UpRight(qbert));

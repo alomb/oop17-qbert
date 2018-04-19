@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import qbert.model.characters.Character;
+import qbert.model.characters.Coily;
 import qbert.model.characters.Qbert;
 import qbert.model.states.DeathState;
 import qbert.model.states.LandState;
@@ -16,6 +17,7 @@ import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
 import qbert.view.CharacterGraphicComponent;
+import qbert.view.DownwardCGC;
 import qbert.view.DownwardUpwardCGC;
 
 public final class Level {
@@ -50,6 +52,11 @@ public final class Level {
         this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReverable(), Sprites.blueBackground);
         this.createLevelTiles(settings);
         this.spawnQbert();
+//        this.gameCharacters.add(new Coily(new Position2D(5, 5), 0.35f,
+//                new DownwardUpwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, 
+//                        Sprites.RedBallStanding, Sprites.RedBallMoving, new Position2D(Dimensions.spawningPointLeft)), 500, qbert));
+      this.gameCharacters.add(new Coily(new Position2D(5, 5), 0.35f,
+      new DownwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, new Position2D(Dimensions.spawningPointLeft)), 500, qbert));
     }
 
     public Tile getTile(final int x, final int y) {
