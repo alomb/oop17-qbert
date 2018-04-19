@@ -3,7 +3,8 @@ package qbert.view;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import qbert.model.Dimensions;
+
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.DisplaceAnimation;
 import qbert.view.animations.Jump;

@@ -1,6 +1,6 @@
 package qbert.model.states;
 
-import qbert.model.Character;
+import qbert.model.characters.Character;
 import qbert.model.utilities.Position2D;
 
 /**

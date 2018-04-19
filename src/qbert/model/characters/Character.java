@@ -1,5 +1,7 @@
-package qbert.model;
+package qbert.model.characters;
 
+import qbert.model.GameObject;
+import qbert.model.Tile;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
@@ -64,5 +66,8 @@ public interface Character extends GameObject {
      */
     void update(float dt);
 
+    /**
+     * @param t the reference to the tile where the {@link Character} has just landed
+     */
     void land(Tile t);
 }

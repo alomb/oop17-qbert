@@ -9,7 +9,11 @@ import java.util.Random;
 import org.jdom2.JDOMException;
 
 import qbert.controller.LevelConfigurationReader;
+import qbert.model.characters.Character;
+import qbert.model.characters.Qbert;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
+import qbert.model.utilities.Sprites;
 import qbert.view.CharacterGraphicComponent;
 import qbert.view.CharacterGraphicComponentImpl;
 import qbert.view.DownwardCGC;
@@ -46,7 +50,7 @@ public class Spawner {
                     final Position2D randomPos = new Random().nextInt(2) == 0 ? Dimensions.spawningPointLeft : Dimensions.spawningPointRight;
                     final Position2D logicalPos = randomPos == Dimensions.spawningPointLeft ? new Position2D(5, 5) : new Position2D(7, 5);
                     try {
-                        final Class<?> cl = Class.forName("qbert.model." + entry.getKey());
+                        final Class<?> cl = Class.forName("qbert.model.characters." + entry.getKey());
                         final Constructor<?> cns = cl.getConstructor(Position2D.class, Float.class, CharacterGraphicComponent.class, Integer.class);
                         final Character character = (Character) cns.newInstance(logicalPos, entry.getValue().getSpeed(), new DownwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, randomPos), entry.getValue().getStandingTime());
                         level.spawn(character); 

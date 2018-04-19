@@ -7,10 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import qbert.model.characters.Character;
+import qbert.model.characters.Qbert;
 import qbert.model.states.DeathState;
 import qbert.model.states.LandState;
 import qbert.model.states.MoveState;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
+import qbert.model.utilities.Sprites;
 import qbert.view.CharacterGraphicComponent;
 import qbert.view.DownwardUpwardCGC;
 

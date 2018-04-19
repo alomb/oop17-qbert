@@ -1,18 +1,18 @@
 package qbert.model.states;
 
-import qbert.model.Character;
+import qbert.model.characters.Character;
 import qbert.model.utilities.Position2D;
 
 /**
  * The {@link CharacterState} used for {@link Character}s which move down on the Y axis and randomly on the X axis.
  */
-public class SimpleStandingState extends WaitTimerState {
+public class DownwardCharStandingState extends WaitTimerState {
 
     /**
      * @param character the {@link Character} linked to this state
      * @param triggerTime the timer duration
      */
-    public SimpleStandingState(final Character character, final int triggerTime) {
+    public DownwardCharStandingState(final Character character, final int triggerTime) {
         super(character, triggerTime);
         this.getCharacter().getGraphicComponent().setStandingAnimation();
     }

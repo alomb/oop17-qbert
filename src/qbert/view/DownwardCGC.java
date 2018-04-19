@@ -1,7 +1,8 @@
 package qbert.view;
 
 import java.awt.image.BufferedImage;
-import qbert.model.Dimensions;
+
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.Jump;
 import qbert.view.animations.MoveAnimation;

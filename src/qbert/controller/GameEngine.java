@@ -5,8 +5,8 @@ import qbert.model.Game;
 import java.util.Optional;
 
 import qbert.input.Command;
-import qbert.model.Dimensions;
 import qbert.model.mapping.Mapper;
+import qbert.model.utilities.Dimensions;
 import qbert.view.Scene;
 
 /**

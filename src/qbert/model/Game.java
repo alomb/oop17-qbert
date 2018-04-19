@@ -22,7 +22,9 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
+import qbert.model.utilities.Sprites;
 
 public class Game {
 

@@ -1,6 +1,6 @@
 package qbert.model.states;
 
-import qbert.model.Character;
+import qbert.model.characters.Character;
 
 /**
  * A dumb {@link CharacterState} used to advise that the relative {@link Character} is landed on a block

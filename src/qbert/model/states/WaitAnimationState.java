@@ -1,6 +1,6 @@
 package qbert.model.states;
 
-import qbert.model.Character;
+import qbert.model.characters.Character;
 
 /**
  * An implementation of the {@link CharacterState} interface used to manage an animation.

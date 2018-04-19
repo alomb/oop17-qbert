@@ -25,11 +25,11 @@ import qbert.input.MoveDown;
 import qbert.input.MoveLeft;
 import qbert.input.MoveRight;
 import qbert.input.MoveUp;
-import qbert.model.Dimensions;
 import qbert.model.Level;
-import qbert.model.Sprites;
 import qbert.model.mapping.Mapper;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
+import qbert.model.utilities.Sprites;
 
 public class Scene {
     private final JFrame frame;
