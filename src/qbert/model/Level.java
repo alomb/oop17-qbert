@@ -254,7 +254,7 @@ public final class Level {
             }
         }
 
-        if (qbert.getCurrentState() instanceof DeathState) {
+        if (qbert.isDead()) {
             this.death();
         }
 
@@ -273,7 +273,7 @@ public final class Level {
                 }
             }
 
-            if (e.getCurrentState() instanceof DeathState) {
+            if (e.isDead()) {
                 //Notify Spawner
             }
 
@@ -281,6 +281,6 @@ public final class Level {
                     qbert.getCurrentPosition().getY() == e.getCurrentPosition().getY()) {
                 this.death();
             }
-        }).filter(e -> !(e.getCurrentState() instanceof DeathState)).collect(Collectors.toList());
+        }).filter(e -> !e.isDead()).collect(Collectors.toList());
     }
 }

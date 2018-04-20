@@ -4,7 +4,6 @@ import qbert.model.states.CharacterState;
 import qbert.model.states.DownwardCharStandingState;
 import qbert.model.states.MoveState;
 import qbert.model.states.WaitTimerState;
-import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
 import qbert.view.CharacterGraphicComponent;
@@ -17,7 +16,7 @@ import qbert.view.DownwardUpwardCGC;
 public class Coily extends CharacterImpl {
 
     private final int standingTime;
-    private Character qbert;
+    private final Character qbert;
 
     private boolean adult;
 
@@ -95,15 +94,14 @@ public class Coily extends CharacterImpl {
 
         @Override
         public void conclude() {
-            System.out.println("Coily B: " + this.getCharacter().getCurrentPosition());
             final Position2D targetPosition = qbert.getCurrentPosition();
             final Position2D myPosition = this.getCharacter().getCurrentPosition();
-
-            final int dx, dy;
 
             if (targetPosition.equals(myPosition)) {
                 return;
             }
+
+            final int dx, dy;
 
             if (targetPosition.getX() > myPosition.getX()) {
                 dx = 1;

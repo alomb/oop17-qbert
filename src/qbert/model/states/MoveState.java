@@ -75,7 +75,6 @@ public abstract class MoveState extends WaitAnimationState {
         @Override
         public final void conclude() {
             this.getCharacter().setCurrentState(new LandState(this.getCharacter()));
-            this.getCharacter().setCurrentPosition(new Position2D(this.getCharacter().getNextPosition()));
         }
     }
 
@@ -97,7 +96,6 @@ public abstract class MoveState extends WaitAnimationState {
         @Override
         public final void conclude() {
             this.getCharacter().setCurrentState(new LandState(this.getCharacter()));
-            this.getCharacter().setCurrentPosition(new Position2D(this.getCharacter().getNextPosition()));
         }
     }
 
@@ -119,7 +117,6 @@ public abstract class MoveState extends WaitAnimationState {
         @Override
         public final void conclude() {
             this.getCharacter().setCurrentState(new LandState(this.getCharacter()));
-            this.getCharacter().setCurrentPosition(new Position2D(this.getCharacter().getNextPosition()));
         }
     }
 
@@ -141,7 +138,6 @@ public abstract class MoveState extends WaitAnimationState {
         @Override
         public final void conclude() {
             this.getCharacter().setCurrentState(new LandState(this.getCharacter()));
-            this.getCharacter().setCurrentPosition(new Position2D(this.getCharacter().getNextPosition()));
         }
     }
 }

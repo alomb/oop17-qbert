@@ -47,6 +47,16 @@ public interface Character extends GameObject {
     boolean isMoving();
 
     /**
+     * @return true if the {@link Character} is dead
+     */
+    boolean isDead();
+
+    /**
+     * Set the {@link Character} dead.
+     */
+    void setDead();
+
+    /**
      * @return the current {@link CharacterState}
      */
     CharacterState getCurrentState();

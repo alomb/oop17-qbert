@@ -19,6 +19,7 @@ public abstract class CharacterImpl implements Character {
     private float characterSpeed;
     private CharacterGraphicComponent graphics;
 
+    private boolean dead;
     private CharacterState currentState;
 
     /**
@@ -30,6 +31,7 @@ public abstract class CharacterImpl implements Character {
         this.currentPos = startPos;
         this.characterSpeed = speed;
         this.graphics = graphics;
+        this.dead = false;
         this.nextPos = new Position2D(startPos);
     }
 
@@ -76,6 +78,16 @@ public abstract class CharacterImpl implements Character {
     @Override
     public final boolean isMoving() {
         return !this.currentPos.equals(this.nextPos);
+    }
+
+    @Override
+    public final boolean isDead() {
+        return this.dead;
+    }
+
+    @Override
+    public final void setDead() {
+        this.dead = true;
     }
 
     @Override
