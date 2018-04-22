@@ -1,10 +1,7 @@
 package qbert.model;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 import org.jdom2.JDOMException;
 
@@ -12,19 +9,22 @@ import qbert.controller.LevelConfigurationReader;
 import qbert.model.characters.Character;
 import qbert.model.characters.Qbert;
 import qbert.model.utilities.Dimensions;
-import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
-import qbert.view.CharacterGraphicComponent;
-import qbert.view.CharacterGraphicComponentImpl;
-import qbert.view.DownwardCGC;
 import qbert.view.DownwardUpwardCGC;
 
-public class Spawner {
-    
+/**
+ * The class for the characters spawning management.
+ */
+public final class Spawner {
+
     private final Level level;
-    private Map<String, LevelConfigurationReader.EnemyInfo> mapInfo;
-    final LevelConfigurationReader lcr;
-    
+    private final EnemyFactory ef = new EnemyFactoryImpl();
+    private Map<String, EnemyInfo> mapInfo;
+    private final LevelConfigurationReader lcr;
+
+    /**
+     * @param level the {@link Level} reference
+     */
     public Spawner(final Level level) {
         this.level = level;
         this.mapInfo = new HashMap<>();
@@ -37,41 +37,63 @@ public class Spawner {
         this.mapInfo = lcr.getMapInfo();
     }
 
+    /**
+     * 
+     */
     public void spawnQbert() {
         /*TODO: Change with correct sprites*/
         level.spawn(new Qbert(Dimensions.spawningQBert, 0.35f, new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.RedBallStanding, Sprites.RedBallStanding, Dimensions.spawningQBert)));
     }
 
+    /**
+     * This function manages the characters spawning progress during the game.
+     * @param dt the time passed since the last game cycle
+     */
     public void update(final float dt) {
-        for (final Map.Entry<String, LevelConfigurationReader.EnemyInfo> entry : mapInfo.entrySet()) {
+        for (final Map.Entry<String, EnemyInfo> entry : mapInfo.entrySet()) {
             if (entry.getValue().getSpawningTime() <= entry.getValue().getElapsedTime()) {
                 entry.getValue().resetElapsedTime();
                 if (entry.getValue().getCurrentQuantity() < entry.getValue().getTotalQuantity()) {
-                    final Position2D randomPos = new Random().nextInt(2) == 0 ? Dimensions.spawningPointLeft : Dimensions.spawningPointRight;
-                    final Position2D logicalPos = randomPos == Dimensions.spawningPointLeft ? new Position2D(5, 5) : new Position2D(7, 5);
-                    try {
-                        final Class<?> cl = Class.forName("qbert.model.characters." + entry.getKey());
-                        final Constructor<?> cns = cl.getConstructor(Position2D.class, Float.class, CharacterGraphicComponent.class, Integer.class);
-                        final Character character = (Character) cns.newInstance(logicalPos, entry.getValue().getSpeed(), new DownwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, randomPos), entry.getValue().getStandingTime());
-                        level.spawn(character); 
-                    } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-                            | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
+                    final Character character;
+                    switch (entry.getKey()) {
+                    case "Coily":
+                        character = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), level.getQBert());
+                        level.spawn(character);
+                        break;
+                    case "RedBall":
+                        character = ef.createRedBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
+                        level.spawn(character);
+                        break;
+                    default:
                     }
+                    entry.getValue().incCurrentQuantity();
                 }
-                entry.getValue().incCurrentQuantity();
             } else {
                 entry.getValue().incElapsedTime(dt);
             }
         }
     }
 
+    /**
+     * This function manages the death of a character.
+     * @param character the dead {@link Character}
+     */
+    public void death(final Character character) {
+        final String name = character.getClass().getSimpleName();
+        this.mapInfo.get(name).decCurrentQuantity();
+    }
+
+    /**
+     * @return the number of colors to be set for each tile for the current level/round
+     */
     public int getColorsNumber() {
         return this.lcr.getColorsNumber();
     }
 
-    public boolean isReverable() {
-        return this.lcr.isReversable();
+    /**
+     * @return true if the tile is reversible, false otherwise
+     */
+    public boolean isReversible() {
+        return this.lcr.isReversible();
     }
 }

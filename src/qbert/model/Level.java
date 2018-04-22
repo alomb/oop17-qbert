@@ -49,14 +49,14 @@ public final class Level {
     }
 
     public void reset() {
-        this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReverable(), Sprites.blueBackground);
+        this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground);
         this.createLevelTiles(settings);
         this.spawnQbert();
 //        this.gameCharacters.add(new Coily(new Position2D(5, 5), 0.35f,
 //                new DownwardUpwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, 
 //                        Sprites.RedBallStanding, Sprites.RedBallMoving, new Position2D(Dimensions.spawningPointLeft)), 500, qbert));
-      this.gameCharacters.add(new Coily(new Position2D(5, 5), 0.35f,
-      new DownwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, new Position2D(Dimensions.spawningPointLeft)), 500, qbert));
+      //this.gameCharacters.add(new Coily(new Position2D(5, 5), 0.35f,
+      //new DownwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, new Position2D(Dimensions.spawningPointLeft)), 500, qbert));
     }
 
     public Tile getTile(final int x, final int y) {
@@ -220,12 +220,15 @@ public final class Level {
         if (level == 9 && round == 3) {
             System.exit(0);
         }
-        if (this.round > 2) {
+        if (this.round >= 1) {
             this.round = 1;
             this.level++;
         } else {
             this.round++;
         }
+        /* SPAWNER */
+        System.out.println("LEVEL" + this.level + "ROUND" + this.round); 
+        this.spawner = new Spawner(this);
     }
 
     public void death() {
@@ -275,6 +278,7 @@ public final class Level {
 
             if (e.isDead()) {
                 //Notify Spawner
+                this.spawner.death(e);
             }
 
             if (qbert.getCurrentPosition().getX() == e.getCurrentPosition().getX() && 
