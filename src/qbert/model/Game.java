@@ -1,12 +1,10 @@
 package qbert.model;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -38,31 +36,75 @@ public class Game {
         d = t.getScreenSize();
          
         try {
-          Sprites.blueTile = loadImg("res/svg/TileBlue.svg","res/png/TileBlue.png");
-          Sprites.pinkTile = loadImg("res/svg/TilePink.svg","res/png/TilePink.png");
-          Sprites.yellowTile = loadImg("res/svg/TileYellow.svg","res/png/TileYellow.png");
-          Sprites.life = loadImg("res/svg/GreenBallStand.svg","res/png/GreenBallStand.png");
-          Sprites.blueBackground = loadImg("res/svg/BackgroundBlue.svg","res/png/BackgroundBlue.png"); 
-          Sprites.brownBackground = loadImg("res/svg/BackgroundBrown.svg","res/png/BackgroundBrown.png"); 
-          Sprites.qbertFrontMoving = loadImg("res/svg/QbertFrontMove.svg","res/png/QbertFrontMove.png"); 
-          Sprites.qbertFrontStanding = loadImg("res/svg/QbertFrontStand.svg","res/png/QbertFrontStand.png"); 
-          Sprites.RedBallMoving = loadImg("res/svg/RedBallMove.svg","res/png/RedBallMove.png"); 
-          Sprites.RedBallStanding = loadImg("res/svg/RedBallStand.svg","res/png/RedBallStand.png");
+          for(File file: new File("res/png/").listFiles()) {
+              if(!file.isDirectory()) {
+                  file.delete();
+              }
+          }
+          
+          convertSvgToPng("res/svg/BackgroundBlue.svg","res/png/BackgroundBlue.png"); 
+          convertSvgToPng("res/svg/BackgroundBrown.svg","res/png/BackgroundBrown.png"); 
+          convertSvgToPng("res/svg/BackgroundGreen.svg","res/png/BackgroundGreen.png"); 
+          convertSvgToPng("res/svg/BackgroundGrey.svg","res/png/BackgroundGrey.png"); 
+          convertSvgToPng("res/svg/CoilyBackMove.svg","res/png/CoilyBackMove.png"); 
+          convertSvgToPng("res/svg/CoilyBackStand.svg","res/png/CoilyBackStand.png"); 
+          convertSvgToPng("res/svg/CoilyFrontMove.svg","res/png/CoilyFrontMove.png"); 
+          convertSvgToPng("res/svg/CoilyFrontStand.svg","res/png/CoilyFrontStand.png");
+          convertSvgToPng("res/svg/GreenBallMove.svg","res/png/GreenBallMove.png"); 
+          convertSvgToPng("res/svg/GreenBallStand.svg","res/png/GreenBallStand.png");
+          convertSvgToPng("res/svg/PurpleBallMove.svg","res/png/PurpleBallMove.png"); 
+          convertSvgToPng("res/svg/PurpleBallStand.svg","res/png/PurpleBallStand.png");
+          convertSvgToPng("res/svg/QbertBackMove.svg","res/png/QbertBackMove.png"); 
+          convertSvgToPng("res/svg/QbertBackStand.svg","res/png/QbertBackStand.png"); 
+          convertSvgToPng("res/svg/QbertFrontMove.svg","res/png/QbertFrontMove.png"); 
+          convertSvgToPng("res/svg/QbertFrontStand.svg","res/png/QbertFrontStand.png");
+          convertSvgToPng("res/svg/RedBallMove.svg","res/png/RedBallMove.png"); 
+          convertSvgToPng("res/svg/RedBallStand.svg","res/png/RedBallStand.png");
+          convertSvgToPng("res/svg/TileBeige.svg","res/png/TileBeige.png");
+          convertSvgToPng("res/svg/TileBlue.svg","res/png/TileBlue.png");
+          convertSvgToPng("res/svg/TileGreen.svg","res/png/TileGreen.png");
+          convertSvgToPng("res/svg/TileGrey.svg","res/png/TileGrey.png");
+          convertSvgToPng("res/svg/TilePink.svg","res/png/TilePink.png");
+          convertSvgToPng("res/svg/TilePurple.svg","res/png/TilePurple.png");
+          convertSvgToPng("res/svg/TileYellow.svg","res/png/TileYellow.png");
+          
+          //Wait converting image
+          Thread.sleep(9000);
+          
+          Sprites.blueBackground=loadImg("res/png/BackgroundBlue.png");  
+          Sprites.brownBackground=loadImg("res/png/BackgroundBrown.png");
+          Sprites.greenBackground=loadImg("res/png/BackgroundGreen.png");
+          Sprites.greyBackground=loadImg("res/png/BackgroundGrey.png"); ; 
+          Sprites.coilyBackMoving=loadImg("res/png/CoilyBackMove.png");; 
+          Sprites.coilyBackStanding=loadImg("res/png/CoilyBackStand.png"); 
+          Sprites.coilyFrontMoving=loadImg("res/png/CoilyFrontMove.png");  
+          Sprites.coilyFrontStanding=loadImg("res/png/CoilyFrontStand.png");
+          Sprites.GreenBallMoving=loadImg("res/png/GreenBallMove.png");
+          Sprites.GreenBallStanding=loadImg("res/png/GreenBallStand.png");
+          Sprites.PurpleBallMoving=loadImg("res/png/PurpleBallMove.png"); 
+          Sprites.PurpleBallStanding=loadImg("res/png/PurpleBallStand.png"); 
+          Sprites.qbertBackMoving=loadImg("res/png/QbertBackMove.png"); 
+          Sprites.qbertBackStanding=loadImg("res/png/QbertBackStand.png");
+          Sprites.qbertFrontMoving=loadImg("res/png/QbertFrontMove.png"); 
+          Sprites.qbertFrontStanding=loadImg("res/png/QbertFrontStand.png");
+          Sprites.RedBallMoving=loadImg("res/png/RedBallMove.png");
+          Sprites.RedBallStanding=loadImg("res/png/RedBallStand.png");
+          Sprites.beigeTile=loadImg("res/png/TileBeige.png");
+          Sprites.blueTile=loadImg("res/png/TileBlue.png");
+          Sprites.greenTile=loadImg("res/png/TileGreen.png"); 
+          Sprites.greyTile=loadImg("res/png/TileGrey.png");
+          Sprites.pinkTile=loadImg("res/png/TilePink.png");
+          Sprites.purpleTile=loadImg("res/png/TilePurple.png");
+          Sprites.yellowTile=loadImg("res/png/TileYellow.png");  
+          
+          //Da fare png
+          Sprites.life=loadImg("res/png/TileYellow.png"); 
+          
         } catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-//        
-//        Sprites.blueTile = loadImg("/blueTile.png");
-//        Sprites.pinkTile = loadImg("/pinkTile.png");
-//        Sprites.yellowTile = loadImg("/yellowTile.png");
-//        Sprites.life = loadImg("/life.png");
-//        Sprites.blueBackground = loadImg("/blueBackground.png"); 
-//        Sprites.brownBackground = loadImg("/brownBackground.png"); 
-//        Sprites.qbertFrontMoving = loadImg("/QbertFrontMoving.png"); 
-//        Sprites.qbertFrontStanding = loadImg("/QbertFrontStanding.png"); 
-//        Sprites.RedBallMoving = loadImg("/redBallMoving.png"); 
-//        Sprites.RedBallStanding = loadImg("/redBallStanding.png"); 
-        
+            System.out.println("Error load"+e.getMessage());
+        }  
+
+      
         Dimensions.screenHeight = d.height;
         Dimensions.screenWidth = d.width;
         Dimensions.windowHeight = Dimensions.screenHeight*3/4;
@@ -92,45 +134,25 @@ public class Game {
         gameLevel.update(elapsed);
     }
     
-    private BufferedImage loadImg(String pathIn,String pathOut) throws Exception{
-        svg2png(pathIn,pathOut);
+    private BufferedImage loadImg(String pathOut) throws Exception{
         BufferedImage res = null;
-        //System.out.println("/png/"+pathOut.split("/")[2]);
         final URL spriteUrl = this.getClass().getResource("/png/"+pathOut.split("/")[2]);
         try {
             res = ImageIO.read(spriteUrl);
-            System.out.println("new H " + res.getHeight() + " W " + res.getWidth());
         } catch (IOException e) {
             e.printStackTrace();
         }
         return res;
     }
     
-//    private void svg2png(String pathIn, String pathOut) throws Exception {
-//        //Step -1: We read the input SVG document into Transcoder Input
-//        //We use Java NIO for this purpose
-//        String svg_URI_input = Paths.get(pathIn).toUri().toURL().toString();
-//        TranscoderInput input_svg_image = new TranscoderInput(svg_URI_input);        
-//        //Step-2: Define OutputStream to PNG Image and attach to TranscoderOutput
-//        OutputStream png_ostream = new FileOutputStream(pathOut);
-//        TranscoderOutput output_png_image = new TranscoderOutput(png_ostream);              
-//        // Step-3: Create PNGTranscoder and define hints if required
-//        PNGTranscoder my_converter = new PNGTranscoder();        
-//        // Step-4: Convert and Write output
-//        my_converter.transcode(input_svg_image, output_png_image);
-//        // Step 5- close / flush Output Stream
-//        png_ostream.flush();
-//        png_ostream.close();
-//        
-//    }
     
-    private static void svg2png(String svg, String png) throws Exception {
-        String svgURIInput = Paths.get(svg).toUri().toURL().toString();
-        TranscoderInput inputSvgImage = new TranscoderInput(svgURIInput);
-        OutputStream pngOstream = new FileOutputStream(png);
-        TranscoderOutput outputPngImage = new TranscoderOutput(pngOstream);
-        PNGTranscoder myConverter = new PNGTranscoder();
+    private static void convertSvgToPng(String svg, String png) throws Exception {
         
+        String uriSvg = Paths.get(svg).toUri().toURL().toString();
+        TranscoderInput imageSvg = new TranscoderInput(uriSvg);
+        OutputStream streamPng = new FileOutputStream(png);
+        TranscoderOutput outputImagePng = new TranscoderOutput(streamPng);
+        PNGTranscoder converter = new PNGTranscoder();
         
         final SAXBuilder builder = new SAXBuilder();
         final Document document = builder.build(svg);
@@ -138,16 +160,16 @@ public class Game {
         final Element root = document.getRootElement();
         float width = Float.valueOf(root.getAttributeValue("width"));
         float height = Float.valueOf(root.getAttributeValue("height"));
-        System.out.println("old H " + height + " W " + width);
-        
-        
-        myConverter.addTranscodingHint(PNGTranscoder.KEY_WIDTH, new Float(2*width));
-        myConverter.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, new Float(2*height));
-        myConverter.addTranscodingHint(PNGTranscoder.KEY_AOI, new Rectangle( 0, 0, Math.round(width), Math.round(height)));
+        converter.addTranscodingHint(PNGTranscoder.KEY_WIDTH, new Float(1*width));
+        converter.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, new Float(1*height));
+        converter.addTranscodingHint(PNGTranscoder.KEY_AOI, new Rectangle( 0, 0, Math.round(width), Math.round(height)));
 
-        myConverter.transcode(inputSvgImage, outputPngImage);
-        pngOstream.flush();
-        pngOstream.close();
+        converter.transcode(imageSvg, outputImagePng);
+        streamPng.flush();
+        streamPng.close();
+
+
+        
     }
 
      
