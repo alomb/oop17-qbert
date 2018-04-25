@@ -16,7 +16,7 @@ public final class QBertLauncher {
      * @param args the parameters passed by command line.
      * @throws Exception 
      */
-    public static void main(final String[] args) throws Exception {
+    public static void main(final String[] args) {
         GameEngine test = new GameEngine();
         test.setup();
         test.mainLoop();

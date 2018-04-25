@@ -1,23 +1,24 @@
 package qbert.model;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.imageio.ImageIO;
-
+import qbert.model.characters.Character;
+import qbert.model.characters.Coily;
+import qbert.model.characters.Qbert;
 import qbert.model.states.DeathState;
 import qbert.model.states.LandState;
 import qbert.model.states.MoveState;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
+import qbert.model.utilities.Sprites;
 import qbert.view.CharacterGraphicComponent;
-import qbert.view.CharacterGraphicComponentImpl;
+import qbert.view.DownwardCGC;
+import qbert.view.DownwardUpwardCGC;
 
 public final class Level {
 
@@ -29,131 +30,123 @@ public final class Level {
     private Spawner spawner;
 
     //Level settings
+    private LevelSettings settings;
     private int level;
     private int round;
-    private int colorsNumber;
-    private boolean reversableColors;
-    
-    private int totalTime = 0;
-    private boolean spawned = false;
 
     public Level() {
-        this.createLevelTiles();
-
+        //Forse da spostare in classe Game
+        this.points = 0;
+        
         this.level = 1;
         this.round = 1;
         this.lives = 3;
 
-        //Forse da spostare in classe Game
-        this.points = 0;
-
         this.gameCharacters = new ArrayList<>();
-        
-        /* SPAWNER */
-        spawner = new Spawner(this);
-        
+        this.spawner = new Spawner(this);
+
         this.reset();
-        
-        spawner.spawnQbert();
     }
 
     public void reset() {
-        //Info da importare da classe esterna
-        this.colorsNumber = spawner.getColorsNumber();
-        this.reversableColors = spawner.isReverable();
-
-        this.resetLevelTiles();
+        this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground);
+        this.createLevelTiles(settings);
+        this.spawnQbert();
+//        this.gameCharacters.add(new Coily(new Position2D(5, 5), 0.35f,
+//                new DownwardUpwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, 
+//                        Sprites.RedBallStanding, Sprites.RedBallMoving, new Position2D(Dimensions.spawningPointLeft)), 500, qbert));
+      //this.gameCharacters.add(new Coily(new Position2D(5, 5), 0.35f,
+      //new DownwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, new Position2D(Dimensions.spawningPointLeft)), 500, qbert));
     }
 
     public Tile getTile(final int x, final int y) {
         return tiles.get(x).get(y);
     }
 
-    private void createLevelTiles() {
+    public BufferedImage getBackground() {
+        return this.settings.getBackgroundImage();
+    }
+
+    private void createLevelTiles(LevelSettings settings) {
         tiles = new HashMap<>();
         Map<Integer, Tile> tmp = new HashMap<>();
-        tmp.put(0, new Tile(0, 0));
+        tmp.put(0, new Tile(0, 0, settings));
         tiles.put(0, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(1, 1));
+        tmp.put(1, new Tile(1, 1, settings));
         tiles.put(1, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(2, 0));
-        tmp.put(2, new Tile(2, 2));
+        tmp.put(0, new Tile(2, 0, settings));
+        tmp.put(2, new Tile(2, 2, settings));
         tiles.put(2, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(3, 1));
-        tmp.put(3, new Tile(3, 3));
+        tmp.put(1, new Tile(3, 1, settings));
+        tmp.put(3, new Tile(3, 3, settings));
         tiles.put(3, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(4, 0));
-        tmp.put(2, new Tile(4, 2));
-        tmp.put(4, new Tile(4, 4));
+        tmp.put(0, new Tile(4, 0, settings));
+        tmp.put(2, new Tile(4, 2, settings));
+        tmp.put(4, new Tile(4, 4, settings));
         tiles.put(4, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(5, 1));
-        tmp.put(3, new Tile(5, 3));
-        tmp.put(5, new Tile(5, 5));
+        tmp.put(1, new Tile(5, 1, settings));
+        tmp.put(3, new Tile(5, 3, settings));
+        tmp.put(5, new Tile(5, 5, settings));
         tiles.put(5, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(6, 0));
-        tmp.put(2, new Tile(6, 2));
-        tmp.put(4, new Tile(6, 4));
-        tmp.put(6, new Tile(6, 6));
+        tmp.put(0, new Tile(6, 0, settings));
+        tmp.put(2, new Tile(6, 2, settings));
+        tmp.put(4, new Tile(6, 4, settings));
+        tmp.put(6, new Tile(6, 6, settings));
         tiles.put(6, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(7, 1));
-        tmp.put(3, new Tile(7, 3));
-        tmp.put(5, new Tile(7, 5));
+        tmp.put(1, new Tile(7, 1, settings));
+        tmp.put(3, new Tile(7, 3, settings));
+        tmp.put(5, new Tile(7, 5, settings));
         tiles.put(7, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(8, 0));
-        tmp.put(2, new Tile(8, 2));
-        tmp.put(4, new Tile(8, 4));
+        tmp.put(0, new Tile(8, 0, settings));
+        tmp.put(2, new Tile(8, 2, settings));
+        tmp.put(4, new Tile(8, 4, settings));
         tiles.put(8, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(9, 1));
-        tmp.put(3, new Tile(9, 3));
+        tmp.put(1, new Tile(9, 1, settings));
+        tmp.put(3, new Tile(9, 3, settings));
         tiles.put(9, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(10, 0));
-        tmp.put(2, new Tile(10, 2));
+        tmp.put(0, new Tile(10, 0, settings));
+        tmp.put(2, new Tile(10, 2, settings));
         tiles.put(10, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(1, new Tile(11, 1));
+        tmp.put(1, new Tile(11, 1, settings));
         tiles.put(11, tmp);
 
         tmp = new HashMap<>();
-        tmp.put(0, new Tile(12, 0));
+        tmp.put(0, new Tile(12, 0, settings));
         tiles.put(12, tmp);
 
-        //TODO: Utilizzare un metodo di creazione dei tile migliore
-//        for (int i = 1; i <= this.mapHeight; i++) {
-//            Map<Integer, Tile> tmpMap = new HashMap<>();
-//            for (int j = 1; j <= this.mapHeight; j++) {
-//                if (j <= i) {
-//                    tmpMap.put(j, new Tile(j, i));
-//                }
-//                tiles.put(i, tmpMap);
-//            }
-//        }
+        this.resetLevelTiles();
     }
 
     private void resetLevelTiles() {
         this.getTiles().stream().forEach(t -> {
             t.resetColor();
         });
+    }
+
+    public Character getQBert() {
+        return this.qbert;
     }
 
     public List<Character> getEntities() {
@@ -174,17 +167,22 @@ public final class Level {
     public void spawn(Character entity) {
         this.gameCharacters.add(entity);
     }
-    
+
     public void spawnQbert(Qbert qbert) {
         this.qbert = qbert;
     }
 
-    public void score(int points) {
-        this.points += points;
+    //Test qbert spawn
+    public void spawnQbert() {
+        CharacterGraphicComponent qg = new DownwardUpwardCGC(Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, 
+                new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Dimensions.tileHeight / 2)
+        );
+        Qbert q = new Qbert(new Position2D(6, 6), 0.35f, qg);
+        this.spawnQbert(q);
     }
 
-    public int getStage() {
-        return ((this.level - 1) * 3) + this.round;
+    public void score(int points) {
+        this.points += points;
     }
 
     public int getLevel() {
@@ -199,29 +197,17 @@ public final class Level {
         return this.points;
     }
 
-    public boolean step(Tile t) {
-        if (t.getColor() < this.colorsNumber) {
-            t.incrementColor();
-            return true;
-        } else {
-            if (this.reversableColors) {
-                t.resetColor();
-            }
-            return false;
-        }
-    }
-
     //Game?
     public void checkStatus() {
         int coloredTiles = 0;
         for (Tile t : this.getTiles()) {
-            if (t.getColor() == this.colorsNumber) {
+            if (t.getColor() == this.settings.getColorNumber()) {
                 coloredTiles++;
             }
         }
 
         if (coloredTiles == this.getTiles().stream().count()) {
-            this.changeStage();
+            this.changeRound();
             this.reset();
         }
     }
@@ -230,44 +216,51 @@ public final class Level {
         return this.lives;
     }
 
-    public void changeStage() {
+    public void changeRound() {
         if (level == 9 && round == 3) {
             System.exit(0);
         }
-        if (this.round > 2) {
+        if (this.round >= 1) {
             this.round = 1;
             this.level++;
         } else {
             this.round++;
         }
+        /* SPAWNER */
+        System.out.println("LEVEL" + this.level + "ROUND" + this.round); 
+        this.spawner = new Spawner(this);
     }
 
     public void death() {
         if (this.lives > 1) {
             this.lives--;
+            this.spawnQbert();
         } else {
             System.exit(0);
         }
     }
 
-    public void update(float elapsed) {
-        this.totalTime += elapsed;
-        
-        /* SPAWNER */
+    public void update(final float elapsed) {
         spawner.update(elapsed);
-        
-        if (this.totalTime > 1000 && !this.spawned) {
-            this.spawned = true;
 
-            /* Temp RedBall Spawn 
-            CharacterGraphicComponent g = new CharacterGraphicComponentImpl(Sprites.RedBallStanding, Dimensions.spawingPointLeft);
-            Character ball = new RedBall(new Position2D(5, 5), 0.35f, g, 1000);
-            this.spawn(ball);
-            */
-           
-             
+        qbert.update(elapsed);
+        Position2D qLogicalPos = qbert.getCurrentPosition();
+        //Check if entity is just landed 
+        if (qbert.getCurrentState() instanceof LandState) {
+            //Checking if entity is outside the map
+            if (qLogicalPos.getY() < 0 || qLogicalPos.getX() + qLogicalPos.getY() == 14 || qLogicalPos.getY() - qLogicalPos.getX() == 2) {
+                qbert.setCurrentState(new MoveState.Fall(qbert));
+            } else {
+                qbert.land(this.getTile((int) qLogicalPos.getX(), (int) qLogicalPos.getY()));
+                qbert.setCurrentState(qbert.getStandingState());
+                this.checkStatus();
+            }
         }
-        
+
+        if (qbert.isDead()) {
+            this.death();
+        }
+
         //Update Entities
         this.gameCharacters = this.gameCharacters.stream().peek(e -> {
             e.update(elapsed);
@@ -278,15 +271,20 @@ public final class Level {
                 if (logicalPos.getY() < 0 || logicalPos.getX() + logicalPos.getY() == 14 || logicalPos.getY() - logicalPos.getX() == 2) {
                     e.setCurrentState(new MoveState.Fall(e));
                 } else {
-                    this.step(this.getTile((int) logicalPos.getX(), (int) logicalPos.getY()));
+                    e.land(this.getTile((int) logicalPos.getX(), (int) logicalPos.getY()));
                     e.setCurrentState(e.getStandingState());
                 }
             }
-            
-            if (e.getCurrentState() instanceof DeathState) {
+
+            if (e.isDead()) {
                 //Notify Spawner
-                this.spawned = false;
+                this.spawner.death(e);
             }
-        }).filter(e -> !(e.getCurrentState() instanceof DeathState)).collect(Collectors.toList());
+
+            if (qbert.getCurrentPosition().getX() == e.getCurrentPosition().getX() && 
+                    qbert.getCurrentPosition().getY() == e.getCurrentPosition().getY()) {
+                this.death();
+            }
+        }).filter(e -> !e.isDead()).collect(Collectors.toList());
     }
 }

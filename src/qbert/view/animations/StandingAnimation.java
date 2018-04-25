@@ -5,7 +5,7 @@ import qbert.model.utilities.Position2D;
 /**
  * Animation that doesn't move the sprite and is finished.
  */
-public class StandingAnimation extends GenericAnimation {
+public class StandingAnimation extends MovementAnimation {
 
     /**
      * @param startPos the first {@link Position2D}

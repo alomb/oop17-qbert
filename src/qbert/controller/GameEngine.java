@@ -5,8 +5,8 @@ import qbert.model.Game;
 import java.util.Optional;
 
 import qbert.input.Command;
-import qbert.model.Dimensions;
 import qbert.model.mapping.Mapper;
+import qbert.model.utilities.Dimensions;
 import qbert.view.Scene;
 
 /**
@@ -34,9 +34,9 @@ public class GameEngine {
      * @throws Exception 
      * 
      */
-    public void setup() throws Exception {
+    public void setup() {
         game = new Game();
-        Mapper mapper = new Mapper(Dimensions.screenWidth, Dimensions.screenHeight, Dimensions.windowWidth, Dimensions.windowHeight);
+        Mapper mapper = new Mapper();
 
         this.gameScene = new Scene(game.getLevel(), mapper, Dimensions.windowWidth, Dimensions.windowHeight, this);
 

@@ -6,9 +6,9 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 
-import qbert.model.Sprites;
 import qbert.model.Tile;
 import qbert.model.utilities.Position2D;
+import qbert.model.utilities.Sprites;
 
 public class TileGraphicComponent implements GraphicComponent {
 

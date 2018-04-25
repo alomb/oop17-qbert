@@ -3,11 +3,12 @@ package qbert.view;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-import qbert.model.Dimensions;
+
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.DisplaceAnimation;
-import qbert.view.animations.Jump;
-import qbert.view.animations.MoveAnimation;
+import qbert.view.animations.ComposedAnimation;
+import qbert.view.animations.BasicAnimation;
 import qbert.view.animations.StandingAnimation;
 
 /**
@@ -87,7 +88,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
             this.flipOnYImage();
         }
 
-        this.setCurrentAnimation(new MoveAnimation.Down(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.deathHeight)));
+        this.setCurrentAnimation(new BasicAnimation.Down(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.deathHeight)));
     }
 
     @Override
@@ -96,7 +97,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.front = true;
         this.right = false;
         this.flipOnYImage();
-        this.setCurrentAnimation(new Jump.DownLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
+        this.setCurrentAnimation(new  ComposedAnimation.JumpDownLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
     }
 
     @Override
@@ -104,7 +105,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.setSprite(this.frontMoveSprite);
         this.front = true;
         this.right = true;
-        this.setCurrentAnimation(new Jump.DownRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
+        this.setCurrentAnimation(new ComposedAnimation.JumpDownRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
     }
 
     @Override
@@ -113,7 +114,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.front = false;
         this.right = false;
         this.flipOnYImage();
-        this.setCurrentAnimation(new Jump.UpLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() - this.jumpHeight)));
+        this.setCurrentAnimation(new ComposedAnimation.JumpUpLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() - this.jumpHeight)));
     }
 
     @Override
@@ -121,7 +122,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.setSprite(this.backMoveSprite);
         this.front = false;
         this.right = true;
-        this.setCurrentAnimation(new Jump.UpRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() - this.jumpHeight)));
+        this.setCurrentAnimation(new ComposedAnimation.JumpUpRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() - this.jumpHeight)));
     }
 
     /**

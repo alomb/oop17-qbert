@@ -1,6 +1,6 @@
 package qbert.model.states;
 
-import qbert.model.Character;
+import qbert.model.characters.Character;
 
 /**
  * A dumb {@link CharacterState} used to advise that the associated {@link Character} is death.
@@ -13,6 +13,7 @@ public class DeathState extends CharacterStateImpl {
     public DeathState(final Character character) {
         super(character);
         character.getGraphicComponent().setStandingAnimation();
+        character.setDead();
     }
 
     @Override

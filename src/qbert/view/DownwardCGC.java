@@ -1,10 +1,11 @@
 package qbert.view;
 
 import java.awt.image.BufferedImage;
-import qbert.model.Dimensions;
+
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.view.animations.Jump;
-import qbert.view.animations.MoveAnimation;
+import qbert.view.animations.ComposedAnimation;
+import qbert.view.animations.BasicAnimation;
 import qbert.view.animations.StandingAnimation;
 
 /**
@@ -42,25 +43,25 @@ public class DownwardCGC extends CharacterGraphicComponentImpl {
     @Override
     public final void setSpawnAnimation() {
         this.setSprite(this.moveSprite);
-        this.setCurrentAnimation(new MoveAnimation.Down(this.getSpawnPosition(), this.landPos));
+        this.setCurrentAnimation(new BasicAnimation.Down(this.getSpawnPosition(), this.landPos));
     }
 
     @Override
     public final void setFallAnimation() {
         this.setSprite(this.moveSprite);
-        this.setCurrentAnimation(new MoveAnimation.Down(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.deathHeight)));
+        this.setCurrentAnimation(new BasicAnimation.Down(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.deathHeight)));
     }
 
     @Override
     public final void setMoveDownLeftAnimation() {
         this.setSprite(this.moveSprite);
-        this.setCurrentAnimation(new Jump.DownLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
+        this.setCurrentAnimation(new ComposedAnimation.JumpDownLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
     }
 
     @Override
     public final void setMoveDownRightAnimation() {
         this.setSprite(this.moveSprite);
-        this.setCurrentAnimation(new Jump.DownRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
+        this.setCurrentAnimation(new ComposedAnimation.JumpDownRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
     }
 
     @Override

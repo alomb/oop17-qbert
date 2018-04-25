@@ -1,4 +1,4 @@
-package qbert.model;
+package qbert.model.utilities;
 
 import java.awt.image.BufferedImage;
 

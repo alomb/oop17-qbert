@@ -16,15 +16,4 @@ public interface CharacterState {
      * and updating the {@link CharacterState} reference.
      */
     void conclude();
-
-    /**
-     * @return the relative hashcode
-     */
-    int hashCode();
-
-    /**
-     * @param obj the state to compare
-     * @return true if the two states are equals
-     */
-    boolean equals(Object obj);
 }

@@ -3,23 +3,18 @@ package qbert.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 
-import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -31,9 +26,10 @@ import qbert.input.MoveLeft;
 import qbert.input.MoveRight;
 import qbert.input.MoveUp;
 import qbert.model.Level;
-import qbert.model.Sprites;
 import qbert.model.mapping.Mapper;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
+import qbert.model.utilities.Sprites;
 
 public class Scene {
     private final JFrame frame;
@@ -77,7 +73,6 @@ public class Scene {
         // Temp Variables
         private Mapper mapper;
         private Font custom; 
-        private BufferedImage background;
         private BufferedImage lifeSprite;
 
         public ScenePanel(final Level level, final Mapper mapper, final int w, final int h) {
@@ -103,28 +98,7 @@ public class Scene {
             this.mapper = mapper;
 
             //Temporary Sprite Loading
-            this.background = Sprites.blueBackground;
             this.lifeSprite = Sprites.life;
-
-
-            //TODO: Remove
-            // Qbert Movement Simulation
-            this.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    level.getTiles().stream().forEach(t -> {
-                        GraphicComponent c = t.getGraphicComponent();
-                        Position2D pos = mapper.getPhysical(c.getPosition());
-                        if (e.getX() >= pos.getX() && e.getX() <= pos.getX() + c.getSpriteWidth()
-                            && e.getY() >= pos.getY() && e.getY() <= pos.getY() + c.getSpriteHeight()) {
-                            if (level.step(t)) {
-                                level.score(50);
-                            }
-                        }
-                    });
-                    level.checkStatus();
-                }
-            });
 
             // Qbert Death Simulation
             JButton sim1 = new JButton("Simulate Qbert's Death");
@@ -147,7 +121,7 @@ public class Scene {
             super.paintComponent(g);
 
             // Level components rendering
-            g.drawImage(this.background, (int) mapper.getMapPos().getX(), (int)  mapper.getMapPos().getY(), this);
+            g.drawImage(level.getBackground(), Dimensions.backgroundX, Dimensions.backgroundY, this);
 
             level.getTiles().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
@@ -159,6 +133,8 @@ public class Scene {
                 GraphicComponent c = e.getGraphicComponent();
                 g.drawImage(c.getSprite(), (int) c.getPosition().getX(), (int) c.getPosition().getY(), this);
             });
+
+            g.drawImage(level.getQBert().getGraphicComponent().getSprite(), (int)level.getQBert().getGraphicComponent().getPosition().getX(), (int)level.getQBert().getGraphicComponent().getPosition().getY(), this);
 
             // Info rendering
             g.setColor(new Color(255, 255, 255));

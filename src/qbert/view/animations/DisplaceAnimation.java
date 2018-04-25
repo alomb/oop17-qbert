@@ -5,7 +5,7 @@ import qbert.model.utilities.Position2D;
 /**
  * A very rapid animation to move an object from a {@link Position2D} to another instantly.
  */
-public class DisplaceAnimation extends GenericAnimation {
+public class DisplaceAnimation extends MovementAnimation {
 
     /**
      * @param startPos the first {@link Position2D}

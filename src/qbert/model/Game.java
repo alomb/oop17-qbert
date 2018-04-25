@@ -20,18 +20,19 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.model.Sprites;
+import qbert.model.utilities.Sprites;
 
 public class Game {
 
     private Toolkit t; 
     private Dimension d;
-    
+
     private Level gameLevel;
-   
+
     public Game() {
-        
+
         t = Toolkit.getDefaultToolkit();
         d = t.getScreenSize();
          
@@ -104,33 +105,32 @@ public class Game {
             System.out.println("Error load"+e.getMessage());
         }  
 
-      
         Dimensions.screenHeight = d.height;
         Dimensions.screenWidth = d.width;
-        Dimensions.windowHeight = Dimensions.screenHeight*3/4;
-        Dimensions.windowWidth = Dimensions.screenWidth*3/4;
-        Dimensions.deathHeight = Dimensions.windowHeight+200;
+        Dimensions.windowHeight = Dimensions.screenHeight * 3 / 4;
+        Dimensions.windowWidth = Dimensions.screenWidth * 3 / 4;
+        Dimensions.deathHeight = Dimensions.windowHeight + 200;
         Dimensions.spawningHeight = -100;
-        Dimensions.spawningPointLeft = new Position2D((Dimensions.windowWidth/2)-Sprites.blueTile.getWidth(),-500);
-        Dimensions.spawningPointRight = new Position2D((Dimensions.windowWidth/2),-500);
-        Dimensions.spawningQBert = new Position2D((Dimensions.windowWidth/2)-Sprites.blueTile.getWidth()/2,-500);
+        Dimensions.spawningPointLeft = new Position2D((Dimensions.windowWidth / 2) - Sprites.blueTile.getWidth(), -500);
+        Dimensions.spawningPointRight = new Position2D((Dimensions.windowWidth / 2), -500);
+        Dimensions.spawningQBert = new Position2D((Dimensions.windowWidth / 2) - Sprites.blueTile.getWidth() / 2, -500);
         Dimensions.backgroundHeight = Sprites.blueBackground.getHeight();
         Dimensions.backgroundWidth = Sprites.blueBackground.getWidth();
-        Dimensions.backgroundX = (Dimensions.windowWidth-Dimensions.backgroundWidth)/2;
-        Dimensions.backgroundY = (Dimensions.windowHeight-Dimensions.backgroundHeight)/2;
-        Dimensions.cubeHeight = Sprites.blueBackground.getHeight()/7;
+        Dimensions.backgroundX = (Dimensions.windowWidth - Dimensions.backgroundWidth) / 2;
+        Dimensions.backgroundY = (Dimensions.windowHeight - Dimensions.backgroundHeight) / 2;
+        Dimensions.cubeHeight = Sprites.blueBackground.getHeight() / 7;
         Dimensions.tileHeight = Sprites.blueTile.getHeight();
         Dimensions.tileWidth = Sprites.blueTile.getWidth();
         Dimensions.tileWidth = Sprites.blueTile.getWidth();
-        
+
         gameLevel = new Level();
     }
-    
+
     public Level getLevel() {
         return gameLevel;
     }
-    
-    public void update( float elapsed) {
+
+    public void update(final float elapsed) {
         gameLevel.update(elapsed);
     }
     
@@ -167,10 +167,6 @@ public class Game {
         converter.transcode(imageSvg, outputImagePng);
         streamPng.flush();
         streamPng.close();
-
-
-        
     }
 
-     
 }

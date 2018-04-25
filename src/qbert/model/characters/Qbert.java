@@ -1,6 +1,8 @@
-package qbert.model;
+package qbert.model.characters;
 
+import qbert.model.Tile;
 import qbert.model.states.CharacterState;
+import qbert.model.states.QbertStandingState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
 
@@ -21,30 +23,11 @@ public class Qbert extends CharacterImpl {
 
     @Override
     public final CharacterState getStandingState() {
-        return new QbertStandingState();
+        return new QbertStandingState(this);
     }
 
-    /**
-     * The {@link CharacterState} used to manage {@link Qbert} when it's standing.
-     */
-    private final class QbertStandingState implements CharacterState {
-
-        /**
-         * Sets the spawn position to be the current one and starts the standing animation.
-         */
-        QbertStandingState() {
-            Qbert.this.getGraphicComponent().setSpawnPosToCurrentPos();
-            Qbert.this.getGraphicComponent().setStandingAnimation();
-        }
-
-        @Override
-        public void update(final float dt) {
-            Qbert.this.getGraphicComponent().updateGraphics(dt);
-        }
-
-        @Override
-        public void conclude() {
-
-        }
+    @Override
+    public final void land(final Tile t) {
+        t.incrementColor();
     }
 }

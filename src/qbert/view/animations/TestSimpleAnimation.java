@@ -57,14 +57,14 @@ public class TestSimpleAnimation {
         for (int i = 0; i < size; i++) {
             final Position2D targetDown = new Position2D(source.getX(), this.random.nextInt(10) + source.getY());
             final Position2D targetUp = new Position2D(source.getX(), source.getY() - this.random.nextInt(10));
-            Animation anim = new MoveAnimation.Down(source, targetDown);
+            Animation anim = new BasicAnimation.Down(source, targetDown);
 
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }
             assertEquals(source, targetDown);
 
-            anim = new MoveAnimation.Up(source, targetUp);
+            anim = new BasicAnimation.Up(source, targetUp);
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }
@@ -83,14 +83,14 @@ public class TestSimpleAnimation {
         for (int i = 0; i < size; i++) {
             final Position2D target = new Position2D(source.getX() + this.random.nextInt(20), source.getY());
             final Position2D targetCounter = new Position2D(source.getX() - this.random.nextInt(20), source.getY());
-            Animation anim = new MoveAnimation.ArcClockwise(source, target);
+            Animation anim = new BasicAnimation.ArcClockwise(source, target);
 
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }
             assertEquals(source, target);
 
-            anim = new MoveAnimation.ArcCounterclockwise(source, targetCounter);
+            anim = new BasicAnimation.ArcCounterclockwise(source, targetCounter);
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }

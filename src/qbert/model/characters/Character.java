@@ -1,5 +1,7 @@
-package qbert.model;
+package qbert.model.characters;
 
+import qbert.model.GameObject;
+import qbert.model.Tile;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
@@ -45,6 +47,16 @@ public interface Character extends GameObject {
     boolean isMoving();
 
     /**
+     * @return true if the {@link Character} is dead
+     */
+    boolean isDead();
+
+    /**
+     * Set the {@link Character} dead.
+     */
+    void setDead();
+
+    /**
      * @return the current {@link CharacterState}
      */
     CharacterState getCurrentState();
@@ -63,4 +75,9 @@ public interface Character extends GameObject {
      * @param dt the time passed since the last game cycle
      */
     void update(float dt);
+
+    /**
+     * @param t the reference to the tile where the {@link Character} has just landed
+     */
+    void land(Tile t);
 }

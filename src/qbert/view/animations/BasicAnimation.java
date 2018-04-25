@@ -3,12 +3,16 @@ package qbert.view.animations;
 import qbert.model.utilities.Position2D;
 
 /**
- * The basic animation for straight and curvilinear movements. 
+ * The basic animation extendible for straight and curvilinear movements. 
  */
-public final class MoveAnimation {
+public abstract class BasicAnimation extends MovementAnimation {
 
-    private MoveAnimation() {
-        throw new UnsupportedOperationException();
+    /**
+     * @param startPos the first {@link Position2D}
+     * @param targetPos the last {@link Position2D}
+     */
+    public BasicAnimation(final Position2D startPos, final Position2D targetPos) {
+        super(startPos, targetPos);
     }
 
     private static Position2D calculateCircumferenceCoords(final Position2D centerPos, final int angle, final double radius) {
@@ -19,7 +23,7 @@ public final class MoveAnimation {
     /**
      * Animation for moving the sprite upward.
      */
-    public static class Down extends GenericAnimation {
+    public static class Down extends BasicAnimation {
 
         /**
          * @param startPos the first {@link Position2D}
@@ -42,7 +46,7 @@ public final class MoveAnimation {
     /**
      * Animation for moving the sprite upward.
      */
-    public static class Up extends GenericAnimation {
+    public static class Up extends BasicAnimation {
 
         /**
          * @param startPos the first {@link Position2D}
@@ -65,7 +69,7 @@ public final class MoveAnimation {
     /**
      * Animation to move the character in a clockwise arc.
      */
-    public static class ArcClockwise extends GenericAnimation {
+    public static class ArcClockwise extends BasicAnimation {
 
         private final double radius;
         private final Position2D centerPos;
@@ -92,7 +96,7 @@ public final class MoveAnimation {
                 this.currentAngle = ArcClockwise.TARGETANGLE;
                 this.setCurrentPosition(this.getTargetPosition());
             } else {
-                this.setCurrentPosition(MoveAnimation.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
+                this.setCurrentPosition(BasicAnimation.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
             }
         }
     }
@@ -100,7 +104,7 @@ public final class MoveAnimation {
     /**
      * Animation to move the character in a counterclockwise arc.
      */
-    public static class ArcCounterclockwise extends GenericAnimation {
+    public static class ArcCounterclockwise extends BasicAnimation {
 
         private final double radius;
         private final Position2D centerPos;
@@ -127,7 +131,7 @@ public final class MoveAnimation {
                 this.currentAngle = ArcCounterclockwise.TARGETANGLE;
                 this.setCurrentPosition(this.getTargetPosition());
             } else {
-                this.setCurrentPosition(MoveAnimation.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
+                this.setCurrentPosition(BasicAnimation.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
             }
         }
     }

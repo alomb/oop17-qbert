@@ -1,6 +1,4 @@
-package qbert.model;
-
-import qbert.model.utilities.Position2D;
+package qbert.model.utilities;
 
 public class Dimensions {
     

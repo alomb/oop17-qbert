@@ -1,8 +1,8 @@
-package qbert.model;
+package qbert.model.characters;
 
 import qbert.model.states.CharacterState;
 import qbert.model.states.MoveState;
-import qbert.model.states.SimpleStandingState;
+import qbert.model.states.DownwardCharStandingState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
 
@@ -26,7 +26,7 @@ public class RedBall extends CharacterImpl {
     }
 
     @Override
-    public CharacterState getStandingState() {
-        return new SimpleStandingState(this, this.standingTime);
+    public final CharacterState getStandingState() {
+        return new DownwardCharStandingState(this, this.standingTime);
     }
 }
