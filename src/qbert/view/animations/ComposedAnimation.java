@@ -6,9 +6,9 @@ import java.util.concurrent.ArrayBlockingQueue;
 import qbert.model.utilities.Position2D;
 
 /**
- * The basic animation for a jump, made by multiple basic animations.
+ * An animation made by multiple basic animations stored in a queue.
  */
-public abstract class Jump extends GenericAnimation {
+public class ComposedAnimation extends MovementAnimation {
 
     private final Queue<Animation> animations;
     private static final int QUEUESIZE = 2;
@@ -17,7 +17,7 @@ public abstract class Jump extends GenericAnimation {
      * @param startPos the first {@link Position2D}
      * @param targetPos the last {@link Position2D}
      */
-    public Jump(final Position2D startPos, final Position2D targetPos) {
+    public ComposedAnimation(final Position2D startPos, final Position2D targetPos) {
         super(startPos, targetPos);
         this.animations = new ArrayBlockingQueue<>(QUEUESIZE);
     }
@@ -45,54 +45,54 @@ public abstract class Jump extends GenericAnimation {
     /**
      * Animation for a down-right jump.
      */
-    public static class DownRight extends Jump {
+    public static class JumpDownRight extends ComposedAnimation {
 
         /**
          * @param startPos the first {@link Position2D}
          * @param targetPos the last {@link Position2D}
          */
-        public DownRight(final Position2D startPos, final Position2D targetPos) {
+        public JumpDownRight(final Position2D startPos, final Position2D targetPos) {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(targetPos.getX(), startPos.getY());
 
-            this.getAnimations().add(new MoveAnimation.ArcClockwise(startPos, intermediatePosition));
-            this.getAnimations().add(new MoveAnimation.Down(intermediatePosition, targetPos));
+            this.getAnimations().add(new BasicAnimation.ArcClockwise(startPos, intermediatePosition));
+            this.getAnimations().add(new BasicAnimation.Down(intermediatePosition, targetPos));
         }
     }
 
     /**
      * Animation for a down-left jump.
      */
-    public static class DownLeft extends Jump {
+    public static class JumpDownLeft extends ComposedAnimation {
 
         /**
          * @param startPos the first {@link Position2D}
          * @param targetPos the last {@link Position2D}
          */
-        public DownLeft(final Position2D startPos, final Position2D targetPos) {
+        public JumpDownLeft(final Position2D startPos, final Position2D targetPos) {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(targetPos.getX(), startPos.getY());
 
-            this.getAnimations().add(new MoveAnimation.ArcCounterclockwise(startPos, intermediatePosition));
-            this.getAnimations().add(new MoveAnimation.Down(intermediatePosition, targetPos));
+            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(startPos, intermediatePosition));
+            this.getAnimations().add(new BasicAnimation.Down(intermediatePosition, targetPos));
         }
     }
 
     /**
      * Animation for a up-right jump.
      */
-    public static class UpRight extends Jump {
+    public static class JumpUpRight extends ComposedAnimation {
 
         /**
          * @param startPos the first {@link Position2D}
          * @param targetPos the last {@link Position2D}
          */
-        public UpRight(final Position2D startPos, final Position2D targetPos) {
+        public JumpUpRight(final Position2D startPos, final Position2D targetPos) {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new MoveAnimation.Up(startPos, intermediatePosition));
-            this.getAnimations().add(new MoveAnimation.ArcClockwise(intermediatePosition, targetPos));
+            this.getAnimations().add(new BasicAnimation.Up(startPos, intermediatePosition));
+            this.getAnimations().add(new BasicAnimation.ArcClockwise(intermediatePosition, targetPos));
 
         }
     }
@@ -100,18 +100,18 @@ public abstract class Jump extends GenericAnimation {
     /**
      * Animation for a up-left jump.
      */
-    public static class UpLeft extends Jump {
+    public static class JumpUpLeft extends ComposedAnimation {
 
         /**
          * @param startPos the first {@link Position2D}
          * @param targetPos the last {@link Position2D}
          */
-        public UpLeft(final Position2D startPos, final Position2D targetPos) {
+        public JumpUpLeft(final Position2D startPos, final Position2D targetPos) {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new MoveAnimation.Up(startPos, intermediatePosition));
-            this.getAnimations().add(new MoveAnimation.ArcCounterclockwise(intermediatePosition, targetPos));
+            this.getAnimations().add(new BasicAnimation.Up(startPos, intermediatePosition));
+            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(intermediatePosition, targetPos));
         }
     }
 }

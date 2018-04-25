@@ -34,7 +34,7 @@ public class GameEngine {
      * @throws Exception 
      * 
      */
-    public void setup() throws Exception {
+    public void setup() {
         game = new Game();
         Mapper mapper = new Mapper();
 
