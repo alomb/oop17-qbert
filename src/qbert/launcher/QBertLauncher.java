@@ -17,7 +17,7 @@ public final class QBertLauncher {
      * @throws Exception 
      */
     public static void main(final String[] args) {
-        GameEngine test = new GameEngine();
+        final GameEngine test = new GameEngine();
         test.setup();
         test.mainLoop();
     }

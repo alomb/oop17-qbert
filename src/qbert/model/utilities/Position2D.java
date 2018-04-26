@@ -18,7 +18,7 @@ public class Position2D {
      * @param x the horizontal coordinate
      * @param y the vertical coordinate
      */
-    public Position2D(final double x, final double y){
+    public Position2D(final double x, final double y) {
         this.x = x;
         this.y = y;
     }

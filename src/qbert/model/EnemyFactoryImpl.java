@@ -21,7 +21,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     public final Character createCoily(final float speed, final int standingTime, final Character qbert) {
         final Position2D randomPos = this.getRandomPos();
         final Position2D logicalPos = this.getLogicalPos(randomPos);
-        final CharacterGraphicComponent graphics = new DownwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, randomPos);
+        final CharacterGraphicComponent graphics = new DownwardCGC(Sprites.purpleBallStanding, Sprites.purpleBallMoving, randomPos);
         return new Coily(logicalPos, speed, graphics, standingTime, qbert);
     }
 
@@ -29,7 +29,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     public final Character createRedBall(final float speed, final int standingTime) {
         final Position2D randomPos = this.getRandomPos();
         final Position2D logicalPos = this.getLogicalPos(randomPos);
-        final CharacterGraphicComponent graphics = new DownwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, randomPos);
+        final CharacterGraphicComponent graphics = new DownwardCGC(Sprites.redBallStanding, Sprites.redBallMoving, randomPos);
         return new RedBall(logicalPos, speed, graphics, standingTime);
     }
 

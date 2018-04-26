@@ -40,8 +40,10 @@ public class Coily extends CharacterImpl {
      */
     public void transform() {
         this.adult = true;
-        this.setGraphicComponent(new DownwardUpwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, 
-                Sprites.RedBallStanding, Sprites.RedBallMoving, new Position2D(this.getGraphicComponent().getPosition())));
+        this.setGraphicComponent(new DownwardUpwardCGC(Sprites.coilyFrontStanding, Sprites.coilyFrontMoving, 
+                Sprites.coilyBackStanding, Sprites.coilyBackMoving, new Position2D(this.getGraphicComponent().getPosition())));
+        this.getGraphicComponent().getPosition().setY(
+                this.getGraphicComponent().getPosition().getY() + Sprites.purpleBallStanding.getHeight() - Sprites.coilyFrontStanding.getHeight());
     }
 
     @Override

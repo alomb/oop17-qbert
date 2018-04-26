@@ -42,7 +42,7 @@ public final class Spawner {
      */
     public void spawnQbert() {
         /*TODO: Change with correct sprites*/
-        level.spawn(new Qbert(Dimensions.spawningQBert, 0.35f, new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.RedBallStanding, Sprites.RedBallStanding, Dimensions.spawningQBert)));
+        level.spawn(new Qbert(Dimensions.spawningQBert, 0.35f, new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, Dimensions.spawningQBert)));
     }
 
     /**

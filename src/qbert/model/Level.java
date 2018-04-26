@@ -52,11 +52,9 @@ public final class Level {
         this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground);
         this.createLevelTiles(settings);
         this.spawnQbert();
-//        this.gameCharacters.add(new Coily(new Position2D(5, 5), 0.35f,
-//                new DownwardUpwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, 
-//                        Sprites.RedBallStanding, Sprites.RedBallMoving, new Position2D(Dimensions.spawningPointLeft)), 500, qbert));
-      //this.gameCharacters.add(new Coily(new Position2D(5, 5), 0.35f,
-      //new DownwardCGC(Sprites.RedBallStanding, Sprites.RedBallMoving, new Position2D(Dimensions.spawningPointLeft)), 500, qbert));
+
+//      this.gameCharacters.add(new Coily(new Position2D(5, 5), 0.35f,
+//      new DownwardCGC(Sprites.purpleBallStanding, Sprites.purpleBallMoving, new Position2D(Dimensions.spawningPointLeft)), 500, qbert));
     }
 
     public Tile getTile(final int x, final int y) {
@@ -174,8 +172,8 @@ public final class Level {
 
     //Test qbert spawn
     public void spawnQbert() {
-        CharacterGraphicComponent qg = new DownwardUpwardCGC(Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, Sprites.qbertFrontMoving, 
-                new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Dimensions.tileHeight / 2)
+        CharacterGraphicComponent qg = new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
+                new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight())
         );
         Qbert q = new Qbert(new Position2D(6, 6), 0.35f, qg);
         this.spawnQbert(q);

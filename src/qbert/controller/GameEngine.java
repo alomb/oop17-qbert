@@ -10,7 +10,8 @@ import qbert.model.utilities.Dimensions;
 import qbert.view.Scene;
 
 /**
- *
+ * The class containing the game loop and responsible of communications between View and Model.
+ * It also provides a keyboard input management using Command pattern.
  */
 public class GameEngine {
 
@@ -24,19 +25,18 @@ public class GameEngine {
     private Optional<Command> currentCommand;
 
     /**
-     * 
+     * Set currentCommand to empty.
      */
     public GameEngine() {
         this.currentCommand = Optional.empty();
     }
 
     /**
-     * @throws Exception 
-     * 
+     * The method used to initialize the game loop. 
      */
     public void setup() {
         game = new Game();
-        Mapper mapper = new Mapper();
+        final Mapper mapper = new Mapper();
 
         this.gameScene = new Scene(game.getLevel(), mapper, Dimensions.windowWidth, Dimensions.windowHeight, this);
 
@@ -46,7 +46,7 @@ public class GameEngine {
     }
 
     /**
-     * 
+     * The game loop based on cycles elapsed time that manage game and graphic updates.
      */
     public void mainLoop() {
         long lastTime = System.currentTimeMillis(); 
@@ -62,7 +62,7 @@ public class GameEngine {
     }
 
     /**
-     * @param current
+     * @param current the time at the beginning of the current cycle
      */
     private void waitForNextFrame(final long current) {
         final long dt = System.currentTimeMillis() - current;
@@ -76,7 +76,7 @@ public class GameEngine {
     }
 
     /**
-     * 
+     * The method used to  execute a command's code if is there.
      */
     private void processInput() {
         if (this.currentCommand.isPresent()) {
@@ -86,7 +86,7 @@ public class GameEngine {
     }
 
     /**
-     * @param elapsed
+     * @param elapsed the time passed since the last game cycle
      */
     private void gameUpdate(final float elapsed) {
         if (!this.stopped) {
@@ -95,14 +95,14 @@ public class GameEngine {
     }
 
     /**
-     * 
+     * The method used to update graphics (View).
      */
     private void gameRender() {
         this.gameScene.render();
     }
 
     /**
-     * @param command
+     * @param command a class encapsulating code to execute
      */
     public void notifyCommand(final Command command) {
         this.currentCommand = Optional.of(command);
