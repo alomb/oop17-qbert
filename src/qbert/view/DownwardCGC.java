@@ -23,6 +23,11 @@ public class DownwardCGC extends CharacterGraphicComponentImpl {
     private final Position2D landPos;
 
     /**
+     * A boolean to set true when the character has moved right (up or down).
+     */
+    private boolean right;
+
+    /**
      * @param standSprite the {@link BufferedImage} containing the {@link Character}'s standing sprite
      * @param moveSprite the {@link BufferedImage} containing the {@link Character}'s moving sprite
      * @param startSpritePos the first position (physic) of the {@link Character}
@@ -32,45 +37,59 @@ public class DownwardCGC extends CharacterGraphicComponentImpl {
         this.standSprite = standSprite;
         this.moveSprite = moveSprite;
         this.landPos = new Position2D(this.getSpawnPosition().getX(), (Dimensions.windowHeight - Dimensions.backgroundHeight) / 2 + Dimensions.cubeHeight - this.getSpriteHeight()); 
+        this.right = true;
     }
 
     @Override
     public final void setStandingAnimation() {
         this.setSprite(this.standSprite);
+        if (!this.right) {
+            this.flipOnYImage();
+        }
         this.setCurrentAnimation(new StandingAnimation(this.getPosition()));
     }
 
     @Override
     public final void setSpawnAnimation() {
         this.setSprite(this.moveSprite);
+        if (!this.right) {
+            this.flipOnYImage();
+        }
         this.setCurrentAnimation(new BasicAnimation.Down(this.getSpawnPosition(), this.landPos));
     }
 
     @Override
     public final void setFallAnimation() {
         this.setSprite(this.moveSprite);
+        if (!this.right) {
+            this.flipOnYImage();
+        }
         this.setCurrentAnimation(new BasicAnimation.Down(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.deathHeight)));
     }
 
     @Override
     public final void setMoveDownLeftAnimation() {
         this.setSprite(this.moveSprite);
+        this.right = false;
+        this.flipOnYImage();
         this.setCurrentAnimation(new ComposedAnimation.JumpDownLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
     }
 
     @Override
     public final void setMoveDownRightAnimation() {
         this.setSprite(this.moveSprite);
+        this.right = true;
         this.setCurrentAnimation(new ComposedAnimation.JumpDownRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
     }
 
     @Override
     public final void setMoveUpLeftAnimation() {
-        throw new UnsupportedOperationException();
+
     }
 
     @Override
     public final void setMoveUpRightAnimation() {
-        throw new UnsupportedOperationException();
+
     }
+
 }

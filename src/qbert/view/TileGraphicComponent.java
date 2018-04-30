@@ -34,11 +34,6 @@ public class TileGraphicComponent implements GraphicComponent {
     }
 
     @Override
-    public void setSprite(BufferedImage newSprite) {
-        return;
-    }
-
-    @Override
     public Position2D getPosition() {
         return this.spritePos;
     }

@@ -16,11 +16,6 @@ public interface GraphicComponent {
     BufferedImage getSprite();
 
     /**
-     * @param newSprite the new sprite
-     */
-    void setSprite(BufferedImage newSprite);
-
-    /**
      * @return the current sprite height
      */
     int getSpriteHeight();

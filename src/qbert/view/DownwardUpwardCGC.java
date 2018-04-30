@@ -1,9 +1,6 @@
 package qbert.view;
 
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
-
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.DisplaceAnimation;
@@ -123,15 +120,5 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.front = false;
         this.right = true;
         this.setCurrentAnimation(new ComposedAnimation.JumpUpRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() - this.jumpHeight)));
-    }
-
-    /**
-     * A method to flip on Y axis the current sprite.
-     */
-    private void flipOnYImage() {
-        final AffineTransform transformation = AffineTransform.getScaleInstance(-1, 1);
-        transformation.translate(-this.getSpriteWidth(), 0);
-        final AffineTransformOp operation = new AffineTransformOp(transformation, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-        this.setSprite(operation.filter(this.getSprite(), null));
     }
 }

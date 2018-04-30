@@ -1,5 +1,7 @@
 package qbert.view;
 
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.Animation;
@@ -31,8 +33,10 @@ public abstract class CharacterGraphicComponentImpl implements CharacterGraphicC
         return this.sprite;
     }
 
-    @Override
-    public final void setSprite(final BufferedImage newSprite) {
+    /**
+     * @param newSprite the sprite which will replace the current one
+     */
+    protected final void setSprite(final BufferedImage newSprite) {
         this.sprite = newSprite;
     }
 
@@ -105,5 +109,15 @@ public abstract class CharacterGraphicComponentImpl implements CharacterGraphicC
     @Override
     public final void updateGraphics(final float graphicsSpeed) {
         this.setPosition(this.animation.updateAnimation(graphicsSpeed));
+    }
+
+    /**
+     * A method to flip on Y axis the current sprite.
+     */
+    protected  void flipOnYImage() {
+        final AffineTransform transformation = AffineTransform.getScaleInstance(-1, 1);
+        transformation.translate(-this.getSpriteWidth(), 0);
+        final AffineTransformOp operation = new AffineTransformOp(transformation, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        this.setSprite(operation.filter(this.getSprite(), null));
     }
 }
