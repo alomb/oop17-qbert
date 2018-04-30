@@ -15,6 +15,7 @@ public class LandState extends CharacterStateImpl {
     public LandState(final Character character) {
         super(character);
         /*TODO: update the nextPos only when the character lands on the terrain*/
+        this.getCharacter().setCurrentPosition(new Position2D(this.getCharacter().getNextPosition()));
         this.getCharacter().getGraphicComponent().setStandingAnimation();
     }
 
@@ -25,7 +26,6 @@ public class LandState extends CharacterStateImpl {
 
     @Override
     public void conclude() {
-        this.getCharacter().setCurrentPosition(new Position2D(this.getCharacter().getNextPosition()));
-        
+
     }
 }
