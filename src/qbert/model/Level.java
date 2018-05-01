@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import qbert.model.characters.Character;
 import qbert.model.characters.Coily;
 import qbert.model.characters.Qbert;
+import qbert.model.mapping.Mapper;
 import qbert.model.states.DeathState;
 import qbert.model.states.LandState;
 import qbert.model.states.MoveState;
@@ -246,7 +247,7 @@ public final class Level {
         //Check if entity is just landed 
         if (qbert.getCurrentState() instanceof LandState) {
             //Checking if entity is outside the map
-            if (qLogicalPos.getY() < 0 || qLogicalPos.getX() + qLogicalPos.getY() == 14 || qLogicalPos.getY() - qLogicalPos.getX() == 2) {
+            if (Mapper.isOutOfMap(qLogicalPos)) {
                 qbert.setCurrentState(new MoveState.Fall(qbert));
             } else {
                 qbert.land(this.getTile((int) qLogicalPos.getX(), (int) qLogicalPos.getY()));
@@ -262,14 +263,14 @@ public final class Level {
         //Update Entities
         this.gameCharacters = this.gameCharacters.stream().peek(e -> {
             e.update(elapsed);
-            Position2D logicalPos = e.getCurrentPosition();
+            Position2D logicPos = e.getCurrentPosition();
             //Check if entity is just landed 
             if (e.getCurrentState() instanceof LandState) {
                 //Checking if entity is outside the map
-                if (logicalPos.getY() < 0 || logicalPos.getX() + logicalPos.getY() == 14 || logicalPos.getY() - logicalPos.getX() == 2) {
+                if (Mapper.isOutOfMap(logicPos)) {
                     e.setCurrentState(new MoveState.Fall(e));
                 } else {
-                    e.land(this.getTile((int) logicalPos.getX(), (int) logicalPos.getY()));
+                    e.land(this.getTile((int) logicPos.getX(), (int) logicPos.getY()));
                     e.setCurrentState(e.getStandingState());
                 }
             }
