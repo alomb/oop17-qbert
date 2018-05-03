@@ -34,11 +34,10 @@ public final class Level {
     private LevelSettings settings;
     private int level;
     private int round;
-    
-    //Debug
-    public boolean immortality = false;
 
     public Level() {
+        System.out.println(Dimensions.windowHeight);
+        System.out.println(Dimensions.windowWidth);
         //Forse da spostare in classe Game
         this.points = 0;
         
@@ -242,6 +241,10 @@ public final class Level {
     }
 
     public void update(final float elapsed) {
+        if (!update) {
+            return;
+        }
+        
         spawner.update(elapsed);
 
         qbert.update(elapsed);
@@ -292,7 +295,10 @@ public final class Level {
         }).filter(e -> !e.isDead()).collect(Collectors.toList());
     }
     
-    //Debug functions
+    //Debug options
+    
+    public boolean update = true;
+    public boolean immortality = false;
     
     public void gainLife() {
         lives++;
@@ -300,5 +306,9 @@ public final class Level {
     
     public void toggleImmortality() {
         this.immortality = !this.immortality;
+    }
+    
+    public void toggleTime() {
+        this.update = !this.update;
     }
 }

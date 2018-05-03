@@ -87,7 +87,7 @@ public class Scene {
             try {
                 URL url = getClass().getResource("/arcade_n.ttf");
                 File fontFile = new File(url.getPath());
-                this.custom = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(18.0f);
+                this.custom = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((float) Dimensions.windowHeight / 50);
                 GraphicsEnvironment ge = 
                     GraphicsEnvironment.getLocalGraphicsEnvironment();
                 ge.registerFont(this.custom);
@@ -144,12 +144,12 @@ public class Scene {
             g.drawString("Hi-Score:", 1000, 40);
             g.drawString("1500", 1200, 40);
             
-
-
-            g.drawString("DEBUG:", 60, 600);
-            g.drawString("L - Gain Life", 60, 630);
-            g.drawString("D - Loose Life", 60, 660);
-            g.drawString("I - God Mode (" + (level.immortality ? "on" : "off") + ")", 60, 690);
+            int unit = Dimensions.windowWidth / 48;
+            g.drawString("DEBUG:", unit * 2, unit * 20);
+            g.drawString("L - Gain Life", unit * 2, unit * 20 + unit);
+            g.drawString("D - Loose Life", unit * 2, unit * 20 + unit * 2);
+            g.drawString("I - God Mode (" + (level.immortality ? "on" : "off") + ")", unit * 2, unit * 20 + unit * 3);
+            g.drawString("P - Pause Game (" + (level.update ? "running" : "paused") + ")", unit * 2, unit * 20 + unit * 4);
         }
 
         @Override
@@ -174,6 +174,8 @@ public class Scene {
                     level.death();;
                 } else if (e.getKeyCode() == KeyEvent.VK_I) {
                     level.toggleImmortality();
+                } else if (e.getKeyCode() == KeyEvent.VK_P) {
+                    level.toggleTime();
                 }
             }
         }
