@@ -53,9 +53,6 @@ public final class Level {
         this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground);
         this.createLevelTiles(settings);
         this.spawnQbert();
-
-//      this.gameCharacters.add(new Coily(new Position2D(5, 5), 0.35f,
-//      new DownwardCGC(Sprites.purpleBallStanding, Sprites.purpleBallMoving, new Position2D(Dimensions.spawningPointLeft)), 500, qbert));
     }
 
     public Tile getTile(final int x, final int y) {
@@ -164,6 +161,9 @@ public final class Level {
     }
 
     public void spawn(Character entity) {
+        System.out.println("Spawned: " + entity);
+        //Temporary spawning position wild card
+        entity.setCurrentPosition(new Position2D(-1, -1));
         this.gameCharacters.add(entity);
     }
 
@@ -280,9 +280,16 @@ public final class Level {
                 this.spawner.death(e);
             }
 
-            if (qbert.getCurrentPosition().getX() == e.getCurrentPosition().getX() && 
-                    qbert.getCurrentPosition().getY() == e.getCurrentPosition().getY()) {
-                this.death();
+            //Check if entity is colliding with QBert
+            if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !e.isMoving() && !e.isMoving()
+                    || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())) {
+                System.out.println("Collision Detected");
+                System.out.println(qbert.getCurrentPosition());
+                System.out.println(qbert.getNextPosition());
+                System.out.println(e);
+                System.out.println(e.getCurrentPosition());
+                System.out.println(e.getNextPosition());
+                e.collide(this);
             }
         }).filter(e -> !e.isDead()).collect(Collectors.toList());
     }

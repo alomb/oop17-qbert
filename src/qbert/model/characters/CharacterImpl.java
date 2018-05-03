@@ -1,5 +1,6 @@
 package qbert.model.characters;
 
+import qbert.model.Level;
 import qbert.model.Tile;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
@@ -111,5 +112,10 @@ public abstract class CharacterImpl implements Character {
     @Override
     public void land(final Tile t) {
         //Do nothing
+    }
+
+    @Override
+    public void collide(final Level l) {
+        l.death();
     }
 }

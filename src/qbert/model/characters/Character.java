@@ -1,6 +1,8 @@
 package qbert.model.characters;
 
+
 import qbert.model.GameObject;
+import qbert.model.Level;
 import qbert.model.Tile;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
@@ -80,4 +82,10 @@ public interface Character extends GameObject {
      * @param t the reference to the tile where the {@link Character} has just landed
      */
     void land(Tile t);
+
+
+    /**
+     * @param l temporary reference to level for dealing collision between {@link Character} and QBert
+     */
+    void collide(Level l);
 }
