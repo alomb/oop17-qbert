@@ -99,17 +99,6 @@ public class Scene {
 
             //Temporary Sprite Loading
             this.lifeSprite = Sprites.life;
-
-            // Qbert Death Simulation
-            JButton sim1 = new JButton("Simulate Qbert's Death");
-            sim1.addActionListener(new ActionListener() {
-
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    level.death();
-                }
-            });
-            this.add(sim1);
         }
 
         public void render() {
@@ -154,6 +143,13 @@ public class Scene {
 
             g.drawString("Hi-Score:", 1000, 40);
             g.drawString("1500", 1200, 40);
+            
+
+
+            g.drawString("DEBUG:", 60, 600);
+            g.drawString("L - Gain Life", 60, 630);
+            g.drawString("D - Loose Life", 60, 660);
+            g.drawString("I - God Mode (" + (level.immortality ? "on" : "off") + ")", 60, 690);
         }
 
         @Override
@@ -171,6 +167,14 @@ public class Scene {
                 Scene.this.controller.notifyCommand(new MoveRight());
             } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_KP_LEFT) {
                 Scene.this.controller.notifyCommand(new MoveLeft());
+            } else { //Debug keys
+                if (e.getKeyCode() == KeyEvent.VK_L) {
+                    level.gainLife();
+                } else if (e.getKeyCode() == KeyEvent.VK_D) {
+                    level.death();;
+                } else if (e.getKeyCode() == KeyEvent.VK_I) {
+                    level.toggleImmortality();
+                }
             }
         }
 

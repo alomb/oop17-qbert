@@ -34,6 +34,9 @@ public final class Level {
     private LevelSettings settings;
     private int level;
     private int round;
+    
+    //Debug
+    public boolean immortality = false;
 
     public Level() {
         //Forse da spostare in classe Game
@@ -161,7 +164,6 @@ public final class Level {
     }
 
     public void spawn(Character entity) {
-        System.out.println("Spawned: " + entity);
         //Temporary spawning position wild card
         entity.setCurrentPosition(new Position2D(-1, -1));
         this.gameCharacters.add(entity);
@@ -283,14 +285,20 @@ public final class Level {
             //Check if entity is colliding with QBert
             if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !e.isMoving() && !e.isMoving()
                     || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())) {
-                System.out.println("Collision Detected");
-                System.out.println(qbert.getCurrentPosition());
-                System.out.println(qbert.getNextPosition());
-                System.out.println(e);
-                System.out.println(e.getCurrentPosition());
-                System.out.println(e.getNextPosition());
-                e.collide(this);
+                
+                if (!immortality) //Debug check
+                    e.collide(this);
             }
         }).filter(e -> !e.isDead()).collect(Collectors.toList());
+    }
+    
+    //Debug functions
+    
+    public void gainLife() {
+        lives++;
+    }
+    
+    public void toggleImmortality() {
+        this.immortality = !this.immortality;
     }
 }
