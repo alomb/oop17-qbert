@@ -182,6 +182,8 @@ public final class Level {
     }
 
     public void respawnQbert() {
+        /*Clean an attempted movement*/
+        this.qbert.setNextPosition(this.qbert.getCurrentPosition());
         this.qbert.setCurrentState(new MoveState.Spawn(qbert));
     }
 
@@ -240,7 +242,7 @@ public final class Level {
         if (this.lives > 1) {
             this.lives--;
             this.respawnQbert();
-            this.gameCharacters = new ArrayList<>();
+            this.gameCharacters.forEach(c -> c.setDead(true));
         } else {
             System.exit(0);
         }
@@ -250,11 +252,11 @@ public final class Level {
         if (!update) {
             return;
         }
-        
+
         if (this.waitTimer <= 0) {
-            
+
             qbert.update(elapsed);
-            Position2D qLogicalPos = qbert.getCurrentPosition();
+            Position2D qLogicalPos = qbert.getNextPosition();
             //Check if entity is just landed 
             if (qbert.getCurrentState() instanceof LandState) {
                 //Checking if entity is outside the map
@@ -266,21 +268,21 @@ public final class Level {
                     this.checkStatus();
                 }
             }
-    
+
             if (qbert.isDead()) {
                 this.death();
             }
-            
+
             if (!updateEntities) {
                 return;
             }
-            
+
             spawner.update(elapsed);
-    
+
             //Update Entities
             this.gameCharacters = this.gameCharacters.stream().peek(e -> {
                 e.update(elapsed);
-                Position2D logicPos = e.getCurrentPosition();
+                Position2D logicPos = e.getNextPosition();
                 //Check if entity is just landed 
                 if (e.getCurrentState() instanceof LandState) {
                     //Checking if entity is outside the map
@@ -291,18 +293,20 @@ public final class Level {
                         e.setCurrentState(e.getStandingState());
                     }
                 }
-    
+
                 if (e.isDead()) {
                     //Notify Spawner
                     this.spawner.death(e);
-                }
-    
-                //Check if entity is colliding with QBert
-                if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !qbert.isMoving() && !e.isMoving()
-                        || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())) {
-                    
-                    if (!immortality) //Debug check
-                        e.collide(this);
+                } else {
+                    //Check if entity is colliding with QBert
+                    if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !qbert.isMoving() && !e.isMoving()
+                            || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())) {
+
+                        if (!immortality) { 
+                            //Debug check
+                            e.collide(this);
+                        }
+                    }
                 }
             }).filter(e -> !e.isDead()).collect(Collectors.toList());
         } else {

@@ -1,6 +1,7 @@
 package qbert.model.states;
 
 import qbert.model.characters.Character;
+import qbert.model.utilities.Position2D;
 
 /**
  * The {@link CharacterState} used to manage {@link Qbert} when it's standing, it differs from
@@ -15,6 +16,7 @@ public final class QbertStandingState implements CharacterState {
      */
     public QbertStandingState(final Character character) {
         this.character = character;
+        this.character.setCurrentPosition(new Position2D(this.character.getNextPosition()));
         this.character.getGraphicComponent().setSpawnPosToCurrentPos();
         this.character.getGraphicComponent().setStandingAnimation();
     }

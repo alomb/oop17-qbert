@@ -14,6 +14,7 @@ public class DownwardCharStandingState extends WaitTimerState {
      */
     public DownwardCharStandingState(final Character character, final int triggerTime) {
         super(character, triggerTime);
+        this.getCharacter().setCurrentPosition(new Position2D(this.getCharacter().getNextPosition()));
         this.getCharacter().getGraphicComponent().setStandingAnimation();
     }
 
