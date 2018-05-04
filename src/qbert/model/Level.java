@@ -242,8 +242,6 @@ public final class Level {
         if (!update) {
             return;
         }
-        
-        spawner.update(elapsed);
 
         qbert.update(elapsed);
         Position2D qLogicalPos = qbert.getCurrentPosition();
@@ -262,6 +260,12 @@ public final class Level {
         if (qbert.isDead()) {
             this.death();
         }
+        
+        if (!updateEntities) {
+            return;
+        }
+        
+        spawner.update(elapsed);
 
         //Update Entities
         this.gameCharacters = this.gameCharacters.stream().peek(e -> {
@@ -284,7 +288,7 @@ public final class Level {
             }
 
             //Check if entity is colliding with QBert
-            if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !e.isMoving() && !e.isMoving()
+            if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !qbert.isMoving() && !e.isMoving()
                     || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())) {
                 
                 if (!immortality) //Debug check
@@ -296,6 +300,7 @@ public final class Level {
     //Debug options
     
     public boolean update = true;
+    public boolean updateEntities = true;
     public boolean immortality = false;
     
     public void gainLife() {
@@ -308,5 +313,9 @@ public final class Level {
     
     public void toggleTime() {
         this.update = !this.update;
+    }
+    
+    public void toggleEntities() {
+        this.updateEntities = !this.updateEntities;
     }
 }

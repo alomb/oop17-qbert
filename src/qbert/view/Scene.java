@@ -150,6 +150,8 @@ public class Scene {
             g.drawString("D - Loose Life", unit * 2, unit * 20 + unit * 2);
             g.drawString("I - God Mode (" + (level.immortality ? "on" : "off") + ")", unit * 2, unit * 20 + unit * 3);
             g.drawString("P - Pause Game (" + (level.update ? "running" : "paused") + ")", unit * 2, unit * 20 + unit * 4);
+            g.drawString("E - Pause Entities (" + (level.updateEntities ? "running" : "paused") + ")", unit * 2, unit * 20 + unit * 5);
+            g.drawString("Q - Quit", unit * 2, unit * 20 + unit * 6);
         }
 
         @Override
@@ -176,6 +178,10 @@ public class Scene {
                     level.toggleImmortality();
                 } else if (e.getKeyCode() == KeyEvent.VK_P) {
                     level.toggleTime();
+                } else if (e.getKeyCode() == KeyEvent.VK_E) {
+                    level.toggleEntities();
+                } else if (e.getKeyCode() == KeyEvent.VK_Q) {
+                    System.exit(0);
                 }
             }
         }
