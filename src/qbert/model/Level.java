@@ -36,8 +36,6 @@ public final class Level {
     private int round;
 
     public Level() {
-        System.out.println(Dimensions.windowHeight);
-        System.out.println(Dimensions.windowWidth);
         //Forse da spostare in classe Game
         this.points = 0;
         

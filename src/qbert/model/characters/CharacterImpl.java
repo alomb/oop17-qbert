@@ -29,7 +29,7 @@ public abstract class CharacterImpl implements Character {
      * @param graphics the relative {@link CharacterGraphicComponent} to manage graphics
      */
     public CharacterImpl(final Position2D startPos, final float speed, final CharacterGraphicComponent graphics) {
-        this.currentPos = startPos;
+        this.currentPos = new Position2D(startPos);
         this.characterSpeed = speed;
         this.graphics = graphics;
         this.dead = false;
@@ -43,7 +43,7 @@ public abstract class CharacterImpl implements Character {
 
     @Override
     public final void setCurrentPosition(final Position2D currentGridPos) {
-        this.currentPos = currentGridPos;
+        this.currentPos = new Position2D(currentGridPos);
     }
 
     @Override
@@ -53,7 +53,7 @@ public abstract class CharacterImpl implements Character {
 
     @Override
     public final void setNextPosition(final Position2D nextGridPos) {
-        this.nextPos = nextGridPos;
+        this.nextPos = new Position2D(nextGridPos);
     }
 
     @Override

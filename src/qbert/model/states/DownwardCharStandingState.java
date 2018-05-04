@@ -20,7 +20,7 @@ public class DownwardCharStandingState extends WaitTimerState {
     @Override
     public final void conclude() {
         CharacterState nextState;
-        final Position2D newPos = getCharacter().getCurrentPosition();
+        final Position2D newPos = new Position2D(getCharacter().getCurrentPosition());
         if (this.canAdvance()) {
             newPos.setY(newPos.getY() - 1);
             if (Math.random() > 0.5) {
