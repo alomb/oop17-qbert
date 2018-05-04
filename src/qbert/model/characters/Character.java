@@ -54,9 +54,9 @@ public interface Character extends GameObject {
     boolean isDead();
 
     /**
-     * Set the {@link Character} dead.
+     * Set the {@link Character} dead. TODO: Aggiornare JavaDoc (e/o funzione)
      */
-    void setDead();
+    void setDead(boolean dead);
 
     /**
      * @return the current {@link CharacterState}

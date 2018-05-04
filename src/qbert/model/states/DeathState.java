@@ -13,7 +13,7 @@ public class DeathState extends CharacterStateImpl {
     public DeathState(final Character character) {
         super(character);
         character.getGraphicComponent().setStandingAnimation();
-        character.setDead();
+        character.setDead(true);
     }
 
     @Override

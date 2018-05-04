@@ -29,6 +29,7 @@ public abstract class MoveState extends WaitAnimationState {
          */
         public Spawn(final Character character) {
             super(character);
+            this.getCharacter().setDead(false);
             this.getCharacter().getGraphicComponent().setSpawnAnimation();
         }
 

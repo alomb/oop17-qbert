@@ -87,8 +87,8 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public final void setDead() {
-        this.dead = true;
+    public final void setDead(boolean dead) {
+        this.dead = dead;
     }
 
     @Override
@@ -116,6 +116,6 @@ public abstract class CharacterImpl implements Character {
 
     @Override
     public void collide(final Level l) {
-        l.death();
+        l.getQBert().setDead(true);
     }
 }

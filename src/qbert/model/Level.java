@@ -11,6 +11,7 @@ import qbert.model.characters.Character;
 import qbert.model.characters.Coily;
 import qbert.model.characters.Qbert;
 import qbert.model.mapping.Mapper;
+import qbert.model.states.CharacterState;
 import qbert.model.states.DeathState;
 import qbert.model.states.LandState;
 import qbert.model.states.MoveState;
@@ -28,6 +29,7 @@ public final class Level {
     private Qbert qbert;
     private int points;
     private int lives;
+    private int waitTimer = 0;
     private Spawner spawner;
 
     //Level settings
@@ -179,6 +181,10 @@ public final class Level {
         this.spawnQbert(q);
     }
 
+    public void respawnQbert() {
+        this.qbert.setCurrentState(new MoveState.Spawn(qbert));
+    }
+
     public void score(int points) {
         this.points += points;
     }
@@ -230,9 +236,11 @@ public final class Level {
     }
 
     public void death() {
+        this.waitTimer = 2000;
         if (this.lives > 1) {
             this.lives--;
-            this.spawnQbert();
+            this.respawnQbert();
+            this.gameCharacters = new ArrayList<>();
         } else {
             System.exit(0);
         }
@@ -242,59 +250,64 @@ public final class Level {
         if (!update) {
             return;
         }
-
-        qbert.update(elapsed);
-        Position2D qLogicalPos = qbert.getCurrentPosition();
-        //Check if entity is just landed 
-        if (qbert.getCurrentState() instanceof LandState) {
-            //Checking if entity is outside the map
-            if (Mapper.isOutOfMap(qLogicalPos)) {
-                qbert.setCurrentState(new MoveState.Fall(qbert));
-            } else {
-                qbert.land(this.getTile((int) qLogicalPos.getX(), (int) qLogicalPos.getY()));
-                qbert.setCurrentState(qbert.getStandingState());
-                this.checkStatus();
-            }
-        }
-
-        if (qbert.isDead()) {
-            this.death();
-        }
         
-        if (!updateEntities) {
-            return;
-        }
-        
-        spawner.update(elapsed);
-
-        //Update Entities
-        this.gameCharacters = this.gameCharacters.stream().peek(e -> {
-            e.update(elapsed);
-            Position2D logicPos = e.getCurrentPosition();
+        if (this.waitTimer <= 0) {
+            
+            qbert.update(elapsed);
+            Position2D qLogicalPos = qbert.getCurrentPosition();
             //Check if entity is just landed 
-            if (e.getCurrentState() instanceof LandState) {
+            if (qbert.getCurrentState() instanceof LandState) {
                 //Checking if entity is outside the map
-                if (Mapper.isOutOfMap(logicPos)) {
-                    e.setCurrentState(new MoveState.Fall(e));
+                if (Mapper.isOutOfMap(qLogicalPos)) {
+                    qbert.setCurrentState(new MoveState.Fall(qbert));
                 } else {
-                    e.land(this.getTile((int) logicPos.getX(), (int) logicPos.getY()));
-                    e.setCurrentState(e.getStandingState());
+                    qbert.land(this.getTile((int) qLogicalPos.getX(), (int) qLogicalPos.getY()));
+                    qbert.setCurrentState(qbert.getStandingState());
+                    this.checkStatus();
                 }
             }
-
-            if (e.isDead()) {
-                //Notify Spawner
-                this.spawner.death(e);
+    
+            if (qbert.isDead()) {
+                this.death();
             }
-
-            //Check if entity is colliding with QBert
-            if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !qbert.isMoving() && !e.isMoving()
-                    || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())) {
-                
-                if (!immortality) //Debug check
-                    e.collide(this);
+            
+            if (!updateEntities) {
+                return;
             }
-        }).filter(e -> !e.isDead()).collect(Collectors.toList());
+            
+            spawner.update(elapsed);
+    
+            //Update Entities
+            this.gameCharacters = this.gameCharacters.stream().peek(e -> {
+                e.update(elapsed);
+                Position2D logicPos = e.getCurrentPosition();
+                //Check if entity is just landed 
+                if (e.getCurrentState() instanceof LandState) {
+                    //Checking if entity is outside the map
+                    if (Mapper.isOutOfMap(logicPos)) {
+                        e.setCurrentState(new MoveState.Fall(e));
+                    } else {
+                        e.land(this.getTile((int) logicPos.getX(), (int) logicPos.getY()));
+                        e.setCurrentState(e.getStandingState());
+                    }
+                }
+    
+                if (e.isDead()) {
+                    //Notify Spawner
+                    this.spawner.death(e);
+                }
+    
+                //Check if entity is colliding with QBert
+                if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !qbert.isMoving() && !e.isMoving()
+                        || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())) {
+                    
+                    if (!immortality) //Debug check
+                        e.collide(this);
+                }
+            }).filter(e -> !e.isDead()).collect(Collectors.toList());
+        } else {
+            this.waitTimer -= elapsed;
+        }
     }
     
     //Debug options
