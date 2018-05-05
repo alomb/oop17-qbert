@@ -53,6 +53,7 @@ public final class Level {
     }
 
     public void reset() {
+        this.gameCharacters.forEach(c -> c.setDead(true));
         this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground);
         this.createLevelTiles(settings);
         this.spawnQbert();
