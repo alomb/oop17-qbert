@@ -1,12 +1,14 @@
 package qbert.model;
 
 import qbert.model.characters.Coily;
+import qbert.model.characters.Qbert;
 import qbert.model.characters.RedBall;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
 import qbert.view.CharacterGraphicComponent;
 import qbert.view.DownwardCGC;
+import qbert.view.DownwardUpwardCGC;
 
 import java.util.Random;
 
@@ -16,6 +18,13 @@ import qbert.model.characters.Character;
  * The implementation of {@link EnemyFactory} interface.
  */
 public class EnemyFactoryImpl implements EnemyFactory {
+
+    @Override
+    public final Character createQbert() {
+        final CharacterGraphicComponent qg = new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
+                new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight()));
+        return new Qbert(new Position2D(6, 6), 0.35f, qg);
+    }
 
     @Override
     public final Character createCoily(final float speed, final int standingTime, final Character qbert) {
@@ -40,4 +49,5 @@ public class EnemyFactoryImpl implements EnemyFactory {
     private Position2D getLogicalPos(final Position2D randPos) {
         return randPos == Dimensions.spawningPointLeft ? new Position2D(5, 5) : new Position2D(7, 5);
     }
+
 }

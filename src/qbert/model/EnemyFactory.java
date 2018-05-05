@@ -8,6 +8,11 @@ import qbert.model.characters.Character;
 public interface EnemyFactory {
 
     /**
+     * @return the {@link Character} representing Qbert
+     */
+    Character createQbert();
+
+    /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
      * @param qbert the {@link Qbert} reference
