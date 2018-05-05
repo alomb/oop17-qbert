@@ -30,6 +30,7 @@ public final class Level {
     private int points;
     private int lives;
     private int waitTimer = 0;
+    private boolean timerCallback = false;
     private Spawner spawner;
 
     //Level settings
@@ -239,13 +240,7 @@ public final class Level {
 
     public void death() {
         this.waitTimer = 2000;
-        if (this.lives > 1) {
-            this.lives--;
-            this.respawnQbert();
-            this.gameCharacters.forEach(c -> c.setDead(true));
-        } else {
-            System.exit(0);
-        }
+        this.timerCallback = true;
     }
 
     public void update(final float elapsed) {
@@ -254,6 +249,16 @@ public final class Level {
         }
 
         if (this.waitTimer <= 0) {
+            if (this.timerCallback) {
+                if (this.lives > 1) {
+                    this.lives--;
+                    this.respawnQbert();
+                    this.gameCharacters.forEach(c -> c.setDead(true));
+                } else {
+                    System.exit(0);
+                }
+                this.timerCallback = false;
+            }
 
             qbert.update(elapsed);
             Position2D qLogicalPos = qbert.getNextPosition();
