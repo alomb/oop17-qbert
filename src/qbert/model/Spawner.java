@@ -3,6 +3,7 @@ package qbert.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.batik.anim.timing.SyncbaseTimingSpecifier;
 import org.jdom2.JDOMException;
 
 import qbert.controller.LevelConfigurationReader;
@@ -80,7 +81,12 @@ public final class Spawner {
      */
     public void death(final Character character) {
         final String name = character.getClass().getSimpleName();
-        this.mapInfo.get(name).decCurrentQuantity();
+        /* DEBUG */
+        System.out.println("DEC");
+
+        if (this.mapInfo.get(name).getCurrentQuantity() > 0) {
+            this.mapInfo.get(name).decCurrentQuantity();
+        }
     }
 
     /**

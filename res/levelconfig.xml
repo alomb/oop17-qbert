@@ -8,55 +8,55 @@
 	<LEVEL2>
 		<ROUND1 colors="1" reversible="false">
 			<Coily speed="0.34" quantity="1" spawningTime="4000" standingTime="1000"/>
-			<RedBall speed="0.35" quantity="1" spawningTime="4000" standingTime="1000"/>
+			<RedBall speed="0.35" quantity="1" spawningTime="6000" standingTime="1000"/>
 		</ROUND1>
 	</LEVEL2>
 	<LEVEL3>
 		<ROUND1 colors="1" reversible="false">
 			<Coily speed="0.35" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<RedBall speed="0.35" quantity="2" spawningTime="3000" standingTime="1000"/>
+			<RedBall speed="0.35" quantity="2" spawningTime="5000" standingTime="1000"/>
 		</ROUND1>
 	</LEVEL3>
 	<LEVEL4>
 		<ROUND1 colors="2" reversible="false">
 			<Coily speed="0.35" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<RedBall speed="0.36" quantity="2" spawningTime="3000" standingTime="1000"/>
-			<GreenBall speed="0.35" quantity="1" spawningTime="3000" standingTime="1000"/>
+			<RedBall speed="0.36" quantity="2" spawningTime="5000" standingTime="1000"/>
+			<GreenBall speed="0.35" quantity="1" spawningTime="7000" standingTime="1000"/>
 		</ROUND1>
 	</LEVEL4>
 	<LEVEL5>
 		<ROUND1 colors="2" reversible="false">
 			<Coily speed="0.36" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<RedBall speed="0.36" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<GreenBall speed="0.35" quantity="1" spawningTime="3000" standingTime="1000"/>
+			<RedBall speed="0.36" quantity="2" spawningTime="4000" standingTime="1000"/>
+			<GreenBall speed="0.35" quantity="1" spawningTime="7000" standingTime="1000"/>
 		</ROUND1>
 	</LEVEL5>
 	<LEVEL6>
 		<ROUND1 colors="2" reversible="false">
 			<Coily speed="0.36" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<RedBall speed="0.37" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<GreenBall speed="0.35" quantity="1" spawningTime="3000" standingTime="1000"/>
+			<RedBall speed="0.37" quantity="3" spawningTime="4000" standingTime="1000"/>
+			<GreenBall speed="0.35" quantity="1" spawningTime="7000" standingTime="1000"/>
 		</ROUND1>
 	</LEVEL6>
 	<LEVEL7>
 		<ROUND1 colors="2" reversible="true">
 			<Coily speed="0.37" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<RedBall speed="0.37" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<GreenBall speed="0.35" quantity="1" spawningTime="3000" standingTime="1000"/>
+			<RedBall speed="0.37" quantity="2" spawningTime="5000" standingTime="1000"/>
+			<GreenBall speed="0.35" quantity="1" spawningTime="7000" standingTime="1000"/>
 		</ROUND1>
 	</LEVEL7>
 	<LEVEL8>
 		<ROUND1 colors="2" reversible="true">
 			<Coily speed="0.37" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<RedBall speed="0.38" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<GreenBall speed="0.35" quantity="1" spawningTime="3000" standingTime="1000"/>
+			<RedBall speed="0.38" quantity="3" spawningTime="4000" standingTime="1000"/>
+			<GreenBall speed="0.35" quantity="1" spawningTime="7000" standingTime="1000"/>
 		</ROUND1>
 	</LEVEL8>
 	<LEVEL9>
 		<ROUND1 colors="3" reversible="true">
 			<Coily speed="0.38" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<RedBall speed="0.38" quantity="1" spawningTime="3000" standingTime="1000"/>
-			<GreenBall speed="0.35" quantity="1" spawningTime="3000" standingTime="1000"/>
+			<RedBall speed="0.38" quantity="3" spawningTime="4000" standingTime="1000"/>
+			<GreenBall speed="0.35" quantity="1" spawningTime="10000" standingTime="1000"/>
 		</ROUND1>
 	</LEVEL9>
 </LEVELS>
