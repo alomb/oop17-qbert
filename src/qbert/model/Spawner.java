@@ -3,15 +3,11 @@ package qbert.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.batik.anim.timing.SyncbaseTimingSpecifier;
 import org.jdom2.JDOMException;
 
 import qbert.controller.LevelConfigurationReader;
 import qbert.model.characters.Character;
-import qbert.model.characters.Qbert;
-import qbert.model.utilities.Dimensions;
-import qbert.model.utilities.Sprites;
-import qbert.view.DownwardUpwardCGC;
+import qbert.model.states.MoveState;
 
 /**
  * The class for the characters spawning management.
@@ -39,15 +35,22 @@ public final class Spawner {
     }
 
     /**
-     * 
+     * @return the {@link Character} representing Qbert.
      */
-    public void spawnQbert() {
-        /*TODO: Change with correct sprites*/
-        level.spawn(new Qbert(Dimensions.spawningQBert, 0.35f, new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, Dimensions.spawningQBert)));
+    public Character spawnQbert() {
+        return ef.createQbert();
     }
 
     /**
-     * This function manages the characters spawning progress during the game.
+     * 
+     */
+    public void respawnQbert() {
+        level.getQBert().setNextPosition(level.getQBert().getCurrentPosition());
+        level.getQBert().setCurrentState(new MoveState.Spawn(level.getQBert()));
+    }
+
+    /**
+     * This method manages the characters spawning progress during the game.
      * @param dt the time passed since the last game cycle
      */
     public void update(final float dt) {
@@ -76,7 +79,7 @@ public final class Spawner {
     }
 
     /**
-     * This function manages the death of a character.
+     * This method manages the death of a character.
      * @param character the dead {@link Character}
      */
     public void death(final Character character) {

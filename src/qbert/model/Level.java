@@ -56,7 +56,7 @@ public final class Level {
         this.gameCharacters.forEach(c -> c.setDead(true));
         this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground);
         this.createLevelTiles(settings);
-        this.spawnQbert();
+        this.qbert = (Qbert) this.spawner.spawnQbert();
     }
 
     public Tile getTile(final int x, final int y) {
@@ -169,26 +169,7 @@ public final class Level {
         entity.setCurrentPosition(new Position2D(-1, -1));
         this.gameCharacters.add(entity);
     }
-
-    public void spawnQbert(Qbert qbert) {
-        this.qbert = qbert;
-    }
-
-    //Test qbert spawn
-    public void spawnQbert() {
-        CharacterGraphicComponent qg = new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
-                new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight())
-        );
-        Qbert q = new Qbert(new Position2D(6, 6), 0.35f, qg);
-        this.spawnQbert(q);
-    }
-
-    public void respawnQbert() {
-        /*Clean an attempted movement*/
-        this.qbert.setNextPosition(this.qbert.getCurrentPosition());
-        this.qbert.setCurrentState(new MoveState.Spawn(qbert));
-    }
-
+    
     public void score(int points) {
         this.points += points;
     }
@@ -253,7 +234,7 @@ public final class Level {
             if (this.timerCallback) {
                 if (this.lives > 1) {
                     this.lives--;
-                    this.respawnQbert();
+                    spawner.respawnQbert();
                     this.gameCharacters.forEach(c -> c.setDead(true));
                 } else {
                     System.exit(0);
