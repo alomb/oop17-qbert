@@ -91,13 +91,14 @@ public class Coily extends CharacterImpl {
         CoilyAdultStandingState(final Character character, final int triggerTime, final Character qbert) {
             super(character, triggerTime);
             this.qbert = qbert;
+            this.getCharacter().setCurrentPosition(new Position2D(this.getCharacter().getNextPosition()));
             this.getCharacter().getGraphicComponent().setStandingAnimation();
         }
 
         @Override
         public void conclude() {
-            final Position2D targetPosition = qbert.getCurrentPosition();
-            final Position2D myPosition = this.getCharacter().getCurrentPosition();
+            final Position2D targetPosition = new Position2D(this.qbert.getCurrentPosition());
+            final Position2D myPosition = new Position2D(this.getCharacter().getCurrentPosition());
 
             if (targetPosition.equals(myPosition)) {
                 return;
@@ -130,9 +131,6 @@ public class Coily extends CharacterImpl {
             } else {
                 this.getCharacter().setCurrentState(new MoveState.DownLeft(this.getCharacter()));
             }
-
-            this.getCharacter().getCurrentPosition().setY(myPosition.getY() + dy);
-            this.getCharacter().getCurrentPosition().setX(myPosition.getX() + dx);
         }
     }
 }
