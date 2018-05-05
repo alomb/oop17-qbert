@@ -1,9 +1,13 @@
 package qbert.model;
 
+import java.util.Random;
+
 /**
  * The class containing the information of a specific character.
  */
 public final class EnemyInfo {
+
+    private static final int MILLIS_OFFSET = 1500;
 
     private final float speed;
     private int currentQuantity;
@@ -23,7 +27,7 @@ public final class EnemyInfo {
         this.speed = speed;
         this.currentQuantity = 0;
         this.totalQuantity = quantity;
-        this.spawningTime = spawningTime;
+        this.spawningTime = this.addRandomness(spawningTime);
         this.standingTime = standingTime;
 
         this.elapsedTime = 0;
@@ -97,6 +101,13 @@ public final class EnemyInfo {
      */
     public void incElapsedTime(final float dt) {
         this.elapsedTime += dt;
+    }
+
+    /**
+     * This method adds an offset of randomness to the spawning timing of each enemy.
+     */
+    private int addRandomness(final int spawningTime) {
+        return (spawningTime + new Random().nextInt(EnemyInfo.MILLIS_OFFSET));
     }
 }
 
