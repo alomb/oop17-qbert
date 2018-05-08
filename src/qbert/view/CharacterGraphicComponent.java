@@ -29,14 +29,14 @@ public interface CharacterGraphicComponent extends GraphicComponent {
     void setCurrentAnimation(Animation animation);
 
     /**
+     * Set the {@link Character} relative death animation.
+     */
+    void setDeathAnimation();
+
+    /**
      * Set the {@link Character} relative standing animation.
      */
     void setStandingAnimation();
-
-    /**
-     * Set spawning {@link Position2D} to be the current one.
-     */
-    void setSpawnPosToCurrentPos();
 
     /**
      * Set the {@link Character} relative spawning animation.
@@ -67,6 +67,11 @@ public interface CharacterGraphicComponent extends GraphicComponent {
      * Set the {@link Character} relative moving up-right animation.
      */
     void setMoveUpRightAnimation();
+
+    /**
+     * Set the {@link Character} relative on-disk animation.
+     */
+    void setOnDiskAnimation();
 
     /**
      * This function is called to update the graphics, e.g., the current {@link Animation}.

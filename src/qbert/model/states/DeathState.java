@@ -12,7 +12,8 @@ public class DeathState extends CharacterStateImpl {
      */
     public DeathState(final Character character) {
         super(character);
-        character.getGraphicComponent().setStandingAnimation();
+        System.out.println("dssd");
+        character.getGraphicComponent().setDeathAnimation();
         character.setDead(true);
     }
 

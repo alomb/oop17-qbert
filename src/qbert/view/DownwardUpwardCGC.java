@@ -10,7 +10,7 @@ import qbert.view.animations.StandingAnimation;
 
 /**
  * CGC stands for CharacterGraphicComponent, this implementation is used to manage characters whose movements are bidirectional and 
- * whose spawn is instant on some position, like Coily (adult) and QBert.
+ * whose spawn is instant on some position, like Coily (adult) and partially QBert.
  */
 public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
 
@@ -48,6 +48,11 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.backMoveSprite = backMoveSprite;
         this.frontStandSprite = frontStandSprite;
         this.frontMoveSprite = frontMoveSprite;
+    }
+
+    @Override
+    public void setDeathAnimation() {
+
     }
 
     @Override
@@ -120,5 +125,10 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.front = false;
         this.right = true;
         this.setCurrentAnimation(new ComposedAnimation.JumpUpRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() - this.jumpHeight)));
+    }
+
+    @Override
+    public void setOnDiskAnimation() {
+
     }
 }

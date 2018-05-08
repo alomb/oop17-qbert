@@ -223,6 +223,7 @@ public final class Level {
     public void death() {
         this.waitTimer = 2000;
         this.timerCallback = true;
+        this.qbert.setCurrentState(new DeathState(this.getQBert()));
     }
 
     public void update(final float elapsed) {

@@ -17,7 +17,8 @@ public final class QbertStandingState implements CharacterState {
     public QbertStandingState(final Character character) {
         this.character = character;
         this.character.setCurrentPosition(new Position2D(this.character.getNextPosition()));
-        this.character.getGraphicComponent().setSpawnPosToCurrentPos();
+        this.character.getGraphicComponent().setSpawnPosition(
+                new Position2D(this.character.getGraphicComponent().getPosition()));
         this.character.getGraphicComponent().setStandingAnimation();
     }
 

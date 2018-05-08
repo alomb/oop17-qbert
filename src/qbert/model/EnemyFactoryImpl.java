@@ -8,7 +8,7 @@ import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
 import qbert.view.CharacterGraphicComponent;
 import qbert.view.DownwardCGC;
-import qbert.view.DownwardUpwardCGC;
+import qbert.view.QBertCGC;
 
 import java.util.Random;
 
@@ -21,9 +21,14 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
     public final Character createQbert() {
-        final CharacterGraphicComponent qg = new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
-                new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight()));
-        return new Qbert(new Position2D(6, 6), 0.35f, qg);
+
+        final CharacterGraphicComponent graphics = new QBertCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
+                Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight()));
+
+//        final CharacterGraphicComponent graphics = new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
+//                new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight()));
+
+        return new Qbert(new Position2D(6, 6), 0.35f, graphics);
     }
 
     @Override

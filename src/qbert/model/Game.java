@@ -59,6 +59,8 @@ public class Game {
           convertSvgToPng("res/svg/QbertBackStand.svg", "res/png/QbertBackStand.png"); 
           convertSvgToPng("res/svg/QbertFrontMove.svg", "res/png/QbertFrontMove.png"); 
           convertSvgToPng("res/svg/QbertFrontStand.svg", "res/png/QbertFrontStand.png");
+          convertSvgToPng("res/svg/QbertDead.svg", "res/png/QbertDead.png");
+          convertSvgToPng("res/svg/QbertOnDisk.svg", "res/png/QbertOnDisk.png"); 
           convertSvgToPng("res/svg/RedBallMove.svg", "res/png/RedBallMove.png"); 
           convertSvgToPng("res/svg/RedBallStand.svg", "res/png/RedBallStand.png");
           convertSvgToPng("res/svg/TileBeige.svg", "res/png/TileBeige.png");
@@ -89,6 +91,8 @@ public class Game {
           Sprites.qbertBackStanding = loadImg("res/png/QbertBackStand.png");
           Sprites.qbertFrontMoving = loadImg("res/png/QbertFrontMove.png"); 
           Sprites.qbertFrontStanding = loadImg("res/png/QbertFrontStand.png");
+          Sprites.qbertDead = loadImg("res/png/QbertDead.png");
+          Sprites.qbertOnDisk = loadImg("res/png/QbertOnDisk.png");
           Sprites.redBallMoving = loadImg("res/png/RedBallMove.png");
           Sprites.redBallStanding = loadImg("res/png/RedBallStand.png");
           Sprites.beigeTile = loadImg("res/png/TileBeige.png");

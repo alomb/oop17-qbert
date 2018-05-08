@@ -81,12 +81,10 @@ public abstract class CharacterGraphicComponentImpl implements CharacterGraphicC
     }
 
     @Override
-    public abstract void setStandingAnimation();
+    public abstract void setDeathAnimation();
 
     @Override
-    public final void setSpawnPosToCurrentPos() {
-        this.spawnPos = new Position2D(this.spritePos.getX(), this.spritePos.getY());
-    }
+    public abstract void setStandingAnimation();
 
     @Override
     public abstract void setSpawnAnimation();

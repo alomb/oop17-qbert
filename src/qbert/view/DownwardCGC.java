@@ -41,6 +41,11 @@ public class DownwardCGC extends CharacterGraphicComponentImpl {
     }
 
     @Override
+    public final void setDeathAnimation() {
+
+    }
+
+    @Override
     public final void setStandingAnimation() {
         this.setSprite(this.standSprite);
         if (!this.right) {
@@ -89,6 +94,11 @@ public class DownwardCGC extends CharacterGraphicComponentImpl {
 
     @Override
     public final void setMoveUpRightAnimation() {
+
+    }
+
+    @Override
+    public void setOnDiskAnimation() {
 
     }
 

@@ -20,6 +20,8 @@ public class Sprites {
     public static BufferedImage qbertBackStanding;
     public static BufferedImage qbertFrontMoving;
     public static BufferedImage qbertFrontStanding;
+    public static BufferedImage qbertDead;
+    public static BufferedImage qbertOnDisk;
     public static BufferedImage redBallMoving;
     public static BufferedImage redBallStanding;
     public static BufferedImage beigeTile;
@@ -30,5 +32,6 @@ public class Sprites {
     public static BufferedImage purpleTile;
     public static BufferedImage yellowTile;
     public static BufferedImage life;
+
 
 }
