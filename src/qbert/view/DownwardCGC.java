@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.ComposedAnimation;
+import qbert.view.animations.DiskAnimation;
 import qbert.view.animations.BasicAnimation;
 import qbert.view.animations.StandingAnimation;
 
@@ -42,7 +43,7 @@ public class DownwardCGC extends CharacterGraphicComponentImpl {
 
     @Override
     public final void setDeathAnimation() {
-
+        this.setStandingAnimation();
     }
 
     @Override

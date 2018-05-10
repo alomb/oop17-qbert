@@ -35,7 +35,7 @@ public abstract class BasicAnimation extends MovementAnimation {
 
         @Override
         public final void calculateNext() {
-            this.getCurrentPosition().setY(this.getCurrentPosition().getY() + this.getAnimationSpeed());
+            this.getCurrentPosition().setY((int) (this.getCurrentPosition().getY() + this.getAnimationSpeed()));
 
             if (this.getTargetPosition().getY() < this.getCurrentPosition().getY()) {
                 this.getCurrentPosition().setY(this.getTargetPosition().getY());
@@ -58,7 +58,7 @@ public abstract class BasicAnimation extends MovementAnimation {
 
         @Override
         public final void calculateNext() {
-            this.getCurrentPosition().setY(this.getCurrentPosition().getY() - this.getAnimationSpeed());
+            this.getCurrentPosition().setY((int) (this.getCurrentPosition().getY() - this.getAnimationSpeed()));
 
             if (this.getTargetPosition().getY() > this.getCurrentPosition().getY()) {
                 this.getCurrentPosition().setY(this.getTargetPosition().getY());

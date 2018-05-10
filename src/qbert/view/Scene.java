@@ -115,15 +115,15 @@ public class Scene {
             level.getTiles().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
                 Position2D pos = mapper.getPhysical(c.getPosition());
-                g.drawImage(c.getSprite(), (int) pos.getX(), (int) pos.getY(), this);
+                g.drawImage(c.getSprite(), pos.getX(), pos.getY(), this);
             });
 
             level.getEntities().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
-                g.drawImage(c.getSprite(), (int) c.getPosition().getX(), (int) c.getPosition().getY(), this);
+                g.drawImage(c.getSprite(), c.getPosition().getX(), c.getPosition().getY(), this);
             });
 
-            g.drawImage(level.getQBert().getGraphicComponent().getSprite(), (int)level.getQBert().getGraphicComponent().getPosition().getX(), (int)level.getQBert().getGraphicComponent().getPosition().getY(), this);
+            g.drawImage(level.getQBert().getGraphicComponent().getSprite(), level.getQBert().getGraphicComponent().getPosition().getX(), level.getQBert().getGraphicComponent().getPosition().getY(), this);
 
             // Info rendering
             g.setColor(new Color(255, 255, 255));

@@ -19,7 +19,7 @@ public class Tile implements GameObject {
     /**
      * 
      */
-    public Tile(final double x, final double y, final LevelSettings settings) {
+    public Tile(final int x, final int y, final LevelSettings settings) {
         this.color = 0;
         this.settings = settings;
 

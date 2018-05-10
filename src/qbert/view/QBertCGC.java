@@ -34,6 +34,9 @@ public class QBertCGC extends DownwardUpwardCGC {
         this.setPosition(new Position2D(this.getPosition().getX(), 
                 this.getPosition().getY() + (this.getSpriteHeight() - deathSprite.getHeight())));
         this.setSprite(this.deathSprite);
+        if (this.isRight()) {
+            this.flipOnYImage();
+        }
     }
 
     @Override

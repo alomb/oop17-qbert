@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.DisplaceAnimation;
+import qbert.view.animations.DiskAnimation;
 import qbert.view.animations.ComposedAnimation;
 import qbert.view.animations.BasicAnimation;
 import qbert.view.animations.StandingAnimation;
@@ -52,7 +53,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
 
     @Override
     public void setDeathAnimation() {
-
+        this.setStandingAnimation();
     }
 
     @Override
@@ -99,7 +100,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.front = true;
         this.right = false;
         this.flipOnYImage();
-        this.setCurrentAnimation(new  ComposedAnimation.JumpDownLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
+        this.setCurrentAnimation(new ComposedAnimation.JumpDownLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
     }
 
     @Override
@@ -130,5 +131,12 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
     @Override
     public void setOnDiskAnimation() {
 
+    }
+
+    /**
+     * @return true if the character is right oriented
+     */
+    protected final boolean isRight() {
+        return this.right;
     }
 }
