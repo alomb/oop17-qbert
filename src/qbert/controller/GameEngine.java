@@ -1,11 +1,11 @@
 package qbert.controller;
 
 import qbert.model.Game;
+import qbert.model.map.Mapper;
 
 import java.util.Optional;
 
 import qbert.input.Command;
-import qbert.model.mapping.Mapper;
 import qbert.model.utilities.Dimensions;
 import qbert.view.Scene;
 

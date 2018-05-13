@@ -10,7 +10,8 @@ import java.util.stream.Collectors;
 import qbert.model.characters.Character;
 import qbert.model.characters.Coily;
 import qbert.model.characters.Qbert;
-import qbert.model.mapping.Mapper;
+import qbert.model.map.MapComponent;
+import qbert.model.map.Mapper;
 import qbert.model.states.CharacterState;
 import qbert.model.states.DeathState;
 import qbert.model.states.LandState;
@@ -24,7 +25,6 @@ import qbert.view.DownwardUpwardCGC;
 
 public final class Level {
 
-    private Map<Integer, Map<Integer, Tile>> tiles;
     private List<Character> gameCharacters;
     private Qbert qbert;
     private int points;
@@ -32,6 +32,7 @@ public final class Level {
     private int waitTimer = 0;
     private boolean timerCallback = false;
     private Spawner spawner;
+    private MapComponent map;
 
     //Level settings
     private LevelSettings settings;
@@ -55,113 +56,29 @@ public final class Level {
     public void reset() {
         this.gameCharacters.forEach(c -> c.setDead(true));
         this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground);
-        this.createLevelTiles(settings);
+        this.map = new MapComponent(settings);
         this.qbert = (Qbert) this.spawner.spawnQbert();
     }
 
-    public Tile getTile(final int x, final int y) {
-        return tiles.get(x).get(y);
+    public Tile getTile(final Position2D pos) {
+        return this.map.getTile(pos);
+    }
+    
+    public MapComponent getMap() {
+        return this.map;
     }
 
     public BufferedImage getBackground() {
         return this.settings.getBackgroundImage();
     }
 
-    private void createLevelTiles(LevelSettings settings) {
-        tiles = new HashMap<>();
-        Map<Integer, Tile> tmp = new HashMap<>();
-        tmp.put(0, new Tile(0, 0, settings));
-        tiles.put(0, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(1, 1, settings));
-        tiles.put(1, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(2, 0, settings));
-        tmp.put(2, new Tile(2, 2, settings));
-        tiles.put(2, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(3, 1, settings));
-        tmp.put(3, new Tile(3, 3, settings));
-        tiles.put(3, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(4, 0, settings));
-        tmp.put(2, new Tile(4, 2, settings));
-        tmp.put(4, new Tile(4, 4, settings));
-        tiles.put(4, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(5, 1, settings));
-        tmp.put(3, new Tile(5, 3, settings));
-        tmp.put(5, new Tile(5, 5, settings));
-        tiles.put(5, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(6, 0, settings));
-        tmp.put(2, new Tile(6, 2, settings));
-        tmp.put(4, new Tile(6, 4, settings));
-        tmp.put(6, new Tile(6, 6, settings));
-        tiles.put(6, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(7, 1, settings));
-        tmp.put(3, new Tile(7, 3, settings));
-        tmp.put(5, new Tile(7, 5, settings));
-        tiles.put(7, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(8, 0, settings));
-        tmp.put(2, new Tile(8, 2, settings));
-        tmp.put(4, new Tile(8, 4, settings));
-        tiles.put(8, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(9, 1, settings));
-        tmp.put(3, new Tile(9, 3, settings));
-        tiles.put(9, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(10, 0, settings));
-        tmp.put(2, new Tile(10, 2, settings));
-        tiles.put(10, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(11, 1, settings));
-        tiles.put(11, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(12, 0, settings));
-        tiles.put(12, tmp);
-
-        this.resetLevelTiles();
-    }
-
-    private void resetLevelTiles() {
-        this.getTiles().stream().forEach(t -> {
-            t.resetColor();
-        });
-    }
-
+    
     public Character getQBert() {
         return this.qbert;
     }
 
     public List<Character> getEntities() {
         return this.gameCharacters;
-    }
-
-    public List<Tile> getTiles() {
-        return this.tiles
-                .entrySet()
-                .stream()
-                .flatMap((Map.Entry<Integer, Map<Integer, Tile>> me) -> me.getValue()
-                        .entrySet()
-                        .stream()
-                        .map(Map.Entry::getValue))
-                .collect(Collectors.toList());
     }
 
     public void spawn(Character entity) {
@@ -189,13 +106,13 @@ public final class Level {
     //Game?
     public void checkStatus() {
         int coloredTiles = 0;
-        for (Tile t : this.getTiles()) {
+        for (Tile t : this.map.getTileList()) {
             if (t.getColor() == this.settings.getColorNumber()) {
                 coloredTiles++;
             }
         }
 
-        if (coloredTiles == this.getTiles().stream().count()) {
+        if (coloredTiles == this.map.getTileList().stream().count()) {
             this.changeRound();
             this.reset();
         }
@@ -251,7 +168,7 @@ public final class Level {
                 if (Mapper.isOutOfMap(qLogicalPos)) {
                     qbert.setCurrentState(new MoveState.Fall(qbert));
                 } else {
-                    qbert.land(this.getTile((int) qLogicalPos.getX(), (int) qLogicalPos.getY()));
+                    qbert.land(this.map.getTile(qLogicalPos));
                     qbert.setCurrentState(qbert.getStandingState());
                     this.checkStatus();
                 }
@@ -277,7 +194,7 @@ public final class Level {
                     if (Mapper.isOutOfMap(logicPos)) {
                         e.setCurrentState(new MoveState.Fall(e));
                     } else {
-                        e.land(this.getTile((int) logicPos.getX(), (int) logicPos.getY()));
+                        e.land(this.map.getTile(logicPos));
                         e.setCurrentState(e.getStandingState());
                     }
                 }

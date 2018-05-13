@@ -1,4 +1,4 @@
-package qbert.model.mapping;
+package qbert.model.map;
 
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;

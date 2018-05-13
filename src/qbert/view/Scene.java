@@ -26,7 +26,7 @@ import qbert.input.MoveLeft;
 import qbert.input.MoveRight;
 import qbert.input.MoveUp;
 import qbert.model.Level;
-import qbert.model.mapping.Mapper;
+import qbert.model.map.Mapper;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
@@ -112,7 +112,7 @@ public class Scene {
             // Level components rendering
             g.drawImage(level.getBackground(), Dimensions.backgroundX, Dimensions.backgroundY, this);
 
-            level.getTiles().stream().forEach(e -> {
+            level.getMap().getTileList().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
                 Position2D pos = mapper.getPhysical(c.getPosition());
                 g.drawImage(c.getSprite(), pos.getX(), pos.getY(), this);
