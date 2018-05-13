@@ -1,6 +1,6 @@
 package qbert.model.characters;
 
-import qbert.model.Tile;
+import qbert.model.components.MapComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.states.QbertStandingState;
 import qbert.model.utilities.Position2D;
@@ -27,7 +27,7 @@ public class Qbert extends CharacterImpl {
     }
 
     @Override
-    public final void land(final Tile t) {
-        t.incrementColor();
+    public final void land(final MapComponent map) {
+        map.step(this.getNextPosition());
     }
 }

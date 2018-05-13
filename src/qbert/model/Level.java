@@ -46,14 +46,10 @@ public final class Level {
     }
 
     public void reset() {
-        this.gameCharacters.forEach(c -> c.setDead(true));
+        this.gameCharacters.forEach(c -> c.setCurrentState(new DeathState(c)));
         this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground);
         this.map = new MapComponent(settings);
         this.qbert = (Qbert) this.spawner.spawnQbert();
-    }
-
-    public Tile getTile(final Position2D pos) {
-        return this.map.getTile(pos);
     }
     
     public MapComponent getMap() {
@@ -166,7 +162,7 @@ public final class Level {
                         if (Mapper.isOutOfMap(logicPos)) {
                             e.setCurrentState(new MoveState.Fall(e));
                         } else {
-                            e.land(this.map.getTile(logicPos));
+                            e.land(this.map);
                             e.setCurrentState(e.getStandingState());
                         }
                     }
@@ -193,7 +189,6 @@ public final class Level {
             Position2D qLogicalPos = qbert.getNextPosition();
 
             if (qbert.isDead()) {
-                System.out.println("Dead");
                 this.death();
             }
             
@@ -203,8 +198,7 @@ public final class Level {
                 if (Mapper.isOutOfMap(qLogicalPos)) {
                     qbert.setCurrentState(new MoveState.Fall(qbert));
                 } else {
-                    System.out.println(qbert.getCurrentState());
-                    qbert.land(this.map.getTile(qLogicalPos));
+                    qbert.land(this.map);
                     qbert.setCurrentState(qbert.getStandingState());
                     this.checkStatus();
                 }

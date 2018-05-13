@@ -4,6 +4,7 @@ package qbert.model.characters;
 import qbert.model.GameObject;
 import qbert.model.Level;
 import qbert.model.Tile;
+import qbert.model.components.MapComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
@@ -81,7 +82,7 @@ public interface Character extends GameObject {
     /**
      * @param t the reference to the tile where the {@link Character} has just landed
      */
-    void land(Tile t);
+    void land(final MapComponent map);
 
 
     /**

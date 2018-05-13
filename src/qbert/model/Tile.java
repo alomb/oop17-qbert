@@ -1,8 +1,12 @@
 package qbert.model;
 
+import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import qbert.model.utilities.Position2D;
+import qbert.model.utilities.Sprites;
 import qbert.view.GraphicComponent;
 import qbert.view.TileGraphicComponent;
 
@@ -14,17 +18,19 @@ public class Tile implements GameObject {
     private int color;
     private Position2D position;
     private GraphicComponent graphicComponent;
-    private LevelSettings settings;
 
     /**
      * 
      */
-    public Tile(final int x, final int y, final LevelSettings settings) {
+    public Tile(final int x, final int y) {
         this.color = 0;
-        this.settings = settings;
-
+        Map<Integer, BufferedImage> m = new HashMap<>();
+        m.put(0, Sprites.blueTile);
+        m.put(1, Sprites.yellowTile);
+        m.put(2, Sprites.pinkTile);
+        
         //Temporary management of graphic component generation
-        this.graphicComponent = new TileGraphicComponent(this);
+        this.graphicComponent = new TileGraphicComponent(this, m);
         this.graphicComponent.setPosition(new Position2D(x, y));
     }
 
@@ -45,18 +51,16 @@ public class Tile implements GameObject {
     public GraphicComponent getGraphicComponent() {
         return this.graphicComponent;
     }
-
-    public void incrementColor() {
-        if (this.color < this.settings.getColorNumber()) {
-            this.color++;
-        } else {
-            if (this.settings.getColorReversable()) {
-                this.resetColor();
-            }
-        }
+    
+    public void reset() {
+        this.color = 0;
     }
     
-    public void resetColor() {
-        this.color = 0;
+    public void increment() {
+        this.color++;
+    }
+    
+    public void decrement() {
+        this.color--;
     }
 }

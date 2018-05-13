@@ -1,10 +1,8 @@
 package qbert.view;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
+import java.util.Map;
 
-import javax.imageio.ImageIO;
 
 import qbert.model.Tile;
 import qbert.model.utilities.Position2D;
@@ -14,23 +12,16 @@ public class TileGraphicComponent implements GraphicComponent {
 
     private Tile tile;
     private Position2D spritePos;
+    private Map<Integer, BufferedImage> currentSprites;
 
-    public TileGraphicComponent(Tile tile) {
+    public TileGraphicComponent(Tile tile, Map<Integer, BufferedImage> sprites) {
+        this.currentSprites = sprites;
         this.tile = tile;
     }
 
     @Override
     public BufferedImage getSprite() {
-        switch (tile.getColor()) {
-            case 0:
-                return Sprites.blueTile;
-            case 1:
-                return Sprites.yellowTile;
-            case 2:
-                return Sprites.pinkTile;
-            default:
-                return Sprites.blueTile;
-        }
+        return currentSprites.get(tile.getColor());
     }
 
     @Override

@@ -2,6 +2,7 @@ package qbert.model.characters;
 
 import qbert.model.Level;
 import qbert.model.Tile;
+import qbert.model.components.MapComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
@@ -110,7 +111,7 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public void land(final Tile t) {
+    public void land(final MapComponent map) {
         //Do nothing
     }
 
