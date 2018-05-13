@@ -1,4 +1,4 @@
-package qbert.model.map;
+package qbert.model.components;
 
 import java.util.HashMap;
 import java.util.List;
