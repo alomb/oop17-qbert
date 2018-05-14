@@ -5,18 +5,18 @@ import qbert.model.states.DownwardCharStandingState;
 import qbert.model.states.MoveState;
 import qbert.model.states.WaitTimerState;
 import qbert.model.utilities.Position2D;
-import qbert.model.utilities.Sprites;
-import qbert.view.CharacterGraphicComponent;
-import qbert.view.DownwardUpwardCGC;
+import qbert.view.CoilyGC;
+import qbert.view.DownUpwardCharacterGC;
 
 /**
  * The class shape a clever Qbert's enemy, a purple snake called Coily. Coily join the game in its egg form behaving as
  * a common {@link RedBall}, but when it reaches the bottom of the map it transforms in a snake and starts chasing Qbert.
  */
-public class Coily extends CharacterImpl {
+public class Coily extends CharacterImpl implements DownUpwardCharacter {
 
+    private final CoilyGC graphics;
     private final int standingTime;
-    private final Character qbert;
+    private final Player qbert;
 
     private boolean adult;
 
@@ -27,9 +27,10 @@ public class Coily extends CharacterImpl {
      * @param standingTime the time passed on standing state
      * @param qbert the {@link Qbert} reference
      */
-    public Coily(final Position2D startPos, final float speed, final CharacterGraphicComponent graphics, 
-            final int standingTime, final Character qbert) {
+    public Coily(final Position2D startPos, final float speed, final CoilyGC graphics, 
+            final int standingTime, final Player qbert) {
         super(startPos, speed, graphics);
+        this.graphics = graphics;
         this.standingTime = standingTime;
         this.qbert = qbert;
         this.setCurrentState(new MoveState.Spawn(this));
@@ -40,10 +41,12 @@ public class Coily extends CharacterImpl {
      */
     public void transform() {
         this.adult = true;
-        this.setGraphicComponent(new DownwardUpwardCGC(Sprites.coilyFrontStanding, Sprites.coilyFrontMoving, 
-                Sprites.coilyBackStanding, Sprites.coilyBackMoving, new Position2D(this.getGraphicComponent().getPosition())));
-        this.getGraphicComponent().getPosition().setY(
-                this.getGraphicComponent().getPosition().getY() + Sprites.purpleBallStanding.getHeight() - Sprites.coilyFrontStanding.getHeight());
+        this.graphics.transform();
+    }
+
+    @Override
+    public final DownUpwardCharacterGC getDownUpwardGraphicComponent() {
+        return this.graphics;
     }
 
     @Override
@@ -51,26 +54,28 @@ public class Coily extends CharacterImpl {
         if (!this.adult) {
             return new CoilyBallStandingState(this, standingTime);
         } else {
-            return new CoilyAdultStandingState(this, standingTime, qbert);
+            return new CoilyAdultStandingState(this, standingTime, this.qbert);
         }
     }
 
     private class CoilyBallStandingState extends DownwardCharStandingState {
 
+        private final Coily coily;
+
         /**
          * @param character the {@link Character} linked to this state
          * @param triggerTime the timer duration
          */
-        CoilyBallStandingState(final Character character, final int triggerTime) {
-            super(character, triggerTime);
+        CoilyBallStandingState(final Coily coily, final int triggerTime) {
+            super(coily, triggerTime);
+            this.coily = coily;
             this.getCharacter().getGraphicComponent().setStandingAnimation();
         }
 
         @Override
         public final boolean canAdvance() {
-            /*Si può sostituire con il numero di passi che deve compiere dipendente dalla dimensione della mappa*/
             if (this.getCharacter().getCurrentPosition().getY() == 0) {
-                ((Coily) this.getCharacter()).transform();
+                this.coily.transform();
                 this.getCharacter().setCurrentState(this.getCharacter().getStandingState());
                 return false;
             }
@@ -81,18 +86,20 @@ public class Coily extends CharacterImpl {
 
     private class CoilyAdultStandingState extends WaitTimerState {
 
-        private final Character qbert;
+        private final Player qbert;
+        private final Coily coily;
 
         /**
          * @param character the {@link Character} linked to this state
          * @param triggerTime the timer duration
          * @param qbert the {@link Qbert} reference
          */
-        CoilyAdultStandingState(final Character character, final int triggerTime, final Character qbert) {
+        CoilyAdultStandingState(final Coily character, final int triggerTime, final Player qbert) {
             super(character, triggerTime);
             this.qbert = qbert;
+            this.coily = character;
             this.getCharacter().setCurrentPosition(new Position2D(this.getCharacter().getNextPosition()));
-            this.getCharacter().getGraphicComponent().setStandingAnimation();
+            this.coily.getDownUpwardGraphicComponent().setStandingAnimation();
         }
 
         @Override
@@ -123,13 +130,13 @@ public class Coily extends CharacterImpl {
             }
 
             if (dx > 0 && dy > 0) {
-                this.getCharacter().setCurrentState(new MoveState.UpRight(this.getCharacter()));
+                this.getCharacter().setCurrentState(new MoveState.UpRight(this.coily));
             } else if (dx < 0 && dy > 0) {
-                this.getCharacter().setCurrentState(new MoveState.UpLeft(this.getCharacter()));
+                this.getCharacter().setCurrentState(new MoveState.UpLeft(this.coily));
             } else if (dx > 0 && dy < 0) {
-                this.getCharacter().setCurrentState(new MoveState.DownRight(this.getCharacter()));
+                this.getCharacter().setCurrentState(new MoveState.DownRight(this.coily));
             } else {
-                this.getCharacter().setCurrentState(new MoveState.DownLeft(this.getCharacter()));
+                this.getCharacter().setCurrentState(new MoveState.DownLeft(this.coily));
             }
         }
     }

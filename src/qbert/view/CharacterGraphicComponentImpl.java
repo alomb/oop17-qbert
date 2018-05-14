@@ -99,23 +99,15 @@ public abstract class CharacterGraphicComponentImpl implements CharacterGraphicC
     public abstract void setMoveDownRightAnimation();
 
     @Override
-    public abstract void setMoveUpLeftAnimation();
-
-    @Override
-    public abstract void setMoveUpRightAnimation();
-
-    @Override
-    public final void updateGraphics(final float graphicsSpeed) {
-        this.setPosition(this.animation.updateAnimation(graphicsSpeed));
-    }
-
-    /**
-     * A method to flip on Y axis the current sprite.
-     */
-    protected  void flipOnYImage() {
+    public final void flipOnYImage() {
         final AffineTransform transformation = AffineTransform.getScaleInstance(-1, 1);
         transformation.translate(-this.getSpriteWidth(), 0);
         final AffineTransformOp operation = new AffineTransformOp(transformation, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
         this.setSprite(operation.filter(this.getSprite(), null));
+    }
+
+    @Override
+    public final void updateGraphics(final float graphicsSpeed) {
+        this.setPosition(this.animation.updateAnimation(graphicsSpeed));
     }
 }

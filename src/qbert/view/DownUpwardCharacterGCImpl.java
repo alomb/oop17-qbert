@@ -3,20 +3,18 @@ package qbert.view;
 import java.awt.image.BufferedImage;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.view.animations.DisplaceAnimation;
-import qbert.view.animations.DiskAnimation;
 import qbert.view.animations.ComposedAnimation;
 import qbert.view.animations.BasicAnimation;
 import qbert.view.animations.StandingAnimation;
 
 /**
- * CGC stands for CharacterGraphicComponent, this implementation is used to manage characters whose movements are bidirectional and 
- * whose spawn is instant on some position, like Coily (adult) and partially QBert.
+ * GC stands for graphic component, this implementation is used to manage characters whose movements are bidirectional and 
+ * whose spawn is instant on some position, like characters of type {@link DownUpwardCharacter}.
  */
-public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
+public abstract class DownUpwardCharacterGCImpl extends CharacterGraphicComponentImpl implements DownUpwardCharacterGC {
 
-    private final BufferedImage frontStandSprite;
-    private final BufferedImage frontMoveSprite;
+    private BufferedImage frontStandSprite;
+    private BufferedImage frontMoveSprite;
     private final BufferedImage backStandSprite;
     private final BufferedImage backMoveSprite;
 
@@ -40,7 +38,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
      * @param backMoveSprite the {@link BufferedImage} containing the {@link Character}'s moving back sprite
      * @param startSpritePos the first position (physic) of the {@link Character}
      */
-    public DownwardUpwardCGC(final BufferedImage frontStandSprite, final BufferedImage frontMoveSprite, 
+    public DownUpwardCharacterGCImpl(final BufferedImage frontStandSprite, final BufferedImage frontMoveSprite, 
             final BufferedImage backStandSprite, final BufferedImage backMoveSprite, final Position2D startSpritePos) {
         super(frontStandSprite, startSpritePos);
         this.front = true;
@@ -48,6 +46,46 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.backStandSprite = backStandSprite;
         this.backMoveSprite = backMoveSprite;
         this.frontStandSprite = frontStandSprite;
+        this.frontMoveSprite = frontMoveSprite;
+    }
+ 
+    @Override
+    public final boolean isFront() {
+        return front;
+    }
+
+    @Override
+    public final void setFront(final boolean front) {
+        this.front = front;
+    }
+
+    @Override
+    public final boolean isRight() {
+        return front;
+    }
+
+    @Override
+    public final void setRight(final boolean right) {
+        this.right = right;
+    }
+
+    @Override
+    public final BufferedImage getFrontStandSprite() {
+        return this.frontStandSprite;
+    }
+
+    @Override
+    public final void setFrontStandSprite(final BufferedImage frontStandSprite) {
+        this.frontStandSprite = frontStandSprite;
+    }
+
+    @Override
+    public final BufferedImage getFrontMoveSprite() {
+        return this.frontMoveSprite;
+    }
+
+    @Override
+    public final void setFrontMoveSprite(final BufferedImage frontMoveSprite) {
         this.frontMoveSprite = frontMoveSprite;
     }
 
@@ -72,12 +110,7 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
     }
 
     @Override
-    public final void setSpawnAnimation() {
-        this.setSprite(this.frontStandSprite);
-        this.right = true;
-        this.front = true;
-        this.setCurrentAnimation(new DisplaceAnimation(this.getPosition(), this.getSpawnPosition()));
-    }
+    public abstract void setSpawnAnimation();
 
     @Override
     public final void setFallAnimation() {
@@ -126,17 +159,5 @@ public class DownwardUpwardCGC extends CharacterGraphicComponentImpl {
         this.front = false;
         this.right = true;
         this.setCurrentAnimation(new ComposedAnimation.JumpUpRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() - this.jumpHeight)));
-    }
-
-    @Override
-    public void setOnDiskAnimation() {
-
-    }
-
-    /**
-     * @return true if the character is right oriented
-     */
-    protected final boolean isRight() {
-        return this.right;
     }
 }

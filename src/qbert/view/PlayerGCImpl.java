@@ -3,11 +3,12 @@ package qbert.view;
 import java.awt.image.BufferedImage;
 
 import qbert.model.utilities.Position2D;
+import qbert.view.animations.DisplaceAnimation;
 
 /**
- * CGC stands for CharacterGraphicComponent, this implementation is used to manage QBert.
+ * GC stands for graphic component, this implementation is used to manage the {@link Player}.
  */
-public class QBertCGC extends DownwardUpwardCGC {
+public class PlayerGCImpl extends DownUpwardCharacterGCImpl implements PlayerGC {
 
     private final BufferedImage deathSprite;
     private final BufferedImage onDiskSprite;
@@ -21,7 +22,7 @@ public class QBertCGC extends DownwardUpwardCGC {
      * @param onDiskSprite the {@link BufferedImage} containing the {@link Character}'s sprite when it stays on the disk
      * @param startSpritePos the first position (physic) of the {@link Character}
      */
-    public QBertCGC(final BufferedImage frontStandSprite, final BufferedImage frontMoveSprite, final BufferedImage backStandSprite,
+    public PlayerGCImpl(final BufferedImage frontStandSprite, final BufferedImage frontMoveSprite, final BufferedImage backStandSprite,
             final BufferedImage backMoveSprite, final BufferedImage deathSprite, final BufferedImage onDiskSprite,
             final Position2D startSpritePos) {
         super(frontStandSprite, frontMoveSprite, backStandSprite, backMoveSprite, startSpritePos);
@@ -37,6 +38,14 @@ public class QBertCGC extends DownwardUpwardCGC {
         if (this.isRight()) {
             this.flipOnYImage();
         }
+    }
+
+    @Override
+    public final void setSpawnAnimation() {
+        this.setSprite(this.getFrontStandSprite());
+        this.setRight(true);
+        this.setFront(true);
+        this.setCurrentAnimation(new DisplaceAnimation(this.getPosition(), this.getSpawnPosition()));
     }
 
     @Override

@@ -1,6 +1,8 @@
 package qbert.model;
 
 import qbert.model.characters.Character;
+import qbert.model.characters.DownUpwardCharacter;
+import qbert.model.characters.Player;
 
 /**
  * The factory method interface for enemies creation.
@@ -8,17 +10,17 @@ import qbert.model.characters.Character;
 public interface EnemyFactory {
 
     /**
-     * @return the {@link Character} representing Qbert
+     * @return the {@link Player} representing Qbert
      */
-    Character createQbert();
+    Player createQbert();
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @param qbert the {@link Qbert} reference
-     * @return the {@link Character} representing Coily enemy
+     * @param qbert the {@link Player} reference
+     * @return the {@link DownUpwardCharacter} representing Coily enemy
      */
-    Character createCoily(float speed, int standingTime, Character qbert);
+    DownUpwardCharacter createCoily(float speed, int standingTime, Player qbert);
 
     /**
      * @param speed the {@link Character} movement speed

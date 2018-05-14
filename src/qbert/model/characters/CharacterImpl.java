@@ -1,7 +1,6 @@
 package qbert.model.characters;
 
 import qbert.model.Level;
-import qbert.model.Tile;
 import qbert.model.components.MapComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
@@ -19,7 +18,7 @@ public abstract class CharacterImpl implements Character {
     private Position2D nextPos;
 
     private float characterSpeed;
-    private CharacterGraphicComponent graphics;
+    private final CharacterGraphicComponent graphics;
 
     private boolean dead;
     private CharacterState currentState;
@@ -73,11 +72,6 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public final void setGraphicComponent(final CharacterGraphicComponent graphics) {
-        this.graphics = graphics;
-    }
-
-    @Override
     public final boolean isMoving() {
         return !this.currentPos.equals(this.nextPos);
     }
@@ -88,7 +82,7 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public final void setDead(boolean dead) {
+    public final void setDead(final boolean dead) {
         this.dead = dead;
     }
 

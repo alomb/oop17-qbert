@@ -7,6 +7,7 @@ import org.jdom2.JDOMException;
 
 import qbert.controller.LevelConfigurationReader;
 import qbert.model.characters.Character;
+import qbert.model.characters.Player;
 import qbert.model.states.MoveState;
 
 /**
@@ -35,9 +36,9 @@ public final class Spawner {
     }
 
     /**
-     * @return the {@link Character} representing Qbert.
+     * @return the {@link Player} representing Qbert.
      */
-    public Character spawnQbert() {
+    public Player spawnQbert() {
         return ef.createQbert();
     }
 

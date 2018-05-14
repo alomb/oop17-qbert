@@ -2,7 +2,6 @@ package qbert.view;
 
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.assertEquals;
 
 import qbert.model.Game;
@@ -72,7 +71,7 @@ public class TestCharacterGraphicComponent {
     /**
      * @param cgc the {@link CharacterGraphicComponent} to apply a upLeft animation
      */
-    private void moveUpLeft(final CharacterGraphicComponent cgc) {
+    private void moveUpLeft(final DownUpwardCharacterGC cgc) {
         cgc.setMoveUpLeftAnimation();
         assertTrue(cgc.getCurrentAnimation() instanceof ComposedAnimation.JumpUpLeft);
         final Position2D oldPos = new Position2D(cgc.getPosition());
@@ -83,7 +82,7 @@ public class TestCharacterGraphicComponent {
     /**
      * @param cgc the {@link CharacterGraphicComponent} to apply a upRight animation
      */
-    private void moveUpRight(final CharacterGraphicComponent cgc) {
+    private void moveUpRight(final DownUpwardCharacterGC cgc) {
         cgc.setMoveUpRightAnimation();
         assertTrue(cgc.getCurrentAnimation() instanceof ComposedAnimation.JumpUpRight);
         final Position2D oldPos = new Position2D(cgc.getPosition());
@@ -92,11 +91,11 @@ public class TestCharacterGraphicComponent {
     }
 
     /**
-     * A test method for {@link DownwardCGC}.
+     * A test method for {@link DownwardCharacterGCImpl}.
      */
     @Test
     public void testDownwardCGC() {
-        final CharacterGraphicComponent cgc = new DownwardCGC(image, image, new Position2D(Dimensions.spawningPointLeft));
+        final CharacterGraphicComponent cgc = new DownwardCharacterGCImpl(image, image, new Position2D(Dimensions.spawningPointLeft));
         assertEquals(cgc.getPosition(), Dimensions.spawningPointLeft);
         cgc.setSpawnAnimation();
         assertTrue(cgc.getCurrentAnimation() instanceof BasicAnimation.Down);
@@ -111,24 +110,14 @@ public class TestCharacterGraphicComponent {
                 this.moveDownRight(cgc);
             }
         }
-
-        try {
-            cgc.setMoveUpLeftAnimation();
-            fail();
-        } catch (final UnsupportedOperationException e) {
-            cgc.setFallAnimation();
-            assertTrue(cgc.getCurrentAnimation() instanceof BasicAnimation.Down);
-            this.finishAnimation(cgc);
-            assertEquals(cgc.getPosition(), new Position2D(cgc.getPosition().getX(), Dimensions.deathHeight));
-        }
     }
 
     /**
-     * A test method for {@link DownwardUpwardCGC}.
+     * A test method for {@link CoilyGC}.
      */
     @Test
     public void testDownwardUpwardGC() {
-        final CharacterGraphicComponent cgc = new DownwardUpwardCGC(image, image, image, image, new Position2D(Dimensions.spawningPointRight));
+        final DownUpwardCharacterGC cgc = new CoilyGCImpl(image, image, image, image, image, image, new Position2D(Dimensions.spawningPointRight));
         final Position2D spawnPos = new Position2D(rnd.nextInt(10), rnd.nextInt(10));
         assertEquals(cgc.getPosition(), Dimensions.spawningPointRight);
         cgc.setSpawnPosition(spawnPos);

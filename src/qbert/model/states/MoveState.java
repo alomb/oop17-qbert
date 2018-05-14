@@ -1,6 +1,7 @@
 package qbert.model.states;
 
 import qbert.model.characters.Character;
+import qbert.model.characters.DownUpwardCharacter;
 import qbert.model.utilities.Position2D;
 
 /**
@@ -106,11 +107,11 @@ public abstract class MoveState extends WaitAnimationState {
     public static class UpRight extends MoveState {
 
         /**
-         * @param character the relative {@link Character}
+         * @param character the relative {@link DownUpwardCharacter}
          */
-        public UpRight(final Character character) {
+        public UpRight(final DownUpwardCharacter character) {
             super(character);
-            this.getCharacter().getGraphicComponent().setMoveUpRightAnimation();
+            character.getDownUpwardGraphicComponent().setMoveUpRightAnimation();
             this.getCharacter().setNextPosition(
                     new Position2D(getCharacter().getCurrentPosition().getX() + 1, getCharacter().getCurrentPosition().getY() + 1));
         }
@@ -127,11 +128,11 @@ public abstract class MoveState extends WaitAnimationState {
     public static class UpLeft extends MoveState {
 
         /**
-         * @param character the relative {@link Character}
+         * @param character the relative {@link DownUpwardCharacter}
          */
-        public UpLeft(final Character character) {
+        public UpLeft(final DownUpwardCharacter character) {
             super(character);
-            this.getCharacter().getGraphicComponent().setMoveUpLeftAnimation();
+            character.getDownUpwardGraphicComponent().setMoveUpLeftAnimation();
             this.getCharacter().setNextPosition(
                     new Position2D(getCharacter().getCurrentPosition().getX() - 1, getCharacter().getCurrentPosition().getY() + 1));
         }

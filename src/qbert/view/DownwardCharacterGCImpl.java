@@ -5,15 +5,14 @@ import java.awt.image.BufferedImage;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.ComposedAnimation;
-import qbert.view.animations.DiskAnimation;
 import qbert.view.animations.BasicAnimation;
 import qbert.view.animations.StandingAnimation;
 
 /**
- * CGC stands for CharacterGraphicComponent, this implementation is used to manage characters whose movements are unidirectional and 
+ * GC stands graphic component, this implementation is used to manage characters whose movements are unidirectional and 
  * downward, doesn't support upward animations.
  */
-public class DownwardCGC extends CharacterGraphicComponentImpl {
+public class DownwardCharacterGCImpl extends CharacterGraphicComponentImpl {
 
     private final BufferedImage standSprite;
     private final BufferedImage moveSprite;
@@ -33,7 +32,7 @@ public class DownwardCGC extends CharacterGraphicComponentImpl {
      * @param moveSprite the {@link BufferedImage} containing the {@link Character}'s moving sprite
      * @param startSpritePos the first position (physic) of the {@link Character}
      */
-    public DownwardCGC(final BufferedImage standSprite, final BufferedImage moveSprite, final Position2D startSpritePos) {
+    public DownwardCharacterGCImpl(final BufferedImage standSprite, final BufferedImage moveSprite, final Position2D startSpritePos) {
         super(standSprite, startSpritePos);
         this.standSprite = standSprite;
         this.moveSprite = moveSprite;
@@ -87,20 +86,4 @@ public class DownwardCGC extends CharacterGraphicComponentImpl {
         this.right = true;
         this.setCurrentAnimation(new ComposedAnimation.JumpDownRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
     }
-
-    @Override
-    public final void setMoveUpLeftAnimation() {
-
-    }
-
-    @Override
-    public final void setMoveUpRightAnimation() {
-
-    }
-
-    @Override
-    public void setOnDiskAnimation() {
-
-    }
-
 }

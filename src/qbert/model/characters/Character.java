@@ -1,16 +1,15 @@
 package qbert.model.characters;
 
-
 import qbert.model.GameObject;
 import qbert.model.Level;
-import qbert.model.Tile;
 import qbert.model.components.MapComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.CharacterGraphicComponent;
 
 /**
- * An interface representing a visible and movable game object.
+ * An interface representing a visible and movable game character. It provides
+ * the most common functionalities.
  */
 public interface Character extends GameObject {
 
@@ -40,11 +39,6 @@ public interface Character extends GameObject {
     CharacterGraphicComponent getGraphicComponent();
 
     /**
-     * @param graphics the new {@link CharacterGraphicComponent} of this {@link Character}
-     */
-    void setGraphicComponent(CharacterGraphicComponent graphics);
-
-    /**
      * @return true if the {@link Character} is moving
      */
     boolean isMoving();
@@ -55,7 +49,7 @@ public interface Character extends GameObject {
     boolean isDead();
 
     /**
-     * Set the {@link Character} dead. TODO: Aggiornare JavaDoc (e/o funzione)
+     *  @param dead true if the {@link Character} id dead.
      */
     void setDead(boolean dead);
 
@@ -80,10 +74,9 @@ public interface Character extends GameObject {
     void update(float dt);
 
     /**
-     * @param t the reference to the tile where the {@link Character} has just landed
+     * @param map the component containing informations about tiles status
      */
-    void land(final MapComponent map);
-
+    void land(MapComponent map);
 
     /**
      * @param l temporary reference to level for dealing collision between {@link Character} and QBert

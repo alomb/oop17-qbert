@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import qbert.model.characters.Character;
-import qbert.model.characters.Qbert;
+import qbert.model.characters.Player;
 import qbert.model.components.MapComponent;
 import qbert.model.map.Mapper;
 import qbert.model.states.DeathState;
@@ -18,7 +18,7 @@ import qbert.model.utilities.Sprites;
 public final class Level {
 
     private List<Character> gameCharacters;
-    private Qbert qbert;
+    private Player qbert;
     private int points;
     private int lives;
     private int waitTimer = 0;
@@ -49,9 +49,9 @@ public final class Level {
         this.gameCharacters.forEach(c -> c.setCurrentState(new DeathState(c)));
         this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground);
         this.map = new MapComponent(settings);
-        this.qbert = (Qbert) this.spawner.spawnQbert();
+        this.qbert = this.spawner.spawnQbert();
     }
-    
+
     public MapComponent getMap() {
         return this.map;
     }
@@ -60,8 +60,8 @@ public final class Level {
         return this.settings.getBackgroundImage();
     }
 
-    
-    public Character getQBert() {
+
+    public Player getQBert() {
         return this.qbert;
     }
 

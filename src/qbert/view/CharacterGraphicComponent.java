@@ -5,6 +5,7 @@ import qbert.view.animations.Animation;
 
 /**
  * This interface extends {@link GraphicComponent} to manage the animations of a {@link Character}.
+ * It provides the most generic functionalities.
  */
 public interface CharacterGraphicComponent extends GraphicComponent {
 
@@ -59,19 +60,9 @@ public interface CharacterGraphicComponent extends GraphicComponent {
     void setMoveDownRightAnimation();
 
     /**
-     * Set the {@link Character} relative moving up-right animation.
+     * A method to flip on Y axis the current sprite.
      */
-    void setMoveUpLeftAnimation();
-
-    /**
-     * Set the {@link Character} relative moving up-right animation.
-     */
-    void setMoveUpRightAnimation();
-
-    /**
-     * Set the {@link Character} relative on-disk animation.
-     */
-    void setOnDiskAnimation();
+    void flipOnYImage();
 
     /**
      * This function is called to update the graphics, e.g., the current {@link Animation}.

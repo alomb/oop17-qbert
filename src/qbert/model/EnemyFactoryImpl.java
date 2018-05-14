@@ -1,14 +1,19 @@
 package qbert.model;
 
 import qbert.model.characters.Coily;
+import qbert.model.characters.DownUpwardCharacter;
+import qbert.model.characters.Player;
 import qbert.model.characters.Qbert;
 import qbert.model.characters.RedBall;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
 import qbert.view.CharacterGraphicComponent;
-import qbert.view.DownwardCGC;
-import qbert.view.QBertCGC;
+import qbert.view.CoilyGC;
+import qbert.view.CoilyGCImpl;
+import qbert.view.DownwardCharacterGCImpl;
+import qbert.view.PlayerGC;
+import qbert.view.PlayerGCImpl;
 
 import java.util.Random;
 
@@ -20,9 +25,9 @@ import qbert.model.characters.Character;
 public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
-    public final Character createQbert() {
+    public final Player createQbert() {
 
-        final CharacterGraphicComponent graphics = new QBertCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
+        final PlayerGC graphics = new PlayerGCImpl(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
                 Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight()));
 
 //        final CharacterGraphicComponent graphics = new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
@@ -32,10 +37,11 @@ public class EnemyFactoryImpl implements EnemyFactory {
     }
 
     @Override
-    public final Character createCoily(final float speed, final int standingTime, final Character qbert) {
+    public final DownUpwardCharacter createCoily(final float speed, final int standingTime, final Player qbert) {
         final Position2D randomPos = this.getRandomPos();
         final Position2D logicalPos = this.getLogicalPos(randomPos);
-        final CharacterGraphicComponent graphics = new DownwardCGC(Sprites.purpleBallStanding, Sprites.purpleBallMoving, randomPos);
+        final CoilyGC graphics = new CoilyGCImpl(Sprites.purpleBallStanding, Sprites.coilyFrontStanding, 
+                Sprites.coilyFrontMoving, Sprites.purpleBallMoving, Sprites.coilyBackStanding, Sprites.coilyBackMoving, randomPos);
         return new Coily(logicalPos, speed, graphics, standingTime, qbert);
     }
 
@@ -43,7 +49,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     public final Character createRedBall(final float speed, final int standingTime) {
         final Position2D randomPos = this.getRandomPos();
         final Position2D logicalPos = this.getLogicalPos(randomPos);
-        final CharacterGraphicComponent graphics = new DownwardCGC(Sprites.redBallStanding, Sprites.redBallMoving, randomPos);
+        final CharacterGraphicComponent graphics = new DownwardCharacterGCImpl(Sprites.redBallStanding, Sprites.redBallMoving, randomPos);
         return new RedBall(logicalPos, speed, graphics, standingTime);
     }
 
