@@ -1,4 +1,4 @@
-package qbert.view;
+package qbert.view.characters;
 
 import java.awt.image.BufferedImage;
 import qbert.model.utilities.Dimensions;
@@ -11,7 +11,7 @@ import qbert.view.animations.StandingAnimation;
  * GC stands for graphic component, this implementation is used to manage characters whose movements are bidirectional and 
  * whose spawn is instant on some position, like characters of type {@link DownUpwardCharacter}.
  */
-public abstract class DownUpwardCharacterGCImpl extends CharacterGraphicComponentImpl implements DownUpwardCharacterGC {
+public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implements DownUpwardCharacterGC {
 
     private BufferedImage frontStandSprite;
     private BufferedImage frontMoveSprite;
@@ -90,9 +90,7 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGraphicComponen
     }
 
     @Override
-    public void setDeathAnimation() {
-        this.setStandingAnimation();
-    }
+    public abstract void setDeathAnimation();
 
     @Override
     public final void setStandingAnimation() {

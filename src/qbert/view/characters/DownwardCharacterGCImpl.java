@@ -1,4 +1,4 @@
-package qbert.view;
+package qbert.view.characters;
 
 import java.awt.image.BufferedImage;
 
@@ -12,7 +12,7 @@ import qbert.view.animations.StandingAnimation;
  * GC stands graphic component, this implementation is used to manage characters whose movements are unidirectional and 
  * downward, doesn't support upward animations.
  */
-public class DownwardCharacterGCImpl extends CharacterGraphicComponentImpl {
+public class DownwardCharacterGCImpl extends CharacterGCImpl {
 
     private final BufferedImage standSprite;
     private final BufferedImage moveSprite;

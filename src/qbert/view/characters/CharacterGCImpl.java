@@ -1,4 +1,4 @@
-package qbert.view;
+package qbert.view.characters;
 
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -7,9 +7,9 @@ import qbert.model.utilities.Position2D;
 import qbert.view.animations.Animation;
 
 /**
- * A generic implementation of {@link CharacterGraphicComponent}.
+ * A generic implementation of {@link CharacterGC}.
  */
-public abstract class CharacterGraphicComponentImpl implements CharacterGraphicComponent {
+public abstract class CharacterGCImpl implements CharacterGC {
 
     private BufferedImage sprite;
 
@@ -22,7 +22,7 @@ public abstract class CharacterGraphicComponentImpl implements CharacterGraphicC
      * @param sprite the {@link BufferedImage} containing the {@link Character}'s current sprite
      * @param startSpritePos the first position (physic) of the {@link Character} and also the spawn position
      */
-    public CharacterGraphicComponentImpl(final BufferedImage sprite, final Position2D startSpritePos) {
+    public CharacterGCImpl(final BufferedImage sprite, final Position2D startSpritePos) {
         this.sprite = sprite;
         this.spritePos = new Position2D(startSpritePos);
         this.spawnPos = new Position2D(startSpritePos);

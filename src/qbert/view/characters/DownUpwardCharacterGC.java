@@ -1,12 +1,12 @@
-package qbert.view;
+package qbert.view.characters;
 
 import java.awt.image.BufferedImage;
 
 /**
- * An interface that extends {@link CharacterGraphicComponent} to add new functionalities
+ * An interface that extends {@link CharacterGC} to add new functionalities
  * for upward moving animation.
  */
-public interface DownUpwardCharacterGC extends CharacterGraphicComponent {
+public interface DownUpwardCharacterGC extends CharacterGC {
 
     /**
      * @return true if the sprite is front oriented

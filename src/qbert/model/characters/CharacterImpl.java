@@ -4,7 +4,7 @@ import qbert.model.Level;
 import qbert.model.components.MapComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
-import qbert.view.CharacterGraphicComponent;
+import qbert.view.characters.CharacterGC;
 
 /**
  * A generic implementation of the {@link Character} interface that provides many common functionalities for
@@ -18,7 +18,7 @@ public abstract class CharacterImpl implements Character {
     private Position2D nextPos;
 
     private float characterSpeed;
-    private final CharacterGraphicComponent graphics;
+    private final CharacterGC graphics;
 
     private boolean dead;
     private CharacterState currentState;
@@ -26,9 +26,9 @@ public abstract class CharacterImpl implements Character {
     /**
      * @param startPos the logical first {@link Position2D} in the map
      * @param speed the movements speed of the character
-     * @param graphics the relative {@link CharacterGraphicComponent} to manage graphics
+     * @param graphics the relative {@link CharacterGC} to manage graphics
      */
-    public CharacterImpl(final Position2D startPos, final float speed, final CharacterGraphicComponent graphics) {
+    public CharacterImpl(final Position2D startPos, final float speed, final CharacterGC graphics) {
         this.currentPos = new Position2D(startPos);
         this.characterSpeed = speed;
         this.graphics = graphics;
@@ -67,7 +67,7 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public final CharacterGraphicComponent getGraphicComponent() {
+    public final CharacterGC getGraphicComponent() {
         return this.graphics;
     }
 

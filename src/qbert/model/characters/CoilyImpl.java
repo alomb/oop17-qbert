@@ -1,0 +1,58 @@
+package qbert.model.characters;
+
+import qbert.model.states.CharacterState;
+import qbert.model.states.CoilyAdultStandingState;
+import qbert.model.states.CoilyBallStandingState;
+import qbert.model.states.MoveState;
+import qbert.model.utilities.Position2D;
+import qbert.view.characters.CoilyGC;
+import qbert.view.characters.DownUpwardCharacterGC;
+
+/**
+ * Implementation of {@link Coily}.
+ */
+public class CoilyImpl extends CharacterImpl implements Coily {
+
+    private final CoilyGC graphics;
+    private final int standingTime;
+    private final Player qbert;
+
+    private boolean adult;
+
+    /**
+     * @param startPos the first {@link Position2D} of the {@link Character} in the map
+     * @param speed the {@link Character} movement speed
+     * @param graphics the {@link Character}'s {@link CharacterGC}
+     * @param standingTime the time passed on standing state
+     * @param qbert the {@link Player} reference
+     */
+    public CoilyImpl(final Position2D startPos, final float speed, final CoilyGC graphics, 
+            final int standingTime, final Player qbert) {
+        super(startPos, speed, graphics);
+        this.graphics = graphics;
+        this.standingTime = standingTime;
+        this.qbert = qbert;
+        this.setCurrentState(new MoveState.Spawn(this));
+    }
+
+    @Override
+    public final void transform() {
+        this.adult = true;
+        this.graphics.transform();
+    }
+
+    @Override
+    public final DownUpwardCharacterGC getDownUpwardGraphicComponent() {
+        return this.graphics;
+    }
+
+    @Override
+    public final CharacterState getStandingState() {
+        if (!this.adult) {
+            return new CoilyBallStandingState(this, standingTime);
+        } else {
+            return new CoilyAdultStandingState(this, standingTime, this.qbert);
+        }
+    }
+}
+

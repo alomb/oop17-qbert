@@ -5,7 +5,7 @@ import qbert.model.Level;
 import qbert.model.components.MapComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
-import qbert.view.CharacterGraphicComponent;
+import qbert.view.characters.CharacterGC;
 
 /**
  * An interface representing a visible and movable game character. It provides
@@ -34,9 +34,9 @@ public interface Character extends GameObject {
     void setSpeed(float speed);
 
     /**
-     * @return the {@link CharacterGraphicComponent} of this {@link Character}
+     * @return the {@link CharacterGC} of this {@link Character}
      */
-    CharacterGraphicComponent getGraphicComponent();
+    CharacterGC getGraphicComponent();
 
     /**
      * @return true if the {@link Character} is moving

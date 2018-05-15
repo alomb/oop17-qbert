@@ -1,7 +1,7 @@
-package qbert.view;
+package qbert.view.characters;
 
 /**
- * The {@link CharacterGraphicComponent} used by {@link Player} that contains 
+ * The {@link CharacterGC} used by {@link Player} that contains 
  * other different animations like the surfing disk.
  */
 public interface PlayerGC extends DownUpwardCharacterGC {

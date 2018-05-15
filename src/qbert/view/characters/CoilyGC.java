@@ -1,4 +1,4 @@
-package qbert.view;
+package qbert.view.characters;
 
 /**
  * A specialization of {@link DownUpwardCharacterGC} used for {@link Coily}.

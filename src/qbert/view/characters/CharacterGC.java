@@ -1,13 +1,14 @@
-package qbert.view;
+package qbert.view.characters;
 
 import qbert.model.utilities.Position2D;
+import qbert.view.GraphicComponent;
 import qbert.view.animations.Animation;
 
 /**
- * This interface extends {@link GraphicComponent} to manage the animations of a {@link Character}.
- * It provides the most generic functionalities.
+ * GC stands for graphic component. This interface extends {@link GraphicComponent} to 
+ * manage the animations of a {@link Character}. It provides the most generic functionalities.
  */
-public interface CharacterGraphicComponent extends GraphicComponent {
+public interface CharacterGC extends GraphicComponent {
 
     /**
      * @return the current {@link Character} spawn position in the space

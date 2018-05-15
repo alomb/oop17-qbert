@@ -1,6 +1,6 @@
 package qbert.model.characters;
 
-import qbert.view.PlayerGC;
+import qbert.view.characters.PlayerGC;
 
 /**
  * Interface that extends {@link Character} used to manage {@link Qbert}, 

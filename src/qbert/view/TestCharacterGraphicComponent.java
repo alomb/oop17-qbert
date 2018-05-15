@@ -8,13 +8,18 @@ import qbert.model.Game;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.DisplaceAnimation;
+import qbert.view.characters.CharacterGC;
+import qbert.view.characters.CoilyGC;
+import qbert.view.characters.CoilyGCImpl;
+import qbert.view.characters.DownUpwardCharacterGC;
+import qbert.view.characters.DownwardCharacterGCImpl;
 import qbert.view.animations.ComposedAnimation;
 import qbert.view.animations.BasicAnimation;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
- * A class with some jUnit tests for {@link CharacterGraphicComponent}.
+ * A class with some jUnit tests for {@link CharacterGC}.
  */
 public class TestCharacterGraphicComponent {
 
@@ -30,7 +35,7 @@ public class TestCharacterGraphicComponent {
     private static final int TEST = 20;
 
     /**
-     * The constructor create a {@link Game} object to initialize some {@link Dimensions} used in {@link CharacterGraphicComponent}.
+     * The constructor create a {@link Game} object to initialize some {@link Dimensions} used in {@link CharacterGC}.
      */
     public TestCharacterGraphicComponent() {
         new Game();
@@ -38,18 +43,18 @@ public class TestCharacterGraphicComponent {
     }
 
     /**
-     * Method that provides an infinite loop to conclude the {@link CharacterGraphicComponent}'s current animation.
+     * Method that provides an infinite loop to conclude the {@link CharacterGC}'s current animation.
      */
-    private void finishAnimation(final CharacterGraphicComponent cgc) {
+    private void finishAnimation(final CharacterGC cgc) {
         while (cgc.getCurrentAnimation() != null && !cgc.getCurrentAnimation().hasFinished()) {
             cgc.updateGraphics(TestCharacterGraphicComponent.SPEED);
         }
     }
 
     /**
-     * @param cgc the {@link CharacterGraphicComponent} to apply a downLeft animation
+     * @param cgc the {@link CharacterGC} to apply a downLeft animation
      */
-    private void moveDownLeft(final CharacterGraphicComponent cgc) {
+    private void moveDownLeft(final CharacterGC cgc) {
         cgc.setMoveDownLeftAnimation();
         assertTrue(cgc.getCurrentAnimation() instanceof ComposedAnimation.JumpDownLeft);
         final Position2D oldPos = new Position2D(cgc.getPosition());
@@ -58,9 +63,9 @@ public class TestCharacterGraphicComponent {
     }
 
     /**
-     * @param cgc the {@link CharacterGraphicComponent} to apply a downRight animation
+     * @param cgc the {@link CharacterGC} to apply a downRight animation
      */
-    private void moveDownRight(final CharacterGraphicComponent cgc) {
+    private void moveDownRight(final CharacterGC cgc) {
         cgc.setMoveDownRightAnimation();
         assertTrue(cgc.getCurrentAnimation() instanceof ComposedAnimation.JumpDownRight);
         final Position2D oldPos = new Position2D(cgc.getPosition());
@@ -69,7 +74,7 @@ public class TestCharacterGraphicComponent {
     }
 
     /**
-     * @param cgc the {@link CharacterGraphicComponent} to apply a upLeft animation
+     * @param cgc the {@link CharacterGC} to apply a upLeft animation
      */
     private void moveUpLeft(final DownUpwardCharacterGC cgc) {
         cgc.setMoveUpLeftAnimation();
@@ -80,7 +85,7 @@ public class TestCharacterGraphicComponent {
     }
 
     /**
-     * @param cgc the {@link CharacterGraphicComponent} to apply a upRight animation
+     * @param cgc the {@link CharacterGC} to apply a upRight animation
      */
     private void moveUpRight(final DownUpwardCharacterGC cgc) {
         cgc.setMoveUpRightAnimation();
@@ -95,7 +100,7 @@ public class TestCharacterGraphicComponent {
      */
     @Test
     public void testDownwardCGC() {
-        final CharacterGraphicComponent cgc = new DownwardCharacterGCImpl(image, image, new Position2D(Dimensions.spawningPointLeft));
+        final CharacterGC cgc = new DownwardCharacterGCImpl(image, image, new Position2D(Dimensions.spawningPointLeft));
         assertEquals(cgc.getPosition(), Dimensions.spawningPointLeft);
         cgc.setSpawnAnimation();
         assertTrue(cgc.getCurrentAnimation() instanceof BasicAnimation.Down);

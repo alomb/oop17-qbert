@@ -1,4 +1,4 @@
-package qbert.view;
+package qbert.view.characters;
 
 import java.awt.image.BufferedImage;
 

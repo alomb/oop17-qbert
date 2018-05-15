@@ -1,4 +1,4 @@
-package qbert.view;
+package qbert.view.characters;
 
 import java.awt.image.BufferedImage;
 
@@ -34,6 +34,11 @@ public class CoilyGCImpl extends DownUpwardCharacterGCImpl implements CoilyGC {
     }
 
     @Override
+    public final void setDeathAnimation() {
+        this.setStandingAnimation();
+    }
+
+    @Override
     public final void transform() {
         this.getPosition().setY(
                 this.getPosition().getY() + this.getFrontStandSprite().getHeight() - adultFrontStandSprite.getHeight());
@@ -49,5 +54,4 @@ public class CoilyGCImpl extends DownUpwardCharacterGCImpl implements CoilyGC {
         }
         this.setCurrentAnimation(new BasicAnimation.Down(this.getSpawnPosition(), this.landPos));
     }
-
 }

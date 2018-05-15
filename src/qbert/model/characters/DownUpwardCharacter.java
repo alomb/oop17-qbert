@@ -1,6 +1,6 @@
 package qbert.model.characters;
 
-import qbert.view.DownUpwardCharacterGC;
+import qbert.view.characters.DownUpwardCharacterGC;
 
 /**
  * Interface that extends {@link Character} used to manage characters
