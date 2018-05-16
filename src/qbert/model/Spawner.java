@@ -61,7 +61,7 @@ public final class Spawner {
                 if (entry.getValue().getCurrentQuantity() < entry.getValue().getTotalQuantity()) {
                     final Character character;
                     switch (entry.getKey()) {
-                    case "Coily":
+                    case "CoilyImpl":
                         character = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), level.getQBert());
                         level.spawn(character);
                         break;
