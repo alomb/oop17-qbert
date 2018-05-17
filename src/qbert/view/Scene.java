@@ -42,7 +42,7 @@ public class Scene {
         this.frame.setSize(w, h);
         this.frame.setMinimumSize(new Dimension(w, h));
         this.frame.setResizable(false);
-        this.panel = new ScenePanel(level, mapper, w, h);
+        this.panel = new ScenePanel(level, w, h);
 
         this.frame.getContentPane().add(this.panel);
         this.frame.addWindowListener(new WindowAdapter() {
@@ -75,7 +75,7 @@ public class Scene {
         private Font custom; 
         private BufferedImage lifeSprite;
 
-        public ScenePanel(final Level level, final Mapper mapper, final int w, final int h) {
+        public ScenePanel(final Level level, final int w, final int h) {
             this.setSize(w, h);
             this.setBackground(Color.black);
             this.addKeyListener(this);
@@ -94,8 +94,6 @@ public class Scene {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            //Temporary Mapper
-            this.mapper = mapper;
 
             //Temporary Sprite Loading
             this.lifeSprite = Sprites.life;
@@ -114,7 +112,7 @@ public class Scene {
 
             level.getMap().getTileList().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
-                Position2D pos = mapper.getPhysical(c.getPosition());
+                Position2D pos = Mapper.getPhysical(c.getPosition());
                 g.drawImage(c.getSprite(), pos.getX(), pos.getY(), this);
             });
 

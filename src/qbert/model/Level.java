@@ -159,7 +159,7 @@ public final class Level {
                     //Check if entity is just landed 
                     if (e.getCurrentState() instanceof LandState) {
                         //Checking if entity is outside the map
-                        if (Mapper.isOutOfMap(logicPos)) {
+                        if (this.map.isOnVoid(logicPos)) {
                             e.setCurrentState(new MoveState.Fall(e));
                         } else {
                             e.land(this.map);
@@ -195,7 +195,7 @@ public final class Level {
             //Check if entity is just landed 
             if (qbert.getCurrentState() instanceof LandState) {
                 //Checking if entity is outside the map
-                if (Mapper.isOutOfMap(qLogicalPos)) {
+                if (this.map.isOnVoid(qLogicalPos)) {
                     qbert.setCurrentState(new MoveState.Fall(qbert));
                 } else {
                     qbert.land(this.map);

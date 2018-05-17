@@ -7,9 +7,14 @@ import java.util.stream.Collectors;
 
 import qbert.model.LevelSettings;
 import qbert.model.Tile;
+import qbert.model.map.Mapper;
 import qbert.model.utilities.Position2D;
 
 public class MapComponent {
+    
+    private final int MAP_LEFT_TOP_EDGE = 2;
+    private final int MAP_RIGHT_TOP_EDGE = 14;
+    private final int MAP_BOTTOM_EDGE = 0;
 
     private Map<Integer, Map<Integer, Tile>> tiles;
     private LevelSettings settings;
@@ -120,5 +125,10 @@ public class MapComponent {
        }
    }
   
+   public boolean isOnVoid(Position2D logicPos) {
+       return logicPos.getY() < this.MAP_BOTTOM_EDGE 
+               || logicPos.getX() + logicPos.getY() == this.MAP_RIGHT_TOP_EDGE 
+               || logicPos.getY() - logicPos.getX() == this.MAP_LEFT_TOP_EDGE;
+   }
 
 }
