@@ -36,9 +36,8 @@ public class GameEngine {
      */
     public void setup() {
         game = new Game();
-        final Mapper mapper = new Mapper();
 
-        this.gameScene = new Scene(game.getLevel(), mapper, Dimensions.windowWidth, Dimensions.windowHeight, this);
+        this.gameScene = new Scene(game.getLevel(), Dimensions.windowWidth, Dimensions.windowHeight, this);
 
         this.running = true;
         this.stopped = false;

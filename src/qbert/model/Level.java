@@ -2,7 +2,9 @@ package qbert.model;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import qbert.model.characters.Character;
@@ -47,7 +49,12 @@ public final class Level {
 
     public void reset() {
         this.gameCharacters.forEach(c -> c.setCurrentState(new DeathState(c)));
-        this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground);
+        
+        Map<Integer, BufferedImage> colorMap = new HashMap<>();
+        colorMap.put(0, Sprites.blueTile);
+        colorMap.put(1, Sprites.yellowTile);
+        colorMap.put(2, Sprites.pinkTile);
+        this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground, colorMap);
         this.map = new MapComponent(settings);
         this.qbert = this.spawner.spawnQbert();
     }

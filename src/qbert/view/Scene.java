@@ -37,7 +37,7 @@ public class Scene {
     private final Level level;
     private final GameEngine controller;
 
-    public Scene(final Level level, final Mapper mapper, final int w, final int h, final GameEngine controller) {
+    public Scene(final Level level, final int w, final int h, final GameEngine controller) {
         this.frame = new JFrame("Qbert Test");
         this.frame.setSize(w, h);
         this.frame.setMinimumSize(new Dimension(w, h));

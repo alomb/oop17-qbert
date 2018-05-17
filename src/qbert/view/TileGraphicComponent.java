@@ -10,18 +10,16 @@ import qbert.model.utilities.Sprites;
 
 public class TileGraphicComponent implements GraphicComponent {
 
-    private Tile tile;
     private Position2D spritePos;
-    private Map<Integer, BufferedImage> currentSprites;
+    private BufferedImage sprite;
 
-    public TileGraphicComponent(Tile tile, Map<Integer, BufferedImage> sprites) {
-        this.currentSprites = sprites;
-        this.tile = tile;
+    public TileGraphicComponent(BufferedImage sprite) {
+        this.sprite = sprite;
     }
 
     @Override
     public BufferedImage getSprite() {
-        return currentSprites.get(tile.getColor());
+        return this.sprite;
     }
 
     @Override

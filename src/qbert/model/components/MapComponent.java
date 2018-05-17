@@ -1,5 +1,6 @@
 package qbert.model.components;
 
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,9 @@ import qbert.model.LevelSettings;
 import qbert.model.Tile;
 import qbert.model.map.Mapper;
 import qbert.model.utilities.Position2D;
+import qbert.model.utilities.Sprites;
+import qbert.view.GraphicComponent;
+import qbert.view.TileGraphicComponent;
 
 public class MapComponent {
     
@@ -114,7 +118,9 @@ public class MapComponent {
                .collect(Collectors.toList());
    }
    
+   //TODO: Find out pattern to be used to use an algorithm based on who calls the method
    public void step(Position2D pos) {
+       System.out.println("Stepping");
        Tile t = this.getTile(pos);
        if (t.getColor() < this.settings.getColorNumber()) {
            t.increment();
@@ -123,6 +129,7 @@ public class MapComponent {
                t.reset();
            }
        }
+       t.setGraphicComponent(new TileGraphicComponent(this.settings.getColorMap().get(t.getColor())));
    }
   
    public boolean isOnVoid(Position2D logicPos) {

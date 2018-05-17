@@ -24,14 +24,11 @@ public class Tile implements GameObject {
      */
     public Tile(final int x, final int y) {
         this.color = 0;
-        Map<Integer, BufferedImage> m = new HashMap<>();
-        m.put(0, Sprites.blueTile);
-        m.put(1, Sprites.yellowTile);
-        m.put(2, Sprites.pinkTile);
         
-        //Temporary management of graphic component generation
-        this.graphicComponent = new TileGraphicComponent(this, m);
+        //TODO: Find out best way to create GC
+        this.graphicComponent = new TileGraphicComponent(Sprites.beigeTile);
         this.graphicComponent.setPosition(new Position2D(x, y));
+        this.position = new Position2D(x, y);
     }
 
     @Override
@@ -50,6 +47,12 @@ public class Tile implements GameObject {
 
     public GraphicComponent getGraphicComponent() {
         return this.graphicComponent;
+    }
+
+    public void setGraphicComponent(GraphicComponent g) {
+        //TODO: Find out best way to set GC position
+        this.graphicComponent = g;
+        this.graphicComponent.setPosition(new Position2D(this.position));
     }
     
     public void reset() {
