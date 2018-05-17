@@ -2,8 +2,10 @@ package qbert.view.characters;
 
 import java.awt.image.BufferedImage;
 
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.DisplaceAnimation;
+import qbert.view.animations.UpwardDiagonalAnimation;
 
 /**
  * GC stands for graphic component, this implementation is used to manage the {@link Player}.
@@ -51,5 +53,10 @@ public class PlayerGCImpl extends DownUpwardCharacterGCImpl implements PlayerGC 
     @Override
     public final void setOnDiskAnimation() {
         this.setSprite(this.onDiskSprite);
+        /*Possible flip?*/
+
+        /*Temporary position*/
+        final Position2D ondiskendPos = new Position2D(Dimensions.spawningQBert.getX(), Dimensions.spawningQBert.getY() + this.getSpriteHeight() * 2);
+        this.setCurrentAnimation(new UpwardDiagonalAnimation(this.getPosition(), ondiskendPos));
     }
 }

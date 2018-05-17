@@ -3,20 +3,17 @@ package qbert.view.animations;
 import qbert.model.utilities.Position2D;
 
 /**
- * An animation for disks that provide a diagonal upward movement. 
+ * An animation that provide a diagonal upward movement to a target point. 
  */
-public class DiskAnimation extends MovementAnimation {
+public class UpwardDiagonalAnimation extends MovementAnimation {
 
-    /**
-     * Set true when the disk must move to.
-     */
     private final double angle;
 
     /**
      * @param startPos the first {@link Position2D}
      * @param targetPos the last {@link Position2D}
      */
-    public DiskAnimation(final Position2D startPos, final Position2D targetPos) {
+    public UpwardDiagonalAnimation(final Position2D startPos, final Position2D targetPos) {
         super(startPos, targetPos);
         final Position2D direction = new Position2D(targetPos);
         direction.vectorSum(new Position2D(-this.getCurrentPosition().getX(), 
@@ -34,7 +31,5 @@ public class DiskAnimation extends MovementAnimation {
         if (this.getCurrentPosition().getY() < this.getTargetPosition().getY()) {
             this.setCurrentPosition(new Position2D(this.getTargetPosition()));
         }
-
     }
-
 }
