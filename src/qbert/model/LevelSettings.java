@@ -16,6 +16,7 @@ public class LevelSettings {
         this.colorNumber = number;
         this.colorReversable = reverse;
         this.backgroundImage = background;
+        this.colorMap = colorMap;
     }
     
     public int getColorNumber() {

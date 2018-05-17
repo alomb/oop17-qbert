@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import qbert.model.characters.Character;
 import qbert.model.characters.Player;
 import qbert.model.components.MapComponent;
-import qbert.model.map.Mapper;
 import qbert.model.states.DeathState;
 import qbert.model.states.LandState;
 import qbert.model.states.MoveState;

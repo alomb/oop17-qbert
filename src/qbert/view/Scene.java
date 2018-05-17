@@ -26,7 +26,6 @@ import qbert.input.MoveLeft;
 import qbert.input.MoveRight;
 import qbert.input.MoveUp;
 import qbert.model.Level;
-import qbert.model.map.Mapper;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
@@ -71,7 +70,6 @@ public class Scene {
 
     public class ScenePanel extends JPanel implements KeyListener {
         // Temp Variables
-        private Mapper mapper;
         private Font custom; 
         private BufferedImage lifeSprite;
 
@@ -112,7 +110,7 @@ public class Scene {
 
             level.getMap().getTileList().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
-                Position2D pos = Mapper.getPhysical(c.getPosition());
+                Position2D pos = level.getMap().getPhysical(c.getPosition());
                 g.drawImage(c.getSprite(), pos.getX(), pos.getY(), this);
             });
 

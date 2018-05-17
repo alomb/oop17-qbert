@@ -1,7 +1,6 @@
 package qbert.controller;
 
 import qbert.model.Game;
-import qbert.model.map.Mapper;
 
 import java.util.Optional;
 

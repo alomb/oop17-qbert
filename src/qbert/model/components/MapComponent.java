@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import qbert.model.LevelSettings;
 import qbert.model.Tile;
-import qbert.model.map.Mapper;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
 import qbert.view.GraphicComponent;
@@ -138,4 +138,10 @@ public class MapComponent {
                || logicPos.getY() - logicPos.getX() == this.MAP_LEFT_TOP_EDGE;
    }
 
+   public static Position2D getPhysical(Position2D logicPos) {
+       int newX = Dimensions.backgroundX + Dimensions.tileWidth / 2 * (logicPos.getX() + 1) - Dimensions.tileWidth / 2;
+       int newY = Dimensions.backgroundY + Dimensions.backgroundHeight - (Dimensions.cubeHeight * (logicPos.getY() + 1)) - (Dimensions.tileHeight / 2);
+
+       return new Position2D(newX, newY);
+   }
 }
