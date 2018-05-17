@@ -2,6 +2,7 @@ package qbert.model.states;
 
 import qbert.model.characters.Player;
 import qbert.model.utilities.Dimensions;
+import qbert.model.utilities.Position2D;
 
 /**
  * The {@link CharacterState} used to manage {@link Player} when it's surfing the disk.
@@ -13,6 +14,8 @@ public class QbertOnDiskState extends WaitAnimationState {
      */
     public QbertOnDiskState(final Player qbert) {
         super(qbert);
+        qbert.setCurrentPosition(new Position2D(qbert.getNextPosition()));
+        qbert.setNextPosition(new Position2D(6, 6));
         qbert.getPlayerGraphicComponent().setOnDiskAnimation();
     }
 
