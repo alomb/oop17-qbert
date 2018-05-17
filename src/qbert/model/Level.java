@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import qbert.model.characters.Character;
 import qbert.model.characters.Player;
 import qbert.model.components.MapComponent;
+import qbert.model.components.PointComponent;
 import qbert.model.states.DeathState;
 import qbert.model.states.LandState;
 import qbert.model.states.MoveState;
@@ -20,11 +21,11 @@ public final class Level {
 
     private List<Character> gameCharacters;
     private Player qbert;
-    private int points;
     private int lives;
     private int waitTimer = 0;
     private boolean timerCallback = false;
     private Spawner spawner;
+    private PointComponent points;
     private MapComponent map;
 
     //Level settings
@@ -34,7 +35,6 @@ public final class Level {
 
     public Level() {
         //Forse da spostare in classe Game
-        this.points = 0;
         
         this.level = 1;
         this.round = 1;
@@ -55,6 +55,7 @@ public final class Level {
         colorMap.put(2, Sprites.pinkTile);
         this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground, colorMap);
         this.map = new MapComponent(settings);
+        this.points = new PointComponent();
         this.qbert = this.spawner.spawnQbert();
     }
 
@@ -80,10 +81,6 @@ public final class Level {
         entity.setCurrentPosition(new Position2D(-1, -1));
         this.gameCharacters.add(entity);
     }
-    
-    public void score(int points) {
-        this.points += points;
-    }
 
     public int getLevel() {
         return this.level;
@@ -94,7 +91,7 @@ public final class Level {
     }
 
     public int getPoints() {
-        return this.points;
+        return this.points.getPoints();
     }
 
     //Game?
