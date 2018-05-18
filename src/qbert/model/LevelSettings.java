@@ -1,10 +1,7 @@
 package qbert.model;
 
 import java.awt.image.BufferedImage;
-import java.util.HashMap;
 import java.util.Map;
-
-import qbert.model.utilities.Sprites;
 
 public class LevelSettings {
     private int colorNumber;

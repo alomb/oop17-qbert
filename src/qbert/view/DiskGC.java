@@ -1,7 +1,7 @@
 package qbert.view;
 
 /**
- * The extension of {@link GraphicComponent} to manage disk graphics.
+ * The extension of {@link TileGC} to manage disk graphics that includes a method to provide animations.
  */
 public interface DiskGC extends TileGC {
     

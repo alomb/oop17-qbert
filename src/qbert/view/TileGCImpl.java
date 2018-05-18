@@ -3,19 +3,21 @@ package qbert.view;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
-
-import qbert.model.Tile;
 import qbert.model.utilities.Position2D;
-import qbert.model.utilities.Sprites;
 
-public class TileGraphicComponent implements TileGC {
+/**
+ * The implementation of {@link TileGC}.
+ */
+public class TileGCImpl implements TileGC {
 
     private Position2D spritePos;
-    private Map<Integer, BufferedImage> sprites;
+    private final Map<Integer, BufferedImage> sprites;
     private int spriteIndex;
 
-    public TileGraphicComponent(Map<Integer, BufferedImage> sprites) {
+    /**
+     * @param sprites the map of colors orderly indexed  
+     */
+    public TileGCImpl(final Map<Integer, BufferedImage> sprites) {
         this.sprites = sprites;
         this.spriteIndex = 0;
     }
