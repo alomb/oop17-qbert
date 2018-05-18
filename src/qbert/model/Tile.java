@@ -1,32 +1,20 @@
 package qbert.model;
 
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 import qbert.model.utilities.Position2D;
-import qbert.model.utilities.Sprites;
-import qbert.view.GraphicComponent;
-import qbert.view.TileGraphicComponent;
+import qbert.view.TileGC;
 
 /**
- * .
+ * 
  */
 public class Tile implements GameObject {
-
-    private int color;
     private Position2D position;
-    private GraphicComponent graphicComponent;
+    private final TileGC graphicComponent;
 
     /**
      * 
      */
-    public Tile(final int x, final int y) {
-        this.color = 0;
-        
-        //TODO: Find out best way to create GC
-        this.graphicComponent = new TileGraphicComponent(Sprites.beigeTile);
+    public Tile(final int x, final int y, final TileGC graphics) {
+        this.graphicComponent = graphics;
         this.graphicComponent.setPosition(new Position2D(x, y));
         this.position = new Position2D(x, y);
     }
@@ -42,28 +30,22 @@ public class Tile implements GameObject {
     }
 
     public int getColor() {
-        return this.color;
+        return this.graphicComponent.getSpriteIndex();
     }
 
-    public GraphicComponent getGraphicComponent() {
+    public TileGC getGraphicComponent() {
         return this.graphicComponent;
-    }
-
-    public void setGraphicComponent(GraphicComponent g) {
-        //TODO: Find out best way to set GC position
-        this.graphicComponent = g;
-        this.graphicComponent.setPosition(new Position2D(this.position));
     }
     
     public void reset() {
-        this.color = 0;
+        this.graphicComponent.setSprite(0);
     }
     
     public void increment() {
-        this.color++;
+        this.graphicComponent.setNextSprite();
     }
     
     public void decrement() {
-        this.color--;
+        this.graphicComponent.setPreviousSprite();
     }
 }
