@@ -107,7 +107,7 @@ public class Scene {
 
             // Level components rendering
             g.drawImage(level.getBackground(), Dimensions.backgroundX, Dimensions.backgroundY, this);
-
+            
             level.getMap().getTileList().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();
                 Position2D pos = level.getMap().getPhysical(c.getPosition());

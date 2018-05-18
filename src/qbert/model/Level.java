@@ -16,6 +16,7 @@ import qbert.model.states.LandState;
 import qbert.model.states.MoveState;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
+import qbert.view.DiskGCImpl;
 
 public final class Level {
 
@@ -57,6 +58,12 @@ public final class Level {
         this.map = new MapComponent(settings);
         this.points = new PointComponent();
         this.qbert = this.spawner.spawnQbert();
+        
+        Map<Integer, BufferedImage> im = new HashMap<>();
+        im.put(0, Sprites.beigeTile);
+        im.put(1, Sprites.greenTile);
+        im.put(2, Sprites.pinkTile);
+        im.put(3, Sprites.blueTile);
     }
 
     public MapComponent getMap() {

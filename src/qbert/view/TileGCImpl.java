@@ -33,7 +33,7 @@ public class TileGCImpl implements TileGC {
     }
 
     @Override
-    public void setPosition(Position2D newPos) {
+    public void setPosition(final Position2D newPos) {
         this.spritePos = newPos;
     }
 
@@ -62,8 +62,8 @@ public class TileGCImpl implements TileGC {
     }
 
     @Override
-    public void setSprite(int index) {
-        if(index < this.sprites.size() && index > 0) {
+    public void setSprite(final int index) {
+        if(index < this.sprites.size() && index >= 0) {
             this.spriteIndex = index;        
         }
     }
