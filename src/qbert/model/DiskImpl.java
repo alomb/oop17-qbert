@@ -9,9 +9,9 @@ import qbert.view.DiskGC;
 public class DiskImpl implements Disk {
 
     private Position2D position;
-    private DiskGC graphics;
+    private final DiskGC graphics;
     private boolean dead;
-    
+
     /**
      * @param position the {@link Position2D} of the disk
      * @param graphics the linked {@link DiskGC}
@@ -22,32 +22,32 @@ public class DiskImpl implements Disk {
     }
 
     @Override
-    public Position2D getCurrentPosition() {
+    public final Position2D getCurrentPosition() {
         return this.position;
     }
 
     @Override
-    public void setCurrentPosition(final Position2D newPos) {
+    public final void setCurrentPosition(final Position2D newPos) {
         this.position = newPos;
     }
 
     @Override
-    public DiskGC getDiskGraphicComponent() {
+    public final DiskGC getDiskGraphicComponent() {
         return this.graphics;
     }
 
     @Override
-    public void setDead() {
+    public final void setDead() {
         this.dead = true;
     }
 
     @Override
-    public boolean isDead() {
+    public final boolean isDead() {
         return this.dead;
     }
 
     @Override
-    public void update(final float elapsedTime) {
+    public final void update(final float elapsedTime) {
         this.graphics.update(elapsedTime);
     }
 }

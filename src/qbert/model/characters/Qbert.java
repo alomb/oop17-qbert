@@ -15,9 +15,9 @@ public class Qbert extends CharacterImpl implements Player {
     private final PlayerGC graphics;
 
     /**
-     * @param startPos the first {@link Position2D} of the {@link Character} in the map
-     * @param speed the {@link Character} movement speed
-     * @param graphics the {@link Character}'s {@link CharacterGC}
+     * @param startPos the first {@link Position2D} of the {@link Player} in the map
+     * @param speed the {@link Player} movement speed
+     * @param graphics the {@link Player}'s {@link PlayerGC}
      */
     public Qbert(final Position2D startPos, final float speed, final PlayerGC graphics) {
         super(startPos, speed, graphics);

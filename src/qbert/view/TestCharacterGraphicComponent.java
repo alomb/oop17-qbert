@@ -9,7 +9,6 @@ import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.DisplaceAnimation;
 import qbert.view.characters.CharacterGC;
-import qbert.view.characters.CoilyGC;
 import qbert.view.characters.CoilyGCImpl;
 import qbert.view.characters.DownUpwardCharacterGC;
 import qbert.view.characters.DownwardCharacterGCImpl;

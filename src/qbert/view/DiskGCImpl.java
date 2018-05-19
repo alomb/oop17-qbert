@@ -11,7 +11,7 @@ import qbert.model.utilities.Position2D;
 public class DiskGCImpl extends TileGCImpl implements DiskGC {
 
     private int timeBuffer;
-    private int speed;
+    private final int speed;
     private final int spritesNumber;
 
     /**
@@ -28,10 +28,11 @@ public class DiskGCImpl extends TileGCImpl implements DiskGC {
     }
 
     @Override
-    public void update(float elapsedTime) {
-        if((this.timeBuffer+=elapsedTime) > speed) {
+    public final void update(final float elapsedTime) {
+        this.timeBuffer += elapsedTime;
+        if ((this.timeBuffer) > speed) {
             this.timeBuffer = 0;
-            if(this.spritesNumber - 1 <= this.getSpriteIndex()) {
+            if (this.spritesNumber - 1 <= this.getSpriteIndex()) {
                 this.setSprite(0);
             } else {
                 this.setNextSprite();

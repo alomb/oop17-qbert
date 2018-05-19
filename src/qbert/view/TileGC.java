@@ -21,7 +21,7 @@ public interface TileGC extends GraphicComponent {
     void setPreviousSprite();
 
     /**
-     * Set the index of the current  
+     * Set the index of the current.
      * @param index the new sprite's number
      */
     void setSprite(int index);

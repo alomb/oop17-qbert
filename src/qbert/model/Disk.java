@@ -11,19 +11,19 @@ public interface Disk extends GameObject {
      * @return the linked {@link DiskGC}
      */
     DiskGC getDiskGraphicComponent();
-    
+
     /**
      * set the disk dead (unusable).
      */
     void setDead();
-    
+
     /**
      * @return true if the disk is dead
      */
     boolean isDead();
-    
+
     /**
      * @param elapsedTime the time elapsed since the last game cycle
      */
-    void update (float elapsedTime);
+    void update(float elapsedTime);
 }

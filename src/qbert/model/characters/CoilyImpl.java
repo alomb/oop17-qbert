@@ -20,9 +20,9 @@ public class CoilyImpl extends CharacterImpl implements Coily {
     private boolean adult;
 
     /**
-     * @param startPos the first {@link Position2D} of the {@link Character} in the map
-     * @param speed the {@link Character} movement speed
-     * @param graphics the {@link Character}'s {@link CharacterGC}
+     * @param startPos the first {@link Position2D} of the {@link DownUpwardCharacte} in the map
+     * @param speed the {@link DownUpwardCharacter} movement speed
+     * @param graphics the {@link DownUpwardCharacte}'s {@link CoilyGC}
      * @param standingTime the time passed on standing state
      * @param qbert the {@link Player} reference
      */

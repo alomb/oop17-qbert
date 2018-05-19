@@ -15,7 +15,7 @@ public class TileGCImpl implements TileGC {
     private int spriteIndex;
 
     /**
-     * @param sprites the map of colors orderly indexed  
+     * @param sprites the map of colors orderly indexed
      */
     public TileGCImpl(final Map<Integer, BufferedImage> sprites) {
         this.sprites = sprites;
@@ -49,22 +49,22 @@ public class TileGCImpl implements TileGC {
 
     @Override
     public void setNextSprite() {
-        if(this.spriteIndex < this.sprites.size()) {
-            this.spriteIndex++;        
+        if (this.spriteIndex < this.sprites.size()) {
+            this.spriteIndex++;
         }
     }
 
     @Override
     public void setPreviousSprite() {
-        if(this.spriteIndex > 0) {   
+        if (this.spriteIndex > 0) {
             this.spriteIndex--;
         }
     }
 
     @Override
     public void setSprite(final int index) {
-        if(index < this.sprites.size() && index >= 0) {
-            this.spriteIndex = index;        
+        if (index < this.sprites.size() && index >= 0) {
+            this.spriteIndex = index;
         }
     }
 
