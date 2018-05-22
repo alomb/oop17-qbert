@@ -108,10 +108,18 @@ public class Scene {
             // Level components rendering
             g.drawImage(level.getBackground(), Dimensions.backgroundX, Dimensions.backgroundY, this);
             
+            /**
+             *      level.getGameObjects().stream().sorted((a, b) -> a.getCurrentPosition().getY() - b.getCurrentPosition().getY() ).forEach(c -> {
+             *          g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getY(), c.getGraphicComponent().getPosition().getX(), this);
+             *      });
+             */
             level.getMap().getTileList().stream().forEach(e -> {
-                GraphicComponent c = e.getGraphicComponent();
+                /*GraphicComponent c = e.getGraphicComponent();
                 Position2D pos = level.getMap().getPhysical(c.getPosition());
-                g.drawImage(c.getSprite(), pos.getX(), pos.getY(), this);
+                g.drawImage(c.getSprite(), pos.getX(), pos.getY(), this);*/
+
+                GraphicComponent c = e.getGraphicComponent();
+                g.drawImage(c.getSprite(), c.getPosition().getX(), c.getPosition().getY(), this);
             });
 
             level.getEntities().stream().forEach(e -> {

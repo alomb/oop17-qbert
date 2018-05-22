@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import qbert.model.characters.Character;
 import qbert.model.characters.Player;
@@ -16,7 +17,6 @@ import qbert.model.states.LandState;
 import qbert.model.states.MoveState;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
-import qbert.view.DiskGCImpl;
 
 public final class Level {
 
@@ -50,10 +50,12 @@ public final class Level {
     public void reset() {
         this.gameCharacters.forEach(c -> c.setCurrentState(new DeathState(c)));
         
+        //Temporary Map, will be instantiated in Spawner
         Map<Integer, BufferedImage> colorMap = new HashMap<>();
         colorMap.put(0, Sprites.blueTile);
         colorMap.put(1, Sprites.yellowTile);
         colorMap.put(2, Sprites.pinkTile);
+        
         this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground, colorMap);
         this.map = new MapComponent(settings);
         this.points = new PointComponent();
@@ -141,6 +143,10 @@ public final class Level {
         this.qbert.setCurrentState(new DeathState(this.getQBert()));
     }
 
+    public List<GameObject> getGameObjects() {
+        return Stream.concat(this.gameCharacters.stream(), map.getTileList().stream()).collect(Collectors.toList());
+    }
+    
     public void update(final float elapsed) {
         if (!update) {
             return;

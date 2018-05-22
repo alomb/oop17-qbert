@@ -3,6 +3,7 @@ package qbert.view;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 
 /**
@@ -33,8 +34,11 @@ public class TileGCImpl implements TileGC {
     }
 
     @Override
-    public void setPosition(final Position2D newPos) {
-        this.spritePos = newPos;
+    public void setPosition(final Position2D logicPos) {
+        this.spritePos = new Position2D(
+            Dimensions.backgroundX + Dimensions.tileWidth / 2 * (logicPos.getX() + 1) - Dimensions.tileWidth / 2,
+            Dimensions.backgroundY + Dimensions.backgroundHeight - (Dimensions.cubeHeight * (logicPos.getY() + 1)) - (Dimensions.tileHeight / 2)
+        );
     }
 
     @Override

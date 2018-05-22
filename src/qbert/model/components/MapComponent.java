@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import qbert.model.LevelSettings;
 import qbert.model.Tile;
-import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.TileGCImpl;
 
@@ -118,9 +117,7 @@ public class MapComponent {
                .collect(Collectors.toList());
    }
    
-   //TODO: Find out pattern to be used to use an algorithm based on who calls the method
    public void step(Position2D pos) {
-       System.out.println("Stepping");
        Tile t = this.getTile(pos);
        if (t.getColor() < this.settings.getColorNumber()) {
            t.increment();
@@ -135,12 +132,5 @@ public class MapComponent {
        return logicPos.getY() < this.MAP_BOTTOM_EDGE 
                || logicPos.getX() + logicPos.getY() == this.MAP_RIGHT_TOP_EDGE 
                || logicPos.getY() - logicPos.getX() == this.MAP_LEFT_TOP_EDGE;
-   }
-
-   public static Position2D getPhysical(Position2D logicPos) {
-       int newX = Dimensions.backgroundX + Dimensions.tileWidth / 2 * (logicPos.getX() + 1) - Dimensions.tileWidth / 2;
-       int newY = Dimensions.backgroundY + Dimensions.backgroundHeight - (Dimensions.cubeHeight * (logicPos.getY() + 1)) - (Dimensions.tileHeight / 2);
-
-       return new Position2D(newX, newY);
    }
 }
