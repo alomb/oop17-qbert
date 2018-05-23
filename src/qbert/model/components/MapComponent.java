@@ -4,11 +4,20 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import qbert.model.characters.Character;
+import qbert.model.characters.Player;
+import qbert.model.states.QbertOnDiskState;
+import qbert.model.Disk;
+import qbert.model.DiskImpl;
 import qbert.model.LevelSettings;
 import qbert.model.Tile;
 import qbert.model.utilities.Position2D;
+import qbert.model.utilities.Sprites;
+import qbert.view.DiskGC;
+import qbert.view.DiskGCImpl;
 import qbert.view.TileGCImpl;
 
 public class MapComponent {
@@ -18,6 +27,7 @@ public class MapComponent {
     private final int MAP_BOTTOM_EDGE = 0;
 
     private Map<Integer, Map<Integer, Tile>> tiles;
+    private Map<Integer, Map<Integer, Optional<Disk>>> disks;
     private LevelSettings settings;
     
     public MapComponent(LevelSettings settings) {
@@ -92,6 +102,23 @@ public class MapComponent {
         tmp = new HashMap<>();
         tmp.put(0, new Tile(12, 0, new TileGCImpl(colors)));
         tiles.put(12, tmp);
+        
+
+        //Disk Test Implementation
+        disks = new HashMap<>();
+        
+        Map<Integer, BufferedImage> im = new HashMap<>();
+        im.put(0, Sprites.disk1);
+        im.put(1, Sprites.disk2);
+        im.put(2, Sprites.disk3);
+        im.put(3, Sprites.disk4);
+        DiskGC diskG = new DiskGCImpl(new Position2D(0, 2), im, 2);
+        Disk disk = new DiskImpl(new Position2D(0, 2), diskG);
+        Optional<Disk> optDisk = Optional.of(disk);
+        Map<Integer, Optional<Disk>> tmp2 = new HashMap<>();
+        tmp2.put(2, optDisk);
+        disks.put(0, tmp2);
+        
 
         this.reset();
     }
@@ -116,6 +143,17 @@ public class MapComponent {
                        .map(Map.Entry::getValue))
                .collect(Collectors.toList());
    }
+   
+   public List<Disk> getDiskList() {
+       return this.disks
+               .entrySet()
+               .stream()
+               .flatMap((Map.Entry<Integer, Map<Integer, Optional<Disk>>> me) -> me.getValue()
+                       .entrySet()
+                       .stream()
+                       .map((Map.Entry<Integer, Optional<Disk>> opt) -> opt.getValue().get()))
+               .collect(Collectors.toList());
+   }
 
    
    public void increment(Position2D pos) {
@@ -136,10 +174,21 @@ public class MapComponent {
            t.decrement();
        }
    }
-  
+
    public boolean isOnVoid(Position2D logicPos) {
        return logicPos.getY() < this.MAP_BOTTOM_EDGE 
                || logicPos.getX() + logicPos.getY() == this.MAP_RIGHT_TOP_EDGE 
                || logicPos.getY() - logicPos.getX() == this.MAP_LEFT_TOP_EDGE;
+   }
+   
+   public void checkForDisk(Player qbert) {
+       Position2D logicPos = qbert.getNextPosition();
+       if (this.isOnVoid(logicPos)) {
+           Optional<Disk> disk = disks.get(logicPos.getX()).get(logicPos.getY());
+           if (disk.isPresent()) {
+               disks.get(logicPos.getX()).clear();
+               qbert.setCurrentState(new QbertOnDiskState(qbert));
+           }
+       }
    }
 }

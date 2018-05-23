@@ -121,6 +121,11 @@ public class Scene {
                 GraphicComponent c = e.getGraphicComponent();
                 g.drawImage(c.getSprite(), c.getPosition().getX(), c.getPosition().getY(), this);
             });
+            
+            level.getMap().getDiskList().stream().forEach(e -> {
+                GraphicComponent c = e.getDiskGraphicComponent();
+                g.drawImage(c.getSprite(), c.getPosition().getX(), c.getPosition().getY(), this);
+            });
 
             level.getEntities().stream().forEach(e -> {
                 GraphicComponent c = e.getGraphicComponent();

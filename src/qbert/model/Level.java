@@ -65,17 +65,11 @@ public final class Level {
         this.points = new PointComponent();
         this.qbert = this.spawner.spawnQbert();
         
-        Map<Integer, BufferedImage> im = new HashMap<>();
-        im.put(0, Sprites.beigeTile);
-        im.put(1, Sprites.greenTile);
-        im.put(2, Sprites.pinkTile);
-        im.put(3, Sprites.blueTile);
-        
         
         //Slick and Sam Test Implementation (Crashes when something dies)
-        CharacterGC g = new DownwardCharacterGCImpl(Sprites.greenBallStanding, Sprites.greenBallMoving, Dimensions.spawningPointRight);
-        SamAndSlick e = new SamAndSlick(new Position2D(7, 5), 0.25f, g, 1000);
-        //this.spawn(e);
+        CharacterGC charG = new DownwardCharacterGCImpl(Sprites.greenBallStanding, Sprites.greenBallMoving, Dimensions.spawningPointRight);
+        SamAndSlick sam = new SamAndSlick(new Position2D(7, 5), 0.25f, charG, 1000);
+        //this.spawn(sam);
     }
 
     public MapComponent getMap() {
@@ -176,6 +170,7 @@ public final class Level {
 
             spawner.update(elapsed);
 
+            this.map.getDiskList().forEach(d -> d.update(elapsed));
 
             if (updateEntities) {
                 //Update Entities
@@ -212,7 +207,7 @@ public final class Level {
 
 
             qbert.update(elapsed);
-            Position2D qLogicalPos = qbert.getNextPosition();
+            Position2D qLogicPos = qbert.getNextPosition();
 
             if (qbert.isDead()) {
                 this.death();
@@ -221,13 +216,14 @@ public final class Level {
             //Check if entity is just landed 
             if (qbert.getCurrentState() instanceof LandState) {
                 //Checking if entity is outside the map
-                if (this.map.isOnVoid(qLogicalPos)) {
+                if (this.map.isOnVoid(qLogicPos)) {
                     qbert.setCurrentState(new MoveState.Fall(qbert));
                 } else {
                     qbert.land(this.map);
                     qbert.setCurrentState(qbert.getStandingState());
                     this.checkStatus();
                 }
+                this.map.checkForDisk(qbert);
             }
         } else {
             this.waitTimer -= elapsed;
