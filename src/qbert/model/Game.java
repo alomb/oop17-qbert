@@ -20,6 +20,7 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
@@ -37,43 +38,47 @@ public class Game {
         d = t.getScreenSize();
 
         try {
-          for (File file: new File("res/png/").listFiles()) {
-              if (!file.isDirectory()) {
-                  file.delete();
+          
+          if (!qbert.temp.Config.DEBUG || new File("res/png/").listFiles().length < qbert.temp.Config.SVGS_TO_CONVERT) {
+          
+              for (File file: new File("res/png/").listFiles()) {
+                  if (!file.isDirectory()) {
+                      file.delete();
+                  }
               }
+    
+              convertSvgToPng("res/svg/BackgroundBlue.svg", "res/png/BackgroundBlue.png"); 
+              convertSvgToPng("res/svg/BackgroundBrown.svg", "res/png/BackgroundBrown.png"); 
+              convertSvgToPng("res/svg/BackgroundGreen.svg", "res/png/BackgroundGreen.png"); 
+              convertSvgToPng("res/svg/BackgroundGrey.svg", "res/png/BackgroundGrey.png"); 
+              convertSvgToPng("res/svg/CoilyBackMove.svg", "res/png/CoilyBackMove.png"); 
+              convertSvgToPng("res/svg/CoilyBackStand.svg", "res/png/CoilyBackStand.png"); 
+              convertSvgToPng("res/svg/CoilyFrontMove.svg", "res/png/CoilyFrontMove.png"); 
+              convertSvgToPng("res/svg/CoilyFrontStand.svg", "res/png/CoilyFrontStand.png");
+              convertSvgToPng("res/svg/GreenBallMove.svg", "res/png/GreenBallMove.png"); 
+              convertSvgToPng("res/svg/GreenBallStand.svg", "res/png/GreenBallStand.png");
+              convertSvgToPng("res/svg/PurpleBallMove.svg", "res/png/PurpleBallMove.png"); 
+              convertSvgToPng("res/svg/PurpleBallStand.svg", "res/png/PurpleBallStand.png");
+              convertSvgToPng("res/svg/QbertBackMove.svg", "res/png/QbertBackMove.png"); 
+              convertSvgToPng("res/svg/QbertBackStand.svg", "res/png/QbertBackStand.png"); 
+              convertSvgToPng("res/svg/QbertFrontMove.svg", "res/png/QbertFrontMove.png"); 
+              convertSvgToPng("res/svg/QbertFrontStand.svg", "res/png/QbertFrontStand.png");
+              convertSvgToPng("res/svg/QbertDead.svg", "res/png/QbertDead.png");
+              convertSvgToPng("res/svg/QbertOnDisk.svg", "res/png/QbertOnDisk.png"); 
+              convertSvgToPng("res/svg/RedBallMove.svg", "res/png/RedBallMove.png"); 
+              convertSvgToPng("res/svg/RedBallStand.svg", "res/png/RedBallStand.png");
+              convertSvgToPng("res/svg/TileBeige.svg", "res/png/TileBeige.png");
+              convertSvgToPng("res/svg/TileBlue.svg", "res/png/TileBlue.png");
+              convertSvgToPng("res/svg/TileGreen.svg", "res/png/TileGreen.png");
+              convertSvgToPng("res/svg/TileGrey.svg", "res/png/TileGrey.png");
+              convertSvgToPng("res/svg/TilePink.svg", "res/png/TilePink.png");
+              convertSvgToPng("res/svg/TilePurple.svg", "res/png/TilePurple.png");
+              convertSvgToPng("res/svg/TileYellow.svg", "res/png/TileYellow.png");
+              convertSvgToPng("res/svg/Life.svg", "res/png/Life.png");
+    
+              //Wait converting image
+              Thread.sleep(9000);
           }
-
-          convertSvgToPng("res/svg/BackgroundBlue.svg", "res/png/BackgroundBlue.png"); 
-          convertSvgToPng("res/svg/BackgroundBrown.svg", "res/png/BackgroundBrown.png"); 
-          convertSvgToPng("res/svg/BackgroundGreen.svg", "res/png/BackgroundGreen.png"); 
-          convertSvgToPng("res/svg/BackgroundGrey.svg", "res/png/BackgroundGrey.png"); 
-          convertSvgToPng("res/svg/CoilyBackMove.svg", "res/png/CoilyBackMove.png"); 
-          convertSvgToPng("res/svg/CoilyBackStand.svg", "res/png/CoilyBackStand.png"); 
-          convertSvgToPng("res/svg/CoilyFrontMove.svg", "res/png/CoilyFrontMove.png"); 
-          convertSvgToPng("res/svg/CoilyFrontStand.svg", "res/png/CoilyFrontStand.png");
-          convertSvgToPng("res/svg/GreenBallMove.svg", "res/png/GreenBallMove.png"); 
-          convertSvgToPng("res/svg/GreenBallStand.svg", "res/png/GreenBallStand.png");
-          convertSvgToPng("res/svg/PurpleBallMove.svg", "res/png/PurpleBallMove.png"); 
-          convertSvgToPng("res/svg/PurpleBallStand.svg", "res/png/PurpleBallStand.png");
-          convertSvgToPng("res/svg/QbertBackMove.svg", "res/png/QbertBackMove.png"); 
-          convertSvgToPng("res/svg/QbertBackStand.svg", "res/png/QbertBackStand.png"); 
-          convertSvgToPng("res/svg/QbertFrontMove.svg", "res/png/QbertFrontMove.png"); 
-          convertSvgToPng("res/svg/QbertFrontStand.svg", "res/png/QbertFrontStand.png");
-          convertSvgToPng("res/svg/QbertDead.svg", "res/png/QbertDead.png");
-          convertSvgToPng("res/svg/QbertOnDisk.svg", "res/png/QbertOnDisk.png"); 
-          convertSvgToPng("res/svg/RedBallMove.svg", "res/png/RedBallMove.png"); 
-          convertSvgToPng("res/svg/RedBallStand.svg", "res/png/RedBallStand.png");
-          convertSvgToPng("res/svg/TileBeige.svg", "res/png/TileBeige.png");
-          convertSvgToPng("res/svg/TileBlue.svg", "res/png/TileBlue.png");
-          convertSvgToPng("res/svg/TileGreen.svg", "res/png/TileGreen.png");
-          convertSvgToPng("res/svg/TileGrey.svg", "res/png/TileGrey.png");
-          convertSvgToPng("res/svg/TilePink.svg", "res/png/TilePink.png");
-          convertSvgToPng("res/svg/TilePurple.svg", "res/png/TilePurple.png");
-          convertSvgToPng("res/svg/TileYellow.svg", "res/png/TileYellow.png");
-          convertSvgToPng("res/svg/Life.svg", "res/png/Life.png");
-
-          //Wait converting image
-          Thread.sleep(9000);
 
           Sprites.blueBackground = loadImg("res/png/BackgroundBlue.png");
           Sprites.brownBackground = loadImg("res/png/BackgroundBrown.png");
