@@ -39,7 +39,7 @@ public class Game {
 
         try {
           
-          if (!qbert.temp.Config.DEBUG || new File("res/png/").listFiles().length < qbert.temp.Config.SVGS_TO_CONVERT) {
+          if (!qbert.temp.Config.DEBUG || new File("res/png/").listFiles().length < new File("res/svg/").listFiles().length) {
           
               for (File file: new File("res/png/").listFiles()) {
                   if (!file.isDirectory()) {
@@ -75,7 +75,15 @@ public class Game {
               convertSvgToPng("res/svg/TilePurple.svg", "res/png/TilePurple.png");
               convertSvgToPng("res/svg/TileYellow.svg", "res/png/TileYellow.png");
               convertSvgToPng("res/svg/Life.svg", "res/png/Life.png");
-    
+              convertSvgToPng("res/svg/Disk1.svg", "res/png/Disk1.png");
+              convertSvgToPng("res/svg/Disk2.svg", "res/png/Disk2.png");
+              convertSvgToPng("res/svg/Disk3.svg", "res/png/Disk3.png");
+              convertSvgToPng("res/svg/Disk4.svg", "res/png/Disk4.png");
+              convertSvgToPng("res/svg/SamMove.svg", "res/png/SamMove.png");
+              convertSvgToPng("res/svg/SamStand.svg", "res/png/SamStand.png");
+              convertSvgToPng("res/svg/SlickMove.svg", "res/png/SlickMove.png");
+              convertSvgToPng("res/svg/SlickStand.svg", "res/png/SlickStand.png");
+
               //Wait converting image
               Thread.sleep(9000);
           }
@@ -92,6 +100,14 @@ public class Game {
           Sprites.greenBallStanding = loadImg("res/png/GreenBallStand.png");
           Sprites.purpleBallMoving = loadImg("res/png/PurpleBallMove.png");
           Sprites.purpleBallStanding = loadImg("res/png/PurpleBallStand.png");
+          Sprites.samStanding = loadImg("res/png/SamStand.png");
+          Sprites.samMoving = loadImg("res/png/SamMove.png");
+          Sprites.slickStanding = loadImg("res/png/SlickStand.png");
+          Sprites.slickMoving = loadImg("res/png/SlickMove.png");
+          Sprites.disk1 = loadImg("res/png/Disk1.png");
+          Sprites.disk2 = loadImg("res/png/Disk2.png");
+          Sprites.disk3 = loadImg("res/png/Disk3.png");
+          Sprites.disk4 = loadImg("res/png/Disk4.png");
           Sprites.qbertBackMoving = loadImg("res/png/QbertBackMove.png"); 
           Sprites.qbertBackStanding = loadImg("res/png/QbertBackStand.png");
           Sprites.qbertFrontMoving = loadImg("res/png/QbertFrontMove.png"); 

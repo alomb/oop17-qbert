@@ -16,6 +16,14 @@ public class Sprites {
     public static BufferedImage greenBallStanding;
     public static BufferedImage purpleBallMoving;
     public static BufferedImage purpleBallStanding;
+    public static BufferedImage samStanding;
+    public static BufferedImage samMoving;
+    public static BufferedImage slickStanding;
+    public static BufferedImage slickMoving;
+    public static BufferedImage disk1;
+    public static BufferedImage disk2;
+    public static BufferedImage disk3;
+    public static BufferedImage disk4;
     public static BufferedImage qbertBackMoving;
     public static BufferedImage qbertBackStanding;
     public static BufferedImage qbertFrontMoving;
