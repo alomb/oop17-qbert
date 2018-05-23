@@ -116,8 +116,9 @@ public class MapComponent {
                        .map(Map.Entry::getValue))
                .collect(Collectors.toList());
    }
+
    
-   public void step(Position2D pos) {
+   public void increment(Position2D pos) {
        Tile t = this.getTile(pos);
        if (t.getColor() < this.settings.getColorNumber()) {
            t.increment();
@@ -125,6 +126,14 @@ public class MapComponent {
            if (this.settings.getColorReversable()) {
                t.reset();
            }
+       }
+   }
+
+   
+   public void decrement(Position2D pos) {
+       Tile t = this.getTile(pos);
+       if (t.getColor() > 0) {
+           t.decrement();
        }
    }
   

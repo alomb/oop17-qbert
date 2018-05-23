@@ -32,7 +32,7 @@ public class Qbert extends CharacterImpl implements Player {
 
     @Override
     public final void land(final MapComponent map) {
-        map.step(this.getNextPosition());
+        map.increment(this.getNextPosition());
     }
 
     @Override

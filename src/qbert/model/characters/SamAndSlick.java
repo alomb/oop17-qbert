@@ -1,5 +1,9 @@
 package qbert.model.characters;
 
+import qbert.model.Level;
+import qbert.model.components.MapComponent;
+import qbert.model.components.PointComponent;
+import qbert.model.states.DeathState;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CharacterGC;
 
@@ -17,5 +21,16 @@ public class SamAndSlick extends DownwardCharacter {
      */
     public SamAndSlick(final Position2D startPos, final float speed, final CharacterGC graphics, final Integer standingTime) {
         super(startPos, speed, graphics, standingTime);
+    }
+
+    @Override
+    public final void land(final MapComponent map) {
+        map.decrement(this.getNextPosition());
+    }
+
+    @Override
+    public final void collide(Level l, PointComponent points) {
+        points.gain(50);
+        this.setCurrentState(new DeathState(this));
     }
 }

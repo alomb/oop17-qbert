@@ -10,13 +10,17 @@ import java.util.stream.Stream;
 
 import qbert.model.characters.Character;
 import qbert.model.characters.Player;
+import qbert.model.characters.SamAndSlick;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.states.DeathState;
 import qbert.model.states.LandState;
 import qbert.model.states.MoveState;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
+import qbert.view.characters.CharacterGC;
+import qbert.view.characters.DownwardCharacterGCImpl;
 
 public final class Level {
 
@@ -66,6 +70,12 @@ public final class Level {
         im.put(1, Sprites.greenTile);
         im.put(2, Sprites.pinkTile);
         im.put(3, Sprites.blueTile);
+        
+        
+        //Slick and Sam Test Implementation (Crashes when something dies)
+        CharacterGC g = new DownwardCharacterGCImpl(Sprites.greenBallStanding, Sprites.greenBallMoving, Dimensions.spawningPointRight);
+        SamAndSlick e = new SamAndSlick(new Position2D(7, 5), 0.25f, g, 1000);
+        //this.spawn(e);
     }
 
     public MapComponent getMap() {
@@ -193,7 +203,7 @@ public final class Level {
     
                             if (!immortality) { 
                                 //Debug check
-                                e.collide(this);
+                                e.collide(this, points);
                             }
                         }
                     }

@@ -3,6 +3,7 @@ package qbert.model.characters;
 import qbert.model.GameObject;
 import qbert.model.Level;
 import qbert.model.components.MapComponent;
+import qbert.model.components.PointComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CharacterGC;
@@ -80,6 +81,7 @@ public interface Character extends GameObject {
 
     /**
      * @param l temporary reference to level for dealing collision between {@link Character} and QBert
+     * @param points reference to {@link PointComponent} to eventually score points in entity collisions
      */
-    void collide(Level l);
+    void collide(Level l, PointComponent points);
 }
