@@ -137,7 +137,6 @@ public class Game {
         Dimensions.spawningHeight = -100;
         Dimensions.spawningPointLeft = new Position2D((Dimensions.windowWidth / 2) - Sprites.blueTile.getWidth(), -500);
         Dimensions.spawningPointRight = new Position2D((Dimensions.windowWidth / 2), -500);
-        Dimensions.spawningQBert = new Position2D((Dimensions.windowWidth / 2) - Sprites.blueTile.getWidth() / 2, -500);
         Dimensions.backgroundHeight = Sprites.blueBackground.getHeight();
         Dimensions.backgroundWidth = Sprites.blueBackground.getWidth();
         Dimensions.backgroundX = (Dimensions.windowWidth - Dimensions.backgroundWidth) / 2;
@@ -146,6 +145,7 @@ public class Game {
         Dimensions.tileHeight = Sprites.blueTile.getHeight();
         Dimensions.tileWidth = Sprites.blueTile.getWidth();
         Dimensions.tileWidth = Sprites.blueTile.getWidth();
+        Dimensions.spawningQBert = new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight());
 
         gameLevel = new Level();
     }

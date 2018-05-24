@@ -9,6 +9,7 @@ import qbert.controller.LevelConfigurationReader;
 import qbert.model.characters.Character;
 import qbert.model.characters.Player;
 import qbert.model.states.MoveState;
+import qbert.model.utilities.Position2D;
 
 /**
  * The class for the characters spawning management.
@@ -46,7 +47,7 @@ public final class Spawner {
      * 
      */
     public void respawnQbert() {
-        level.getQBert().setNextPosition(level.getQBert().getCurrentPosition());
+        level.getQBert().setNextPosition(new Position2D(level.getQBert().getCurrentPosition()));
         level.getQBert().setCurrentState(new MoveState.Spawn(level.getQBert()));
     }
 

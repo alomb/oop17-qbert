@@ -26,10 +26,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     public final Player createQbert() {
 
         final PlayerGC graphics = new PlayerGCImpl(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
-                Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight()));
-
-//        final CharacterGraphicComponent graphics = new DownwardUpwardCGC(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
-//                new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight()));
+                Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(Dimensions.spawningQBert));
 
         return new Qbert(new Position2D(6, 6), 0.35f, graphics);
     }
