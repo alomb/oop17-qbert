@@ -8,17 +8,9 @@ import qbert.controller.GameEngine;
 public final class QBertLauncher {
 
     private QBertLauncher() {
-
-    }
-
-    /** 
-     * The main method for the game launcher. 
-     * @param args the parameters passed by command line.
-     * @throws Exception 
-     */
-    public static void main(final String[] args) {
         final GameEngine test = new GameEngine();
         test.setup();
         test.mainLoop();
     }
+
 }
