@@ -7,7 +7,7 @@ import qbert.controller.GameEngine;
  */
 public final class QBertLauncher {
 
-    private QBertLauncher() {
+    public QBertLauncher() {
         final GameEngine test = new GameEngine();
         test.setup();
         test.mainLoop();

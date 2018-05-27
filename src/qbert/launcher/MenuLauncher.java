@@ -1,55 +1,67 @@
 package qbert.launcher;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 import com.sun.glass.events.KeyEvent;
 
 public class MenuLauncher {
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("FrameDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        //Where the GUI is created:
-        JMenuBar menuBar;
-        JMenu menu;
-        JMenuItem menuItem;
+        new MenuLauncher();
+    }
 
-        //Create the menu bar.
-        menuBar = new JMenuBar();
+    public MenuLauncher() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JFrame frame = new JFrame("Test");
+                frame.add(new MenuPane());
+                frame.pack();
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
+            }
+        });
+    }
 
-        //Build the first menu.
-        menu = new JMenu("File");
-        menu.setMnemonic(KeyEvent.VK_F);
-        menu.getAccessibleContext().setAccessibleDescription("File menu");
-        menuBar.add(menu);
+    public class MenuPane extends JPanel {
 
-        //JMenuItems show the menu items
-        menuItem = new JMenuItem("New", new ImageIcon("images/new.gif"));
-        menuItem.setMnemonic(KeyEvent.VK_N);
-        menu.add(menuItem);
+        public MenuPane() {
+            setBorder(new EmptyBorder(10, 10, 10, 10));
+            setLayout(new GridBagLayout());
 
-        // add a separator
-        menu.addSeparator();
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridwidth = GridBagConstraints.REMAINDER;
+            gbc.anchor = GridBagConstraints.NORTH;
 
-        menuItem = new JMenuItem("Pause", new ImageIcon("images/pause.gif"));
-        menuItem.setMnemonic(KeyEvent.VK_P);
-        menu.add(menuItem);
+            add(new JLabel("<html><h1><strong><i>Qbert</i></strong></h1><hr></html>"), gbc);
 
-        menuItem = new JMenuItem("Exit", new ImageIcon("images/exit.gif"));
-        menuItem.setMnemonic(KeyEvent.VK_E);
-        menu.add(menuItem);
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            
+            JButton jb = new JButton("Start");
+            jb.addActionListener(new ActionListener() { 
+                public void actionPerformed(ActionEvent e) { 
+                    QBertLauncher start = new QBertLauncher();
+                } 
+            });
 
-        // add menu bar to frame
-        frame.setJMenuBar(menuBar);
-        frame.pack();
-        frame.setVisible(true);
+            JPanel buttons = new JPanel(new GridBagLayout());
+            buttons.add(jb, gbc);
+            buttons.add(new JButton("Show scores"), gbc);
+            buttons.add(new JButton("Help"), gbc);
+            buttons.add(new JButton("Exit"), gbc);
+
+            gbc.weighty = 1;
+            add(buttons, gbc);
+        }
+
     }
 
 }
