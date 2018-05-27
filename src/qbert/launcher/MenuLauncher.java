@@ -3,8 +3,11 @@ package qbert.launcher;
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,17 +21,43 @@ public class MenuLauncher {
     }
 
     public MenuLauncher() {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JFrame frame = new JFrame("Test");
-                frame.add(new MenuPane());
-                frame.pack();
-                frame.setLocationRelativeTo(null);
-                frame.setVisible(true);
-            }
-        });
+        JFrame frame = new JFrame("Test");
+        frame.add(new MenuPane());
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        
+          Set forwardKeys = frame.getFocusTraversalKeys(
+          KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS); 
+    
+          Set newForwardKeys = new HashSet(forwardKeys); 
+    
+          // add the UP ARROW key 
+          newForwardKeys.add(KeyStroke.getKeyStroke(
+              KeyEvent.VK_UP, 0)); 
+    
+          //apply your  new set of keys
+          frame.setFocusTraversalKeys(
+          KeyboardFocusManager.FORWARD_TRAVERSAL_KEYS, 
+              newForwardKeys); 
+    
+          //gets the default backward traversal keys (shift-tab)
+          Set backwardKeys = frame.getFocusTraversalKeys(
+          KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS); 
+    
+          // your own set of backward traversal keys
+          Set newBackwardKeys = new HashSet(backwardKeys); 
+    
+          // add the LEFT ARROW key 
+          newBackwardKeys.add(KeyStroke.getKeyStroke(
+              KeyEvent.VK_LEFT, 0)); 
+    
+          //apply your  new set of keys
+          frame.setFocusTraversalKeys(
+          KeyboardFocusManager.BACKWARD_TRAVERSAL_KEYS, 
+              newBackwardKeys); 
     }
+        
 
     public class MenuPane extends JPanel {
 
@@ -40,20 +69,25 @@ public class MenuLauncher {
             gbc.gridwidth = GridBagConstraints.REMAINDER;
             gbc.anchor = GridBagConstraints.NORTH;
 
-            add(new JLabel("<html><h1><strong><i>Qbert</i></strong></h1><hr></html>"), gbc);
+            add(new JLabel("<html><h1><strong><i>QBert</i></strong></h1><hr></html>"), gbc);
 
             gbc.anchor = GridBagConstraints.CENTER;
             gbc.fill = GridBagConstraints.HORIZONTAL;
-            
-            JButton jb = new JButton("Start");
-            jb.addActionListener(new ActionListener() { 
-                public void actionPerformed(ActionEvent e) { 
-                    QBertLauncher start = new QBertLauncher();
-                } 
-            });
 
             JPanel buttons = new JPanel(new GridBagLayout());
-            buttons.add(jb, gbc);
+            JButton jbstart = new JButton("Start");
+            jbstart.addActionListener(new ActionListener() { 
+                public void actionPerformed(ActionEvent e) { 
+                    Thread t = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            QBertLauncher start = new QBertLauncher();       
+                        }
+                       });
+                    t.start();
+                  } 
+                } );
+            buttons.add(jbstart, gbc);
             buttons.add(new JButton("Show scores"), gbc);
             buttons.add(new JButton("Help"), gbc);
             buttons.add(new JButton("Exit"), gbc);
@@ -65,3 +99,5 @@ public class MenuLauncher {
     }
 
 }
+
+
