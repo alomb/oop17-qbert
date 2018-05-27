@@ -1,6 +1,9 @@
 package qbert.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.jdom2.JDOMException;
@@ -16,20 +19,23 @@ import qbert.model.utilities.Position2D;
  */
 public final class Spawner {
 
-    private final Level level;
+    private final Player qbert;
+    private List<Character> gameCharacters;
     private final EnemyFactory ef = new EnemyFactoryImpl();
     private Map<String, EnemyInfo> mapInfo;
     private final LevelConfigurationReader lcr;
 
     /**
-     * @param level the {@link Level} reference
+     * @param level the level that must be loaded
+     * @param round the round that must be loaded
      */
-    public Spawner(final Level level) {
-        this.level = level;
+    public Spawner(final int level, final int round) {
+        this.qbert = ef.createQbert();
+        this.gameCharacters = new ArrayList<>();
         this.mapInfo = new HashMap<>();
         this.lcr = new LevelConfigurationReader();
         try {
-            lcr.readLevelConfiguration(level);
+            lcr.readLevelConfiguration(level, round);
         } catch (JDOMException e) {
             e.printStackTrace();
         }
@@ -40,15 +46,15 @@ public final class Spawner {
      * @return the {@link Player} representing Qbert.
      */
     public Player spawnQbert() {
-        return ef.createQbert();
+        return this.qbert;
     }
 
     /**
      * 
      */
     public void respawnQbert() {
-        level.getQBert().setNextPosition(new Position2D(level.getQBert().getCurrentPosition()));
-        level.getQBert().setCurrentState(new MoveState.Spawn(level.getQBert()));
+        this.qbert.setNextPosition(new Position2D(this.qbert.getCurrentPosition()));
+        this.qbert.setCurrentState(new MoveState.Spawn(this.qbert));
     }
 
     /**
@@ -63,12 +69,14 @@ public final class Spawner {
                     final Character character;
                     switch (entry.getKey()) {
                     case "CoilyImpl":
-                        character = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), level.getQBert());
-                        level.spawn(character);
+                        character = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.qbert);
+                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        this.gameCharacters.add(character);
                         break;
                     case "RedBall":
                         character = ef.createRedBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
-                        level.spawn(character);
+                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        this.gameCharacters.add(character);
                         break;
                     default:
                     }
@@ -95,16 +103,23 @@ public final class Spawner {
     }
 
     /**
-     * @return the number of colors to be set for each tile for the current level/round
+     * @return the list of the {@link Character} of the current level/round
      */
-    public int getColorsNumber() {
-        return this.lcr.getColorsNumber();
+    public List<Character> getGameCharacters() {
+        return Collections.unmodifiableList(this.gameCharacters);
     }
 
     /**
-     * @return true if the tile is reversible, false otherwise
+     * @param gc the list of {@link Character} to be updated
      */
-    public boolean isReversible() {
-        return this.lcr.isReversible();
+    public void updateGameCharacters(final List<Character> gc) {
+        this.gameCharacters = gc;
+    }
+
+    /**
+     * @return the {@link LevelSettings} of the current level/round
+     */
+    public LevelSettings getLevelSettings() {
+        return this.lcr.getLevelSettings();
     }
 }

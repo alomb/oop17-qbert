@@ -24,7 +24,6 @@ import qbert.view.characters.DownwardCharacterGCImpl;
 
 public final class Level {
 
-    private List<Character> gameCharacters;
     private Player qbert;
     private int lives;
     private int waitTimer = 0;
@@ -45,22 +44,15 @@ public final class Level {
         this.round = 1;
         this.lives = 3;
 
-        this.gameCharacters = new ArrayList<>();
-        this.spawner = new Spawner(this);
+        this.spawner = new Spawner(this.getLevel(), this.getRound());
 
         this.reset();
     }
 
     public void reset() {
-        this.gameCharacters.forEach(c -> c.setCurrentState(new DeathState(c)));
+        this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
         
-        //Temporary Map, will be instantiated in Spawner
-        Map<Integer, BufferedImage> colorMap = new HashMap<>();
-        colorMap.put(0, Sprites.blueTile);
-        colorMap.put(1, Sprites.yellowTile);
-        colorMap.put(2, Sprites.pinkTile);
-        
-        this.settings = new LevelSettings(spawner.getColorsNumber(), spawner.isReversible(), Sprites.blueBackground, colorMap);
+        this.settings = this.spawner.getLevelSettings();
         this.map = new MapComponent(settings);
         this.points = new PointComponent();
         this.qbert = this.spawner.spawnQbert();
@@ -85,16 +77,11 @@ public final class Level {
         return this.qbert;
     }
 
+    
     public List<Character> getEntities() {
-        return this.gameCharacters;
+        return this.spawner.getGameCharacters(); /////
     }
-
-    public void spawn(Character entity) {
-        //Temporary spawning position wild card
-        entity.setCurrentPosition(new Position2D(-1, -1));
-        this.gameCharacters.add(entity);
-    }
-
+    
     public int getLevel() {
         return this.level;
     }
@@ -111,7 +98,7 @@ public final class Level {
     public void checkStatus() {
         int coloredTiles = 0;
         for (Tile t : this.map.getTileList()) {
-            if (t.getColor() == this.settings.getColorNumber()) {
+            if (t.getColor() == this.settings.getColorsNumber()) {
                 coloredTiles++;
             }
         }
@@ -138,7 +125,8 @@ public final class Level {
         }
         /* SPAWNER */
         System.out.println("LEVEL" + this.level + "ROUND" + this.round); 
-        this.spawner = new Spawner(this);
+        this.spawner = new Spawner(this.getLevel(), this.getRound());
+        this.settings = this.spawner.getLevelSettings();
     }
 
     public void death() {
@@ -148,7 +136,7 @@ public final class Level {
     }
 
     public List<GameObject> getGameObjects() {
-        return Stream.concat(this.gameCharacters.stream(), map.getTileList().stream()).collect(Collectors.toList());
+        return Stream.concat(this.spawner.getGameCharacters().stream(), map.getTileList().stream()).collect(Collectors.toList());
     }
     
     public void update(final float elapsed) {
@@ -161,7 +149,7 @@ public final class Level {
                 if (this.lives > 1) {
                     this.lives--;
                     spawner.respawnQbert();
-                    this.gameCharacters.forEach(c -> c.setCurrentState(new DeathState(c)));
+                    this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
                 } else {
                     System.exit(0);
                 }
@@ -174,7 +162,8 @@ public final class Level {
 
             if (updateEntities) {
                 //Update Entities
-                this.gameCharacters = this.gameCharacters.stream().peek(e -> {
+                /* this.spawner.getGameCharacters() = */
+                this.spawner.updateGameCharacters(this.spawner.getGameCharacters().stream().peek(e -> {
                     e.update(elapsed);
                     Position2D logicPos = e.getNextPosition();
                     //Check if entity is just landed 
@@ -202,7 +191,7 @@ public final class Level {
                             }
                         }
                     }
-                }).filter(e -> !e.isDead()).collect(Collectors.toList());
+                }).filter(e -> !e.isDead()).collect(Collectors.toList())); /* togliere parentesi se modifico */
             }
 
 
