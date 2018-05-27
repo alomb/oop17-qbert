@@ -158,10 +158,10 @@ public class MapComponent {
    
    public void increment(Position2D pos) {
        Tile t = this.getTile(pos);
-       if (t.getColor() < this.settings.getColorNumber()) {
+       if (t.getColor() < this.settings.getColorsNumber()) {
            t.increment();
        } else {
-           if (this.settings.getColorReversable()) {
+           if (this.settings.isReversible()) {
                t.reset();
            }
        }
