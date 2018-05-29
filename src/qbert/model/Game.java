@@ -85,7 +85,7 @@ public class Game {
               convertSvgToPng("res/svg/SlickStand.svg", "res/png/SlickStand.png");
 
               //Wait converting image
-              Thread.sleep(11000);
+              //Thread.sleep(1000);
           }
 
           Sprites.blueBackground = loadImg("res/png/BackgroundBlue.png");
