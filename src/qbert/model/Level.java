@@ -1,10 +1,7 @@
 package qbert.model;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,17 +31,17 @@ public final class Level {
 
     //Level settings
     private LevelSettings settings;
-    private int level;
-    private int round;
+    private int levelNumber;
+    private int roundNumber;
 
     public Level() {
         //Forse da spostare in classe Game
         
-        this.level = 1;
-        this.round = 1;
+        this.levelNumber = 1;
+        this.roundNumber = 1;
         this.lives = 3;
 
-        this.spawner = new Spawner(this.getLevel(), this.getRound());
+        this.spawner = new Spawner(this.getLevelNumber(), this.getRoundNumber());
 
         this.reset();
     }
@@ -82,12 +79,12 @@ public final class Level {
         return this.spawner.getGameCharacters(); /////
     }
     
-    public int getLevel() {
-        return this.level;
+    public int getLevelNumber() {
+        return this.levelNumber;
     }
 
-    public int getRound() {
-        return this.round;
+    public int getRoundNumber() {
+        return this.roundNumber;
     }
 
     public int getPoints() {
@@ -114,18 +111,17 @@ public final class Level {
     }
 
     public void changeRound() {
-        if (level == 9 && round == 3) {
+        if (levelNumber == 9 && roundNumber == 3) {
             System.exit(0);
         }
-        if (this.round >= 1) {
-            this.round = 1;
-            this.level++;
+        if (this.roundNumber >= 1) {
+            this.roundNumber = 1;
+            this.levelNumber++;
         } else {
-            this.round++;
+            this.roundNumber++;
         }
         /* SPAWNER */
-        System.out.println("LEVEL" + this.level + "ROUND" + this.round); 
-        this.spawner = new Spawner(this.getLevel(), this.getRound());
+        this.spawner = new Spawner(this.getLevelNumber(), this.getRoundNumber());
         this.settings = this.spawner.getLevelSettings();
     }
 
