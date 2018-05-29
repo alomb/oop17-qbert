@@ -141,11 +141,11 @@ public class Scene {
             g.drawString("" + level.getPoints(), 40, 80);
 
             g.drawString("Level:", 1200, 300);
-            g.drawString("" + level.getLevel(), 1400, 300);
+            g.drawString("" + level.getLevelNumber(), 1400, 300);
 
             g.drawString("Round:", 1200, 330);
-            g.drawString("" + level.getRound(), 1400, 330);
-
+            g.drawString("" + level.getRoundNumber(), 1400, 330);
+            
             for (int i = 0, posY = 0; i < level.getLives(); i++, posY += this.lifeSprite.getHeight() + 10) {
                 g.drawImage(this.lifeSprite, 60, 190 + posY, this);
             }
