@@ -117,7 +117,7 @@ public class Game {
           Sprites.redBallMoving = loadImg("res/png/RedBallMove.png");
           Sprites.redBallStanding = loadImg("res/png/RedBallStand.png");
           Sprites.beigeTile = loadImg("res/png/TileBeige.png");
-          Sprites.blueTile = loadImg("/res/png/TileBlue.png");
+          Sprites.blueTile = loadImg("res/png/TileBlue.png");
           Sprites.greenTile = loadImg("res/png/TileGreen.png"); 
           Sprites.greyTile = loadImg("res/png/TileGrey.png");
           Sprites.pinkTile = loadImg("res/png/TilePink.png");
@@ -135,16 +135,15 @@ public class Game {
         Dimensions.windowWidth = Dimensions.screenWidth * 3 / 4;
         Dimensions.deathHeight = Dimensions.windowHeight + 200;
         Dimensions.spawningHeight = -100;
-        Dimensions.spawningPointLeft = new Position2D((Dimensions.windowWidth / 2) - 100/*Sprites.blueTile.getWidth()*/, -500);
+        Dimensions.spawningPointLeft = new Position2D((Dimensions.windowWidth / 2) - Sprites.blueTile.getWidth(), -500);
         Dimensions.spawningPointRight = new Position2D((Dimensions.windowWidth / 2), -500);
         Dimensions.backgroundHeight = Sprites.blueBackground.getHeight();
         Dimensions.backgroundWidth = Sprites.blueBackground.getWidth();
         Dimensions.backgroundX = (Dimensions.windowWidth - Dimensions.backgroundWidth) / 2;
         Dimensions.backgroundY = (Dimensions.windowHeight - Dimensions.backgroundHeight) / 2;
         Dimensions.cubeHeight = Sprites.blueBackground.getHeight() / 7;
-        Dimensions.tileHeight = /*Sprites.blueTile.getHeight();*/100;
-        Dimensions.tileWidth = /*Sprites.blueTile.getWidth();*/100;
-        Dimensions.tileWidth = /*Sprites.blueTile.getWidth();*/100;
+        Dimensions.tileHeight = Sprites.blueTile.getHeight();
+        Dimensions.tileWidth = Sprites.blueTile.getWidth();
         Dimensions.spawningQBert = new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight());
 
         gameLevel = new Level();
