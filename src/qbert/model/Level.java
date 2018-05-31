@@ -16,6 +16,7 @@ import qbert.model.states.MoveState;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
+import qbert.view.Renderable;
 import qbert.view.characters.CharacterGC;
 import qbert.view.characters.DownwardCharacterGCImpl;
 
@@ -131,8 +132,8 @@ public final class Level {
         this.qbert.setCurrentState(new DeathState(this.getQBert()));
     }
 
-    public List<GameObject> getGameObjects() {
-        return Stream.concat(this.spawner.getGameCharacters().stream(), map.getTileList().stream()).collect(Collectors.toList());
+    public List<Renderable> getRenderables() {
+        return Stream.concat(Stream.concat(map.getTileList().stream(), map.getDiskList().stream()), Stream.concat(Stream.of(this.qbert), this.spawner.getGameCharacters().stream())).collect(Collectors.toList());
     }
     
     public void update(final float elapsed) {

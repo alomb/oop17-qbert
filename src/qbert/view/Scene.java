@@ -108,28 +108,28 @@ public class Scene {
             // Level components rendering
             g.drawImage(level.getBackground(), Dimensions.backgroundX, Dimensions.backgroundY, this);
             
-            /**
-             *      level.getGameObjects().stream().sorted((a, b) -> a.getCurrentPosition().getY() - b.getCurrentPosition().getY() ).forEach(c -> {
-             *          g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getY(), c.getGraphicComponent().getPosition().getX(), this);
-             *      });
-             */
-            level.getMap().getTileList().stream().forEach(e -> {
-                GraphicComponent c = e.getGraphicComponent();
-                g.drawImage(c.getSprite(), c.getPosition().getX(), c.getPosition().getY(), this);
-            });
             
-            level.getMap().getDiskList().stream().forEach(e -> {
-                GraphicComponent c = e.getDiskGraphicComponent();
-                g.drawImage(c.getSprite(), c.getPosition().getX(), c.getPosition().getY(), this);
-            });
-
-            level.getEntities().stream().forEach(e -> {
-                GraphicComponent c = e.getGraphicComponent();
-                g.drawImage(c.getSprite(), c.getPosition().getX(), c.getPosition().getY(), this);
-            });
-
-            g.drawImage(level.getQBert().getGraphicComponent().getSprite(), level.getQBert().getGraphicComponent().getPosition().getX(), level.getQBert().getGraphicComponent().getPosition().getY(), this);
-
+                   level.getRenderables().stream().sorted((a, b) -> a.getCurrentPosition().getY() - b.getCurrentPosition().getY() ).forEach(c -> {
+                       g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(), c.getGraphicComponent().getPosition().getY(), this);
+                   });
+             
+//            level.getMap().getTileList().stream().forEach(e -> {
+//                GraphicComponent c = e.getGraphicComponent();
+//                g.drawImage(c.getSprite(), c.getPosition().getX(), c.getPosition().getY(), this);
+//            });
+//            
+//            level.getMap().getDiskList().stream().forEach(e -> {
+//                GraphicComponent c = e.getGraphicComponent();
+//                g.drawImage(c.getSprite(), c.getPosition().getX(), c.getPosition().getY(), this);
+//            });
+//
+//            level.getEntities().stream().forEach(e -> {
+//                GraphicComponent c = e.getGraphicComponent();
+//                g.drawImage(c.getSprite(), c.getPosition().getX(), c.getPosition().getY(), this);
+//            });
+//q
+//            g.drawImage(level.getQBert().getGraphicComponent().getSprite(), level.getQBert().getGraphicComponent().getPosition().getX(), level.getQBert().getGraphicComponent().getPosition().getY(), this);
+            
             // Info rendering
             g.setColor(new Color(255, 255, 255));
             g.setFont(this.custom);

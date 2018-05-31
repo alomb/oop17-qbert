@@ -32,7 +32,7 @@ public class DiskImpl implements Disk {
     }
 
     @Override
-    public final DiskGC getDiskGraphicComponent() {
+    public final DiskGC getGraphicComponent() {
         return this.graphics;
     }
 

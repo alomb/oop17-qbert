@@ -6,13 +6,14 @@ import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
+import qbert.view.Renderable;
 import qbert.view.characters.CharacterGC;
 
 /**
  * An interface representing a visible and movable game character. It provides
  * the most common functionalities.
  */
-public interface Character extends GameObject {
+public interface Character extends GameObject, Renderable {
 
     /**
      * @return the {@link Position2D} where the {@link Character} is moving

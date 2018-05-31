@@ -1,12 +1,13 @@
 package qbert.model;
 
 import qbert.model.utilities.Position2D;
+import qbert.view.Renderable;
 import qbert.view.TileGC;
 
 /**
  * 
  */
-public class Tile implements GameObject {
+public class Tile implements GameObject, Renderable {
     private Position2D position;
     private final TileGC graphicComponent;
 
