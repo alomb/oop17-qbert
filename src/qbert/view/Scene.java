@@ -114,10 +114,6 @@ public class Scene {
              *      });
              */
             level.getMap().getTileList().stream().forEach(e -> {
-                /*GraphicComponent c = e.getGraphicComponent();
-                Position2D pos = level.getMap().getPhysical(c.getPosition());
-                g.drawImage(c.getSprite(), pos.getX(), pos.getY(), this);*/
-
                 GraphicComponent c = e.getGraphicComponent();
                 g.drawImage(c.getSprite(), c.getPosition().getX(), c.getPosition().getY(), this);
             });

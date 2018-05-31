@@ -106,6 +106,61 @@ public class MapComponent {
 
         //Disk Test Implementation
         disks = new HashMap<>();
+        Map<Integer, Optional<Disk>> tmp2 = new HashMap<>();
+        tmp2.put(1, Optional.empty());
+        disks.put(-1, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(2, Optional.empty());
+        disks.put(0, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(3, Optional.empty());
+        disks.put(1, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(4, Optional.empty());
+        disks.put(2, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(5, Optional.empty());
+        disks.put(3, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(6, Optional.empty());
+        disks.put(4, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(7, Optional.empty());
+        disks.put(5, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(7, Optional.empty());
+        disks.put(7, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(6, Optional.empty());
+        disks.put(8, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(5, Optional.empty());
+        disks.put(6, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(4, Optional.empty());
+        disks.put(10, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(3, Optional.empty());
+        disks.put(11, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(2, Optional.empty());
+        disks.put(12, tmp2);
+
+        tmp2 = new HashMap<>();
+        tmp2.put(1, Optional.empty());
+        disks.put(13, tmp2);
         
         Map<Integer, BufferedImage> im = new HashMap<>();
         im.put(0, Sprites.disk1);
@@ -115,7 +170,7 @@ public class MapComponent {
         DiskGC diskG = new DiskGCImpl(new Position2D(0, 2), im, 2);
         Disk disk = new DiskImpl(new Position2D(0, 2), diskG);
         Optional<Disk> optDisk = Optional.of(disk);
-        Map<Integer, Optional<Disk>> tmp2 = new HashMap<>();
+        tmp2 = new HashMap<>();
         tmp2.put(2, optDisk);
         disks.put(0, tmp2);
         
@@ -151,7 +206,9 @@ public class MapComponent {
                .flatMap((Map.Entry<Integer, Map<Integer, Optional<Disk>>> me) -> me.getValue()
                        .entrySet()
                        .stream()
-                       .map((Map.Entry<Integer, Optional<Disk>> opt) -> opt.getValue().get()))
+                       .map((Map.Entry<Integer, Optional<Disk>> opt) -> opt)
+                       .filter(opt -> opt.getValue().isPresent())
+                       .map(opt -> opt.getValue().get()))
                .collect(Collectors.toList());
    }
 
