@@ -16,8 +16,13 @@ import qbert.model.states.MoveState;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
+import qbert.view.BaseTileGC;
+import qbert.view.GenericGC;
+import qbert.view.GraphicComponent;
 import qbert.view.Renderable;
+import qbert.view.RenderableObject;
 import qbert.view.characters.CharacterGC;
+import qbert.view.characters.CharacterGCImpl;
 import qbert.view.characters.DownwardCharacterGCImpl;
 
 public final class Level {
@@ -29,6 +34,7 @@ public final class Level {
     private Spawner spawner;
     private PointComponent points;
     private MapComponent map;
+    private Renderable background;
 
     //Level settings
     private LevelSettings settings;
@@ -55,6 +61,8 @@ public final class Level {
         this.points = new PointComponent();
         this.qbert = this.spawner.spawnQbert();
         
+        GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.backgroundX, Dimensions.backgroundY));
+        this.background = new RenderableObject(backgroundGC);
         
         //Slick and Sam Test Implementation (Crashes when something dies)
         CharacterGC charG = new DownwardCharacterGCImpl(Sprites.greenBallStanding, Sprites.greenBallMoving, Dimensions.spawningPointRight);
@@ -133,7 +141,7 @@ public final class Level {
     }
 
     public List<Renderable> getRenderables() {
-        return Stream.concat(Stream.concat(map.getTileList().stream(), map.getDiskList().stream()), Stream.concat(Stream.of(this.qbert), this.spawner.getGameCharacters().stream())).collect(Collectors.toList());
+        return Stream.concat(Stream.of(this.background), Stream.concat(Stream.concat(map.getTileList().stream(), map.getDiskList().stream()), Stream.concat(Stream.of(this.qbert), this.spawner.getGameCharacters().stream()))).collect(Collectors.toList());
     }
     
     public void update(final float elapsed) {

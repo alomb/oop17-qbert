@@ -4,6 +4,7 @@ import qbert.model.Level;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.states.CharacterState;
+import qbert.model.states.MoveState;
 import qbert.model.utilities.Position2D;
 import qbert.view.Renderable;
 import qbert.view.characters.CharacterGC;
@@ -114,5 +115,14 @@ public abstract class CharacterImpl implements Character {
     @Override
     public void collide(final Level l, PointComponent points) {
         l.getQBert().setDead(true);
+    }
+    
+    @Override
+    public int getZIndex() {
+        if (this.getCurrentState() instanceof MoveState.Fall) {
+            return -1;
+        } else {
+            return 7 - this.getCurrentPosition().getY();
+        }
     }
 }

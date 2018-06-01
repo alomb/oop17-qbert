@@ -6,12 +6,12 @@ import java.util.Map;
 /**
  * The implementation of {@link TileGC}.
  */
-public class ReversableTileGC extends BaseTileGC {
+public class ReversibleTileGC extends BaseTileGC {
 
     /**
      * @param sprites the map of colors orderly indexed
      */
-    public ReversableTileGC(final Map<Integer, BufferedImage> sprites) {
+    public ReversibleTileGC(final Map<Integer, BufferedImage> sprites) {
         super(sprites);
     }
     

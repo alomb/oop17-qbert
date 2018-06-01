@@ -8,7 +8,7 @@ import qbert.model.utilities.Position2D;
 /**
  * The implementation of {@link DiskGC}.
  */
-public class DiskGCImpl extends ReversableTileGC implements DiskGC {
+public class DiskGCImpl extends ReversibleTileGC implements DiskGC {
 
     private int timeBuffer;
     private final int speed;

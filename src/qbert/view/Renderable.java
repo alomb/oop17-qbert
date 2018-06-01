@@ -6,6 +6,6 @@ public interface Renderable {
     
     public GraphicComponent getGraphicComponent();
     
-    public Position2D getCurrentPosition();
+    public int getZIndex();
     
 }

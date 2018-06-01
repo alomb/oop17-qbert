@@ -18,7 +18,7 @@ import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
 import qbert.view.DiskGC;
 import qbert.view.DiskGCImpl;
-import qbert.view.ReversableTileGC;
+import qbert.view.ReversibleTileGC;
 import qbert.view.TileGC;
 import qbert.view.BaseTileGC;
 
@@ -47,7 +47,7 @@ public class MapComponent {
                 if (i % 2 == j % 2) {
                     TileGC gComponent;
                     if (settings.isReversible()) {
-                        gComponent = new ReversableTileGC(colors);
+                        gComponent = new ReversibleTileGC(colors);
                     } else {
                         gComponent = new BaseTileGC(colors);
                     }

@@ -104,11 +104,8 @@ public class Scene {
         @Override
         protected void paintComponent(final Graphics g) {
             super.paintComponent(g);
-
-            // Level components rendering
-            g.drawImage(level.getBackground(), Dimensions.backgroundX, Dimensions.backgroundY, this);
             
-            level.getRenderables().stream().sorted((a, b) -> a.getCurrentPosition().getY() - b.getCurrentPosition().getY() ).forEach(c -> {
+            level.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex() ).forEach(c -> {
                 g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(), c.getGraphicComponent().getPosition().getY(), this);
             });
             
