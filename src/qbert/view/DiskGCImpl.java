@@ -8,7 +8,7 @@ import qbert.model.utilities.Position2D;
 /**
  * The implementation of {@link DiskGC}.
  */
-public class DiskGCImpl extends TileGCImpl implements DiskGC {
+public class DiskGCImpl extends ReversableTileGC implements DiskGC {
 
     private int timeBuffer;
     private final int speed;
@@ -32,11 +32,7 @@ public class DiskGCImpl extends TileGCImpl implements DiskGC {
         this.timeBuffer += elapsedTime;
         if ((this.timeBuffer) > speed) {
             this.timeBuffer = 0;
-            if (this.spritesNumber - 1 <= this.getSpriteIndex()) {
-                this.setSprite(0);
-            } else {
-                this.setNextSprite();
-            }
+            this.setNextSprite();
         }
     }
 }

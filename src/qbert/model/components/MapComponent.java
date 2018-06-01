@@ -18,13 +18,17 @@ import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
 import qbert.view.DiskGC;
 import qbert.view.DiskGCImpl;
-import qbert.view.TileGCImpl;
+import qbert.view.ReversableTileGC;
+import qbert.view.TileGC;
+import qbert.view.BaseTileGC;
 
 public class MapComponent {
     
     private final int MAP_LEFT_TOP_EDGE = 2;
     private final int MAP_RIGHT_TOP_EDGE = 14;
     private final int MAP_BOTTOM_EDGE = 0;
+    
+    private final int MAP_COLUMNS = 12;
 
     private Map<Integer, Map<Integer, Tile>> tiles;
     private Map<Integer, Map<Integer, Optional<Disk>>> disks;
@@ -34,74 +38,24 @@ public class MapComponent {
         this.settings = settings;
         
         final Map<Integer, BufferedImage> colors = this.settings.getColorMap();
-        
         tiles = new HashMap<>();
-        Map<Integer, Tile> tmp = new HashMap<>();
-        tmp.put(0, new Tile(0, 0, new TileGCImpl(colors)));
-        tiles.put(0, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(1, 1, new TileGCImpl(colors)));
-        tiles.put(1, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(2, 0, new TileGCImpl(colors)));
-        tmp.put(2, new Tile(2, 2, new TileGCImpl(colors)));
-        tiles.put(2, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(3, 1, new TileGCImpl(colors)));
-        tmp.put(3, new Tile(3, 3, new TileGCImpl(colors)));
-        tiles.put(3, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(4, 0, new TileGCImpl(colors)));
-        tmp.put(2, new Tile(4, 2, new TileGCImpl(colors)));
-        tmp.put(4, new Tile(4, 4, new TileGCImpl(colors)));
-        tiles.put(4, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(5, 1, new TileGCImpl(colors)));
-        tmp.put(3, new Tile(5, 3, new TileGCImpl(colors)));
-        tmp.put(5, new Tile(5, 5, new TileGCImpl(colors)));
-        tiles.put(5, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(6, 0, new TileGCImpl(colors)));
-        tmp.put(2, new Tile(6, 2, new TileGCImpl(colors)));
-        tmp.put(4, new Tile(6, 4, new TileGCImpl(colors)));
-        tmp.put(6, new Tile(6, 6, new TileGCImpl(colors)));
-        tiles.put(6, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(7, 1, new TileGCImpl(colors)));
-        tmp.put(3, new Tile(7, 3, new TileGCImpl(colors)));
-        tmp.put(5, new Tile(7, 5, new TileGCImpl(colors)));
-        tiles.put(7, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(8, 0, new TileGCImpl(colors)));
-        tmp.put(2, new Tile(8, 2, new TileGCImpl(colors)));
-        tmp.put(4, new Tile(8, 4, new TileGCImpl(colors)));
-        tiles.put(8, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(9, 1, new TileGCImpl(colors)));
-        tmp.put(3, new Tile(9, 3, new TileGCImpl(colors)));
-        tiles.put(9, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(10, 0, new TileGCImpl(colors)));
-        tmp.put(2, new Tile(10, 2, new TileGCImpl(colors)));
-        tiles.put(10, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(1, new Tile(11, 1, new TileGCImpl(colors)));
-        tiles.put(11, tmp);
-
-        tmp = new HashMap<>();
-        tmp.put(0, new Tile(12, 0, new TileGCImpl(colors)));
-        tiles.put(12, tmp);
+        
+        for (int i = 0; i <= this.MAP_COLUMNS; i++) {
+            Map<Integer, Tile> column = new HashMap<>();
+            
+            for (int j = 0; j <= i && j <= this.MAP_COLUMNS - i; j++) {
+                if (i % 2 == j % 2) {
+                    TileGC gComponent;
+                    if (settings.isReversible()) {
+                        gComponent = new ReversableTileGC(colors);
+                    } else {
+                        gComponent = new BaseTileGC(colors);
+                    }
+                    column.put(j, new Tile(i, j, gComponent));
+                    tiles.put(i, column);
+                }
+            }
+        }
         
 
         //Disk Test Implementation
@@ -214,22 +168,12 @@ public class MapComponent {
 
    
    public void increment(Position2D pos) {
-       Tile t = this.getTile(pos);
-       if (t.getColor() < this.settings.getColorsNumber()) {
-           t.increment();
-       } else {
-           if (this.settings.isReversible()) {
-               t.reset();
-           }
-       }
+       this.getTile(pos).increment();
    }
 
    
    public void decrement(Position2D pos) {
-       Tile t = this.getTile(pos);
-       if (t.getColor() > 0) {
-           t.decrement();
-       }
+       this.getTile(pos).decrement();
    }
 
    public boolean isOnVoid(Position2D logicPos) {

@@ -9,16 +9,16 @@ import qbert.model.utilities.Position2D;
 /**
  * The implementation of {@link TileGC}.
  */
-public class TileGCImpl implements TileGC {
+public class BaseTileGC implements TileGC {
 
-    private Position2D spritePos;
-    private final Map<Integer, BufferedImage> sprites;
-    private int spriteIndex;
+    protected Position2D spritePos;
+    protected final Map<Integer, BufferedImage> sprites;
+    protected int spriteIndex;
 
     /**
      * @param sprites the map of colors orderly indexed
      */
-    public TileGCImpl(final Map<Integer, BufferedImage> sprites) {
+    public BaseTileGC(final Map<Integer, BufferedImage> sprites) {
         this.sprites = sprites;
         this.spriteIndex = 0;
     }
@@ -53,7 +53,7 @@ public class TileGCImpl implements TileGC {
 
     @Override
     public void setNextSprite() {
-        if (this.spriteIndex < this.sprites.size()) {
+        if (this.spriteIndex < this.sprites.size() - 1) {
             this.spriteIndex++;
         }
     }
