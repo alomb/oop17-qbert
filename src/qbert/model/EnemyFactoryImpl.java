@@ -3,9 +3,11 @@ package qbert.model;
 import qbert.model.characters.Character;
 import qbert.model.characters.Coily;
 import qbert.model.characters.CoilyImpl;
+import qbert.model.characters.GreenBall;
 import qbert.model.characters.Player;
 import qbert.model.characters.Qbert;
 import qbert.model.characters.RedBall;
+import qbert.model.characters.SamAndSlick;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
@@ -46,6 +48,24 @@ public class EnemyFactoryImpl implements EnemyFactory {
         final Position2D logicalPos = this.getLogicalPos(randomPos);
         final CharacterGC graphics = new DownwardCharacterGCImpl(Sprites.redBallStanding, Sprites.redBallMoving, randomPos);
         return new RedBall(logicalPos, speed, graphics, standingTime);
+    }
+
+    @Override
+    public final Character createGreenBall(final float speed, final int standingTime) {
+        final Position2D randomPos = this.getRandomPos();
+        final Position2D logicalPos = this.getLogicalPos(randomPos);
+        final CharacterGC graphics = new DownwardCharacterGCImpl(Sprites.greenBallStanding, Sprites.greenBallMoving, randomPos);
+        return new GreenBall(logicalPos, speed, graphics, standingTime);
+    }
+
+    @Override
+    public final Character createSamAndSlick(final float speed, final int standingTime) {
+        final Position2D randomPos = this.getRandomPos();
+        final Position2D logicalPos = this.getLogicalPos(randomPos);
+        final CharacterGC graphics = randomPos == Dimensions.spawningPointLeft
+                ? new DownwardCharacterGCImpl(Sprites.slickStanding, Sprites.slickMoving, randomPos)
+                : new DownwardCharacterGCImpl(Sprites.samStanding, Sprites.samMoving, randomPos);
+        return new SamAndSlick(logicalPos, speed, graphics, standingTime);
     }
 
     private Position2D getRandomPos() {
