@@ -1,5 +1,6 @@
 package qbert.model.characters;
 
+import qbert.model.Collidable;
 import qbert.model.GameObject;
 import qbert.model.Level;
 import qbert.model.components.MapComponent;
@@ -14,7 +15,7 @@ import qbert.view.characters.CharacterGC;
  * An interface representing a visible and movable game character. It provides
  * the most common functionalities.
  */
-public interface Character extends GameObject, Renderable {
+public interface Character extends GameObject, Renderable, Collidable {
 
     /**
      * @return the {@link Position2D} where the {@link Character} is moving
@@ -80,10 +81,4 @@ public interface Character extends GameObject, Renderable {
      * @param map the component containing informations about tiles status
      */
     void land(MapComponent map, PointComponent points);
-
-    /**
-     * @param l temporary reference to level for dealing collision between {@link Character} and QBert
-     * @param points reference to {@link PointComponent} to eventually score points in entity collisions
-     */
-    void collide(Player qbert, PointComponent points, TimerComponent timer);
 }
