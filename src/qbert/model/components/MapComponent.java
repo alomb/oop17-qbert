@@ -28,7 +28,7 @@ public class MapComponent {
     public static final int MAP_RIGHT_TOP_EDGE = 14;
     public static final int MAP_BOTTOM_EDGE = 0;
     
-    public static final int MAP_COLUMNS = 12;
+    public static final int MAP_COLUMNS = 13;
     public static final int MAP_ROWS = 7;
     public static final int MAP_BEHIND_INDEX = -1;
 
@@ -42,10 +42,10 @@ public class MapComponent {
         final Map<Integer, BufferedImage> colors = this.settings.getColorMap();
         tiles = new HashMap<>();
         
-        for (int i = 0; i <= this.MAP_COLUMNS; i++) {
+        for (int i = 0; i < this.MAP_COLUMNS; i++) {
             Map<Integer, Tile> column = new HashMap<>();
             
-            for (int j = 0; j <= i && j <= this.MAP_COLUMNS - i; j++) {
+            for (int j = 0; j <= i && j < this.MAP_COLUMNS - i; j++) {
                 if (i % 2 == j % 2) {
                     TileGC gComponent;
                     if (settings.isReversible()) {
@@ -60,63 +60,17 @@ public class MapComponent {
         }
         
 
-        //Disk Test Implementation
         disks = new HashMap<>();
-        Map<Integer, Optional<Disk>> tmp2 = new HashMap<>();
-        tmp2.put(1, Optional.empty());
-        disks.put(-1, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(2, Optional.empty());
-        disks.put(0, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(3, Optional.empty());
-        disks.put(1, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(4, Optional.empty());
-        disks.put(2, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(5, Optional.empty());
-        disks.put(3, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(6, Optional.empty());
-        disks.put(4, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(7, Optional.empty());
-        disks.put(5, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(7, Optional.empty());
-        disks.put(7, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(6, Optional.empty());
-        disks.put(8, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(5, Optional.empty());
-        disks.put(6, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(4, Optional.empty());
-        disks.put(10, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(3, Optional.empty());
-        disks.put(11, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(2, Optional.empty());
-        disks.put(12, tmp2);
-
-        tmp2 = new HashMap<>();
-        tmp2.put(1, Optional.empty());
-        disks.put(13, tmp2);
+        
+        for (int i = 1; i <= this.MAP_ROWS; i++) {
+            Map<Integer, Optional<Disk>> row = new HashMap<>();
+            Map<Integer, Optional<Disk>> row2 = new HashMap<>();
+            row.put(i, Optional.empty());
+            row2.put(i, Optional.empty());
+            
+            disks.put(i - 2, row);
+            disks.put((this.MAP_ROWS - i) * 2 + i, row2);
+        }
         
         Map<Integer, BufferedImage> im = new HashMap<>();
         im.put(0, Sprites.disk1);
@@ -126,9 +80,9 @@ public class MapComponent {
         DiskGC diskG = new DiskGCImpl(new Position2D(0, 2), im, 2);
         Disk disk = new DiskImpl(new Position2D(0, 2), diskG);
         Optional<Disk> optDisk = Optional.of(disk);
-        tmp2 = new HashMap<>();
-        tmp2.put(2, optDisk);
-        disks.put(0, tmp2);
+        Map<Integer, Optional<Disk>> tmp = new HashMap<>();
+        tmp.put(2, optDisk);
+        disks.put(0, tmp);
         
 
         this.reset();
@@ -196,7 +150,7 @@ public class MapComponent {
        if (this.isOverMap(logicPos)) {
            Optional<Disk> disk = disks.get(logicPos.getX()).get(logicPos.getY());
            if (disk.isPresent()) {
-               disks.get(logicPos.getX()).clear();
+               disks.get(logicPos.getX()).put(logicPos.getY(), Optional.empty());
                qbert.setCurrentState(new QbertOnDiskState(qbert));
            }
        }
