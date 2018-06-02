@@ -52,6 +52,8 @@ public final class Level {
         this.lives = 3;
 
         this.spawner = new Spawner(this.getLevelNumber(), this.getRoundNumber());
+        this.points = new PointComponent();
+        this.timer = new TimerComponent();
 
         this.reset();
     }
@@ -61,17 +63,10 @@ public final class Level {
         
         this.settings = this.spawner.getLevelSettings();
         this.map = new MapComponent(settings);
-        this.points = new PointComponent();
-        this.timer = new TimerComponent();
         this.qbert = this.spawner.spawnQbert();
         
         GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.backgroundX, Dimensions.backgroundY));
         this.background = new RenderableObject(backgroundGC);
-        
-        //Slick and Sam Test Implementation (Crashes when something dies)
-        CharacterGC charG = new DownwardCharacterGCImpl(Sprites.greenBallStanding, Sprites.greenBallMoving, Dimensions.spawningPointRight);
-        SamAndSlick sam = new SamAndSlick(new Position2D(7, 5), 0.25f, charG, 1000);
-        //this.spawn(sam);
     }
     
     public void resetDisk() {
@@ -123,7 +118,6 @@ public final class Level {
 
         if (coloredTiles == this.map.getTileList().stream().count()) {
             this.changeRound();
-            this.reset();
         }
     }
 
@@ -146,6 +140,8 @@ public final class Level {
         /* SPAWNER */
         this.spawner = new Spawner(this.getLevelNumber(), this.getRoundNumber());
         this.settings = this.spawner.getLevelSettings();
+
+        this.reset();
     }
 
     public void death() {

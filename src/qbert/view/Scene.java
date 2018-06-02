@@ -157,7 +157,8 @@ public class Scene {
             g.drawString("I - God Mode (" + (level.immortality ? "on" : "off") + ")", unit * 2, unit * 20 + unit * 3);
             g.drawString("P - Pause Game (" + (level.update ? "running" : "paused") + ")", unit * 2, unit * 20 + unit * 4);
             g.drawString("E - Pause Entities (" + (level.updateEntities ? "running" : "paused") + ")", unit * 2, unit * 20 + unit * 5);
-            g.drawString("Q - Quit", unit * 2, unit * 20 + unit * 6);
+            g.drawString("N - Go to next level", unit * 2, unit * 20 + unit * 6);
+            g.drawString("Q - Quit", unit * 2, unit * 20 + unit * 7);
         }
 
         @Override
@@ -188,6 +189,8 @@ public class Scene {
                     level.toggleEntities();
                 } else if (e.getKeyCode() == KeyEvent.VK_Q) {
                     System.exit(0);
+                } else if (e.getKeyCode() == KeyEvent.VK_N) {
+                    level.changeRound();
                 }
             }
         }
