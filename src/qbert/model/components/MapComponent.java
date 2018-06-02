@@ -24,11 +24,13 @@ import qbert.view.BaseTileGC;
 
 public class MapComponent {
     
-    private final int MAP_LEFT_TOP_EDGE = 2;
-    private final int MAP_RIGHT_TOP_EDGE = 14;
-    private final int MAP_BOTTOM_EDGE = 0;
+    public static final int MAP_LEFT_TOP_EDGE = 2;
+    public static final int MAP_RIGHT_TOP_EDGE = 14;
+    public static final int MAP_BOTTOM_EDGE = 0;
     
-    private final int MAP_COLUMNS = 12;
+    public static final int MAP_COLUMNS = 12;
+    public static final int MAP_ROWS = 7;
+    public static final int MAP_BEHIND_INDEX = -1;
 
     private Map<Integer, Map<Integer, Tile>> tiles;
     private Map<Integer, Map<Integer, Optional<Disk>>> disks;
@@ -167,24 +169,31 @@ public class MapComponent {
    }
 
    
-   public void increment(Position2D pos) {
-       this.getTile(pos).increment();
+   public int increment(Position2D pos) {
+       return this.getTile(pos).increment();
    }
 
    
    public void decrement(Position2D pos) {
        this.getTile(pos).decrement();
    }
+   
+   public boolean isBelowMap(Position2D logicPos) {
+       return logicPos.getY() < this.MAP_BOTTOM_EDGE;
+   }
+   
+   public boolean isOverMap(Position2D logicPos) {
+       return logicPos.getX() + logicPos.getY() == this.MAP_RIGHT_TOP_EDGE 
+               || logicPos.getY() - logicPos.getX() == this.MAP_LEFT_TOP_EDGE;
+   }
 
    public boolean isOnVoid(Position2D logicPos) {
-       return logicPos.getY() < this.MAP_BOTTOM_EDGE 
-               || logicPos.getX() + logicPos.getY() == this.MAP_RIGHT_TOP_EDGE 
-               || logicPos.getY() - logicPos.getX() == this.MAP_LEFT_TOP_EDGE;
+       return this.isBelowMap(logicPos) || this.isOverMap(logicPos);
    }
    
    public void checkForDisk(Player qbert) {
        Position2D logicPos = qbert.getNextPosition();
-       if (this.isOnVoid(logicPos)) {
+       if (this.isOverMap(logicPos)) {
            Optional<Disk> disk = disks.get(logicPos.getX()).get(logicPos.getY());
            if (disk.isPresent()) {
                disks.get(logicPos.getX()).clear();

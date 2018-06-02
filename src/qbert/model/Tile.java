@@ -1,5 +1,6 @@
 package qbert.model;
 
+import qbert.model.components.PointComponent;
 import qbert.model.utilities.Position2D;
 import qbert.view.Renderable;
 import qbert.view.TileGC;
@@ -42,8 +43,15 @@ public class Tile implements GameObject, Renderable {
         this.graphicComponent.setSprite(0);
     }
     
-    public void increment() {
-        this.graphicComponent.setNextSprite();
+    public int increment() {
+        if (this.graphicComponent.setNextSprite()) {
+            if (this.graphicComponent.isTargetColor()) {
+                return PointComponent.TARGET_COLOR_SCORE;
+            } else {
+                return PointComponent.INTERMEDIATE_COLOR_SCORE;
+            }
+        }
+        return 0;
     }
     
     public void decrement() {

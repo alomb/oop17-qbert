@@ -52,10 +52,12 @@ public class BaseTileGC implements TileGC {
     }
 
     @Override
-    public void setNextSprite() {
+    public boolean setNextSprite() {
         if (this.spriteIndex < this.sprites.size() - 1) {
             this.spriteIndex++;
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -75,5 +77,10 @@ public class BaseTileGC implements TileGC {
     @Override
     public int getSpriteIndex() {
         return this.spriteIndex;
+    }
+    
+    @Override 
+    public boolean isTargetColor() {
+        return this.spriteIndex == this.sprites.size() - 1;
     }
 }

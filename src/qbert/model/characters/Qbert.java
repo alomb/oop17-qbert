@@ -1,6 +1,7 @@
 package qbert.model.characters;
 
 import qbert.model.components.MapComponent;
+import qbert.model.components.PointComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.states.QbertStandingState;
 import qbert.model.utilities.Position2D;
@@ -31,8 +32,8 @@ public class Qbert extends CharacterImpl implements Player {
     }
 
     @Override
-    public final void land(final MapComponent map) {
-        map.increment(this.getNextPosition());
+    public final void land(final MapComponent map, final PointComponent points) {
+        points.gain(map.increment(this.getNextPosition()));
     }
 
     @Override

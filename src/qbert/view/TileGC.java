@@ -13,7 +13,7 @@ public interface TileGC extends GraphicComponent {
     /**
      * set the next sprite and updates the index.
      */
-    void setNextSprite();
+    boolean setNextSprite();
 
     /**
      * set the previous sprite and updates the index.
@@ -25,4 +25,7 @@ public interface TileGC extends GraphicComponent {
      * @param index the new sprite's number
      */
     void setSprite(int index);
+    
+    
+    boolean isTargetColor();
 }

@@ -16,11 +16,13 @@ public class ReversibleTileGC extends BaseTileGC {
     }
     
     @Override
-    public void setNextSprite() {
+    public boolean setNextSprite() {
         if (this.spriteIndex < this.sprites.size() - 1) {
             this.spriteIndex++;
+            return true;
         } else {
             this.spriteIndex = 0;
+            return false;
         }
     }
 }

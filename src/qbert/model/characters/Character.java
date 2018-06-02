@@ -4,6 +4,7 @@ import qbert.model.GameObject;
 import qbert.model.Level;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
+import qbert.model.components.TimerComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.Renderable;
@@ -78,11 +79,11 @@ public interface Character extends GameObject, Renderable {
     /**
      * @param map the component containing informations about tiles status
      */
-    void land(MapComponent map);
+    void land(MapComponent map, PointComponent points);
 
     /**
      * @param l temporary reference to level for dealing collision between {@link Character} and QBert
      * @param points reference to {@link PointComponent} to eventually score points in entity collisions
      */
-    void collide(Level l, PointComponent points);
+    void collide(Player qbert, PointComponent points, TimerComponent timer);
 }

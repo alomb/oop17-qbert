@@ -3,6 +3,7 @@ package qbert.model.characters;
 import qbert.model.Level;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
+import qbert.model.components.TimerComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.states.MoveState;
 import qbert.model.utilities.Position2D;
@@ -108,21 +109,21 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public void land(final MapComponent map) {
+    public void land(final MapComponent map, final PointComponent points) {
         //Do nothing
     }
 
     @Override
-    public void collide(final Level l, PointComponent points) {
-        l.getQBert().setDead(true);
+    public void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
+        qbert.setDead(true);
     }
     
     @Override
     public int getZIndex() {
         if (this.getCurrentState() instanceof MoveState.Fall) {
-            return -1;
+            return MapComponent.MAP_BEHIND_INDEX;
         } else {
-            return 7 - this.getCurrentPosition().getY();
+            return MapComponent.MAP_ROWS - this.getCurrentPosition().getY();
         }
     }
 }

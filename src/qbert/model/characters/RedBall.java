@@ -1,5 +1,7 @@
 package qbert.model.characters;
 
+import qbert.model.Level;
+import qbert.model.components.PointComponent;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CharacterGC;
 

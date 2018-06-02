@@ -10,6 +10,7 @@ import qbert.model.characters.Player;
 import qbert.model.characters.SamAndSlick;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
+import qbert.model.components.TimerComponent;
 import qbert.model.states.DeathState;
 import qbert.model.states.LandState;
 import qbert.model.states.MoveState;
@@ -34,6 +35,7 @@ public final class Level {
     private Spawner spawner;
     private PointComponent points;
     private MapComponent map;
+    private TimerComponent timer;
     private Renderable background;
 
     //Level settings
@@ -59,6 +61,7 @@ public final class Level {
         this.settings = this.spawner.getLevelSettings();
         this.map = new MapComponent(settings);
         this.points = new PointComponent();
+        this.timer = new TimerComponent();
         this.qbert = this.spawner.spawnQbert();
         
         GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.backgroundX, Dimensions.backgroundY));
@@ -129,6 +132,8 @@ public final class Level {
         } else {
             this.roundNumber++;
         }
+        
+        this.points.gain(points.ROUND_BONUS_SCORE);
         /* SPAWNER */
         this.spawner = new Spawner(this.getLevelNumber(), this.getRoundNumber());
         this.settings = this.spawner.getLevelSettings();
@@ -176,8 +181,9 @@ public final class Level {
                         //Checking if entity is outside the map
                         if (this.map.isOnVoid(logicPos)) {
                             e.setCurrentState(new MoveState.Fall(e));
+                            this.points.gain(points.COILY_FALL_SCORE);
                         } else {
-                            e.land(this.map);
+                            e.land(this.map, this.points);
                             e.setCurrentState(e.getStandingState());
                         }
                     }
@@ -192,7 +198,7 @@ public final class Level {
     
                             if (!immortality) { 
                                 //Debug check
-                                e.collide(this, points);
+                                e.collide(this.getQBert(), this.points, this.timer);
                             }
                         }
                     }
@@ -213,7 +219,7 @@ public final class Level {
                 if (this.map.isOnVoid(qLogicPos)) {
                     qbert.setCurrentState(new MoveState.Fall(qbert));
                 } else {
-                    qbert.land(this.map);
+                    qbert.land(this.map, this.points);
                     qbert.setCurrentState(qbert.getStandingState());
                     this.checkStatus();
                 }
