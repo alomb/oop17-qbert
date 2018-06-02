@@ -182,14 +182,17 @@ public class MapComponent {
                || logicPos.getY() - logicPos.getX() == this.MAP_LEFT_TOP_EDGE;
    }
    
-   public void checkForDisk(Player qbert) {
+   public boolean checkForDisk(Player qbert) {
        Position2D logicPos = qbert.getNextPosition();
        if (this.isOnVoid(logicPos)) {
            Optional<Disk> disk = disks.get(logicPos.getX()).get(logicPos.getY());
            if (disk.isPresent()) {
                disks.get(logicPos.getX()).clear();
                qbert.setCurrentState(new QbertOnDiskState(qbert));
+
+               return true;
            }
        }
+    return false;
    }
 }
