@@ -145,14 +145,17 @@ public class MapComponent {
        return this.isBelowMap(logicPos) || this.isOverMap(logicPos);
    }
    
-   public void checkForDisk(Player qbert) {
+   public boolean checkForDisk(Player qbert) {
        Position2D logicPos = qbert.getNextPosition();
        if (this.isOverMap(logicPos)) {
            Optional<Disk> disk = disks.get(logicPos.getX()).get(logicPos.getY());
            if (disk.isPresent()) {
                disks.get(logicPos.getX()).put(logicPos.getY(), Optional.empty());
                qbert.setCurrentState(new QbertOnDiskState(qbert));
+
+               return true;
            }
        }
+    return false;
    }
 }

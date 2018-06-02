@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import qbert.model.characters.Character;
+import qbert.model.characters.CoilyImpl;
 import qbert.model.characters.Player;
 import qbert.model.characters.SamAndSlick;
 import qbert.model.components.MapComponent;
@@ -71,6 +72,14 @@ public final class Level {
         CharacterGC charG = new DownwardCharacterGCImpl(Sprites.greenBallStanding, Sprites.greenBallMoving, Dimensions.spawningPointRight);
         SamAndSlick sam = new SamAndSlick(new Position2D(7, 5), 0.25f, charG, 1000);
         //this.spawn(sam);
+    }
+    
+    public void resetDisk() {
+        this.spawner.getGameCharacters().forEach(c -> {
+            if (!(c instanceof CoilyImpl)) {
+                c.setCurrentState(new DeathState(c));
+            }
+        });
     }
 
     public MapComponent getMap() {
@@ -223,7 +232,10 @@ public final class Level {
                     qbert.setCurrentState(qbert.getStandingState());
                     this.checkStatus();
                 }
-                this.map.checkForDisk(qbert);
+                /* se Qbert e' sul disco pulisco la mappa, tranne Coily */
+                if (this.map.checkForDisk(qbert)) {
+                    this.resetDisk();
+                }
             }
         } else {
             this.waitTimer -= elapsed;

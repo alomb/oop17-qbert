@@ -78,6 +78,16 @@ public final class Spawner {
                         character.setCurrentPosition(new Position2D(-1, -1)); ////////////
                         this.gameCharacters.add(character);
                         break;
+                    case "GreenBall":
+                        character = ef.createGreenBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
+                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        this.gameCharacters.add(character);
+                        break;
+                    case "SamAndSlick":
+                        character = ef.createSamAndSlick(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
+                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        this.gameCharacters.add(character);
+                        break;
                     default:
                     }
                     entry.getValue().incCurrentQuantity();
