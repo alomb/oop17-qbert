@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 import qbert.model.characters.Character;
 import qbert.model.characters.CoilyImpl;
 import qbert.model.characters.Player;
-import qbert.model.characters.SamAndSlick;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
@@ -17,15 +16,10 @@ import qbert.model.states.LandState;
 import qbert.model.states.MoveState;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.model.utilities.Sprites;
-import qbert.view.BaseTileGC;
 import qbert.view.GenericGC;
 import qbert.view.GraphicComponent;
 import qbert.view.Renderable;
 import qbert.view.RenderableObject;
-import qbert.view.characters.CharacterGC;
-import qbert.view.characters.CharacterGCImpl;
-import qbert.view.characters.DownwardCharacterGCImpl;
 
 public final class Level {
 
@@ -136,7 +130,8 @@ public final class Level {
             this.roundNumber++;
         }
         
-        this.points.gain(points.ROUND_BONUS_SCORE);
+        this.points.gain(PointComponent.ROUND_BONUS_SCORE);
+        this.points.gain(PointComponent.UNUSED_DISK_SCORE * map.getDiskList().size());
         /* SPAWNER */
         this.spawner = new Spawner(this.getLevelNumber(), this.getRoundNumber());
         this.settings = this.spawner.getLevelSettings();
@@ -186,7 +181,10 @@ public final class Level {
                         //Checking if entity is outside the map
                         if (this.map.isOnVoid(logicPos)) {
                             e.setCurrentState(new MoveState.Fall(e));
-                            this.points.gain(points.COILY_FALL_SCORE);
+
+                            if (!(e instanceof CoilyImpl)) {
+                                this.points.gain(PointComponent.COILY_FALL_SCORE);
+                            }
                         } else {
                             e.land(this.map, this.points);
                             e.setCurrentState(e.getStandingState());

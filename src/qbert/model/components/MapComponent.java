@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import qbert.model.characters.Character;
 import qbert.model.characters.Player;
 import qbert.model.states.QbertOnDiskState;
 import qbert.model.Disk;
