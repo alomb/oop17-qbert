@@ -12,7 +12,6 @@ public class DiskGCImpl extends ReversibleTileGC implements DiskGC {
 
     private int timeBuffer;
     private final int speed;
-    private final int spritesNumber;
 
     /**
      * @param spritePos the {@link Position2D} of the sprite
@@ -22,7 +21,6 @@ public class DiskGCImpl extends ReversibleTileGC implements DiskGC {
     public DiskGCImpl(final Position2D spritePos, final Map<Integer, BufferedImage> sprites, final int speed) {
         super(sprites);
         this.setPosition(spritePos);
-        this.spritesNumber = sprites.size();
         this.timeBuffer = 0;
         this.speed = speed;
     }

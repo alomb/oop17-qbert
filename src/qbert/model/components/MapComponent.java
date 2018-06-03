@@ -23,11 +23,11 @@ import qbert.view.TileGC;
 import qbert.view.BaseTileGC;
 
 public class MapComponent {
-    
+
     public static final int MAP_LEFT_TOP_EDGE = 2;
     public static final int MAP_RIGHT_TOP_EDGE = 14;
     public static final int MAP_BOTTOM_EDGE = 0;
-    
+
     public static final int MAP_COLUMNS = 13;
     public static final int MAP_ROWS = 7;
     public static final int MAP_BEHIND_INDEX = -1;
@@ -36,18 +36,19 @@ public class MapComponent {
     private Map<Integer, Map<Integer, Optional<Disk>>> disks;
     private LevelSettings settings;
     private int disksToPlace;
-    
+
     public MapComponent(LevelSettings settings) {
         this.settings = settings;
-        disksToPlace = settings.getDisksNumber();
+        this.disksToPlace = settings.getDisksNumber();
+        final int diskVelocity = 40;
         Random rand = new Random();
-        
+
         final Map<Integer, BufferedImage> colors = this.settings.getColorMap();
         tiles = new HashMap<>();
-        
+
         for (int i = 0; i < MapComponent.MAP_COLUMNS; i++) {
             Map<Integer, Tile> column = new HashMap<>();
-            
+
             for (int j = 0; j <= i && j < MapComponent.MAP_COLUMNS - i; j++) {
                 if (i % 2 == j % 2) {
                     TileGC gComponent;
@@ -61,39 +62,38 @@ public class MapComponent {
                 }
             }
         }
-        
 
         disks = new HashMap<>();
-        
+
         for (int i = 1; i <= MapComponent.MAP_ROWS; i++) {
             Map<Integer, Optional<Disk>> row = new HashMap<>();
             Map<Integer, Optional<Disk>> row2 = new HashMap<>();
             row.put(i, Optional.empty());
             row2.put(i, Optional.empty());
-            
+
             disks.put(i - 2, row);
             disks.put((MapComponent.MAP_ROWS - i) * 2 + i, row2);
         }
-        
+
         while (disksToPlace > 0) {
             int n = rand.nextInt(6) + 1;
             int side = rand.nextInt(2);
             int y = n;
             int x;
-            
+
             if (side > 0) {
                 x = n - 2;
             } else {
                 x = 14 - n;
             }
-            
+
             if (!disks.get(x).get(y).isPresent()) {
                 Map<Integer, BufferedImage> im = new HashMap<>();
                 im.put(0, Sprites.disk1);
                 im.put(1, Sprites.disk2);
                 im.put(2, Sprites.disk3);
                 im.put(3, Sprites.disk4);
-                DiskGC diskG = new DiskGCImpl(new Position2D(x, y), im, 1);
+                DiskGC diskG = new DiskGCImpl(new Position2D(x, y), im, diskVelocity);
                 Disk disk = new DiskImpl(new Position2D(x, y), diskG);
                 disks.get(x).put(y, Optional.of(disk));
                 

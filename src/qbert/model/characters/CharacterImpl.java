@@ -1,13 +1,11 @@
 package qbert.model.characters;
 
-import qbert.model.Level;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.states.MoveState;
 import qbert.model.utilities.Position2D;
-import qbert.view.Renderable;
 import qbert.view.characters.CharacterGC;
 
 /**
@@ -117,9 +115,9 @@ public abstract class CharacterImpl implements Character {
     public void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
         qbert.setDead(true);
     }
-    
+
     @Override
-    public int getZIndex() {
+    public final int getZIndex() {
         if (this.getCurrentState() instanceof MoveState.Fall) {
             return MapComponent.MAP_BEHIND_INDEX;
         } else {

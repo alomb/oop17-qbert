@@ -8,6 +8,7 @@ import qbert.model.utilities.Position2D;
 public class UpwardDiagonalAnimation extends MovementAnimation {
 
     private final double angle;
+    private static final double SPEEDFACTOR = 0.75;
 
     /**
      * @param startPos the first {@link Position2D}
@@ -25,8 +26,8 @@ public class UpwardDiagonalAnimation extends MovementAnimation {
     protected final void calculateNext() {
 
         this.getCurrentPosition().vectorSum(
-                new Position2D((int) (this.getAnimationSpeed() * Math.cos(angle)), 
-                        (int) (this.getAnimationSpeed() * Math.sin(angle))));
+                new Position2D((int) (this.getAnimationSpeed() * UpwardDiagonalAnimation.SPEEDFACTOR * Math.cos(angle)), 
+                        (int) (this.getAnimationSpeed() * UpwardDiagonalAnimation.SPEEDFACTOR * Math.sin(angle))));
 
         if (this.getCurrentPosition().getY() < this.getTargetPosition().getY()) {
             this.setCurrentPosition(new Position2D(this.getTargetPosition()));

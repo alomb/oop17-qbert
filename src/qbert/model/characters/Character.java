@@ -2,10 +2,8 @@ package qbert.model.characters;
 
 import qbert.model.Collidable;
 import qbert.model.GameObject;
-import qbert.model.Level;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
-import qbert.model.components.TimerComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.Renderable;
@@ -79,6 +77,7 @@ public interface Character extends GameObject, Renderable, Collidable {
 
     /**
      * @param map the component containing informations about tiles status
+     * @param points the component used to update game points
      */
     void land(MapComponent map, PointComponent points);
 }

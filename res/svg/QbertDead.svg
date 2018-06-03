@@ -26,7 +26,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="4.0000001"
      inkscape:cx="60.838594"
-     inkscape:cy="18.492605"
+     inkscape:cy="19.409334"
      inkscape:document-units="px"
      inkscape:current-layer="g5191"
      showgrid="true"
@@ -96,16 +96,17 @@
         </g>
       </g>
       <g
-         id="g3032">
+         id="g3032"
+         transform="matrix(-1,0,0,1,-3668.2251,0)">
         <path
-           style="fill:none;stroke:#ef5600;stroke-width:1.29999994999999990;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           style="fill:none;stroke:#ef5600;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
            d="m -583.18879,110.73576 c 0.11005,1.55109 0.0454,4.49588 0.0454,4.49588 l -2.56266,0.92543"
            id="path5086"
            inkscape:connector-curvature="0"
            sodipodi:nodetypes="ccc"
            transform="matrix(2.7997582,0,0,2.7997582,-192.7058,236.72318)" />
         <path
-           style="fill:none;stroke:#ef5600;stroke-width:1.29999994999999990;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           style="fill:none;stroke:#ef5600;stroke-width:1.29999995;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
            d="m -586.62207,110.09859 -0.024,4.82162 -3.01413,1.23686"
            id="path5088"
            inkscape:connector-curvature="0"
@@ -123,7 +124,7 @@
            transform="matrix(-2.7997582,0,0,2.7997582,-3517.0409,157.32635)" />
         <path
            sodipodi:type="arc"
-           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            id="path5094"
            sodipodi:cx="-619.72858"
            sodipodi:cy="133.75471"
@@ -133,7 +134,7 @@
            transform="matrix(-2.7997582,0,0,2.7997582,-3565.0341,152.23122)" />
         <path
            sodipodi:type="arc"
-           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            id="path5096"
            sodipodi:cx="-619.47607"
            sodipodi:cy="134.41763"
@@ -149,7 +150,7 @@
            sodipodi:cy="133.75471"
            sodipodi:cx="-619.72858"
            id="path5098"
-           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            sodipodi:type="arc" />
         <path
            transform="matrix(-3.8161168,1.1254066,1.1254066,3.8161168,-4346.607,712.38451)"
@@ -159,7 +160,7 @@
            sodipodi:cy="134.41763"
            sodipodi:cx="-619.47607"
            id="path5100"
-           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            sodipodi:type="arc" />
         <path
            transform="matrix(-2.7997582,0,0,2.7997582,-3575.1096,152.23122)"
@@ -169,7 +170,7 @@
            sodipodi:cy="133.75471"
            sodipodi:cx="-619.72858"
            id="path5102"
-           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            sodipodi:type="arc" />
         <path
            transform="matrix(-3.9786036,0,0,3.9786036,-4307.302,-7.99403)"
@@ -179,11 +180,11 @@
            sodipodi:cy="134.41763"
            sodipodi:cx="-619.47607"
            id="path5104"
-           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            sodipodi:type="arc" />
         <path
            sodipodi:type="arc"
-           style="color:#000000;fill:#ff7700;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.29999994999999990;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           style="color:#000000;fill:#ff7700;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1.29999995;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            id="path5112"
            sodipodi:cx="-643.88391"
            sodipodi:cy="129.88451"
@@ -194,7 +195,7 @@
         <path
            inkscape:transform-center-y="5.8582687"
            inkscape:transform-center-x="4.9750435"
-           style="fill:#ef5600;fill-opacity:1;stroke:#ef5600;stroke-width:3.50000000000000000;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+           style="fill:#ef5600;fill-opacity:1;stroke:#ef5600;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
            d="m -586.97029,106.64337 -3.27491,3.83891"
            id="path5090"
            inkscape:connector-curvature="0"
@@ -204,7 +205,7 @@
            inkscape:transform-center-y="11.60027"
            inkscape:transform-center-x="10.079852"
            sodipodi:type="arc"
-           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.60000002000000000;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1.60000002;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            id="path5110"
            sodipodi:cx="-592.45447"
            sodipodi:cy="108.56404"
@@ -214,7 +215,7 @@
            transform="matrix(2.8250937,-1.0977365,1.0977365,2.8250937,-291.2052,-410.64762)" />
         <path
            sodipodi:type="arc"
-           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           style="color:#000000;fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            id="path5106"
            sodipodi:cx="-619.72858"
            sodipodi:cy="133.75471"
@@ -224,7 +225,7 @@
            transform="matrix(-2.7997582,0,0,2.7997582,-3575.1096,152.23122)" />
         <path
            sodipodi:type="arc"
-           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.50000000000000000;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+           style="color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:3.5;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
            id="path5108"
            sodipodi:cx="-619.47607"
            sodipodi:cy="134.41763"
