@@ -8,8 +8,6 @@ public class PointComponent {
     public static final int KILL_GREEN_BALL_SCORE = 100;
     public static final int KILL_SAM_SLICK_SCORE = 300;
     public static final int UNUSED_DISK_SCORE = 50;
-    //TODO: Rendere dinamici i punti per round
-    public static final int ROUND_BONUS_SCORE = 1500;
     
     private int points;
     
@@ -17,7 +15,7 @@ public class PointComponent {
         this.points = 0;
     }
     
-    public void gain(int amount) {
+    public void score(int amount) {
         this.points += amount;
     }
     

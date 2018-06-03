@@ -133,8 +133,8 @@ public final class Level {
             this.roundNumber++;
         }
         
-        this.points.gain(PointComponent.ROUND_BONUS_SCORE);
-        this.points.gain(PointComponent.UNUSED_DISK_SCORE * map.getDiskList().size());
+        this.points.score(this.settings.getRoundScore());
+        this.points.score(PointComponent.UNUSED_DISK_SCORE * map.getDiskList().size());
         /* SPAWNER */
         this.spawner = new Spawner(this.getLevelNumber(), this.getRoundNumber());
         this.settings = this.spawner.getLevelSettings();
@@ -186,7 +186,7 @@ public final class Level {
                             e.setCurrentState(new MoveState.Fall(e));
 
                             if (e instanceof CoilyImpl) {
-                                this.points.gain(PointComponent.COILY_FALL_SCORE);
+                                this.points.score(PointComponent.COILY_FALL_SCORE);
                             }
                         } else {
                             e.land(this.map, this.points);

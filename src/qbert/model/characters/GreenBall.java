@@ -25,7 +25,7 @@ public class GreenBall extends DownwardCharacter {
     
     @Override
     public void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
-        points.gain(points.KILL_GREEN_BALL_SCORE);
+        points.score(points.KILL_GREEN_BALL_SCORE);
         this.setCurrentState(new DeathState(this));
     }
 }

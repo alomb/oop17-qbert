@@ -10,6 +10,7 @@ public class LevelSettings {
 
     private final int colorsNumber;
     private final int disksNumber;
+    private final int roundScore;
     private final boolean colorReversible;
     private final BufferedImage backgroundImage;
     private final Map<Integer, BufferedImage> colorMap;
@@ -29,6 +30,7 @@ public class LevelSettings {
         this.colorMap = colorMap;
         this.targetColor = targetColor;
         this.disksNumber = 3;
+        this.roundScore = 1500;
     }
 
     /**
@@ -43,6 +45,13 @@ public class LevelSettings {
      */
     public int getDisksNumber() {
         return this.disksNumber;
+    }
+
+    /**
+     * @return the number of points the player gets after winning the round
+     */
+    public int getRoundScore() {
+        return this.roundScore;
     }
 
     /**

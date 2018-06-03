@@ -33,7 +33,7 @@ public class Qbert extends CharacterImpl implements Player {
 
     @Override
     public final void land(final MapComponent map, final PointComponent points) {
-        points.gain(map.incrementColor(this.getNextPosition()));
+        points.score(map.incrementColor(this.getNextPosition()));
     }
 
     @Override
