@@ -26,7 +26,7 @@ public class SamAndSlick extends DownwardCharacter {
 
     @Override
     public final void land(final MapComponent map, final PointComponent points) {
-        map.decrement(this.getNextPosition());
+        map.resetColor(this.getNextPosition());
     }
 
     @Override

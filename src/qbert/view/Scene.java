@@ -180,7 +180,7 @@ public class Scene {
                 if (e.getKeyCode() == KeyEvent.VK_L) {
                     level.gainLife();
                 } else if (e.getKeyCode() == KeyEvent.VK_D) {
-                    level.death();;
+                    level.death();
                 } else if (e.getKeyCode() == KeyEvent.VK_I) {
                     level.toggleImmortality();
                 } else if (e.getKeyCode() == KeyEvent.VK_P) {

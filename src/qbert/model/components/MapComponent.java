@@ -42,10 +42,10 @@ public class MapComponent {
         final Map<Integer, BufferedImage> colors = this.settings.getColorMap();
         tiles = new HashMap<>();
         
-        for (int i = 0; i < this.MAP_COLUMNS; i++) {
+        for (int i = 0; i < MapComponent.MAP_COLUMNS; i++) {
             Map<Integer, Tile> column = new HashMap<>();
             
-            for (int j = 0; j <= i && j < this.MAP_COLUMNS - i; j++) {
+            for (int j = 0; j <= i && j < MapComponent.MAP_COLUMNS - i; j++) {
                 if (i % 2 == j % 2) {
                     TileGC gComponent;
                     if (settings.isReversible()) {
@@ -62,14 +62,14 @@ public class MapComponent {
 
         disks = new HashMap<>();
         
-        for (int i = 1; i <= this.MAP_ROWS; i++) {
+        for (int i = 1; i <= MapComponent.MAP_ROWS; i++) {
             Map<Integer, Optional<Disk>> row = new HashMap<>();
             Map<Integer, Optional<Disk>> row2 = new HashMap<>();
             row.put(i, Optional.empty());
             row2.put(i, Optional.empty());
             
             disks.put(i - 2, row);
-            disks.put((this.MAP_ROWS - i) * 2 + i, row2);
+            disks.put((MapComponent.MAP_ROWS - i) * 2 + i, row2);
         }
         
         Map<Integer, BufferedImage> im = new HashMap<>();
@@ -123,22 +123,22 @@ public class MapComponent {
    }
 
    
-   public int increment(Position2D pos) {
+   public int incrementColor(Position2D pos) {
        return this.getTile(pos).increment();
    }
 
    
-   public void decrement(Position2D pos) {
-       this.getTile(pos).decrement();
+   public void resetColor(Position2D pos) {
+       this.getTile(pos).reset();
    }
    
    public boolean isBelowMap(Position2D logicPos) {
-       return logicPos.getY() < this.MAP_BOTTOM_EDGE;
+       return logicPos.getY() < MapComponent.MAP_BOTTOM_EDGE;
    }
    
    public boolean isOverMap(Position2D logicPos) {
-       return logicPos.getX() + logicPos.getY() == this.MAP_RIGHT_TOP_EDGE 
-               || logicPos.getY() - logicPos.getX() == this.MAP_LEFT_TOP_EDGE;
+       return logicPos.getX() + logicPos.getY() == MapComponent.MAP_RIGHT_TOP_EDGE 
+               || logicPos.getY() - logicPos.getX() == MapComponent.MAP_LEFT_TOP_EDGE;
    }
 
    public boolean isOnVoid(Position2D logicPos) {

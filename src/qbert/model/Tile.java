@@ -54,10 +54,6 @@ public class Tile implements GameObject, Renderable {
         return 0;
     }
     
-    public void decrement() {
-        this.graphicComponent.setPreviousSprite();
-    }
-    
     //Forse da spostare in una classe astratta
     @Override
     public int getZIndex() {

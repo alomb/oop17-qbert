@@ -61,13 +61,6 @@ public class BaseTileGC implements TileGC {
     }
 
     @Override
-    public void setPreviousSprite() {
-        if (this.spriteIndex > 0) {
-            this.spriteIndex--;
-        }
-    }
-
-    @Override
     public void setSprite(final int index) {
         if (index < this.sprites.size() && index >= 0) {
             this.spriteIndex = index;
