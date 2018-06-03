@@ -9,6 +9,7 @@ import java.util.Map;
 public class LevelSettings {
 
     private final int colorsNumber;
+    private final int disksNumber;
     private final boolean colorReversible;
     private final BufferedImage backgroundImage;
     private final Map<Integer, BufferedImage> colorMap;
@@ -27,6 +28,7 @@ public class LevelSettings {
         this.backgroundImage = background;
         this.colorMap = colorMap;
         this.targetColor = targetColor;
+        this.disksNumber = 3;
     }
 
     /**
@@ -34,6 +36,13 @@ public class LevelSettings {
      */
     public int getColorsNumber() {
         return this.colorsNumber;
+    }
+
+    /**
+     * @return the number of disks to be set for the current level/round
+     */
+    public int getDisksNumber() {
+        return this.disksNumber;
     }
 
     /**

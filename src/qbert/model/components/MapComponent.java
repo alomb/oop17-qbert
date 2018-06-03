@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import qbert.model.characters.Player;
@@ -34,9 +35,12 @@ public class MapComponent {
     private Map<Integer, Map<Integer, Tile>> tiles;
     private Map<Integer, Map<Integer, Optional<Disk>>> disks;
     private LevelSettings settings;
+    private int disksToPlace;
     
     public MapComponent(LevelSettings settings) {
         this.settings = settings;
+        disksToPlace = settings.getDisksNumber();
+        Random rand = new Random();
         
         final Map<Integer, BufferedImage> colors = this.settings.getColorMap();
         tiles = new HashMap<>();
@@ -71,17 +75,31 @@ public class MapComponent {
             disks.put((MapComponent.MAP_ROWS - i) * 2 + i, row2);
         }
         
-        Map<Integer, BufferedImage> im = new HashMap<>();
-        im.put(0, Sprites.disk1);
-        im.put(1, Sprites.disk2);
-        im.put(2, Sprites.disk3);
-        im.put(3, Sprites.disk4);
-        DiskGC diskG = new DiskGCImpl(new Position2D(0, 2), im, 2);
-        Disk disk = new DiskImpl(new Position2D(0, 2), diskG);
-        Optional<Disk> optDisk = Optional.of(disk);
-        Map<Integer, Optional<Disk>> tmp = new HashMap<>();
-        tmp.put(2, optDisk);
-        disks.put(0, tmp);
+        while (disksToPlace > 0) {
+            int n = rand.nextInt(6) + 1;
+            int side = rand.nextInt(2);
+            int y = n;
+            int x;
+            
+            if (side > 0) {
+                x = n - 2;
+            } else {
+                x = 14 - n;
+            }
+            
+            if (!disks.get(x).get(y).isPresent()) {
+                Map<Integer, BufferedImage> im = new HashMap<>();
+                im.put(0, Sprites.disk1);
+                im.put(1, Sprites.disk2);
+                im.put(2, Sprites.disk3);
+                im.put(3, Sprites.disk4);
+                DiskGC diskG = new DiskGCImpl(new Position2D(x, y), im, 1);
+                Disk disk = new DiskImpl(new Position2D(x, y), diskG);
+                disks.get(x).put(y, Optional.of(disk));
+                
+                disksToPlace--;
+            }
+        }
         
 
         this.reset();

@@ -23,6 +23,9 @@ import qbert.view.RenderableObject;
 
 public final class Level {
 
+    private final int LEVELS_NUMBER = 9;
+    private final int ROUNDS_NUMBER = 4;
+    
     private Player qbert;
     private int lives;
     private int waitTimer = 0;
