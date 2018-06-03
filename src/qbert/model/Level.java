@@ -185,7 +185,7 @@ public final class Level {
                         if (this.map.isOnVoid(logicPos)) {
                             e.setCurrentState(new MoveState.Fall(e));
 
-                            if (!(e instanceof CoilyImpl)) {
+                            if (e instanceof CoilyImpl) {
                                 this.points.gain(PointComponent.COILY_FALL_SCORE);
                             }
                         } else {
