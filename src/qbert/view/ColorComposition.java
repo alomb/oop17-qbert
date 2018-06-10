@@ -1,6 +1,7 @@
 package qbert.view;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,8 +21,7 @@ public interface ColorComposition {
     BufferedImage getBackgroundImage();
 
     /**
-     * @return the {@link BufferedImage} representing the target color
+     * @return the set containing tiles colors
      */
-    BufferedImage getTargetColor();
-
+    List<BufferedImage> getTilesList();
 }

@@ -193,8 +193,8 @@ public class Game {
         final Element root = document.getRootElement();
         float width = Float.valueOf(root.getAttributeValue("width"));
         float height = Float.valueOf(root.getAttributeValue("height"));
-        converter.addTranscodingHint(PNGTranscoder.KEY_WIDTH, new Float(20*width));
-        converter.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, new Float(20*height));
+        converter.addTranscodingHint(PNGTranscoder.KEY_WIDTH, new Float(1*width));
+        converter.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, new Float(1*height));
         converter.addTranscodingHint(PNGTranscoder.KEY_AOI, new Rectangle(0, 0, Math.round(width), Math.round(height)));
 
         converter.transcode(imageSvg, outputImagePng);

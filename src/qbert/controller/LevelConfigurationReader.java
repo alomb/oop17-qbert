@@ -87,9 +87,8 @@ public class LevelConfigurationReader {
     public LevelSettings getLevelSettings() {
         final Map<Integer, BufferedImage> colorMap = this.colorComposition.getColorComposition(colorsNumber);
         final BufferedImage background = this.colorComposition.getBackgroundImage();
-        final BufferedImage targetColor = this.colorComposition.getTargetColor();
 
-        return new LevelSettings(colorsNumber, reversible, background, colorMap, targetColor);
+        return new LevelSettings(colorsNumber, reversible, background, colorMap);
     }
 
     private void setColorComposition() {

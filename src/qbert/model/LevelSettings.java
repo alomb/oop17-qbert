@@ -14,21 +14,18 @@ public class LevelSettings {
     private final boolean colorReversible;
     private final BufferedImage backgroundImage;
     private final Map<Integer, BufferedImage> colorMap;
-    private final BufferedImage targetColor;
 
     /**
      * @param number the number of colors to be set for each tile
      * @param reverse true if the tile is reversible, false otherwise.
      * @param background the {@link BufferedImage} representing the background image
      * @param colorMap the map containing all the tiles colors
-     * @param targetColor the {@link BufferedImage} representing the target color
      */
-    public LevelSettings(final int number, final boolean reverse, final BufferedImage background, final Map<Integer, BufferedImage> colorMap, final BufferedImage targetColor) {
+    public LevelSettings(final int number, final boolean reverse, final BufferedImage background, final Map<Integer, BufferedImage> colorMap) {
         this.colorsNumber = number;
         this.colorReversible = reverse;
         this.backgroundImage = background;
         this.colorMap = colorMap;
-        this.targetColor = targetColor;
         this.disksNumber = 3;
         this.roundScore = 1500;
     }
@@ -73,12 +70,5 @@ public class LevelSettings {
      */
     public Map<Integer, BufferedImage> getColorMap() {
         return this.colorMap;
-    }
-
-    /**
-     * @return the {@link BufferedImage} representing the target color
-     */
-    public BufferedImage getTargetColor() {
-        return this.targetColor;
     }
 }

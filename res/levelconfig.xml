@@ -51,16 +51,16 @@
 	</LEVEL7>
 	<LEVEL8>
 		<ROUND1 colors="2" reversible="true">
-			<CoilyImpl speed="0.39" quantity="1" spawningTime="2000" standingTime="700"/>
-			<RedBall speed="0.45" quantity="3" spawningTime="5000" standingTime="700"/>
+			<CoilyImpl speed="0.39" quantity="1" spawningTime="1000" standingTime="700"/>
+			<RedBall speed="0.25" quantity="3" spawningTime="4000" standingTime="700"/>
 			<GreenBall speed="0.35" quantity="1" spawningTime="8000" standingTime="1000"/>
 			<SamAndSlick speed="0.41" quantity="1" spawningTime="12000" standingTime="1000"/>
 		</ROUND1>
 	</LEVEL8>
 	<LEVEL9>
 		<ROUND1 colors="3" reversible="true">
-			<CoilyImpl speed="0.41" quantity="1" spawningTime="2000" standingTime="500"/>
-			<RedBall speed="0.47" quantity="3" spawningTime="5000" standingTime="500"/>
+			<CoilyImpl speed="0.41" quantity="1" spawningTime="1000" standingTime="500"/>
+			<RedBall speed="0.25" quantity="3" spawningTime="4000" standingTime="500"/>
 			<GreenBall speed="0.35" quantity="1" spawningTime="10000" standingTime="1000"/>
 			<SamAndSlick speed="0.45" quantity="1" spawningTime="15000" standingTime="1000"/>
 		</ROUND1>
