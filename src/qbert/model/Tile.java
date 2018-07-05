@@ -6,14 +6,14 @@ import qbert.view.Renderable;
 import qbert.view.TileGC;
 
 /**
- * Class representing the single {@link Tile} in which the player needs to land to score points
+ * Class representing the single {@link Tile} in which the player needs to land to score points.
  */
 public class Tile implements GameObject, Renderable {
     private Position2D position;
     private final TileGC graphicComponent;
 
     /**
-     * Constructor of Tile class
+     * Constructor of Tile class.
      * @param pos Position of the {@link Tile} in the map
      * @param graphics Component dealing the tile graphics
      */
@@ -24,27 +24,40 @@ public class Tile implements GameObject, Renderable {
     }
 
     @Override
-    public Position2D getCurrentPosition() {
+    public final Position2D getCurrentPosition() {
         return this.position;
     }
 
     @Override
-    public void setCurrentPosition(Position2D currentGridPos) {
+    public final void setCurrentPosition(final Position2D currentGridPos) {
         this.position = currentGridPos;
     }
 
+    /**
+     * @return Current color index of the Tile
+     */
     public int getColor() {
         return this.graphicComponent.getSpriteIndex();
     }
 
+    /**
+     * @return Tile's GraphicComponent
+     */
     public TileGC getGraphicComponent() {
         return this.graphicComponent;
     }
 
+    /**
+     * Sets Tile's sprite to its original one.
+     */
     public void reset() {
         this.graphicComponent.setSprite(0);
     }
 
+    /**
+     * Changes the Tile's sprite.
+     * @return Number of points given by the action
+     */
     public int increment() {
         if (this.graphicComponent.setNextSprite()) {
             if (this.graphicComponent.isTargetColor()) {
@@ -56,7 +69,7 @@ public class Tile implements GameObject, Renderable {
         return 0;
     }
 
-    //Forse da spostare in una classe astratta
+    //TODO: Maybe to be moved in an abstract class
     @Override
     public int getZIndex() {
         return 0;

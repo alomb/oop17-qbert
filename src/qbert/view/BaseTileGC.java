@@ -7,7 +7,7 @@ import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 
 /**
- * The implementation of {@link TileGC}.
+ * Implementation of {@link TileGC}.
  */
 public class BaseTileGC implements TileGC {
 
@@ -24,17 +24,17 @@ public class BaseTileGC implements TileGC {
     }
 
     @Override
-    public BufferedImage getSprite() {
+    public final BufferedImage getSprite() {
         return this.sprites.get(this.spriteIndex);
     }
 
     @Override
-    public Position2D getPosition() {
+    public final Position2D getPosition() {
         return this.spritePos;
     }
 
     @Override
-    public void setPosition(final Position2D logicPos) {
+    public final void setPosition(final Position2D logicPos) {
         this.spritePos = new Position2D(
             Dimensions.backgroundX + Dimensions.tileWidth / 2 * (logicPos.getX() + 1) - Dimensions.tileWidth / 2,
             Dimensions.backgroundY + Dimensions.backgroundHeight - (Dimensions.cubeHeight * (logicPos.getY() + 1)) - (Dimensions.tileHeight / 2)
@@ -42,12 +42,12 @@ public class BaseTileGC implements TileGC {
     }
 
     @Override
-    public int getSpriteHeight() {
+    public final int getSpriteHeight() {
         return this.getSprite().getHeight();
     }
 
     @Override
-    public int getSpriteWidth() {
+    public final int getSpriteWidth() {
         return this.getSprite().getWidth();
     }
 
@@ -61,19 +61,19 @@ public class BaseTileGC implements TileGC {
     }
 
     @Override
-    public void setSprite(final int index) {
+    public final void setSprite(final int index) {
         if (index < this.sprites.size() && index >= 0) {
             this.spriteIndex = index;
         }
     }
 
     @Override
-    public int getSpriteIndex() {
+    public final int getSpriteIndex() {
         return this.spriteIndex;
     }
-    
+
     @Override 
-    public boolean isTargetColor() {
+    public final boolean isTargetColor() {
         return this.spriteIndex == this.sprites.size() - 1;
     }
 }

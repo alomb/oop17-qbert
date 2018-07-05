@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 /**
- * The implementation of {@link TileGC}.
+ * Implementation of {@link TileGC} which rotates the colors endlessly.
  */
 public class ReversibleTileGC extends BaseTileGC {
 
@@ -14,7 +14,7 @@ public class ReversibleTileGC extends BaseTileGC {
     public ReversibleTileGC(final Map<Integer, BufferedImage> sprites) {
         super(sprites);
     }
-    
+
     @Override
     public boolean setNextSprite() {
         if (this.spriteIndex < this.sprites.size() - 1) {

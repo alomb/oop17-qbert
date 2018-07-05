@@ -50,8 +50,8 @@ public class DiskImpl implements Disk {
     public final void update(final float elapsedTime) {
         this.graphics.update(elapsedTime);
     }
-    
-    //Forse da spostare in una classe astratta
+
+    //TODO: Forse da spostare in una classe astratta
     @Override
     public int getZIndex() {
         return 0;

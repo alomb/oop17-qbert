@@ -26,6 +26,7 @@ public class LevelSettings {
         this.colorReversible = reverse;
         this.backgroundImage = background;
         this.colorMap = colorMap;
+        //TODO: Make those parameters dynamic
         this.disksNumber = 3;
         this.roundScore = 1500;
     }

@@ -84,11 +84,11 @@ public final class Level {
         return this.qbert;
     }
 
-    
+
     public List<Character> getEntities() {
         return this.spawner.getGameCharacters(); /////
     }
-    
+
     public int getLevelNumber() {
         return this.levelNumber;
     }
@@ -129,7 +129,7 @@ public final class Level {
         } else {
             this.roundNumber++;
         }
-        
+
         this.points.score(this.settings.getRoundScore());
         this.points.score(PointComponent.UNUSED_DISK_SCORE * map.getDiskList().size());
         /* SPAWNER */
@@ -148,7 +148,7 @@ public final class Level {
     public List<Renderable> getRenderables() {
         return Stream.concat(Stream.of(this.background), Stream.concat(Stream.concat(map.getTileList().stream(), map.getDiskList().stream()), Stream.concat(Stream.of(this.qbert), this.spawner.getGameCharacters().stream()))).collect(Collectors.toList());
     }
-    
+
     public void update(final float elapsed) {
         if (!update) {
             return;
@@ -190,7 +190,7 @@ public final class Level {
                             e.setCurrentState(e.getStandingState());
                         }
                     }
-    
+
                     if (e.isDead()) {
                         //Notify Spawner
                         this.spawner.death(e);
@@ -198,7 +198,7 @@ public final class Level {
                         //Check if entity is colliding with QBert
                         if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !qbert.isMoving() && !e.isMoving()
                                 || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())) {
-    
+
                             if (!immortality) { 
                                 //Debug check
                                 e.collide(this.getQBert(), this.points, this.timer);
