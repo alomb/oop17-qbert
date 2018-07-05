@@ -25,7 +25,7 @@ public final class Level {
 
     private final int LEVELS_NUMBER = 9;
     private final int ROUNDS_NUMBER = 4;
-    
+
     private Player qbert;
     private int lives;
     private int waitTimer = 0;
@@ -36,14 +36,11 @@ public final class Level {
     private TimerComponent timer;
     private Renderable background;
 
-    //Level settings
     private LevelSettings settings;
     private int levelNumber;
     private int roundNumber;
 
     public Level() {
-        //Forse da spostare in classe Game
-        
         this.levelNumber = 1;
         this.roundNumber = 1;
         this.lives = 3;

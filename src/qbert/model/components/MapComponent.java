@@ -22,6 +22,9 @@ import qbert.view.ReversibleTileGC;
 import qbert.view.TileGC;
 import qbert.view.BaseTileGC;
 
+/**
+ * Component managing informations about the game map and its collections of {@link Tile} and {@link Disk}
+ */
 public class MapComponent {
 
     public static final int MAP_LEFT_TOP_EDGE = 2;
@@ -32,18 +35,19 @@ public class MapComponent {
     public static final int MAP_ROWS = 7;
     public static final int MAP_BEHIND_INDEX = -1;
 
-    private Map<Integer, Map<Integer, Tile>> tiles;
-    private Map<Integer, Map<Integer, Optional<Disk>>> disks;
-    private LevelSettings settings;
-    private int disksToPlace;
+    private final Map<Integer, Map<Integer, Tile>> tiles;
+    private final Map<Integer, Map<Integer, Optional<Disk>>> disks;
 
+    /**
+     * Constructor of MapComponent class
+     * @param settings Object containing the parameters of the current level
+     */
     public MapComponent(LevelSettings settings) {
-        this.settings = settings;
-        this.disksToPlace = settings.getDisksNumber();
+        int disksToPlace = settings.getDisksNumber();
         final int diskVelocity = 40;
         Random rand = new Random();
 
-        final Map<Integer, BufferedImage> colors = this.settings.getColorMap();
+        final Map<Integer, BufferedImage> colors = settings.getColorMap();
         tiles = new HashMap<>();
 
         for (int i = 0; i < MapComponent.MAP_COLUMNS; i++) {
@@ -57,7 +61,7 @@ public class MapComponent {
                     } else {
                         gComponent = new BaseTileGC(colors);
                     }
-                    column.put(j, new Tile(i, j, gComponent));
+                    column.put(j, new Tile(new Position2D(i, j), gComponent));
                     tiles.put(i, column);
                 }
             }
@@ -104,17 +108,24 @@ public class MapComponent {
 
         this.reset();
     }
-    
+
+    /**
+     * Gets the {@link Tile} located in the said {@link Position2D}
+     * @param pos Position of the required {@link Tile}
+     * @return {@link Tile} in the requested {@link Position2D}
+     */
    public Tile getTile(final Position2D pos) {
        return tiles.get(pos.getX()).get(pos.getY());
    }
 
-
    private void reset() {
        this.getTileList().forEach(t -> t.reset());
    }
-
-
+   
+   /**
+    * Gets the list of Tiles
+    * @return List of {@link Tile} currently in the map
+    */
    public List<Tile> getTileList() {
        return this.tiles
                .entrySet()
@@ -125,7 +136,11 @@ public class MapComponent {
                        .map(Map.Entry::getValue))
                .collect(Collectors.toList());
    }
-   
+
+   /**
+    * Gets the list of Disks
+    * @return List of {@link Disk} currently in the map
+    */
    public List<Disk> getDiskList() {
        return this.disks
                .entrySet()
@@ -139,29 +154,56 @@ public class MapComponent {
                .collect(Collectors.toList());
    }
 
-   
-   public int incrementColor(Position2D pos) {
+   /**
+    * Increments the color value for the {@link Tile} in a given {@link Position2D}
+    * @param pos Position of the {@link Tile}
+    * @return Number of points given by the action
+    */
+   public int incrementColor(final Position2D pos) {
        return this.getTile(pos).increment();
    }
 
-   
-   public void resetColor(Position2D pos) {
+   /**
+    * Sets a {@link Tile} to its original color
+    * @param pos Position of the {@link Tile}
+    */
+   public void resetColor(final Position2D pos) {
        this.getTile(pos).reset();
    }
-   
-   public boolean isBelowMap(Position2D logicPos) {
+
+   /**
+    * Checks if the given position is placed below the bottom limit of the map
+    * @param logicPos Position to check
+    * @return //TODO: Capire cosa scrivere qui
+    */
+   public boolean isBelowMap(final Position2D logicPos) {
        return logicPos.getY() < MapComponent.MAP_BOTTOM_EDGE;
    }
-   
-   public boolean isOverMap(Position2D logicPos) {
+
+   /**
+    * Checks if the given position is placed beyond the left or right limit of the map
+    * @param logicPos Position to check
+    * @return //TODO: Capire cosa scrivere qui
+    */
+   public boolean isOverMap(final Position2D logicPos) {
        return logicPos.getX() + logicPos.getY() == MapComponent.MAP_RIGHT_TOP_EDGE 
                || logicPos.getY() - logicPos.getX() == MapComponent.MAP_LEFT_TOP_EDGE;
    }
 
-   public boolean isOnVoid(Position2D logicPos) {
+   /**
+    * Checks if the given position is placed outside the map
+    * @param logicPos Position to check
+    * @return //TODO: Capire cosa scrivere qui
+    */
+   public boolean isOnVoid(final Position2D logicPos) {
        return this.isBelowMap(logicPos) || this.isOverMap(logicPos);
    }
-   
+
+   /**
+    * Checks if player is standing on a {@link Disk}
+    * @param qbert {@link Player} object
+    * @return //TODO: Capire cosa scrivere qui
+    */
    public boolean checkForDisk(Player qbert) {
        Position2D logicPos = qbert.getNextPosition();
        if (this.isOverMap(logicPos)) {

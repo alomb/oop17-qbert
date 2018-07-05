@@ -1,13 +1,17 @@
 package qbert.view;
 
-import qbert.model.utilities.Position2D;
-
+/**
+ * Implementation of Renderable Interface
+ */
 public class RenderableObject implements Renderable {
-    
-    private GraphicComponent graphicComponent;
-    private Position2D pos;
-    
-    public RenderableObject(GraphicComponent g) {
+
+    private final GraphicComponent graphicComponent;
+
+    /**
+     * Constructor of RenderableObject class
+     * @param g {@link GraphicComponent} of the object represented by the class
+     */
+    public RenderableObject(final GraphicComponent g) {
         this.graphicComponent = g;
     }
 
