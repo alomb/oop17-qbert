@@ -12,8 +12,8 @@ import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.states.DeathState;
+import qbert.model.states.FallState;
 import qbert.model.states.LandState;
-import qbert.model.states.MoveState;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.GenericGC;
@@ -180,7 +180,7 @@ public final class Level {
                     if (e.getCurrentState() instanceof LandState) {
                         //Checking if entity is outside the map
                         if (this.map.isOnVoid(logicPos)) {
-                            e.setCurrentState(new MoveState.Fall(e));
+                            e.setCurrentState(new FallState(e));
 
                             if (e instanceof CoilyImpl) {
                                 this.points.score(PointComponent.COILY_FALL_SCORE);
@@ -220,7 +220,7 @@ public final class Level {
             if (qbert.getCurrentState() instanceof LandState) {
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(qLogicPos)) {
-                    qbert.setCurrentState(new MoveState.Fall(qbert));
+                    qbert.setCurrentState(new FallState(qbert));
                 } else {
                     qbert.land(this.map, this.points);
                     qbert.setCurrentState(qbert.getStandingState());

@@ -1,5 +1,7 @@
 package qbert.model.characters;
 
+import qbert.model.components.PointComponent;
+import qbert.model.components.TimerComponent;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CharacterGC;
 
@@ -20,5 +22,10 @@ public class RedBall extends DownwardCharacter {
      */
     public RedBall(final Position2D startPos, final Float speed, final CharacterGC graphics, final Integer standingTime) {
         super(startPos, speed, graphics, standingTime);
+    }
+
+    @Override
+    public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
+        qbert.setDead(true);
     }
 }

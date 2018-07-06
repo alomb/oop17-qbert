@@ -7,7 +7,7 @@ import qbert.model.utilities.Position2D;
  * The {@link CharacterState} used to manage {@link Player} when it's standing, it differs from
  * others because it is managed by user's input not by AI or timers, so can never ends.
  */
-public final class QbertStandingState implements CharacterState {
+public class QbertStandingState implements CharacterState {
 
     private final Player qbert;
     /**
@@ -23,7 +23,7 @@ public final class QbertStandingState implements CharacterState {
     }
 
     @Override
-    public void update(final float dt) {
+    public final void update(final float dt) {
         this.qbert.getGraphicComponent().updateGraphics(dt);
     }
 

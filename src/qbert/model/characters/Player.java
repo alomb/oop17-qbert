@@ -13,5 +13,4 @@ public interface Player extends DownUpwardCharacter {
      * @return the {@link PlayerGC} of this {@link Player}
      */
     PlayerGC getPlayerGraphicComponent();
-
 }

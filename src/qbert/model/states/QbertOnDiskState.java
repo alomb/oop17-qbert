@@ -22,7 +22,7 @@ public class QbertOnDiskState extends WaitAnimationState {
     @Override
     public final void conclude() {
         this.getCharacter().getGraphicComponent().setSpawnPosition(Dimensions.spawningQBert);
-        this.getCharacter().setCurrentState(new MoveState.Spawn(this.getCharacter()));
+        this.getCharacter().setCurrentState(new SpawnState(this.getCharacter()));
     }
 
 }

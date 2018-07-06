@@ -2,7 +2,7 @@ package qbert.model.characters;
 
 import qbert.model.states.CharacterState;
 import qbert.model.states.DownwardCharStandingState;
-import qbert.model.states.MoveState;
+import qbert.model.states.SpawnState;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CharacterGC;
 
@@ -23,7 +23,7 @@ public abstract class DownwardCharacter extends CharacterImpl {
      */
     public DownwardCharacter(final Position2D startPos, final Float speed, final CharacterGC graphics, final Integer standingTime) {
         super(startPos, speed, graphics);
-        this.setCurrentState(new MoveState.Spawn(this));
+        this.setCurrentState(new SpawnState(this));
         this.standingTime = standingTime;
     }
 

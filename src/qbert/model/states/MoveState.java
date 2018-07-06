@@ -5,8 +5,7 @@ import qbert.model.characters.DownUpwardCharacter;
 import qbert.model.utilities.Position2D;
 
 /**
- * The {@link CharacterState} used for movement states, e.g. falls, jumps..
- * MoveState conclude() method (which is final) changes the {@link Character}'s current state in the relative Standing State.
+ * The {@link CharacterState} used for all directions movement states.
  */
 public abstract class MoveState extends WaitAnimationState {
 
@@ -18,45 +17,8 @@ public abstract class MoveState extends WaitAnimationState {
     }
 
     @Override
-    public abstract void conclude();
-
-    /**
-     * The {@link CharacterState} for spawning.
-     */
-    public static class Spawn extends MoveState {
-
-        /**
-         * @param character the relative {@link Character}
-         */
-        public Spawn(final Character character) {
-            super(character);
-            this.getCharacter().setDead(false);
-            this.getCharacter().getGraphicComponent().setSpawnAnimation();
-        }
-
-        @Override
-        public final void conclude() {
-            this.getCharacter().setCurrentState(new LandState(this.getCharacter()));
-        }
-    }
-
-    /**
-     * The {@link CharacterState} for falling.
-     */
-    public static class Fall extends MoveState {
-
-        /**
-         * @param character the relative {@link Character}
-         */
-        public Fall(final Character character) {
-            super(character);
-            this.getCharacter().getGraphicComponent().setFallAnimation();
-        }
-
-        @Override
-        public final void conclude() {
-            this.getCharacter().setCurrentState(new DeathState(this.getCharacter()));
-        }
+    public final void conclude() {
+        this.getCharacter().setCurrentState(new LandState(this.getCharacter()));
     }
 
     /**
@@ -72,11 +34,6 @@ public abstract class MoveState extends WaitAnimationState {
             this.getCharacter().getGraphicComponent().setMoveDownLeftAnimation();
             this.getCharacter().setNextPosition(
                     new Position2D(getCharacter().getCurrentPosition().getX() - 1, getCharacter().getCurrentPosition().getY() - 1));
-        }
-
-        @Override
-        public final void conclude() {
-            this.getCharacter().setCurrentState(new LandState(this.getCharacter()));
         }
     }
 
@@ -94,11 +51,6 @@ public abstract class MoveState extends WaitAnimationState {
             this.getCharacter().setNextPosition(
                     new Position2D(getCharacter().getCurrentPosition().getX() + 1, getCharacter().getCurrentPosition().getY() - 1));
         }
-
-        @Override
-        public final void conclude() {
-            this.getCharacter().setCurrentState(new LandState(this.getCharacter()));
-        }
     }
 
     /**
@@ -115,11 +67,6 @@ public abstract class MoveState extends WaitAnimationState {
             this.getCharacter().setNextPosition(
                     new Position2D(getCharacter().getCurrentPosition().getX() + 1, getCharacter().getCurrentPosition().getY() + 1));
         }
-
-        @Override
-        public final void conclude() {
-            this.getCharacter().setCurrentState(new LandState(this.getCharacter()));
-        }
     }
 
     /**
@@ -135,11 +82,6 @@ public abstract class MoveState extends WaitAnimationState {
             character.getDownUpwardGraphicComponent().setMoveUpLeftAnimation();
             this.getCharacter().setNextPosition(
                     new Position2D(getCharacter().getCurrentPosition().getX() - 1, getCharacter().getCurrentPosition().getY() + 1));
-        }
-
-        @Override
-        public final void conclude() {
-            this.getCharacter().setCurrentState(new LandState(this.getCharacter()));
         }
     }
 }

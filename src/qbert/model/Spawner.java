@@ -11,7 +11,7 @@ import org.jdom2.JDOMException;
 import qbert.controller.LevelConfigurationReader;
 import qbert.model.characters.Character;
 import qbert.model.characters.Player;
-import qbert.model.states.MoveState;
+import qbert.model.states.SpawnState;
 import qbert.model.utilities.Position2D;
 
 /**
@@ -54,7 +54,7 @@ public final class Spawner {
      */
     public void respawnQbert() {
         this.qbert.setNextPosition(new Position2D(this.qbert.getCurrentPosition()));
-        this.qbert.setCurrentState(new MoveState.Spawn(this.qbert));
+        this.qbert.setCurrentState(new SpawnState(this.qbert));
     }
 
     /**

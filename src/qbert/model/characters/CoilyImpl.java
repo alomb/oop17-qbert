@@ -1,9 +1,11 @@
 package qbert.model.characters;
 
+import qbert.model.components.PointComponent;
+import qbert.model.components.TimerComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.states.CoilyAdultStandingState;
 import qbert.model.states.CoilyBallStandingState;
-import qbert.model.states.MoveState;
+import qbert.model.states.SpawnState;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CoilyGC;
 import qbert.view.characters.DownUpwardCharacterGC;
@@ -32,7 +34,7 @@ public class CoilyImpl extends CharacterImpl implements Coily {
         this.graphics = graphics;
         this.standingTime = standingTime;
         this.qbert = qbert;
-        this.setCurrentState(new MoveState.Spawn(this));
+        this.setCurrentState(new SpawnState(this));
     }
 
     @Override
@@ -54,5 +56,9 @@ public class CoilyImpl extends CharacterImpl implements Coily {
             return new CoilyAdultStandingState(this, standingTime, this.qbert);
         }
     }
-}
 
+    @Override
+    public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
+        qbert.setDead(true);
+    }
+}

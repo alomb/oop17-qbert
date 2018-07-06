@@ -12,8 +12,7 @@ public interface CharacterState {
     void update(float dt);
 
     /**
-     * This function is used to end the current state, e.g., replacing with other one 
-     * and updating the {@link CharacterState} reference.
+     * This function is used to end the current state, for example replacing with another one, updating the {@link CharacterState} reference.
      */
     void conclude();
 }
