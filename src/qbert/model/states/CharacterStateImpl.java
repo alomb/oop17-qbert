@@ -19,9 +19,6 @@ public abstract class CharacterStateImpl implements CharacterState {
     @Override
     public abstract void update(float dt);
 
-    @Override
-    public abstract void conclude();
-
     /**
      * @return the {@link Character} associated with this {@link CharacterState}
      */

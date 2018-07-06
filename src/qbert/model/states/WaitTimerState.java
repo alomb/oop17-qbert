@@ -36,6 +36,8 @@ public abstract class WaitTimerState extends CharacterStateImpl {
         }
     }
 
-    @Override
+    /**
+     * Undefined method used to accomplish the operations after the timer expirations. 
+     */
     public abstract void conclude();
 }

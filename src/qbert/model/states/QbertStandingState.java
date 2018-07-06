@@ -26,9 +26,4 @@ public class QbertStandingState implements CharacterState {
     public final void update(final float dt) {
         this.qbert.getGraphicComponent().updateGraphics(dt);
     }
-
-    @Override
-    public void conclude() {
-
-    }
 }

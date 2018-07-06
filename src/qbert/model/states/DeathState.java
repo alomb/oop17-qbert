@@ -20,9 +20,4 @@ public class DeathState extends CharacterStateImpl {
     public final void update(final float dt) {
         this.getCharacter().getGraphicComponent().updateGraphics(dt);
     }
-
-    @Override
-    public void conclude() {
-
-    }
 }
