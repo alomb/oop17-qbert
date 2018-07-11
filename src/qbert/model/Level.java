@@ -28,7 +28,6 @@ public final class Level {
 
     private Player qbert;
     private int lives;
-    private int waitTimer = 0;
     private boolean timerCallback = false;
     private Spawner spawner;
     private PointComponent points;
@@ -39,6 +38,8 @@ public final class Level {
     private LevelSettings settings;
     private int levelNumber;
     private int roundNumber;
+    
+    private int waitTimer = 0;
 
     public Level() {
         this.levelNumber = 1;
@@ -47,22 +48,22 @@ public final class Level {
 
         this.spawner = new Spawner(this.getLevelNumber(), this.getRoundNumber());
         this.points = new PointComponent();
-        this.timer = new TimerComponent();
 
         this.reset();
     }
 
     public void reset() {
         this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
-        
+
         this.settings = this.spawner.getLevelSettings();
         this.map = new MapComponent(settings);
         this.qbert = this.spawner.spawnQbert();
-        
+        this.timer = new TimerComponent(qbert, spawner, points, map);
+
         GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.backgroundX, Dimensions.backgroundY));
         this.background = new RenderableObject(backgroundGC);
     }
-    
+
     public void resetDisk() {
         this.spawner.getGameCharacters().forEach(c -> {
             if (!(c instanceof CoilyImpl)) {
@@ -166,56 +167,14 @@ public final class Level {
                 this.timerCallback = false;
             }
 
-            spawner.update(elapsed);
+            timer.update(elapsed);
 
-            this.map.getDiskList().forEach(d -> d.update(elapsed));
-
-            if (updateEntities) {
-                //Update Entities
-                /* this.spawner.getGameCharacters() = */
-                this.spawner.updateGameCharacters(this.spawner.getGameCharacters().stream().peek(e -> {
-                    e.update(elapsed);
-                    Position2D logicPos = e.getNextPosition();
-                    //Check if entity is just landed 
-                    if (e.getCurrentState() instanceof LandState) {
-                        //Checking if entity is outside the map
-                        if (this.map.isOnVoid(logicPos)) {
-                            e.setCurrentState(new FallState(e));
-
-                            if (e instanceof CoilyImpl) {
-                                this.points.score(PointComponent.COILY_FALL_SCORE);
-                            }
-                        } else {
-                            e.land(this.map, this.points);
-                            e.setCurrentState(e.getStandingState());
-                        }
-                    }
-
-                    if (e.isDead()) {
-                        //Notify Spawner
-                        this.spawner.death(e);
-                    } else {
-                        //Check if entity is colliding with QBert
-                        if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !qbert.isMoving() && !e.isMoving()
-                                || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())) {
-
-                            if (!immortality) { 
-                                //Debug check
-                                e.collide(this.getQBert(), this.points, this.timer);
-                            }
-                        }
-                    }
-                }).filter(e -> !e.isDead()).collect(Collectors.toList())); /* togliere parentesi se modifico */
-            }
-
-
-            qbert.update(elapsed);
             Position2D qLogicPos = qbert.getNextPosition();
 
             if (qbert.isDead()) {
                 this.death();
             }
-            
+
             //Check if entity is just landed 
             if (qbert.getCurrentState() instanceof LandState) {
                 //Checking if entity is outside the map
@@ -235,25 +194,37 @@ public final class Level {
             this.waitTimer -= elapsed;
         }
     }
-    
+
     //Debug options
-    
-    public boolean update = true;
-    public boolean updateEntities = true;
-    public boolean immortality = false;
-    
+
+    private boolean update = true;
+    private boolean updateEntities = true;
+    private boolean immortality = false;
+
+    /**
+     * Temporary debug function that adds 1 life.
+     */
     public void gainLife() {
         lives++;
     }
-    
+
+    /**
+     * Temporary debug function that gives immortality to Qbert.
+     */
     public void toggleImmortality() {
         this.immortality = !this.immortality;
     }
-    
+
+    /**
+     * Temporary debug function that freezes time.
+     */
     public void toggleTime() {
         this.update = !this.update;
     }
-    
+
+    /**
+     * Temporary debug function that freezes entities.
+     */
     public void toggleEntities() {
         this.updateEntities = !this.updateEntities;
     }

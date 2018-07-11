@@ -129,8 +129,8 @@ public class Scene {
              *   g.drawImage(level.getQBert().getGraphicComponent().getSprite(), level.getQBert().getGraphicComponent().getPosition().getX(), level.getQBert().getGraphicComponent().getPosition().getY(), this);
              *
              */
-            
-            
+
+
             // Info rendering
             g.setColor(new Color(255, 255, 255));
             g.setFont(this.custom);
@@ -142,21 +142,22 @@ public class Scene {
 
             g.drawString("Round:", 1200, 330);
             g.drawString("" + level.getRoundNumber(), 1400, 330);
-            
+
             for (int i = 0, posY = 0; i < level.getLives(); i++, posY += this.lifeSprite.getHeight() + 10) {
                 g.drawImage(this.lifeSprite, 60, 190 + posY, this);
             }
 
             g.drawString("Hi-Score:", 1000, 40);
             g.drawString("1500", 1200, 40);
-            
+
+            //Temporary debug options
             int unit = Dimensions.windowWidth / 48;
             g.drawString("DEBUG:", unit * 2, unit * 20);
             g.drawString("L - Gain Life", unit * 2, unit * 20 + unit);
             g.drawString("D - Loose Life", unit * 2, unit * 20 + unit * 2);
-            g.drawString("I - God Mode (" + (level.immortality ? "on" : "off") + ")", unit * 2, unit * 20 + unit * 3);
-            g.drawString("P - Pause Game (" + (level.update ? "running" : "paused") + ")", unit * 2, unit * 20 + unit * 4);
-            g.drawString("E - Pause Entities (" + (level.updateEntities ? "running" : "paused") + ")", unit * 2, unit * 20 + unit * 5);
+            //g.drawString("I - God Mode (" + (level.immortality ? "on" : "off") + ")", unit * 2, unit * 20 + unit * 3);
+            //g.drawString("P - Pause Game (" + (level.update ? "running" : "paused") + ")", unit * 2, unit * 20 + unit * 4);
+            //g.drawString("E - Pause Entities (" + (level.updateEntities ? "running" : "paused") + ")", unit * 2, unit * 20 + unit * 5);
             g.drawString("N - Go to next level", unit * 2, unit * 20 + unit * 6);
             g.drawString("Q - Quit", unit * 2, unit * 20 + unit * 7);
         }
