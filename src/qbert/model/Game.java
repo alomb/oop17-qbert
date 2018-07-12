@@ -45,8 +45,12 @@ public class Game {
         
         t = Toolkit.getDefaultToolkit();
         d = t.getScreenSize();
+        Dimensions.screenHeight = d.height;
+        Dimensions.screenWidth = d.width;
+        Dimensions.windowHeight = Dimensions.screenHeight * 3 / 4;
+        Dimensions.windowWidth = Dimensions.screenWidth * 3 / 4;
         try {
-            if(new File("../img/png/").listFiles().length != new File("res/svg/").listFiles().length) {
+            //if(new File("../img/png/").listFiles().length != new File("res/svg/").listFiles().length) {
                 for (File file: new File("../img/png/").listFiles()) {
                     if (!file.isDirectory()) {
                         file.delete();
@@ -89,7 +93,7 @@ public class Game {
                 convertSvgToPng("res/svg/SamStand.svg", "../img/png/SamStand.png");
                 convertSvgToPng("res/svg/SlickMove.svg", "../img/png/SlickMove.png");
                 convertSvgToPng("res/svg/SlickStand.svg", "../img/png/SlickStand.png");
-            }
+            //}
               
 
         } catch (Exception e) {
@@ -139,10 +143,8 @@ public class Game {
             
         }
         
-        Dimensions.screenHeight = d.height;
-        Dimensions.screenWidth = d.width;
-        Dimensions.windowHeight = Dimensions.screenHeight * 3 / 4;
-        Dimensions.windowWidth = Dimensions.screenWidth * 3 / 4;
+        
+        
         Dimensions.deathHeight = Dimensions.windowHeight + 200;
         Dimensions.spawningHeight = -100;
         Dimensions.spawningPointLeft = new Position2D((Dimensions.windowWidth / 2) - Sprites.blueTile.getWidth(), -500);
@@ -193,8 +195,11 @@ public class Game {
         final Element root = document.getRootElement();
         float width = Float.valueOf(root.getAttributeValue("width"));
         float height = Float.valueOf(root.getAttributeValue("height"));
-        converter.addTranscodingHint(PNGTranscoder.KEY_WIDTH, new Float(1*width));
-        converter.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, new Float(1*height));
+        
+        System.out.println(Dimensions.screenWidth);
+        
+        converter.addTranscodingHint(PNGTranscoder.KEY_WIDTH, new Float(width*Dimensions.windowWidth/1440));
+        converter.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, new Float(height*Dimensions.windowHeight/810));
         converter.addTranscodingHint(PNGTranscoder.KEY_AOI, new Rectangle(0, 0, Math.round(width), Math.round(height)));
 
         converter.transcode(imageSvg, outputImagePng);
