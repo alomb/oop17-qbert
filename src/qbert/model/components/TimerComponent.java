@@ -3,7 +3,7 @@ package qbert.model.components;
 import java.util.stream.Collectors;
 
 import qbert.model.Spawner;
-import qbert.model.characters.CoilyImpl;
+import qbert.model.characters.Coily;
 import qbert.model.characters.Player;
 import qbert.model.states.FallState;
 import qbert.model.states.LandState;
@@ -80,7 +80,7 @@ public class TimerComponent {
                 if (this.map.isOnVoid(logicPos)) {
                     e.setCurrentState(new FallState(e));
 
-                    if (e instanceof CoilyImpl) {
+                    if (e instanceof Coily) {
                         this.points.score(PointComponent.COILY_FALL_SCORE);
                     }
                 } else {

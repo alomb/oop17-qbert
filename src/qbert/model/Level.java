@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import qbert.model.characters.Character;
-import qbert.model.characters.CoilyImpl;
+import qbert.model.characters.Coily;
 import qbert.model.characters.Player;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
@@ -66,7 +66,7 @@ public final class Level {
 
     public void resetDisk() {
         this.spawner.getGameCharacters().forEach(c -> {
-            if (!(c instanceof CoilyImpl)) {
+            if (!(c instanceof Coily)) {
                 c.setCurrentState(new DeathState(c));
             }
         });
