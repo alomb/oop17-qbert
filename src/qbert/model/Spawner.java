@@ -68,7 +68,7 @@ public final class Spawner {
                 if (entry.getValue().getCurrentQuantity() < entry.getValue().getTotalQuantity()) {
                     final Character character;
                     switch (entry.getKey()) {
-                    case "CoilyImpl":
+                    case "Coily":
                         character = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.qbert);
                         character.setCurrentPosition(new Position2D(-1, -1)); ////////////
                         this.gameCharacters.add(character);

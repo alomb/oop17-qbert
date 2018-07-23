@@ -1,8 +1,8 @@
 package qbert.model;
 
 import qbert.model.characters.Character;
+import qbert.model.characters.Snake;
 import qbert.model.characters.Coily;
-import qbert.model.characters.CoilyImpl;
 import qbert.model.characters.GreenBall;
 import qbert.model.characters.Player;
 import qbert.model.characters.Qbert;
@@ -34,12 +34,12 @@ public class EnemyFactoryImpl implements EnemyFactory {
     }
 
     @Override
-    public final Coily createCoily(final float speed, final int standingTime, final Player qbert) {
+    public final Snake createCoily(final float speed, final int standingTime, final Player qbert) {
         final Position2D randomPos = this.getRandomPos();
         final Position2D logicalPos = this.getLogicalPos(randomPos);
         final CoilyGC graphics = new CoilyGCImpl(Sprites.purpleBallStanding, Sprites.coilyFrontStanding, 
                 Sprites.coilyFrontMoving, Sprites.purpleBallMoving, Sprites.coilyBackStanding, Sprites.coilyBackMoving, randomPos);
-        return new CoilyImpl(logicalPos, speed, graphics, standingTime, qbert);
+        return new Coily(logicalPos, speed, graphics, standingTime, qbert);
     }
 
     @Override

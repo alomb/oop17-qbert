@@ -1,24 +1,24 @@
 package qbert.model.states;
 
-import qbert.model.characters.Coily;
+import qbert.model.characters.Snake;
 import qbert.model.characters.Player;
 import qbert.model.utilities.Position2D;
 
 /**
- * The {@link CharacterState} used by {@link Coily} in its adult snake form when it 
+ * The {@link CharacterState} used by {@link Snake} in its adult snake form when it 
  * starts chasing the {@link Player}.
  */
 public class CoilyAdultStandingState extends WaitTimerState {
 
     private final Player qbert;
-    private final Coily coily;
+    private final Snake coily;
 
     /**
-     * @param coily the {@link Coily} linked to this state
+     * @param coily the {@link Snake} linked to this state
      * @param triggerTime the timer duration
      * @param qbert the {@link Player} reference
      */
-    public CoilyAdultStandingState(final Coily coily, final int triggerTime, final Player qbert) {
+    public CoilyAdultStandingState(final Snake coily, final int triggerTime, final Player qbert) {
         super(coily, triggerTime);
         this.qbert = qbert;
         this.coily = coily;
