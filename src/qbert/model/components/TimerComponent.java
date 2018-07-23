@@ -3,6 +3,7 @@ package qbert.model.components;
 import java.util.stream.Collectors;
 
 import qbert.model.Spawner;
+import qbert.model.SpawnerImpl;
 import qbert.model.characters.Coily;
 import qbert.model.characters.Player;
 import qbert.model.states.FallState;
@@ -29,7 +30,7 @@ public class TimerComponent {
     /**
      * Constructor of class TimerComponent.
      * @param qbert Instance of {@link Qbert}
-     * @param spawner Instance of {@link Spawner}
+     * @param spawner Instance of {@link SpawnerImpl}
      * @param points Instance of {@link PointComponent}
      * @param map Instance of {@link MapComponen}
      */

@@ -4,72 +4,38 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 
 /**
- * The class containing the settings of the current level/round.
+ * The interface for the management of the settings of the current level/round.
  */
-public class LevelSettings {
-
-    private final int colorsNumber;
-    private final int disksNumber;
-    private final int roundScore;
-    private final boolean colorReversible;
-    private final BufferedImage backgroundImage;
-    private final Map<Integer, BufferedImage> colorMap;
-
-    /**
-     * @param number the number of colors to be set for each tile
-     * @param reverse true if the tile is reversible, false otherwise.
-     * @param background the {@link BufferedImage} representing the background image
-     * @param colorMap the map containing all the tiles colors
-     */
-    public LevelSettings(final int number, final boolean reverse, final BufferedImage background, final Map<Integer, BufferedImage> colorMap) {
-        this.colorsNumber = number;
-        this.colorReversible = reverse;
-        this.backgroundImage = background;
-        this.colorMap = colorMap;
-        //TODO: Make those parameters dynamic
-        this.disksNumber = 3;
-        this.roundScore = 1500;
-    }
+public interface LevelSettings {
 
     /**
      * @return the number of colors to be set for each tile for the current level/round
      */
-    public int getColorsNumber() {
-        return this.colorsNumber;
-    }
+    int getColorsNumber();
 
     /**
      * @return the number of disks to be set for the current level/round
      */
-    public int getDisksNumber() {
-        return this.disksNumber;
-    }
+    int getDisksNumber();
 
     /**
      * @return the number of points the player gets after winning the round
      */
-    public int getRoundScore() {
-        return this.roundScore;
-    }
+    int getRoundScore();
 
     /**
      * @return true if the tile is reversible, false otherwise.
      */
-    public boolean isReversible() {
-        return this.colorReversible;
-    }
+    boolean isReversible();
 
     /**
      * @return the {@link BufferedImage} representing the background image
      */
-    public BufferedImage getBackgroundImage() {
-        return this.backgroundImage;
-    }
+    BufferedImage getBackgroundImage();
 
     /**
      * @return the map containing all the tiles colors of the current level/round
      */
-    public Map<Integer, BufferedImage> getColorMap() {
-        return this.colorMap;
-    }
+    Map<Integer, BufferedImage> getColorMap();
+
 }

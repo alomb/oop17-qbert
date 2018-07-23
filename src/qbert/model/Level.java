@@ -46,7 +46,7 @@ public final class Level {
         this.roundNumber = 1;
         this.lives = 3;
 
-        this.spawner = new Spawner(this.getLevelNumber(), this.getRoundNumber());
+        this.spawner = new SpawnerImpl(this.getLevelNumber(), this.getRoundNumber());
         this.points = new PointComponent();
 
         this.reset();
@@ -134,7 +134,7 @@ public final class Level {
         this.points.score(this.settings.getRoundScore());
         this.points.score(PointComponent.UNUSED_DISK_SCORE * map.getDiskList().size());
         /* SPAWNER */
-        this.spawner = new Spawner(this.getLevelNumber(), this.getRoundNumber());
+        this.spawner = new SpawnerImpl(this.getLevelNumber(), this.getRoundNumber());
         this.settings = this.spawner.getLevelSettings();
 
         this.reset();

@@ -1,113 +1,58 @@
 package qbert.model;
 
-import java.util.Random;
-
 /**
- * The class containing the information of a specific character.
+ * The interface for the management of the information of a specific character.
  */
-public final class EnemyInfo {
-
-    private static final int MILLIS_OFFSET = 1500;
-
-    private final float speed;
-    private int currentQuantity;
-    private final int totalQuantity;
-    private final int spawningTime;
-    private final int standingTime;
-
-    private int elapsedTime;
-
-    /**
-     * @param speed the {@link Character} movement speed
-     * @param quantity the amount of a particular enemy on the map at a given time
-     * @param spawningTime the spawning frequency of the character
-     * @param standingTime the time passed on standing state
-     */
-    public EnemyInfo(final float speed, final int quantity, final int spawningTime, final int standingTime) {
-        this.speed = speed;
-        this.currentQuantity = 0;
-        this.totalQuantity = quantity;
-        this.spawningTime = this.addRandomness(spawningTime);
-        this.standingTime = standingTime;
-
-        this.elapsedTime = 0;
-    }
+public interface EnemyInfo {
 
     /**
      * @return the {@link Character} movement speed
      */
-    public float getSpeed() {
-        return this.speed;
-    }
+    float getSpeed();
 
     /**
      * @return the current amount of a specific {@link Character} on the map
      */
-    public int getCurrentQuantity() {
-        return this.currentQuantity;
-    }
+    int getCurrentQuantity();
 
     /**
      * @return the maximum amount of a specific {@link Character} on the map
      */
-    public int getTotalQuantity() {
-        return this.totalQuantity;
-    }
+    int getTotalQuantity();
 
     /**
      * @return the spawning frequency of the character
      */
-    public int getSpawningTime() {
-        return this.spawningTime;
-    }
+    int getSpawningTime();
 
     /**
      * @return the time passed on standing state
      */
-    public int getStandingTime() {
-        return this.standingTime;
-    }
+    int getStandingTime();
 
     /**
      * @return the timer of the specific spawned {@link Character}
      */
-    public int getElapsedTime() {
-        return this.elapsedTime;
-    }
+    int getElapsedTime();
 
     /**
      * This method increments the current amount of a specific {@link Character} on the map.
      */
-    public void incCurrentQuantity() {
-        this.currentQuantity++;
-    }
+    void incCurrentQuantity();
 
     /**
      * This method decrements the current amount of a specific {@link Character} on the map.
      */
-    public void decCurrentQuantity() {
-        this.currentQuantity--;
-    }
+    void decCurrentQuantity();
 
     /**
      * This method resets the timer of a specific {@Character}.
      */
-    public void resetElapsedTime() {
-        this.elapsedTime = 0;
-    }
+    void resetElapsedTime();
 
     /**
      * @param dt the time passed since the last game cycle
      */
-    public void incElapsedTime(final float dt) {
-        this.elapsedTime += dt;
-    }
+    void incElapsedTime(float dt);
 
-    /**
-     * This method adds an offset of randomness to the spawning timing of each enemy.
-     */
-    private int addRandomness(final int spawningTime) {
-        return (spawningTime + new Random().nextInt(EnemyInfo.MILLIS_OFFSET));
-    }
 }
-
