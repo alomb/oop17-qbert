@@ -9,6 +9,7 @@ public class Dimensions {
     public static int deathHeight;
     public static int spawningHeight;
     public static int cubeHeight;
+    public static int cubeWidth;
     public static int tileHeight;
     public static int tileWidth;
     public static int backgroundHeight;

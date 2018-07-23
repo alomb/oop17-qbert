@@ -53,9 +53,6 @@ public class PlayerGCImpl extends DownUpwardCharacterGCImpl implements PlayerGC 
     @Override
     public final void setOnDiskAnimation() {
         this.setSprite(this.onDiskSprite);
-        /*Possible flip?*/
-
-        /*Temporary position*/
         final Position2D ondiskendPos = new Position2D(Dimensions.spawningQBert.getX(), Dimensions.spawningQBert.getY() - this.getSpriteHeight() * 2);
         this.setCurrentAnimation(new UpwardDiagonalAnimation(this.getPosition(), ondiskendPos));
     }

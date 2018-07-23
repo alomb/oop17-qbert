@@ -47,8 +47,8 @@ public class Game {
         d = t.getScreenSize();
         Dimensions.screenHeight = d.height;
         Dimensions.screenWidth = d.width;
-        Dimensions.windowHeight = Dimensions.screenHeight * 3 / 4;
-        Dimensions.windowWidth = Dimensions.screenWidth * 3 / 4;
+        Dimensions.windowHeight = Math.round(new Float(Dimensions.screenHeight));
+        Dimensions.windowWidth = Math.round(new Float(Dimensions.screenWidth));
         try {
             //if(new File("../img/png/").listFiles().length != new File("res/svg/").listFiles().length) {
                 for (File file: new File("../img/png/").listFiles()) {
@@ -147,17 +147,20 @@ public class Game {
         
         Dimensions.deathHeight = Dimensions.windowHeight + 200;
         Dimensions.spawningHeight = -100;
-        Dimensions.spawningPointLeft = new Position2D((Dimensions.windowWidth / 2) - Sprites.blueTile.getWidth(), -500);
-        Dimensions.spawningPointRight = new Position2D((Dimensions.windowWidth / 2), -500);
+        Dimensions.spawningPointLeft = new Position2D(Math.round(new Float(Dimensions.windowWidth) / 2f) - Sprites.blueTile.getWidth(), -500);
+        Dimensions.spawningPointRight = new Position2D(Math.round(new Float(Dimensions.windowWidth) / 2f), -500);
         Dimensions.backgroundHeight = Sprites.blueBackground.getHeight();
         Dimensions.backgroundWidth = Sprites.blueBackground.getWidth();
-        Dimensions.backgroundX = (Dimensions.windowWidth - Dimensions.backgroundWidth) / 2;
-        Dimensions.backgroundY = (Dimensions.windowHeight - Dimensions.backgroundHeight) / 2;
-        Dimensions.cubeHeight = Sprites.blueBackground.getHeight() / 7;
+        Dimensions.backgroundX = Math.round(new Float(Dimensions.windowWidth - Dimensions.backgroundWidth) / 2f);
+        Dimensions.backgroundY = Math.round(new Float(Dimensions.windowHeight - Dimensions.backgroundHeight) / 2f);
+        Dimensions.cubeHeight = Math.round(new Float(Dimensions.backgroundHeight) / 7f);
+        Dimensions.cubeWidth = Math.round(new Float(Dimensions.backgroundWidth) / 7f);
         Dimensions.tileHeight = Sprites.blueTile.getHeight();
         Dimensions.tileWidth = Sprites.blueTile.getWidth();
-        Dimensions.spawningQBert = new Position2D(Dimensions.windowWidth / 2 - Sprites.qbertFrontMoving.getWidth() / 2, Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight());
+        Dimensions.spawningQBert = new Position2D(Math.round(new Float(Dimensions.windowWidth) / 2f) - Math.round(new Float(Sprites.qbertFrontMoving.getWidth()) / 2f), 
+                Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight());
 
+        System.out.println("H: " + Dimensions.backgroundHeight + " W: " + Dimensions.backgroundWidth + " th " + Sprites.blueTile.getHeight() + " by " + Dimensions.backgroundY);
         gameLevel = new Level();
     }
 
@@ -195,11 +198,9 @@ public class Game {
         final Element root = document.getRootElement();
         float width = Float.valueOf(root.getAttributeValue("width"));
         float height = Float.valueOf(root.getAttributeValue("height"));
-        
-        System.out.println(Dimensions.screenWidth);
-        
-        converter.addTranscodingHint(PNGTranscoder.KEY_WIDTH, new Float(width*Dimensions.windowWidth/1440));
-        converter.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, new Float(height*Dimensions.windowHeight/810));
+
+        converter.addTranscodingHint(PNGTranscoder.KEY_WIDTH, new Float(width * Dimensions.windowWidth / 1440f));
+        converter.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, new Float(height * Dimensions.windowHeight / 810f));
         converter.addTranscodingHint(PNGTranscoder.KEY_AOI, new Rectangle(0, 0, Math.round(width), Math.round(height)));
 
         converter.transcode(imageSvg, outputImagePng);
