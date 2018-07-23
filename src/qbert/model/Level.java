@@ -121,10 +121,10 @@ public final class Level {
     }
 
     public void changeRound() {
-        if (levelNumber == 9 && roundNumber == 3) {
+        if (levelNumber == LEVELS_NUMBER && roundNumber == ROUNDS_NUMBER) {
             System.exit(0);
         }
-        if (this.roundNumber >= 1) {
+        if (this.roundNumber >= ROUNDS_NUMBER) {
             this.roundNumber = 1;
             this.levelNumber++;
         } else {
