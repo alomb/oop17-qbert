@@ -8,7 +8,7 @@ import qbert.model.utilities.Position2D;
 public class UpwardDiagonalAnimation extends MovementAnimation {
 
     private final double angle;
-    private static final double SPEEDFACTOR = 0.75;
+    private static final double SPEEDFACTOR = 0.65;
 
     /**
      * @param startPos the first {@link Position2D}
