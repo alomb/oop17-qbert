@@ -6,7 +6,7 @@ package qbert.model.components;
 public class PointComponent {
 
     /**
-     * Points gained on {@link Coily} fall after following the player jumping over a {@link Disk}.
+     * Points gained on {@link Snake} fall after following the player jumping over a {@link Disk}.
      */
     public static final int COILY_FALL_SCORE = 500;
     /**

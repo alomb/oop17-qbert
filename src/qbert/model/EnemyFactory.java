@@ -1,7 +1,7 @@
 package qbert.model;
 
 import qbert.model.characters.Character;
-import qbert.model.characters.Coily;
+import qbert.model.characters.Snake;
 import qbert.model.characters.Player;
 
 /**
@@ -18,9 +18,9 @@ public interface EnemyFactory {
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
      * @param qbert the {@link Player} reference
-     * @return the {@link Coily} representing Coily enemy
+     * @return the {@link Snake} representing Coily enemy
      */
-    Coily createCoily(float speed, int standingTime, Player qbert);
+    Snake createCoily(float speed, int standingTime, Player qbert);
 
     /**
      * @param speed the {@link Character} movement speed

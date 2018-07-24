@@ -1,20 +1,20 @@
 package qbert.model.states;
 
-import qbert.model.characters.Coily;
+import qbert.model.characters.Snake;
 
 /**
- * The {@link CharacterState} used by {@link Coily} in its egg form when it 
+ * The {@link CharacterState} used by {@link Snake} in its egg form when it 
  * behaves similar to any other {@link DownwardCharStandingState}.
  */
 public class CoilyBallStandingState extends DownwardCharStandingState {
 
-    private final Coily coily;
+    private final Snake coily;
 
     /**
-     * @param coily the {@link Coily} linked to this state
+     * @param coily the {@link Snake} linked to this state
      * @param triggerTime the timer duration
      */
-    public CoilyBallStandingState(final Coily coily, final int triggerTime) {
+    public CoilyBallStandingState(final Snake coily, final int triggerTime) {
         super(coily, triggerTime);
         this.coily = coily;
         this.getCharacter().getGraphicComponent().setStandingAnimation();
@@ -29,5 +29,4 @@ public class CoilyBallStandingState extends DownwardCharStandingState {
         }
         return true;
     }
-
 }

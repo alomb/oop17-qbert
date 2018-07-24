@@ -79,7 +79,7 @@ public class Scene {
             this.addKeyListener(this);
             setFocusable(true);
             setFocusTraversalKeysEnabled(false);
-            requestFocusInWindow(); 
+            requestFocusInWindow();
 
             // Temporary Font
             try {
