@@ -199,9 +199,19 @@ public class Game {
         float width = Float.valueOf(root.getAttributeValue("width"));
         float height = Float.valueOf(root.getAttributeValue("height"));
 
-        converter.addTranscodingHint(PNGTranscoder.KEY_WIDTH, new Float(width * Dimensions.windowWidth / 1440f));
-        converter.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, new Float(height * Dimensions.windowHeight / 810f));
-        converter.addTranscodingHint(PNGTranscoder.KEY_AOI, new Rectangle(0, 0, Math.round(width), Math.round(height)));
+        float newWidth = width * Dimensions.windowWidth / 1440f;
+        float newHeight = height * Dimensions.windowHeight / 810f;
+        
+        if (newHeight < height) {
+            newHeight = height;
+        }
+        if (newWidth < width) {
+            newWidth = width;
+        }
+        
+        converter.addTranscodingHint(PNGTranscoder.KEY_WIDTH, newWidth);
+        converter.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, newHeight);
+        converter.addTranscodingHint(PNGTranscoder.KEY_AOI, new Rectangle(0, 0, Math.round(newWidth), Math.round(newHeight)));
 
         converter.transcode(imageSvg, outputImagePng);
         streamPng.flush();
