@@ -10,9 +10,10 @@ import qbert.model.characters.Player;
 public interface EnemyFactory {
 
     /**
+     * @param speed the QBert speed
      * @return the {@link Player} representing Qbert
      */
-    Player createQbert();
+    Player createQbert(float speed);
 
     /**
      * @param speed the {@link Character} movement speed

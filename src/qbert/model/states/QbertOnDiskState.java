@@ -15,13 +15,13 @@ public class QbertOnDiskState extends WaitAnimationState {
     public QbertOnDiskState(final Player qbert) {
         super(qbert);
         qbert.setCurrentPosition(new Position2D(qbert.getNextPosition()));
-        qbert.setNextPosition(new Position2D(6, 6));
+        qbert.setNextPosition(Dimensions.getSpawningLogQBert());
         qbert.getPlayerGraphicComponent().setOnDiskAnimation();
     }
 
     @Override
     public final void conclude() {
-        this.getCharacter().getGraphicComponent().setSpawnPosition(Dimensions.spawningQBert);
+        this.getCharacter().getGraphicComponent().setSpawnPosition(Dimensions.getSpawningQBert());
         this.getCharacter().setCurrentState(new SpawnState(this.getCharacter()));
     }
 

@@ -85,7 +85,7 @@ public class Scene {
             try {
                 URL url = getClass().getResource("/arcade_n.ttf");
                 File fontFile = new File(url.getPath());
-                this.custom = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((float) Dimensions.windowHeight / 50);
+                this.custom = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((float) Dimensions.getWindowHeight() / 50);
                 GraphicsEnvironment ge = 
                     GraphicsEnvironment.getLocalGraphicsEnvironment();
                 ge.registerFont(this.custom);
@@ -151,7 +151,7 @@ public class Scene {
             g.drawString("1500", 1200, 40);
 
             //Temporary debug options
-            int unit = Dimensions.windowWidth / 48;
+            int unit = Dimensions.getWindowWidth() / 48;
             g.drawString("DEBUG:", unit * 2, unit * 20);
             g.drawString("L - Gain Life", unit * 2, unit * 20 + unit);
             g.drawString("D - Loose Life", unit * 2, unit * 20 + unit * 2);

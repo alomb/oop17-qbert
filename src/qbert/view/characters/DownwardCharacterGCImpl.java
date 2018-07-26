@@ -17,8 +17,8 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
     private final BufferedImage standSprite;
     private final BufferedImage moveSprite;
 
-    private final int jumpWidth = Dimensions.tileWidth;
-    private final int jumpHeight = Dimensions.cubeHeight;
+    private final int jumpWidth = Dimensions.getTileWidth();
+    private final int jumpHeight = Dimensions.getCubeHeight();
 
     private final Position2D landPos;
 
@@ -36,7 +36,7 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
         super(standSprite, startSpritePos);
         this.standSprite = standSprite;
         this.moveSprite = moveSprite;
-        this.landPos = new Position2D(this.getSpawnPosition().getX(), (Dimensions.windowHeight - Dimensions.backgroundHeight) / 2 + Dimensions.cubeHeight - this.getSpriteHeight()); 
+        this.landPos = new Position2D(this.getSpawnPosition().getX(), (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - this.getSpriteHeight()); 
         this.right = true;
     }
 
@@ -69,7 +69,7 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
         if (!this.right) {
             this.flipOnYImage();
         }
-        this.setCurrentAnimation(new BasicAnimation.Down(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.deathHeight)));
+        this.setCurrentAnimation(new BasicAnimation.Down(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.getDeathHeight())));
     }
 
     @Override

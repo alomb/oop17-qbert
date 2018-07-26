@@ -28,8 +28,8 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
      */
     private boolean right;
 
-    private final int jumpWidth = Dimensions.tileWidth;
-    private final int jumpHeight = Dimensions.cubeHeight;
+    private final int jumpWidth = Dimensions.getTileWidth();
+    private final int jumpHeight = Dimensions.getCubeHeight();
 
     /**
      * @param frontStandSprite the {@link BufferedImage} containing the {@link Character}'s standing front sprite
@@ -122,7 +122,7 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
             this.flipOnYImage();
         }
 
-        this.setCurrentAnimation(new BasicAnimation.Down(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.deathHeight)));
+        this.setCurrentAnimation(new BasicAnimation.Down(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.getDeathHeight())));
     }
 
     @Override

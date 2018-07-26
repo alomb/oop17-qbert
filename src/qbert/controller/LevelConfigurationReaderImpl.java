@@ -29,6 +29,7 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
     private final Map<String, EnemyInfoImpl> mapInfo;
     private int colorsNumber;
     private boolean reversible;
+    private float qbertSpeed;
     private ColorComposition colorComposition;
 
     /**
@@ -51,6 +52,7 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
             final Element round = level.getChild("ROUND" + r);
             this.colorsNumber = Integer.valueOf(round.getAttributeValue("colors"));
             this.reversible = Boolean.parseBoolean(round.getAttributeValue("reversible"));
+            this.qbertSpeed = Float.valueOf(round.getAttributeValue("qbertSpeed"));
 
             final List<Element> children = round.getChildren();
             final Iterator<Element> it = children.iterator();
@@ -83,6 +85,11 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
         return new LevelSettingsImpl(colorsNumber, reversible, background, colorMap);
     }
 
+    @Override
+    public float getQBertSpeed() {
+        return this.qbertSpeed;
+    }
+
     private void setColorComposition() {
         final int rand = new Random().nextInt(4) + 1;
 
@@ -94,7 +101,6 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
             this.colorComposition = cc;
         } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
                 | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }

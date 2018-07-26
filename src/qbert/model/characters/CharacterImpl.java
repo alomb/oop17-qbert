@@ -5,6 +5,7 @@ import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.states.FallState;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CharacterGC;
 
@@ -15,7 +16,7 @@ import qbert.view.characters.CharacterGC;
  * Subclasses must decide at least one state for standard behavior (normally called standing state) and could change
  * interaction with terrain that normally isn't provided (land method).
  * 
- * Subclasses could change collision behaviour modifying collide and land methods that normally don't provide any specific operations.
+ * Subclasses could change collision behavior modifying collide and land methods that normally don't provide any specific operations.
  */
 public abstract class CharacterImpl implements Character {
 
@@ -122,9 +123,9 @@ public abstract class CharacterImpl implements Character {
     @Override
     public final int getZIndex() {
         if (this.getCurrentState() instanceof FallState) {
-            return MapComponent.MAP_BEHIND_INDEX;
+            return Dimensions.MAP_BEHIND_INDEX;
         } else {
-            return MapComponent.MAP_ROWS - this.getCurrentPosition().getY();
+            return Dimensions.MAP_ROWS - this.getCurrentPosition().getY();
         }
     }
 }

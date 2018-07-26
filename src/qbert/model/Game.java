@@ -42,13 +42,14 @@ public class Game {
         if (! directory.exists()){
             directory.mkdirs();
         }
-        
+
         t = Toolkit.getDefaultToolkit();
         d = t.getScreenSize();
-        Dimensions.screenHeight = d.height;
-        Dimensions.screenWidth = d.width;
-        Dimensions.windowHeight = Math.round(new Float(Dimensions.screenHeight));
-        Dimensions.windowWidth = Math.round(new Float(Dimensions.screenWidth));
+        Dimensions.setScreenHeight(d.height);
+        Dimensions.setScreenWidth(d.width);
+
+        Dimensions.setWindowHeight(Math.round(new Float(Dimensions.getScreenHeight())));
+        Dimensions.setWindowWidth(Math.round(new Float(Dimensions.getScreenWidth())));
         try {
             //if(new File("../img/png/").listFiles().length != new File("res/svg/").listFiles().length) {
                 for (File file: new File("../img/png/").listFiles()) {
@@ -56,7 +57,7 @@ public class Game {
                         file.delete();
                     }
                 }
-      
+
                 convertSvgToPng("res/svg/BackgroundBlue.svg", "../img/png/BackgroundBlue.png"); 
                 convertSvgToPng("res/svg/BackgroundBrown.svg", "../img/png/BackgroundBrown.png"); 
                 convertSvgToPng("res/svg/BackgroundGreen.svg", "../img/png/BackgroundGreen.png"); 
@@ -145,22 +146,25 @@ public class Game {
         
         
         
-        Dimensions.deathHeight = Dimensions.windowHeight + 200;
-        Dimensions.spawningHeight = -100;
-        Dimensions.spawningPointLeft = new Position2D(Math.round(new Float(Dimensions.windowWidth) / 2f) - Sprites.blueTile.getWidth(), -500);
-        Dimensions.spawningPointRight = new Position2D(Math.round(new Float(Dimensions.windowWidth) / 2f), -500);
-        Dimensions.backgroundHeight = Sprites.blueBackground.getHeight();
-        Dimensions.backgroundWidth = Sprites.blueBackground.getWidth();
-        Dimensions.backgroundX = Math.round(new Float(Dimensions.windowWidth - Dimensions.backgroundWidth) / 2f);
-        Dimensions.backgroundY = Math.round(new Float(Dimensions.windowHeight - Dimensions.backgroundHeight) / 2f);
-        Dimensions.cubeHeight = Math.round(new Float(Dimensions.backgroundHeight) / 7f);
-        Dimensions.cubeWidth = Math.round(new Float(Dimensions.backgroundWidth) / 7f);
-        Dimensions.tileHeight = Sprites.blueTile.getHeight();
-        Dimensions.tileWidth = Sprites.blueTile.getWidth();
-        Dimensions.spawningQBert = new Position2D(Math.round(new Float(Dimensions.windowWidth) / 2f) - Math.round(new Float(Sprites.qbertFrontMoving.getWidth()) / 2f), 
-                Dimensions.backgroundY - Sprites.qbertFrontStanding.getHeight());
+        Dimensions.setDeathHeight(Dimensions.getWindowHeight() + 200);
+        Dimensions.setSpawningHeight(-100);
+        Dimensions.setSpawningPointLeft(new Position2D(Math.round(new Float(Dimensions.getWindowWidth()) / 2f) - Sprites.blueTile.getWidth(), -500));
+        Dimensions.setSpawningPointRight(new Position2D(Math.round(new Float(Dimensions.getWindowWidth()) / 2f), -500));
+        Dimensions.setBackgroundHeight(Sprites.blueBackground.getHeight());
+        Dimensions.setBackgroundWidth(Sprites.blueBackground.getWidth());
+        Dimensions.setBackgroundX(Math.round(new Float(Dimensions.getWindowWidth() - Dimensions.getBackgroundWidth()) / 2f));
+        Dimensions.setBackgroundY(Math.round(new Float(Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2f));
+        Dimensions.setCubeHeight(Math.round(new Float(Dimensions.getBackgroundHeight()) / 7f));
+        Dimensions.setCubeWidth(Math.round(new Float(Dimensions.getBackgroundWidth()) / 7f));
+        Dimensions.setTileHeight(Sprites.blueTile.getHeight());
+        Dimensions.setTileWidth(Sprites.blueTile.getWidth());
+        Dimensions.setSpawningQBert(new Position2D(Math.round(new Float(Dimensions.getWindowWidth()) / 2f) - Math.round(new Float(Sprites.qbertFrontMoving.getWidth()) / 2f), 
+                Dimensions.getBackgroundY() - Sprites.qbertFrontStanding.getHeight()));
+        Dimensions.setSpawningLogPointLeft(new Position2D(Dimensions.MAP_SPAWNING_POINT_LEFT_X, Dimensions.MAP_SPAWNING_POINT_LEFT_Y));
+        Dimensions.setSpawningLogPointRight(new Position2D(Dimensions.MAP_SPAWNING_POINT_RIGHT_X, Dimensions.MAP_SPAWNING_POINT_RIGHT_Y));
+        Dimensions.setSpawningLogQBert(new Position2D(Dimensions.MAP_SPAWNING_QBERT_X, Dimensions.MAP_SPAWNING_QBERT_Y));
 
-        System.out.println("H: " + Dimensions.backgroundHeight + " W: " + Dimensions.backgroundWidth + " th " + Sprites.blueTile.getHeight() + " by " + Dimensions.backgroundY);
+        System.out.println("H: " + Dimensions.getBackgroundHeight() + " W: " + Dimensions.getBackgroundWidth() + " th " + Sprites.blueTile.getHeight() + " by " + Dimensions.getBackgroundY());
         gameLevel = new Level();
     }
 
@@ -198,20 +202,16 @@ public class Game {
         final Element root = document.getRootElement();
         float width = Float.valueOf(root.getAttributeValue("width"));
         float height = Float.valueOf(root.getAttributeValue("height"));
+        float yFactor = Dimensions.getWindowHeight() / 810f;
+        float xFactor = Dimensions.getWindowWidth() / 1440f;
 
-        float newWidth = width * Dimensions.windowWidth / 1440f;
-        float newHeight = height * Dimensions.windowHeight / 810f;
-        
-        if (newHeight < height) {
-            newHeight = height;
-        }
-        if (newWidth < width) {
-            newWidth = width;
-        }
-        
+        float newWidth = width * Math.min(xFactor, yFactor);
+        float newHeight = height * Math.min(xFactor, yFactor);
+
+
         converter.addTranscodingHint(PNGTranscoder.KEY_WIDTH, newWidth);
         converter.addTranscodingHint(PNGTranscoder.KEY_HEIGHT, newHeight);
-        converter.addTranscodingHint(PNGTranscoder.KEY_AOI, new Rectangle(0, 0, Math.round(newWidth), Math.round(newHeight)));
+        converter.addTranscodingHint(PNGTranscoder.KEY_AOI, new Rectangle(0, 0, Math.round(width), Math.round(height)));
 
         converter.transcode(imageSvg, outputImagePng);
         streamPng.flush();

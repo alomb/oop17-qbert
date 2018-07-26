@@ -2,7 +2,6 @@ package qbert.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +22,7 @@ public final class SpawnerImpl implements Spawner {
     private final Player qbert;
     private List<Character> gameCharacters;
     private final EnemyFactory ef = new EnemyFactoryImpl();
-    private Map<String, EnemyInfoImpl> mapInfo;
+    private final Map<String, EnemyInfoImpl> mapInfo;
     private final LevelConfigurationReader lcr;
 
     /**
@@ -31,15 +30,14 @@ public final class SpawnerImpl implements Spawner {
      * @param round the round that must be loaded
      */
     public SpawnerImpl(final int level, final int round) {
-        this.qbert = ef.createQbert();
         this.gameCharacters = new ArrayList<>();
-        this.mapInfo = new HashMap<>();
         this.lcr = new LevelConfigurationReaderImpl();
         try {
             lcr.readLevelConfiguration(level, round);
         } catch (JDOMException e) {
             e.printStackTrace();
         }
+        this.qbert = ef.createQbert(lcr.getQBertSpeed());
         this.mapInfo = lcr.getMapInfo();
     }
 

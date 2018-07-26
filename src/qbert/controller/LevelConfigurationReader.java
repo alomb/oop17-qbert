@@ -6,7 +6,6 @@ import org.jdom2.JDOMException;
 
 import qbert.model.EnemyInfoImpl;
 import qbert.model.LevelSettings;
-import qbert.model.LevelSettingsImpl;
 
 /**
  * The interface for the reading of the levels configuration from file.
@@ -30,5 +29,10 @@ public interface LevelConfigurationReader {
      * @return the current {@link LevelSettingsImpl}
      */
     LevelSettings getLevelSettings();
+
+    /**
+     * @return the QBert speed
+     */
+    float getQBertSpeed();
 
 }

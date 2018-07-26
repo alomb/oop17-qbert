@@ -25,12 +25,11 @@ import java.util.Random;
 public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
-    public final Player createQbert() {
-
+    public final Player createQbert(final float speed) {
         final PlayerGC graphics = new PlayerGCImpl(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
-                Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(Dimensions.spawningQBert));
+                Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(Dimensions.getSpawningQBert()));
 
-        return new Qbert(new Position2D(6, 6), 0.35f, graphics);
+        return new Qbert(Dimensions.getSpawningLogQBert(), speed, graphics);
     }
 
     @Override
@@ -62,18 +61,18 @@ public class EnemyFactoryImpl implements EnemyFactory {
     public final Character createSamAndSlick(final float speed, final int standingTime) {
         final Position2D randomPos = this.getRandomPos();
         final Position2D logicalPos = this.getLogicalPos(randomPos);
-        final CharacterGC graphics = randomPos == Dimensions.spawningPointLeft
+        final CharacterGC graphics = randomPos == Dimensions.getSpawningPointLeft()
                 ? new DownwardCharacterGCImpl(Sprites.slickStanding, Sprites.slickMoving, randomPos)
                 : new DownwardCharacterGCImpl(Sprites.samStanding, Sprites.samMoving, randomPos);
         return new SamAndSlick(logicalPos, speed, graphics, standingTime);
     }
 
     private Position2D getRandomPos() {
-        return new Random().nextInt(2) == 0 ? Dimensions.spawningPointLeft : Dimensions.spawningPointRight;
+        return new Random().nextInt(2) == 0 ? Dimensions.getSpawningPointLeft() : Dimensions.getSpawningPointRight();
     }
 
     private Position2D getLogicalPos(final Position2D randPos) {
-        return randPos == Dimensions.spawningPointLeft ? new Position2D(5, 5) : new Position2D(7, 5);
+        return randPos == Dimensions.getSpawningPointLeft() ? Dimensions.getSpawningLogPointLeft() : Dimensions.getSpawningLogPointRight();
     }
 
 }

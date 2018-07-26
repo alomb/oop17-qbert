@@ -30,7 +30,7 @@ public class CoilyGCImpl extends DownUpwardCharacterGCImpl implements CoilyGC {
         super(frontStandSprite, frontMoveSprite, backStandSprite, backMoveSprite, startSpritePos);
         this.adultFrontStandSprite = adultFrontStandSprite;
         this.adultMoveStandSprite = adultMoveStandSprite;
-        this.landPos = new Position2D(this.getSpawnPosition().getX(), (Dimensions.windowHeight - Dimensions.backgroundHeight) / 2 + Dimensions.cubeHeight - this.getSpriteHeight());
+        this.landPos = new Position2D(this.getSpawnPosition().getX(), (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - this.getSpriteHeight());
     }
 
     @Override

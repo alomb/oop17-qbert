@@ -36,7 +36,7 @@ public class GameEngine {
     public void setup() {
         game = new Game();
 
-        this.gameScene = new Scene(game.getLevel(), Dimensions.windowWidth, Dimensions.windowHeight, this);
+        this.gameScene = new Scene(game.getLevel(), Dimensions.getWindowWidth(), Dimensions.getWindowHeight(), this);
 
         this.running = true;
         this.stopped = false;

@@ -14,6 +14,7 @@ import qbert.model.Disk;
 import qbert.model.DiskImpl;
 import qbert.model.LevelSettings;
 import qbert.model.Tile;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
 import qbert.view.DiskGC;
@@ -23,35 +24,9 @@ import qbert.view.TileGC;
 import qbert.view.BaseTileGC;
 
 /**
- * Component managing informations about the game map and its collections of {@link Tile} and {@link Disk}.
+ * Component managing information about the game map and its collections of {@link Tile} and {@link Disk}.
  */
 public class MapComponent {
-
-    /**
-     * Index representing the exact difference between X and Y axes of positions just beyond the left limit of the map.
-     */
-    public static final int MAP_LEFT_TOP_EDGE = 2;
-    /**
-     * Index representing the exact sum between X and Y axes of positions just beyond the right limit of the map.
-     */
-    public static final int MAP_RIGHT_TOP_EDGE = 14;
-    /**
-     * Index representing the lowest Y axis value before the bottom limit of the map.
-     */
-    public static final int MAP_BOTTOM_EDGE = 0;
-
-    /**
-     * Number of columns in the map.
-     */
-    public static final int MAP_COLUMNS = 13;
-    /**
-     * Number of rows in the map.
-     */
-    public static final int MAP_ROWS = 7;
-    /**
-     * Index representing the Z axis positioned behind the map.
-     */
-    public static final int MAP_BEHIND_INDEX = -1;
 
     private final Map<Integer, Map<Integer, Tile>> tiles;
     private final Map<Integer, Map<Integer, Optional<Disk>>> disks;
@@ -68,10 +43,10 @@ public class MapComponent {
         final Map<Integer, BufferedImage> colors = settings.getColorMap();
         tiles = new HashMap<>();
 
-        for (int i = 0; i < MapComponent.MAP_COLUMNS; i++) {
+        for (int i = 0; i < Dimensions.MAP_COLUMNS; i++) {
             final Map<Integer, Tile> column = new HashMap<>();
 
-            for (int j = 0; j <= i && j < MapComponent.MAP_COLUMNS - i; j++) {
+            for (int j = 0; j <= i && j < Dimensions.MAP_COLUMNS - i; j++) {
                 if (i % 2 == j % 2) {
                     TileGC gComponent;
                     if (settings.isReversible()) {
@@ -87,18 +62,18 @@ public class MapComponent {
 
         disks = new HashMap<>();
 
-        for (int i = 1; i <= MapComponent.MAP_ROWS; i++) {
+        for (int i = 1; i <= Dimensions.MAP_ROWS; i++) {
             final Map<Integer, Optional<Disk>> row = new HashMap<>();
             final Map<Integer, Optional<Disk>> row2 = new HashMap<>();
             row.put(i, Optional.empty());
             row2.put(i, Optional.empty());
 
             disks.put(i - 2, row);
-            disks.put((MapComponent.MAP_ROWS - i) * 2 + i, row2);
+            disks.put((Dimensions.MAP_ROWS - i) * 2 + i, row2);
         }
 
         while (disksToPlace > 0) {
-            final int n = rand.nextInt(MapComponent.MAP_ROWS - 1) + 1;
+            final int n = rand.nextInt(Dimensions.MAP_ROWS - 1) + 1;
             final int side = rand.nextInt(2);
             final int y = n;
             int x;
@@ -106,7 +81,7 @@ public class MapComponent {
             if (side > 0) {
                 x = n - 2;
             } else {
-                x = MapComponent.MAP_COLUMNS + 1 - n;
+                x = Dimensions.MAP_COLUMNS + 1 - n;
             }
 
             if (!disks.get(x).get(y).isPresent()) {
@@ -193,7 +168,7 @@ public class MapComponent {
     * @return True if the position is below the map
     */
    public boolean isBelowMap(final Position2D logicPos) {
-       return logicPos.getY() < MapComponent.MAP_BOTTOM_EDGE;
+       return logicPos.getY() < Dimensions.MAP_BOTTOM_EDGE;
    }
 
    /**
@@ -202,8 +177,8 @@ public class MapComponent {
     * @return True if the position is beyond the map
     */
    public boolean isOverMap(final Position2D logicPos) {
-       return logicPos.getX() + logicPos.getY() == MapComponent.MAP_RIGHT_TOP_EDGE 
-               || logicPos.getY() - logicPos.getX() == MapComponent.MAP_LEFT_TOP_EDGE;
+       return logicPos.getX() + logicPos.getY() == Dimensions.MAP_RIGHT_TOP_EDGE 
+               || logicPos.getY() - logicPos.getX() == Dimensions.MAP_LEFT_TOP_EDGE;
    }
 
    /**
