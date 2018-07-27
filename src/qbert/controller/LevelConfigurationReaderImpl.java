@@ -29,6 +29,7 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
     private final Map<String, EnemyInfoImpl> mapInfo;
     private int colorsNumber;
     private boolean reversible;
+    private int disksNumber;
     private float qbertSpeed;
     private ColorComposition colorComposition;
 
@@ -52,6 +53,7 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
             final Element round = level.getChild("ROUND" + r);
             this.colorsNumber = Integer.valueOf(round.getAttributeValue("colors"));
             this.reversible = Boolean.parseBoolean(round.getAttributeValue("reversible"));
+            this.disksNumber = Integer.valueOf(round.getAttributeValue("disks"));
             this.qbertSpeed = Float.valueOf(round.getAttributeValue("qbertSpeed"));
 
             final List<Element> children = round.getChildren();
@@ -82,7 +84,7 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
         final Map<Integer, BufferedImage> colorMap = this.colorComposition.getColorComposition(colorsNumber);
         final BufferedImage background = this.colorComposition.getBackgroundImage();
 
-        return new LevelSettingsImpl(colorsNumber, reversible, background, colorMap);
+        return new LevelSettingsImpl(colorsNumber, reversible, background, colorMap, disksNumber);
     }
 
     @Override

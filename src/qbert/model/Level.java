@@ -38,7 +38,7 @@ public final class Level {
     private LevelSettings settings;
     private int levelNumber;
     private int roundNumber;
-    
+
     private int waitTimer = 0;
 
     public Level() {
