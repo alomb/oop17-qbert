@@ -16,10 +16,11 @@ public final class LevelSettingsImpl implements LevelSettings {
     private final Map<Integer, BufferedImage> colorMap;
 
     /**
-     * @param number the number of colors to be set for each tile
+     * @param colorsNumber the number of colors to be set for each tile
      * @param reverse true if the tile is reversible, false otherwise.
      * @param background the {@link BufferedImage} representing the background image
      * @param colorMap the map containing all the tiles colors
+     * @param disksNumber the number of the disks of the current level/round
      */
     public LevelSettingsImpl(final int colorsNumber, final boolean reverse, final BufferedImage background, final Map<Integer, BufferedImage> colorMap, final int disksNumber) {
         this.colorsNumber = colorsNumber;
