@@ -42,9 +42,4 @@ public interface Spawner {
      */
     void updateGameCharacters(List<Character> gc);
 
-    /**
-     * @return the {@link LevelSettingsImpl} of the current level/round
-     */
-    LevelSettings getLevelSettings();
-
 }

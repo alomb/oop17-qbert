@@ -1,10 +1,6 @@
 package qbert.controller;
 
-import java.util.Map;
-
 import org.jdom2.JDOMException;
-
-import qbert.model.EnemyInfoImpl;
 import qbert.model.LevelSettings;
 
 /**
@@ -21,18 +17,7 @@ public interface LevelConfigurationReader {
     void readLevelConfiguration(int l, int r) throws JDOMException;
 
     /**
-     * @return the map containing enemies information
-     */
-    Map<String, EnemyInfoImpl> getMapInfo();
-
-    /**
      * @return the current {@link LevelSettingsImpl}
      */
     LevelSettings getLevelSettings();
-
-    /**
-     * @return the QBert speed
-     */
-    float getQBertSpeed();
-
 }

@@ -31,12 +31,13 @@ public class GameEngine {
     }
 
     /**
+     * @param controller the game controller
      * The method used to initialize the game loop. 
      */
-    public void setup() {
-        game = new Game();
-
-        this.gameScene = new Scene(game.getLevel(), Dimensions.getWindowWidth(), Dimensions.getWindowHeight(), this);
+    public void setup(final Controller controller) {
+        game = new Game(controller);
+        game.initializeLevel();
+        this.gameScene = new Scene(game, Dimensions.getWindowWidth(), Dimensions.getWindowHeight(), controller);
 
         this.running = true;
         this.stopped = false;

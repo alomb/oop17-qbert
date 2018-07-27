@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import org.jdom2.JDOMException;
-
-import qbert.controller.LevelConfigurationReader;
-import qbert.controller.LevelConfigurationReaderImpl;
 import qbert.model.characters.Character;
 import qbert.model.characters.Player;
 import qbert.model.states.SpawnState;
@@ -23,22 +18,15 @@ public final class SpawnerImpl implements Spawner {
     private List<Character> gameCharacters;
     private final EnemyFactory ef = new EnemyFactoryImpl();
     private final Map<String, EnemyInfoImpl> mapInfo;
-    private final LevelConfigurationReader lcr;
 
     /**
-     * @param level the level that must be loaded
-     * @param round the round that must be loaded
+     * @param mapInfo the map of the characters
+     * @param qBertSpeed the player speed
      */
-    public SpawnerImpl(final int level, final int round) {
+    public SpawnerImpl(final Map<String, EnemyInfoImpl> mapInfo, final float qBertSpeed) {
         this.gameCharacters = new ArrayList<>();
-        this.lcr = new LevelConfigurationReaderImpl();
-        try {
-            lcr.readLevelConfiguration(level, round);
-        } catch (JDOMException e) {
-            e.printStackTrace();
-        }
-        this.qbert = ef.createQbert(lcr.getQBertSpeed());
-        this.mapInfo = lcr.getMapInfo();
+        this.qbert = ef.createQbert(qBertSpeed);
+        this.mapInfo = mapInfo;
     }
 
     @Override
@@ -109,10 +97,5 @@ public final class SpawnerImpl implements Spawner {
     @Override
     public void updateGameCharacters(final List<Character> gc) {
         this.gameCharacters = gc;
-    }
-
-    @Override
-    public LevelSettings getLevelSettings() {
-        return this.lcr.getLevelSettings();
     }
 }

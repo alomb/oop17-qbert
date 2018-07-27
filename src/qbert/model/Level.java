@@ -23,9 +23,6 @@ import qbert.view.RenderableObject;
 
 public final class Level {
 
-    private final int LEVELS_NUMBER = 9;
-    private final int ROUNDS_NUMBER = 4;
-
     private Player qbert;
     private int lives;
     private boolean timerCallback = false;
@@ -36,32 +33,34 @@ public final class Level {
     private Renderable background;
 
     private LevelSettings settings;
-    private int levelNumber;
-    private int roundNumber;
 
     private int waitTimer = 0;
+    private Game gameObserver;
 
-    public Level() {
-        this.levelNumber = 1;
-        this.roundNumber = 1;
-        this.lives = 3;
+    public Level(LevelSettings levelSettings, final int lives, final int score) {
+        this.lives = lives;
 
-        this.spawner = new SpawnerImpl(this.getLevelNumber(), this.getRoundNumber());
+        this.settings = levelSettings;
+        this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed());
+
         this.points = new PointComponent();
+        this.points.score(score);
 
-        this.reset();
-    }
-
-    public void reset() {
-        this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
-
-        this.settings = this.spawner.getLevelSettings();
         this.map = new MapComponent(settings);
+
         this.qbert = this.spawner.spawnQbert();
         this.timer = new TimerComponent(qbert, spawner, points, map);
 
         GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.getBackgroundX(), Dimensions.getBackgroundY()));
         this.background = new RenderableObject(backgroundGC);
+    }
+
+    public void addObserver(Game gameObserver) {
+        this.gameObserver = gameObserver;
+    }
+
+    public void notifyEndLevel() {
+        this.gameObserver.changeRound();
     }
 
     public void resetDisk() {
@@ -80,29 +79,18 @@ public final class Level {
         return this.settings.getBackgroundImage();
     }
 
-
     public Player getQBert() {
         return this.qbert;
     }
 
-
     public List<Character> getEntities() {
-        return this.spawner.getGameCharacters(); /////
-    }
-
-    public int getLevelNumber() {
-        return this.levelNumber;
-    }
-
-    public int getRoundNumber() {
-        return this.roundNumber;
+        return this.spawner.getGameCharacters();
     }
 
     public int getPoints() {
         return this.points.getPoints();
     }
 
-    //Game?
     public void checkStatus() {
         int coloredTiles = 0;
         for (Tile t : this.map.getTileList()) {
@@ -121,23 +109,11 @@ public final class Level {
     }
 
     public void changeRound() {
-        if (levelNumber == LEVELS_NUMBER && roundNumber == ROUNDS_NUMBER) {
-            System.exit(0);
-        }
-        if (this.roundNumber >= ROUNDS_NUMBER) {
-            this.roundNumber = 1;
-            this.levelNumber++;
-        } else {
-            this.roundNumber++;
-        }
-
         this.points.score(this.settings.getRoundScore());
         this.points.score(PointComponent.UNUSED_DISK_SCORE * map.getDiskList().size());
-        /* SPAWNER */
-        this.spawner = new SpawnerImpl(this.getLevelNumber(), this.getRoundNumber());
-        this.settings = this.spawner.getLevelSettings();
 
-        this.reset();
+        this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
+        this.notifyEndLevel();
     }
 
     public void death() {

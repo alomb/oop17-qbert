@@ -4,6 +4,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
+import qbert.controller.Controller;
+import qbert.controller.ControllerImpl;
 import qbert.model.Game;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
@@ -37,7 +39,8 @@ public class TestCharacterGraphicComponent {
      * The constructor create a {@link Game} object to initialize some {@link Dimensions} used in {@link CharacterGC}.
      */
     public TestCharacterGraphicComponent() {
-        new Game();
+        final Controller controller = new ControllerImpl();
+        new Game(controller);
         this.rnd = new Random();
     }
 

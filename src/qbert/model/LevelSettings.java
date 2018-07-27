@@ -38,4 +38,14 @@ public interface LevelSettings {
      */
     Map<Integer, BufferedImage> getColorMap();
 
+    /**
+     * @return the map containing enemies information
+     */
+    Map<String, EnemyInfoImpl> getMapInfo();
+
+    /**
+     * @return the player speed
+     */
+    float getQBertSpeed();
+
 }

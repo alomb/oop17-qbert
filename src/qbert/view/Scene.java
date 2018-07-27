@@ -20,11 +20,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import qbert.controller.Controller;
 import qbert.controller.GameEngine;
 import qbert.input.MoveDown;
 import qbert.input.MoveLeft;
 import qbert.input.MoveRight;
 import qbert.input.MoveUp;
+import qbert.model.Game;
 import qbert.model.Level;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
@@ -33,15 +35,15 @@ import qbert.model.utilities.Sprites;
 public class Scene {
     private final JFrame frame;
     private final ScenePanel panel;
-    private final Level level;
-    private final GameEngine controller;
+    private final Game game;
+    private final Controller controller;
 
-    public Scene(final Level level, final int w, final int h, final GameEngine controller) {
+    public Scene(final Game game, final int w, final int h, final Controller controller) {
         this.frame = new JFrame("Qbert Test");
         this.frame.setSize(w, h);
         this.frame.setMinimumSize(new Dimension(w, h));
         this.frame.setResizable(false);
-        this.panel = new ScenePanel(level, w, h);
+        this.panel = new ScenePanel(w, h);
 
         this.frame.getContentPane().add(this.panel);
         this.frame.addWindowListener(new WindowAdapter() {
@@ -54,7 +56,7 @@ public class Scene {
         });
         this.frame.pack();
         this.frame.setVisible(true);
-        this.level = level;
+        this.game = game;
         this.controller = controller;
     }
 
@@ -73,7 +75,7 @@ public class Scene {
         private Font custom; 
         private BufferedImage lifeSprite;
 
-        public ScenePanel(final Level level, final int w, final int h) {
+        public ScenePanel(final int w, final int h) {
             this.setSize(w, h);
             this.setBackground(Color.black);
             this.addKeyListener(this);
@@ -104,10 +106,11 @@ public class Scene {
         @Override
         protected void paintComponent(final Graphics g) {
             super.paintComponent(g);
-            
-            level.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex() ).forEach(c -> {
+
+            game.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex() ).forEach(c -> {
                 g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(), c.getGraphicComponent().getPosition().getY(), this);
             });
+
             
             /*
              * 
@@ -135,15 +138,15 @@ public class Scene {
             g.setColor(new Color(255, 255, 255));
             g.setFont(this.custom);
             g.drawString("Player:", 40, 40);
-            g.drawString("" + level.getPoints(), 40, 80);
+            g.drawString("" + game.getPoints(), 40, 80);
 
             g.drawString("Level:", 1200, 300);
-            g.drawString("" + level.getLevelNumber(), 1400, 300);
+            g.drawString("" + game.getLevelNumber(), 1400, 300);
 
             g.drawString("Round:", 1200, 330);
-            g.drawString("" + level.getRoundNumber(), 1400, 330);
+            g.drawString("" + game.getRoundNumber(), 1400, 330);
 
-            for (int i = 0, posY = 0; i < level.getLives(); i++, posY += this.lifeSprite.getHeight() + 10) {
+            for (int i = 0, posY = 0; i < game.getLives(); i++, posY += this.lifeSprite.getHeight() + 10) {
                 g.drawImage(this.lifeSprite, 60, 190 + posY, this);
             }
 
@@ -160,6 +163,7 @@ public class Scene {
             //g.drawString("E - Pause Entities (" + (level.updateEntities ? "running" : "paused") + ")", unit * 2, unit * 20 + unit * 5);
             g.drawString("N - Go to next level", unit * 2, unit * 20 + unit * 6);
             g.drawString("Q - Quit", unit * 2, unit * 20 + unit * 7);
+
         }
 
         @Override
@@ -177,7 +181,7 @@ public class Scene {
                 Scene.this.controller.notifyCommand(new MoveRight());
             } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_KP_LEFT) {
                 Scene.this.controller.notifyCommand(new MoveLeft());
-            } else { //Debug keys
+            } /*else { //Debug keys
                 if (e.getKeyCode() == KeyEvent.VK_L) {
                     level.gainLife();
                 } else if (e.getKeyCode() == KeyEvent.VK_D) {
@@ -193,7 +197,7 @@ public class Scene {
                 } else if (e.getKeyCode() == KeyEvent.VK_N) {
                     level.changeRound();
                 }
-            }
+            }*/
         }
 
         @Override

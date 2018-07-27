@@ -75,21 +75,12 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
     }
 
     @Override
-    public Map<String, EnemyInfoImpl> getMapInfo() {
-        return Collections.unmodifiableMap(mapInfo);
-    }
-
-    @Override
     public LevelSettings getLevelSettings() {
+        final Map<String, EnemyInfoImpl> mapInfo = this.getMapInfo();
         final Map<Integer, BufferedImage> colorMap = this.colorComposition.getColorComposition(colorsNumber);
         final BufferedImage background = this.colorComposition.getBackgroundImage();
 
-        return new LevelSettingsImpl(colorsNumber, reversible, background, colorMap, disksNumber);
-    }
-
-    @Override
-    public float getQBertSpeed() {
-        return this.qbertSpeed;
+        return new LevelSettingsImpl(colorsNumber, reversible, background, colorMap, disksNumber, mapInfo, qbertSpeed);
     }
 
     private void setColorComposition() {
@@ -105,5 +96,9 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
                 | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
         }
+    }
+
+    private Map<String, EnemyInfoImpl> getMapInfo() {
+        return Collections.unmodifiableMap(mapInfo);
     }
 }

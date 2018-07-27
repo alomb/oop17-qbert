@@ -13,6 +13,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 
@@ -23,19 +24,30 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
+import qbert.controller.Controller;
+import qbert.controller.ControllerImpl;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
+import qbert.view.Renderable;
 
 public class Game {
+
+    private final int LEVELS_NUMBER = 9;
+    private final int ROUNDS_NUMBER = 4;
 
     private Toolkit t; 
     private Dimension d;
 
     private Level gameLevel;
+    private Controller controller;
 
-    public Game() {
+    private int levelNumber;
+    private int roundNumber;
+    private int lives;
+    private int score;
+
+    public Game(Controller controller) {
         String PATH = "../img/png/";
 
         File directory = new File(PATH);
@@ -141,11 +153,8 @@ public class Game {
 
         } catch (Exception e) {
             System.out.println("Error load " + e.toString());
-            
         }
-        
-        
-        
+
         Dimensions.setDeathHeight(Dimensions.getWindowHeight() + 200);
         Dimensions.setSpawningHeight(-100);
         Dimensions.setSpawningPointLeft(new Position2D(Math.round(new Float(Dimensions.getWindowWidth()) / 2f) - Sprites.blueTile.getWidth(), -500));
@@ -165,7 +174,18 @@ public class Game {
         Dimensions.setSpawningLogQBert(new Position2D(Dimensions.MAP_SPAWNING_QBERT_X, Dimensions.MAP_SPAWNING_QBERT_Y));
 
         System.out.println("H: " + Dimensions.getBackgroundHeight() + " W: " + Dimensions.getBackgroundWidth() + " th " + Sprites.blueTile.getHeight() + " by " + Dimensions.getBackgroundY());
-        gameLevel = new Level();
+
+        this.controller = controller;
+        this.levelNumber = 1;
+        this.roundNumber = 1;
+        this.lives = 3;
+        this.score = 0;
+        createNewLevel();
+
+    }
+
+    public void initializeLevel() {
+        this.gameLevel.addObserver(this);
     }
 
     public Level getLevel() {
@@ -216,6 +236,48 @@ public class Game {
         converter.transcode(imageSvg, outputImagePng);
         streamPng.flush();
         streamPng.close();
+    }
+
+    public final void createNewLevel() {
+        final LevelSettings ls = controller.getLevelSettings(levelNumber, roundNumber);
+        this.gameLevel = new Level(ls, lives, score);
+        this.gameLevel.addObserver(this);
+    }
+
+    public void changeRound() {
+        if (levelNumber == LEVELS_NUMBER && roundNumber == ROUNDS_NUMBER) {
+            System.exit(0);
+        }
+        if (this.roundNumber >= ROUNDS_NUMBER) {
+            this.roundNumber = 1;
+            this.levelNumber++;
+        } else {
+            this.roundNumber++;
+        }
+
+        this.lives = gameLevel.getLives();
+        this.score = gameLevel.getPoints();
+        this.createNewLevel();
+    }
+
+    public List<Renderable> getRenderables() {
+        return this.gameLevel.getRenderables();
+    }
+
+    public int getPoints() {
+        return this.gameLevel.getPoints();
+    }
+
+    public int getLevelNumber() {
+        return this.levelNumber;
+    }
+
+    public int getRoundNumber() {
+        return this.roundNumber;
+    }
+
+    public int getLives() {
+        return this.gameLevel.getLives();
     }
 
 }

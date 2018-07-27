@@ -1,6 +1,7 @@
 package qbert.launcher;
 
-import qbert.controller.GameEngine;
+import qbert.controller.Controller;
+import qbert.controller.ControllerImpl;
 
 /**
  * The class used to launch the game.
@@ -8,9 +9,8 @@ import qbert.controller.GameEngine;
 public final class QBertLauncher {
 
     public QBertLauncher() {
-        final GameEngine test = new GameEngine();
-        test.setup();
-        test.mainLoop();
+        final Controller controller = new ControllerImpl();
+        controller.setupGameEngine();
     }
 
 }
