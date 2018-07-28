@@ -24,4 +24,9 @@ public interface Controller {
      * @param command a class encapsulating code to execute
      */
     void notifyCommand(Command command);
+
+    /**
+     * (temp) Change the current scene to another.
+     */
+    void changeScene();
 }

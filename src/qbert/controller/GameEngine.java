@@ -1,26 +1,25 @@
 package qbert.controller;
 
-import qbert.model.Game;
+import qbert.model.Model;
 
 import java.util.Optional;
 
 import qbert.input.Command;
-import qbert.model.utilities.Dimensions;
-import qbert.view.Scene;
+import qbert.view.SceneImpl;
 
 /**
  * The class containing the game loop and responsible of communications between View and Model.
  * It also provides a keyboard input management using Command pattern.
  */
-public class GameEngine {
+public class GameEngine implements Loop {
 
     private static final long PERIOD = 20;
 
     private boolean running;
     private boolean stopped;
 
-    private Scene gameScene;
-    private Game game;
+    private SceneImpl gameScene;
+    private Model game;
     private Optional<Command> currentCommand;
 
     /**
@@ -31,33 +30,49 @@ public class GameEngine {
     }
 
     /**
-     * @param controller the game controller
+     * @param scene the game scene
      * The method used to initialize the game loop. 
      */
-    public void setup(final Controller controller) {
-        game = new Game(controller);
-        game.initializeLevel();
-        this.gameScene = new Scene(game, Dimensions.getWindowWidth(), Dimensions.getWindowHeight(), controller);
+    @Override
+    public final void setup(final SceneImpl scene, final Model game) {
+        this.gameScene = scene;
+        this.game = game;
 
         this.running = true;
         this.stopped = false;
-        this.gameRender();
+        this.render();
     }
 
     /**
      * The game loop based on cycles elapsed time that manage game and graphic updates.
      */
-    public void mainLoop() {
+    @Override
+    public final void mainLoop() {
         long lastTime = System.currentTimeMillis(); 
         while (this.running) {
             final long current = System.currentTimeMillis();
             final int elapsed = (int) (current - lastTime);
             this.processInput();
             this.gameUpdate(elapsed);
-            this.gameRender();
+            this.render();
             this.waitForNextFrame(current);
             lastTime = current;
         }
+    }
+
+    @Override
+    public final void stop() {
+        this.running = false;
+    }
+
+    @Override
+    public final void pause() {
+        this.stopped = true;
+    }
+
+    @Override
+    public final void resume() {
+        this.stopped = false;
     }
 
     /**
@@ -96,7 +111,7 @@ public class GameEngine {
     /**
      * The method used to update graphics (View).
      */
-    private void gameRender() {
+    private void render() {
         this.gameScene.render();
     }
 

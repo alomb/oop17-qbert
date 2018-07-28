@@ -1,6 +1,6 @@
 package qbert.input;
 
-import qbert.model.Game;
+import qbert.model.Model;
 
 /**
  * A command object invokes methods of the receiver (the object affected by the execution of certain commands)
@@ -10,7 +10,7 @@ import qbert.model.Game;
 public interface Command {
 
     /**
-     * @param game the reference to the current game session
+     * @param model the reference to the current model logic
      */
-    void execute(Game game);
+    void execute(Model model);
 }

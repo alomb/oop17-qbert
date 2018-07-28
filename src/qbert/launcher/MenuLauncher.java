@@ -23,9 +23,9 @@ import com.sun.glass.events.KeyEvent;
 
 public class MenuLauncher {
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         new MenuLauncher();
-    }
+    }*/
 
 
     @SuppressWarnings("unchecked")
