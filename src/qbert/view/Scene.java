@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyListener;
 
 /**
- * 
+ * The interface for a common application scene.
  */
 public interface Scene extends KeyListener {
 
@@ -19,8 +19,7 @@ public interface Scene extends KeyListener {
     void render();
 
     /**
-     * @param g the {@link Graphics} fo the scene
+     * @param g the {@link Graphics} for the scene
      */
     void draw(Graphics g);
-
 }
