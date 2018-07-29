@@ -4,6 +4,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JPanel;
@@ -33,6 +34,8 @@ public abstract class SceneImpl extends JPanel implements Scene {
     @Override
     public final void render() {
         this.repaint();
+        //Fixes some OSes bug where graphics scheduling gets slowed down
+        Toolkit.getDefaultToolkit().sync();
     }
 
     @Override
