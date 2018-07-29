@@ -51,10 +51,10 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
             final Element root = document.getRootElement();
             final Element level = root.getChild("LEVEL" + l);
             final Element round = level.getChild("ROUND" + r);
-            this.colorsNumber = Integer.valueOf(round.getAttributeValue("colors"));
+            this.colorsNumber = Integer.parseInt(round.getAttributeValue("colors"));
             this.reversible = Boolean.parseBoolean(round.getAttributeValue("reversible"));
-            this.disksNumber = Integer.valueOf(round.getAttributeValue("disks"));
-            this.qbertSpeed = Float.valueOf(round.getAttributeValue("qbertSpeed"));
+            this.disksNumber = Integer.parseInt(round.getAttributeValue("disks"));
+            this.qbertSpeed = Float.parseFloat(round.getAttributeValue("qbertSpeed"));
 
             final List<Element> children = round.getChildren();
             final Iterator<Element> it = children.iterator();
@@ -62,10 +62,10 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
             while (it.hasNext()) {
                 final Element character = (Element) it.next();
                 final String name = character.getName();
-                final float speed = Float.valueOf(character.getAttributeValue("speed"));
-                final int quantity = Integer.valueOf(character.getAttributeValue("quantity"));
-                final int spawningTime = Integer.valueOf(character.getAttributeValue("spawningTime"));
-                final int standingTime = Integer.valueOf(character.getAttributeValue("standingTime"));
+                final float speed = Float.parseFloat(character.getAttributeValue("speed"));
+                final int quantity = Integer.parseInt(character.getAttributeValue("quantity"));
+                final int spawningTime = Integer.parseInt(character.getAttributeValue("spawningTime"));
+                final int standingTime = Integer.parseInt(character.getAttributeValue("standingTime"));
 
                 this.mapInfo.put(name, new EnemyInfoImpl(speed, quantity, spawningTime, standingTime));
             }
