@@ -22,8 +22,8 @@ public class SceneIntro extends SceneImpl {
     private final Controller controller;
     private Font title, text;
 
-    private final int istructionsYOffset = -Math.round(Dimensions.getWindowHeight() / 3.5f);
-    private final int istructionsYStep = -Math.round(Dimensions.getWindowHeight() / 50f);
+    private final int istructionsYOffset = +Math.round(Dimensions.getWindowHeight() / 3.5f);
+    private final int istructionsYStep = +Math.round(Dimensions.getWindowHeight() / 60f);
 
     /**
      * @param w the panel width
@@ -40,7 +40,7 @@ public class SceneIntro extends SceneImpl {
             this.title = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((float) Dimensions.getWindowHeight() / 10f);
             final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(this.title);
-            this.text = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((float) Dimensions.getWindowHeight() / 50f);
+            this.text = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont((float) Dimensions.getWindowHeight() / 60f);
             ge.registerFont(this.text);
         } catch (Exception e) {
             e.printStackTrace();
@@ -52,6 +52,11 @@ public class SceneIntro extends SceneImpl {
 
     @Override
     public final void draw(final Graphics g) {
+
+        this.introduction.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex()).forEach(c -> {
+            g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(), c.getGraphicComponent().getPosition().getY(), this);
+        });
+
         g.setColor(new Color(237, 228, 61));
         this.drawCenteredString(g, "Q*bert", 
                 new Rectangle(0, -Math.round(Dimensions.getWindowHeight() / 2.5f), Dimensions.getWindowWidth(), Dimensions.getWindowHeight()), title);
@@ -60,18 +65,18 @@ public class SceneIntro extends SceneImpl {
 
         int istructionsParagraphStep = 0;
 
+        g.setFont(text);
         for (int i = 0; i < this.introduction.getInstructionsIndex(); i++) {
             if (i % 3 == 0) {
                 istructionsParagraphStep += this.istructionsYStep * 2;
             }
-            this.drawCenteredString(g, this.introduction.getInstructions().get(i), 
-                    new Rectangle(Math.round(Dimensions.getWindowHeight() / 2.5f), this.istructionsYOffset - istructionsParagraphStep - this.istructionsYStep * i * 2, Dimensions.getWindowWidth(), Dimensions.getWindowHeight()), text);
+
+            g.drawString(this.introduction.getInstructions().get(i), Math.round(Dimensions.getWindowWidth() / 1.75f), this.istructionsYOffset + istructionsParagraphStep + this.istructionsYStep * i * 2);
         }
 
         this.drawCenteredString(g, "press Enter to continue...", 
                 new Rectangle(0, Math.round(Dimensions.getWindowHeight() / 2.5f), Dimensions.getWindowWidth(), Dimensions.getWindowHeight()), text);
     }
-
     @Override
     public final void keyTyped(final KeyEvent e) {
 
@@ -80,12 +85,11 @@ public class SceneIntro extends SceneImpl {
     @Override
     public final void keyPressed(final KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (this.introduction.getStep() < this.introduction.getMaxStep()) {
-                this.introduction.incrementInstructionsIndex(3);
-            } else {
+            this.introduction.confirm();
+
+            if (this.introduction.hasReachedTheEnd()) {
                 this.controller.changeScene();
             }
-            this.introduction.incrementStep(1);
         }
     }
 
@@ -93,5 +97,4 @@ public class SceneIntro extends SceneImpl {
     public final void keyReleased(final KeyEvent e) {
 
     }
-
 }

@@ -39,7 +39,6 @@ public class GameEngine implements Loop {
 
         this.running = true;
         this.stopped = false;
-        this.render();
     }
 
     /**
@@ -47,6 +46,7 @@ public class GameEngine implements Loop {
      */
     @Override
     public final void mainLoop() {
+        this.render();
         long lastTime = System.currentTimeMillis(); 
         while (this.running) {
             final long current = System.currentTimeMillis();

@@ -27,14 +27,15 @@ public class ControllerImpl implements Controller {
         this.lcr = new LevelConfigurationReaderImpl();
         this.game = new Game(this);
         this.introduction = new Introduction();
-        this.view = new View(this, game, introduction);
+        this.view = new View(this, this.game, this.introduction);
         this.gameEngine = new GameEngine(this.view);
     }
 
     @Override
     public final void setupGameEngine() {
         this.view.setScene("SceneIntro");
-        this.gameEngine.setup(introduction);
+        this.introduction.initialize();
+        this.gameEngine.setup(this.introduction);
         this.gameEngine.mainLoop();
     }
 
@@ -56,8 +57,8 @@ public class ControllerImpl implements Controller {
 
     @Override
     public final void changeScene() {
-        game.initialize();
+        this.game.initialize();
         this.view.setScene("SceneGame");
-        this.gameEngine.setup(game);
+        this.gameEngine.setup(this.game);
     }
 }
