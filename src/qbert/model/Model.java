@@ -1,9 +1,15 @@
 package qbert.model;
 
 /**
- *
+ * The interface for a generic MVC model class, enabled to store data and manage some logic and
+ * process input from {@link Controller}.
  */
 public interface Model {
+
+    /**
+     * The method to start the model work.
+     */
+    void initialize();
 
     /**
      * @param elapsed the time elapsed since the last loop cycle.

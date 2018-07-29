@@ -14,7 +14,7 @@ import qbert.view.View;
 public class ControllerImpl implements Controller {
 
     private LevelConfigurationReader lcr;
-    private GameEngine gameEngine;
+    private final GameEngine gameEngine;
 
     private final Game game;
     private final Introduction introduction;
@@ -28,13 +28,13 @@ public class ControllerImpl implements Controller {
         this.game = new Game(this);
         this.introduction = new Introduction();
         this.view = new View(this, game, introduction);
+        this.gameEngine = new GameEngine(this.view);
     }
 
     @Override
     public final void setupGameEngine() {
-        this.gameEngine = new GameEngine();
         this.view.setScene("SceneIntro");
-        this.gameEngine.setup(this.view.getScene(), introduction);
+        this.gameEngine.setup(introduction);
         this.gameEngine.mainLoop();
     }
 
@@ -56,8 +56,8 @@ public class ControllerImpl implements Controller {
 
     @Override
     public final void changeScene() {
-        game.initializeLevel();
+        game.initialize();
         this.view.setScene("SceneGame");
-        this.gameEngine.setup(this.view.getScene(), game);
+        this.gameEngine.setup(game);
     }
 }

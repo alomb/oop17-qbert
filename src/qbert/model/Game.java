@@ -7,29 +7,33 @@ import qbert.model.characters.Player;
 import qbert.model.states.MoveState;
 import qbert.view.Renderable;
 
+/**
+ * The implementation of {@link Model} for gameplay logic.
+ */
 public class Game implements Model {
 
     private static final int LEVELSNUMBER = 9;
     private static final int ROUNDSNUMBER = 4;
 
     private Level gameLevel;
-    private Controller controller;
+    private final Controller controller;
 
     private int levelNumber;
     private int roundNumber;
     private int lives;
     private int score;
 
-    public Game(Controller controller) {
+    public Game(final Controller controller) {
         this.controller = controller;
         this.levelNumber = 1;
         this.roundNumber = 1;
         this.lives = 3;
         this.score = 0;
-        createNewLevel();
     }
 
-    public void initializeLevel() {
+    @Override
+    public final void initialize() {
+        createNewLevel();
         this.gameLevel.addObserver(this);
     }
 
@@ -38,7 +42,7 @@ public class Game implements Model {
     }
 
     @Override
-    public void update(final float elapsed) {
+    public final void update(final float elapsed) {
         gameLevel.update(elapsed);
     }
 

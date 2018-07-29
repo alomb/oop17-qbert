@@ -54,7 +54,6 @@ public class View {
 
     public void render() {
         if (this.scene != null) {
-            System.out.println(scene);
             try {
                 SwingUtilities.invokeAndWait(() -> {
                     this.scene.render();

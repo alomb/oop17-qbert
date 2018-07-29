@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The model for the introduction phase.
+ * The implementation of {@link Model} for application introductive scene logic.
  */
 public class Introduction implements Model {
     private final List<String> instructions;
@@ -37,6 +37,11 @@ public class Introduction implements Model {
 
         this.instructionsIndex = 3;
         this.step = 1;
+    }
+
+    @Override
+    public void initialize() {
+
     }
 
     @Override

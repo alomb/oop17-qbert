@@ -5,10 +5,10 @@ import qbert.model.Model;
 import java.util.Optional;
 
 import qbert.input.Command;
-import qbert.view.SceneImpl;
+import qbert.view.View;
 
 /**
- * The class containing the game loop and responsible of communications between View and Model.
+ * The class containing the game loop and responsible of communications between {@link View} and {@link Model}.
  * It also provides a keyboard input management using Command pattern.
  */
 public class GameEngine implements Loop {
@@ -18,24 +18,23 @@ public class GameEngine implements Loop {
     private boolean running;
     private boolean stopped;
 
-    private SceneImpl gameScene;
+    private final View gameScene;
     private Model game;
     private Optional<Command> currentCommand;
 
     /**
-     * Set currentCommand to empty.
+     * @param scene the {@link View} to render
      */
-    public GameEngine() {
+    public GameEngine(final View scene) {
         this.currentCommand = Optional.empty();
+        this.gameScene = scene;
     }
 
     /**
-     * @param scene the game scene
      * The method used to initialize the game loop. 
      */
     @Override
-    public final void setup(final SceneImpl scene, final Model game) {
-        this.gameScene = scene;
+    public final void setup(final Model game) {
         this.game = game;
 
         this.running = true;
@@ -115,10 +114,8 @@ public class GameEngine implements Loop {
         this.gameScene.render();
     }
 
-    /**
-     * @param command a class encapsulating code to execute
-     */
-    public void notifyCommand(final Command command) {
+    @Override
+    public final void notifyCommand(final Command command) {
         this.currentCommand = Optional.of(command);
     }
 }
