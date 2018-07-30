@@ -1,10 +1,14 @@
 package qbert.model.characters;
 
+import qbert.controller.Sounds;
+import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.states.CoilyAdultStandingState;
 import qbert.model.states.CoilyBallStandingState;
+import qbert.model.states.DeathState;
+import qbert.model.states.FallState;
 import qbert.model.states.SpawnState;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CoilyGC;
@@ -49,6 +53,14 @@ public class Coily extends CharacterImpl implements Snake {
     }
 
     @Override
+    public final void setCurrentState(final CharacterState state) {
+        super.setCurrentState(state);
+        if (state instanceof FallState) {
+            Sounds.playSound("CoilyGoesOverTheEdge.wav");
+        }
+    }
+
+    @Override
     public final CharacterState getStandingState() {
         if (!this.adult) {
             return new CoilyBallStandingState(this, standingTime);
@@ -60,5 +72,17 @@ public class Coily extends CharacterImpl implements Snake {
     @Override
     public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
         qbert.setDead(true);
+        if (this.adult) {
+            Sounds.playSound("CoilyBites.wav");
+        } else {
+            Sounds.playSound("%*#!*.wav");
+        }
+    }
+
+    @Override
+    public final void land(final MapComponent map, final PointComponent points) {
+        if (this.adult) {
+            Sounds.playSound("CoilyHops.wav");
+        }
     }
 }

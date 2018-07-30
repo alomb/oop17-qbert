@@ -10,6 +10,7 @@ import java.io.File;
 import java.net.URL;
 
 import qbert.controller.Controller;
+import qbert.controller.Sounds;
 import qbert.model.Introduction;
 import qbert.model.utilities.Dimensions;
 
@@ -48,6 +49,8 @@ public class SceneIntro extends SceneImpl {
 
         this.introduction = introduction;
         this.controller = controller;
+
+        Sounds.playSound("InsertACoin.wav");
     }
 
     @Override
@@ -89,6 +92,9 @@ public class SceneIntro extends SceneImpl {
 
             if (this.introduction.hasReachedTheEnd()) {
                 this.controller.changeScene();
+                Sounds.playSound("GameStartMusic.wav");
+            } else {
+                Sounds.playSound("QbertHops.wav");
             }
         }
     }

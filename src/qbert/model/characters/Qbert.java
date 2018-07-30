@@ -1,5 +1,6 @@
 package qbert.model.characters;
 
+import qbert.controller.Sounds;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.states.CharacterState;
@@ -34,6 +35,7 @@ public class Qbert extends CharacterImpl implements Player {
     @Override
     public final void land(final MapComponent map, final PointComponent points) {
         points.score(map.incrementColor(this.getNextPosition()));
+        Sounds.playSound("QbertHops.wav");
     }
 
     @Override
@@ -45,4 +47,5 @@ public class Qbert extends CharacterImpl implements Player {
     public final DownUpwardCharacterGC getDownUpwardGraphicComponent() {
         return this.graphics;
     }
+
 }

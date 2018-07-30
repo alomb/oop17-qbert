@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import qbert.controller.Sounds;
 import qbert.model.characters.Character;
 import qbert.model.characters.Coily;
 import qbert.model.characters.Player;
@@ -14,6 +15,8 @@ import qbert.model.components.TimerComponent;
 import qbert.model.states.DeathState;
 import qbert.model.states.FallState;
 import qbert.model.states.LandState;
+import qbert.model.states.QbertOnDiskState;
+import qbert.model.states.QbertStandingState;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.GenericGC;
@@ -66,7 +69,7 @@ public final class Level {
     public void resetDisk() {
         this.spawner.getGameCharacters().forEach(c -> {
             if (!(c instanceof Coily)) {
-                c.setCurrentState(new DeathState(c));
+                c.setCurrentState(new DeathState(c)); /////////////////////////
             }
         });
     }
@@ -164,6 +167,9 @@ public final class Level {
                 /* se Qbert e' sul disco pulisco la mappa, tranne Coily */
                 if (this.map.checkForDisk(qbert)) {
                     this.resetDisk();
+                    Sounds.playSound("RidingADisk.wav");
+                } else if (qbert.getCurrentState() instanceof FallState) {
+                    Sounds.playSound("QBertGoesOverTheEdge.wav");
                 }
             }
         } else {

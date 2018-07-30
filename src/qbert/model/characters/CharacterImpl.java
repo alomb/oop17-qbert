@@ -98,7 +98,7 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public final void setCurrentState(final CharacterState state) {
+    public void setCurrentState(final CharacterState state) {
         this.currentState = state;
     }
 
