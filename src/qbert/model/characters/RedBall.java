@@ -28,6 +28,6 @@ public class RedBall extends DownwardCharacter {
     @Override
     public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
         qbert.setDead(true);
-        Sounds.playSound("%*#!*.wav");
+        Sounds.playSound("QbertDeath1.wav");
     }
 }

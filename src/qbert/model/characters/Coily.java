@@ -7,7 +7,6 @@ import qbert.model.components.TimerComponent;
 import qbert.model.states.CharacterState;
 import qbert.model.states.CoilyAdultStandingState;
 import qbert.model.states.CoilyBallStandingState;
-import qbert.model.states.DeathState;
 import qbert.model.states.FallState;
 import qbert.model.states.SpawnState;
 import qbert.model.utilities.Position2D;
@@ -75,7 +74,7 @@ public class Coily extends CharacterImpl implements Snake {
         if (this.adult) {
             Sounds.playSound("CoilyBites.wav");
         } else {
-            Sounds.playSound("%*#!*.wav");
+            Sounds.playSound("QbertDeath1.wav");
         }
     }
 
