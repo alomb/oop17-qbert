@@ -1,5 +1,9 @@
 package qbert.model;
 
+import java.util.List;
+
+import qbert.view.Renderable;
+
 /**
  * The interface for a generic MVC model class, enabled to store data and manage some logic and
  * process input from {@link Controller}.
@@ -40,4 +44,19 @@ public interface Model {
      * The code associated to the confirm command/event. 
      */
     void confirm();
+
+    /**
+     * @return a list of GUI to be rendered
+     */
+    List<GUILogicImpl> getGUI();
+
+    /**
+     * @return a list of images to be rendered
+     */
+    List<Renderable> getRenderables();
+
+    /**
+     * @return true if the model wants to communicate that is job is done
+     */
+    boolean hasFinished();
 }

@@ -1,8 +1,10 @@
 package qbert.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import qbert.model.characters.Player;
@@ -20,10 +22,10 @@ import qbert.view.characters.PlayerGCImpl;
  * The implementation of {@link Model} for application introductive scene logic.
  */
 public class Introduction implements Model {
-    private final List<String> instructions;
 
     private int instructionsIndex;
-    private int step;
+    private static final int INSTRUCTIONSTEP = 4;
+    private int steps;
     private static final int MAXSTEP = 4;
 
     private final Player qbert;
@@ -31,35 +33,58 @@ public class Introduction implements Model {
     private static final Position2D QBERTPOSITION = 
             new Position2D(Math.round(Dimensions.getWindowWidth() / 3f), Math.round(Dimensions.getWindowHeight() / 2.75f));
 
+    private final GUILogicImpl guiBody;
+
+    private final List<GUILogicImpl> guiList;
+
     /**
-     * 
+     * Initialize GUI data and logic.
      */
     public Introduction() {
-
-        this.instructions = new ArrayList<>();
-        this.instructions.add("JUMP ON SQUARES TO");
-        this.instructions.add("CHANGE THEM TO");
-        this.instructions.add("THE TARGET COLOR");
-
-        this.instructions.add("STAY ON PLAYFIELD!");
-        this.instructions.add("JUMPING OFF RESULTS");
-        this.instructions.add("IN A FATAL PLUMMET");
-
-        this.instructions.add("AVOID ALL OBJECTS");
-        this.instructions.add("AND CREATURES THAT");
-        this.instructions.add("ARE NOT GREEN");
-
-        this.instructions.add("JUMP ON SPINNING DISKS");
-        this.instructions.add("TO LURE SNAKE");
-        this.instructions.add("TO HIS DEATH");
-
-        this.instructionsIndex = 3;
-        this.step = 1;
+        this.instructionsIndex = Introduction.INSTRUCTIONSTEP - 1;
+        this.steps = 1;
 
         final PlayerGC graphics = new PlayerGCImpl(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
                 Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(QBERTPOSITION));
 
         this.qbert = new Qbert(Dimensions.getSpawningLogQBert(), SPEED, graphics);
+
+        final GUILogicImpl guiTitle;
+        final GUILogicImpl guiFoot;
+
+        guiTitle = new GUILogicImpl(TextSize.LARGE, TextPosition.TITLE);
+        guiTitle.addData("Q*bert");
+        guiTitle.setCentered(true);
+
+        this.guiBody = new GUILogicImpl(TextSize.SMALL, TextPosition.RIGHTSIDE);
+        this.guiBody.addData("JUMP ON SQUARES TO");
+        this.guiBody.addData("CHANGE THEM TO");
+        this.guiBody.addData("THE TARGET COLOR");
+        this.guiBody.addData("");
+        this.guiBody.addData("STAY ON PLAYFIELD!");
+
+        this.guiBody.addData("JUMPING OFF RESULTS");
+        this.guiBody.addData("IN A FATAL PLUMMET");
+        this.guiBody.addData("");
+        this.guiBody.addData("AVOID ALL OBJECTS");
+        this.guiBody.addData("AND CREATURES THAT");
+        this.guiBody.addData("ARE NOT GREEN");
+        this.guiBody.addData("");
+        this.guiBody.addData("JUMP ON SPINNING DISKS");
+        this.guiBody.addData("TO LURE SNAKE");
+        this.guiBody.addData("TO HIS DEATH");
+        this.guiBody.addData("");
+
+        this.guiBody.getSelected().addAll(IntStream.range(this.instructionsIndex, this.guiBody.getData().size()).mapToObj(i -> i).collect(Collectors.toSet()));
+
+        guiFoot = new GUILogicImpl(TextSize.SMALL, TextPosition.FOOT);
+        guiFoot.addData("Press Enter to continue...");
+        guiFoot.setCentered(true);
+
+        this.guiList = new ArrayList<>();
+        this.guiList.add(guiTitle);
+        this.guiList.add(this.guiBody);
+        this.guiList.add(guiFoot);
     }
 
     @Override
@@ -90,10 +115,11 @@ public class Introduction implements Model {
     @Override
     public final void confirm() {
         if (!this.qbert.isMoving()) {
-            if (this.step < Introduction.MAXSTEP) {
-                this.instructionsIndex += 3;
+            if (this.steps < Introduction.MAXSTEP) {
+                this.instructionsIndex += Introduction.INSTRUCTIONSTEP;
+                this.guiBody.getSelected().removeAll(IntStream.rangeClosed(0, instructionsIndex).mapToObj(i -> i).collect(Collectors.toSet()));
             }
-            this.step++;
+            this.steps++;
 
             this.qbert.setCurrentState(new MoveState.DownRight(this.qbert));
         }
@@ -108,38 +134,18 @@ public class Introduction implements Model {
         }
     }
 
-    /**
-     * @return the list of object renderables.
-     */
-    public List<Renderable> getRenderables() {
+    @Override
+    public final List<GUILogicImpl> getGUI() {
+        return Collections.unmodifiableList(guiList);
+    }
+
+    @Override
+    public final List<Renderable> getRenderables() {
         return Stream.of(this.qbert).collect(Collectors.toList());
     }
 
-    /**
-     * @return the current step.
-     */
-    public int getStep() {
-        return this.step;
-    }
-
-    /**
-     * @return the current index of instructions seen.
-     */
-    public int getInstructionsIndex() {
-        return this.instructionsIndex;
-    }
-
-    /**
-     * @return the list of instructions.
-     */
-    public List<String> getInstructions() {
-        return this.instructions;
-    }
-
-    /**
-     * @return true there's no more steps
-     */
-    public boolean hasReachedTheEnd() {
-        return this.step > Introduction.MAXSTEP;
+    @Override
+    public final boolean hasFinished() {
+        return this.steps > Introduction.MAXSTEP;
     }
 }

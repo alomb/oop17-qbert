@@ -68,7 +68,8 @@ public class Game implements Model {
         this.createNewLevel();
     }
 
-    public List<Renderable> getRenderables() {
+    @Override
+    public final List<Renderable> getRenderables() {
         return this.gameLevel.getRenderables();
     }
 
@@ -123,5 +124,17 @@ public class Game implements Model {
     @Override
     public void confirm() {
 
+    }
+
+    @Override
+    public final List<GUILogicImpl> getGUI() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public final boolean hasFinished() {
+        // TODO Auto-generated method stub
+        return false;
     }
 }
