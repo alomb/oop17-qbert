@@ -2,6 +2,7 @@ package qbert.launcher;
 
 import qbert.controller.Controller;
 import qbert.controller.ControllerImpl;
+import qbert.controller.GameStatus;
 import qbert.controller.LoadResources;
 
 /**
@@ -16,7 +17,7 @@ public final class QBertLauncher {
     public QBertLauncher() {
         LoadResources lr = new LoadResources();
         lr.load();
-        final Controller controller = new ControllerImpl();
+        final Controller controller = new ControllerImpl(GameStatus.INTRODUCTION);
         controller.setupGameEngine();
     }
 

@@ -1,8 +1,9 @@
-package qbert.view;
+package qbert.view.scenes;
 
 import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.util.Optional;
+
 
 import qbert.model.GUILogicImpl;
 import qbert.model.TextPosition;

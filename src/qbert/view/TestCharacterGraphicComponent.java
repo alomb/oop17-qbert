@@ -4,9 +4,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
-import qbert.controller.Controller;
-import qbert.controller.ControllerImpl;
-import qbert.model.Game;
+import qbert.controller.LoadResources;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.DisplaceAnimation;
@@ -39,8 +37,8 @@ public class TestCharacterGraphicComponent {
      * The constructor create a {@link Game} object to initialize some {@link Dimensions} used in {@link CharacterGC}.
      */
     public TestCharacterGraphicComponent() {
-        final Controller controller = new ControllerImpl();
-        new Game(controller);
+        final LoadResources loader = new LoadResources();
+        loader.load();
         this.rnd = new Random();
     }
 

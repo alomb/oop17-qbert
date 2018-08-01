@@ -1,4 +1,4 @@
-package qbert.view;
+package qbert.view.scenes;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -113,7 +113,7 @@ public abstract class SceneImpl extends JPanel implements Scene {
         if (this.sections.get(gui.getPosition()).isPresent()) {
             g.setFont(this.getFont(gui.getSize()));
 
-            final GUISectionImpl section = this.sections.get(gui.getPosition()).get();
+            final GUISection section = this.sections.get(gui.getPosition()).get();
 
             final int xOffset = section.getXOffset();
             final int yOffset =  section.getYOffset();

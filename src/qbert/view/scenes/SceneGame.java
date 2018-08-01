@@ -1,4 +1,4 @@
-package qbert.view;
+package qbert.view.scenes;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,7 +14,6 @@ import qbert.input.MoveDown;
 import qbert.input.MoveLeft;
 import qbert.input.MoveRight;
 import qbert.input.MoveUp;
-import qbert.model.Game;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Sprites;
 
@@ -25,18 +24,16 @@ public class SceneGame extends SceneImpl {
 
     private Font custom; 
     private final BufferedImage lifeSprite;
-    private final Game game;
+
     private final Controller controller;
 
     /**
-     * @param game the game logic
      * @param w the panel width
      * @param h the panel height
      * @param controller the game controller
      */
-    public SceneGame(final Game game, final int w, final int h, final Controller controller) {
+    public SceneGame(final int w, final int h, final Controller controller) {
         super(w, h);
-        this.game = game;
         this.controller = controller;
         this.setBackground(Color.black);
 
@@ -58,23 +55,24 @@ public class SceneGame extends SceneImpl {
 
     @Override
     public final void draw(final Graphics g) {
-        game.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex()).forEach(c -> {
+        this.controller.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex()).forEach(c -> {
             g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(), c.getGraphicComponent().getPosition().getY(), this);
         });
 
+        /*
         // Info rendering
         g.setColor(new Color(255, 255, 255));
         g.setFont(this.custom);
         g.drawString("Player:", 40, 40);
-        g.drawString("" + game.getPoints(), 40, 80);
+        g.drawString("" + this.controller.getModel().getPoints(), 40, 80);
 
         g.drawString("Level:", 1200, 300);
-        g.drawString("" + game.getLevelNumber(), 1400, 300);
+        g.drawString("" + this.controller.getModel().getLevelNumber(), 1400, 300);
 
         g.drawString("Round:", 1200, 330);
-        g.drawString("" + game.getRoundNumber(), 1400, 330);
+        g.drawString("" + this.controller.getModel().getRoundNumber(), 1400, 330);
 
-        for (int i = 0, posY = 0; i < game.getLives(); i++, posY += this.lifeSprite.getHeight() + 10) {
+        for (int i = 0, posY = 0; i < this.controller.getModel().getLives(); i++, posY += this.lifeSprite.getHeight() + 10) {
             g.drawImage(this.lifeSprite, 60, 190 + posY, this);
         }
 
@@ -87,7 +85,7 @@ public class SceneGame extends SceneImpl {
         g.drawString("L - Gain Life", unit * 2, unit * 20 + unit);
         g.drawString("D - Loose Life", unit * 2, unit * 20 + unit * 2);
         g.drawString("N - Go to next level", unit * 2, unit * 20 + unit * 6);
-        g.drawString("Q - Quit", unit * 2, unit * 20 + unit * 7);
+        g.drawString("Q - Quit", unit * 2, unit * 20 + unit * 7);*/
     }
 
     @Override

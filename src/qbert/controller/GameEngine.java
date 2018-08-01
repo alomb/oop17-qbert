@@ -8,7 +8,7 @@ import qbert.input.Command;
 import qbert.view.View;
 
 /**
- * The class containing the game loop and responsible of communications between {@link View} and {@link Model}.
+ * The class containing the game loop and responsible of communications between {@link ViewImpl} and {@link Model}.
  * It also provides a keyboard input management using Command pattern.
  */
 public class GameEngine implements Loop {
@@ -23,7 +23,7 @@ public class GameEngine implements Loop {
     private Optional<Command> currentCommand;
 
     /**
-     * @param scene the {@link View} to render
+     * @param scene the {@link ViewImpl} to render
      */
     public GameEngine(final View scene) {
         this.currentCommand = Optional.empty();

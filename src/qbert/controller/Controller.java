@@ -1,7 +1,11 @@
 package qbert.controller;
 
+import java.util.List;
+
 import qbert.input.Command;
+import qbert.model.GUILogicImpl;
 import qbert.model.LevelSettings;
+import qbert.view.Renderable;
 
 /**
  * The game controller.
@@ -26,7 +30,17 @@ public interface Controller {
     void notifyCommand(Command command);
 
     /**
-     * (temp) Change the current scene to another.
+     * @param newGameStatus the next {@link GameStatus}
      */
-    void changeScene();
+    void changeScene(GameStatus newGameStatus);
+
+    /**
+     * @return from the current model a list of GUI to be rendered
+     */
+    List<GUILogicImpl> getGUI();
+
+    /**
+     * @return from the current model a list of images to be rendered
+     */
+    List<Renderable> getRenderables();
 }

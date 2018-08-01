@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import qbert.controller.Controller;
+import qbert.controller.GameStatus;
 import qbert.model.characters.Player;
 import qbert.model.characters.Qbert;
 import qbert.model.states.LandState;
@@ -36,11 +38,13 @@ public class Introduction implements Model {
     private final GUILogicImpl guiBody;
 
     private final List<GUILogicImpl> guiList;
+    private final Controller controller;
 
     /**
      * Initialize GUI data and logic.
+     * @param controller the game controller.
      */
-    public Introduction() {
+    public Introduction(final Controller controller) {
         this.instructionsIndex = Introduction.INSTRUCTIONSTEP - 1;
         this.steps = 1;
 
@@ -85,6 +89,8 @@ public class Introduction implements Model {
         this.guiList.add(guiTitle);
         this.guiList.add(this.guiBody);
         this.guiList.add(guiFoot);
+
+        this.controller = controller;
     }
 
     @Override
@@ -132,6 +138,10 @@ public class Introduction implements Model {
         if (this.qbert.getCurrentState() instanceof LandState) {
             this.qbert.setCurrentState(this.qbert.getStandingState());
         }
+        
+        if (this.hasFinished()) {
+            this.controller.changeScene(GameStatus.GAMEPLAY); 
+        }
     }
 
     @Override
@@ -146,6 +156,6 @@ public class Introduction implements Model {
 
     @Override
     public final boolean hasFinished() {
-        return this.steps > Introduction.MAXSTEP;
+        return this.steps >= Introduction.MAXSTEP;
     }
 }
