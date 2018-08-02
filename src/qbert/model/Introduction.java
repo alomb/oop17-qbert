@@ -35,9 +35,9 @@ public class Introduction implements Model {
     private static final Position2D QBERTPOSITION = 
             new Position2D(Math.round(Dimensions.getWindowWidth() / 3f), Math.round(Dimensions.getWindowHeight() / 2.75f));
 
-    private final GUILogicImpl guiBody;
+    private final GUILogic guiBody;
 
-    private final List<GUILogicImpl> guiList;
+    private final List<GUILogic> guiList;
     private final Controller controller;
 
     /**
@@ -45,16 +45,13 @@ public class Introduction implements Model {
      * @param controller the game controller.
      */
     public Introduction(final Controller controller) {
-        this.instructionsIndex = Introduction.INSTRUCTIONSTEP - 1;
-        this.steps = 1;
-
         final PlayerGC graphics = new PlayerGCImpl(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
-                Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(QBERTPOSITION));
+                Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(new Position2D(Introduction.QBERTPOSITION)));
 
         this.qbert = new Qbert(Dimensions.getSpawningLogQBert(), SPEED, graphics);
 
-        final GUILogicImpl guiTitle;
-        final GUILogicImpl guiFoot;
+        final GUILogic guiTitle;
+        final GUILogic guiFoot;
 
         guiTitle = new GUILogicImpl(TextSize.LARGE, TextPosition.TITLE);
         guiTitle.addData("Q*bert");
@@ -79,8 +76,6 @@ public class Introduction implements Model {
         this.guiBody.addData("TO HIS DEATH");
         this.guiBody.addData("");
 
-        this.guiBody.getSelected().addAll(IntStream.range(this.instructionsIndex, this.guiBody.getData().size()).mapToObj(i -> i).collect(Collectors.toSet()));
-
         guiFoot = new GUILogicImpl(TextSize.SMALL, TextPosition.FOOT);
         guiFoot.addData("Press Enter to continue...");
         guiFoot.setCentered(true);
@@ -95,6 +90,13 @@ public class Introduction implements Model {
 
     @Override
     public final void initialize() {
+        this.instructionsIndex = Introduction.INSTRUCTIONSTEP - 1;
+        this.steps = 1;
+
+        this.guiBody.getSelected().addAll(IntStream.range(this.instructionsIndex, this.guiBody.getData().size()).mapToObj(i -> i).collect(Collectors.toSet()));
+
+        this.qbert.setCurrentPosition(new Position2D(new Position2D(Dimensions.getSpawningLogQBert())));
+        this.qbert.getGraphicComponent().setPosition(new Position2D(Introduction.QBERTPOSITION));
         this.qbert.setCurrentState(this.qbert.getStandingState());
     }
 
@@ -138,14 +140,14 @@ public class Introduction implements Model {
         if (this.qbert.getCurrentState() instanceof LandState) {
             this.qbert.setCurrentState(this.qbert.getStandingState());
         }
-        
+
         if (this.hasFinished()) {
             this.controller.changeScene(GameStatus.GAMEPLAY); 
         }
     }
 
     @Override
-    public final List<GUILogicImpl> getGUI() {
+    public final List<GUILogic> getGUI() {
         return Collections.unmodifiableList(guiList);
     }
 
@@ -156,6 +158,6 @@ public class Introduction implements Model {
 
     @Override
     public final boolean hasFinished() {
-        return this.steps >= Introduction.MAXSTEP;
+        return this.steps > Introduction.MAXSTEP;
     }
 }

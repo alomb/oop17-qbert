@@ -6,7 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class GUILogicImpl {
+/**
+ * The implementation of {@link GUILogic}.
+ */
+public class GUILogicImpl implements GUILogic {
 
     private final List<String> data;
     private final Set<Integer> selected;
@@ -15,6 +18,10 @@ public class GUILogicImpl {
     private final TextSize size;
     private final TextPosition position;
 
+    /**
+     * @param size the GUI {@link TextSize}
+     * @param position the GUI {@link TextPosition}
+     */
     public GUILogicImpl(final TextSize size, final TextPosition position) {
         this.data = new ArrayList<>();
         this.selected = new HashSet<>();
@@ -22,35 +29,48 @@ public class GUILogicImpl {
         this.position = position;
     }
 
-    public List<String> getData() {
+    @Override
+    public final List<String> getData() {
         return Collections.unmodifiableList(this.data);
     }
 
-    public void addData(final String line) {
+    @Override
+    public final void addData(final String line) {
         this.data.add(line);
     }
 
-    public void removeData(final String line) {
+    @Override
+    public final void removeData(final String line) {
         this.data.remove(line);
     }
 
-    public Set<Integer> getSelected() {
+    @Override
+    public final void removeAllData() {
+        this.data.clear();
+    }
+
+    @Override
+    public final Set<Integer> getSelected() {
         return this.selected;
     }
 
-    public boolean isCentered() {
+    @Override
+    public final boolean isCentered() {
         return this.centered;
     }
 
-    public void setCentered(final boolean centered) {
+    @Override
+    public final void setCentered(final boolean centered) {
         this.centered = centered;
     }
 
-    public TextSize getSize() {
+    @Override
+    public final TextSize getSize() {
         return this.size;
     }
 
-    public TextPosition getPosition() {
+    @Override
+    public final TextPosition getPosition() {
         return this.position;
     }
 }

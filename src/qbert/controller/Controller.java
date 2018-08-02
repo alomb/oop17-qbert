@@ -3,7 +3,7 @@ package qbert.controller;
 import java.util.List;
 
 import qbert.input.Command;
-import qbert.model.GUILogicImpl;
+import qbert.model.GUILogic;
 import qbert.model.LevelSettings;
 import qbert.view.Renderable;
 
@@ -37,7 +37,7 @@ public interface Controller {
     /**
      * @return from the current model a list of GUI to be rendered
      */
-    List<GUILogicImpl> getGUI();
+    List<GUILogic> getGUI();
 
     /**
      * @return from the current model a list of images to be rendered

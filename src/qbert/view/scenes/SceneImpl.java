@@ -16,7 +16,7 @@ import java.util.Optional;
 
 import javax.swing.JPanel;
 
-import qbert.model.GUILogicImpl;
+import qbert.model.GUILogic;
 import qbert.model.TextPosition;
 import qbert.model.TextSize;
 import qbert.model.utilities.Dimensions;
@@ -109,7 +109,7 @@ public abstract class SceneImpl extends JPanel implements Scene {
     }
 
     @Override
-    public final void drawString(final Graphics g, final GUILogicImpl gui) {
+    public final void drawString(final Graphics g, final GUILogic gui) {
         if (this.sections.get(gui.getPosition()).isPresent()) {
             g.setFont(this.getFont(gui.getSize()));
 

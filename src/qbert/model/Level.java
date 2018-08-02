@@ -2,6 +2,7 @@ package qbert.model;
 
 import java.awt.image.BufferedImage;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,6 +22,7 @@ import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.GenericGC;
 import qbert.view.GraphicComponent;
+import qbert.view.GraphicComponentImpl;
 import qbert.view.Renderable;
 import qbert.view.RenderableObject;
 
@@ -126,7 +128,7 @@ public final class Level {
     }
 
     public List<Renderable> getRenderables() {
-        return Stream.concat(Stream.of(this.background), Stream.concat(Stream.concat(map.getTileList().stream(), map.getDiskList().stream()), Stream.concat(Stream.of(this.qbert), this.spawner.getGameCharacters().stream()))).collect(Collectors.toList());
+        return Stream.concat(Stream.concat(Stream.of(this.getTargetColor()), Stream.of(this.background)), Stream.concat(Stream.concat(map.getTileList().stream(), map.getDiskList().stream()), Stream.concat(Stream.of(this.qbert), this.spawner.getGameCharacters().stream()))).collect(Collectors.toList());
     }
 
     public void update(final float elapsed) {
@@ -136,13 +138,9 @@ public final class Level {
 
         if (this.waitTimer <= 0) {
             if (this.timerCallback) {
-                if (this.lives > 1) {
-                    this.lives--;
-                    spawner.respawnQbert();
-                    this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
-                } else {
-                    System.exit(0);
-                }
+                this.lives--;
+                spawner.respawnQbert();
+                this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
                 this.timerCallback = false;
             }
 
@@ -175,6 +173,18 @@ public final class Level {
         } else {
             this.waitTimer -= elapsed;
         }
+    }
+
+    private Renderable getTargetColor() {
+        final Optional<Integer> i = settings.getColorMap().keySet().stream().collect(Collectors.toList()).stream().max((o1, o2) -> o1.compareTo(o2));
+        System.out.println(settings.getColorMap().keySet());
+        if (i.isPresent()) {
+            final GraphicComponent gc = new GraphicComponentImpl(settings.getColorMap().get(i.get()), new Position2D(Math.round(Dimensions.getWindowWidth() / 9f), Math.round(Dimensions.getWindowHeight() / 4f)));
+            final Renderable ro = new RenderableObject(gc);
+            return ro;
+        }
+
+        return null;
     }
 
     //Debug options

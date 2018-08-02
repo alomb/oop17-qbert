@@ -1,8 +1,10 @@
 package qbert.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import qbert.controller.Controller;
+import qbert.controller.GameStatus;
 import qbert.model.characters.Player;
 import qbert.model.states.MoveState;
 import qbert.view.Renderable;
@@ -23,39 +25,49 @@ public class Game implements Model {
     private int lives;
     private int score;
 
+    private final GUILogic levelAndRound;
+    private final GUILogic scoreAndLives;
+    private final List<GUILogic> gui;
+
+    /**
+     * @param controller the application controller
+     */
     public Game(final Controller controller) {
         this.controller = controller;
-        this.levelNumber = 1;
-        this.roundNumber = 1;
-        this.lives = 3;
-        this.score = 0;
+        this.gui = new ArrayList<>();
+        this.levelAndRound = new GUILogicImpl(TextSize.SMALL, TextPosition.RIGHTSIDE);
+        this.scoreAndLives = new GUILogicImpl(TextSize.SMALL, TextPosition.LEFTSIDE);
+        this.gui.add(this.levelAndRound);
+        this.gui.add(this.scoreAndLives);
     }
 
     @Override
     public final void initialize() {
-        createNewLevel();
-        this.gameLevel.addObserver(this);
-    }
+        this.levelNumber = 1;
+        this.roundNumber = 1;
+        this.lives = 3;
+        this.score = 0;
 
-    public Level getLevel() {
-        return gameLevel;
+        this.createNewLevel();
+        this.updateScoreAndLives();
+        this.gameLevel.addObserver(this);
     }
 
     @Override
     public final void update(final float elapsed) {
-        gameLevel.update(elapsed);
-    }
+        this.gameLevel.update(elapsed);
 
-    public final void createNewLevel() {
-        final LevelSettings ls = controller.getLevelSettings(levelNumber, roundNumber);
-        this.gameLevel = new Level(ls, lives, score);
-        this.gameLevel.addObserver(this);
-    }
+        this.updateScoreAndLives();
 
-    public void changeRound() {
-        if (levelNumber == LEVELSNUMBER && roundNumber == ROUNDSNUMBER) {
-            System.exit(0);
+        if (this.hasFinished()) {
+            this.controller.changeScene(GameStatus.INTRODUCTION);
         }
+    }
+
+    /**
+     * The method used by the current {@link Level} to advise that must be instantiated a new level.
+     */
+    public final void changeRound() {
         if (this.roundNumber >= ROUNDSNUMBER) {
             this.roundNumber = 1;
             this.levelNumber++;
@@ -63,8 +75,6 @@ public class Game implements Model {
             this.roundNumber++;
         }
 
-        this.lives = gameLevel.getLives();
-        this.score = gameLevel.getPoints();
         this.createNewLevel();
     }
 
@@ -73,25 +83,14 @@ public class Game implements Model {
         return this.gameLevel.getRenderables();
     }
 
-    public int getPoints() {
-        return this.gameLevel.getPoints();
-    }
-
-    public int getLevelNumber() {
-        return this.levelNumber;
-    }
-
-    public int getRoundNumber() {
-        return this.roundNumber;
-    }
-
-    public int getLives() {
-        return this.gameLevel.getLives();
+    @Override
+    public final List<GUILogic> getGUI() {
+        return this.gui;
     }
 
     @Override
     public final void moveDown() {
-        final Player qbert = this.getLevel().getQBert();
+        final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
             qbert.setCurrentState(new MoveState.DownLeft(qbert));
         }
@@ -99,7 +98,7 @@ public class Game implements Model {
 
     @Override
     public final void moveLeft() {
-        final Player qbert = this.getLevel().getQBert();
+        final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
             qbert.setCurrentState(new MoveState.UpLeft(qbert));
         }
@@ -107,7 +106,7 @@ public class Game implements Model {
 
     @Override
     public final void moveRight() {
-        final Player qbert = this.getLevel().getQBert();
+        final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
             qbert.setCurrentState(new MoveState.DownRight(qbert));
         }
@@ -115,26 +114,45 @@ public class Game implements Model {
 
     @Override
     public final void moveUp() {
-        final Player qbert = this.getLevel().getQBert();
+        final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
             qbert.setCurrentState(new MoveState.UpRight(qbert));
         }
     }
 
     @Override
-    public void confirm() {
-
-    }
-
-    @Override
-    public final List<GUILogicImpl> getGUI() {
-        // TODO Auto-generated method stub
-        return null;
+    public final void confirm() {
+        this.changeRound();
     }
 
     @Override
     public final boolean hasFinished() {
-        // TODO Auto-generated method stub
-        return false;
+        return this.lives <= 0 || (levelNumber == LEVELSNUMBER && roundNumber == ROUNDSNUMBER);
+    }
+
+    /**
+     * A method used to create and initialize a new level. It also updates the GUI.
+     */
+    private void createNewLevel() {
+        this.levelAndRound.removeAllData();
+        this.levelAndRound.addData("LEVEL: " + this.levelNumber);
+        this.levelAndRound.addData("ROUND: " + this.roundNumber);
+
+        final LevelSettings ls = controller.getLevelSettings(this.levelNumber, this.roundNumber);
+        this.gameLevel = new Level(ls, lives, score);
+        this.gameLevel.addObserver(this);
+    }
+
+    /**
+     * A method used to update local variables (and GUI) from level changes.
+     */
+    private void updateScoreAndLives() {
+        this.score = this.gameLevel.getPoints();
+        this.lives = this.gameLevel.getLives();
+
+        this.scoreAndLives.removeAllData();
+        this.scoreAndLives.addData("SCORE: " + this.score);
+        this.scoreAndLives.addData("LIVES: " + this.lives);
+        this.scoreAndLives.addData("CHANGE COLOR TO:");
     }
 }

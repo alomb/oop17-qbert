@@ -48,7 +48,7 @@ public interface Model {
     /**
      * @return a list of GUI to be rendered
      */
-    List<GUILogicImpl> getGUI();
+    List<GUILogic> getGUI();
 
     /**
      * @return a list of images to be rendered

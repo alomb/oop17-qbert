@@ -5,7 +5,7 @@ import java.util.List;
 import org.jdom2.JDOMException;
 
 import qbert.input.Command;
-import qbert.model.GUILogicImpl;
+import qbert.model.GUILogic;
 import qbert.model.LevelSettings;
 import qbert.view.Renderable;
 import qbert.view.View;
@@ -63,7 +63,7 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public final List<GUILogicImpl> getGUI() {
+    public final List<GUILogic> getGUI() {
         return this.statusManager.getModel().getGUI();
     }
 
