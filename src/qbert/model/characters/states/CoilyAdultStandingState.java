@@ -1,4 +1,4 @@
-package qbert.model.states;
+package qbert.model.characters.states;
 
 import qbert.model.characters.Snake;
 import qbert.model.characters.Player;

@@ -2,9 +2,9 @@ package qbert.model.characters;
 
 import qbert.model.Collidable;
 import qbert.model.GameObject;
+import qbert.model.characters.states.CharacterState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
-import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
 import qbert.view.Renderable;
 import qbert.view.characters.CharacterGC;

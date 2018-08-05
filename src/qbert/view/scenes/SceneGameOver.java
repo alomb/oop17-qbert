@@ -10,7 +10,6 @@ import javax.swing.JTextField;
 import qbert.controller.Controller;
 import qbert.controller.input.Confirm;
 import qbert.model.models.TextPosition;
-import qbert.model.models.TextSize;
 import qbert.model.utilities.Dimensions;
 
 /**
@@ -45,9 +44,10 @@ public class SceneGameOver extends SceneImpl {
                 new GUISectionImpl(this.green, Optional.of(this.red), 0, Math.round(Dimensions.getWindowHeight() / 8.5f), true, TextSize.SMALL));
         this.addSection(TextPosition.FOOT, 
                 new GUISectionImpl(this.green, Optional.empty(), 0, Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.SMALL));
-        
+
         this.add(text);
-        
+        this.setVisible(true);
+
     }
 
     @Override

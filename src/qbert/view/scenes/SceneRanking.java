@@ -8,7 +8,6 @@ import java.util.Optional;
 import qbert.controller.Controller;
 import qbert.controller.input.Confirm;
 import qbert.model.models.TextPosition;
-import qbert.model.models.TextSize;
 import qbert.model.utilities.Dimensions;
 
 /**

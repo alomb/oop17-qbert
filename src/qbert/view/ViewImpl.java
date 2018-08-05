@@ -26,16 +26,17 @@ import qbert.view.scenes.SceneRanking;
  */
 public class ViewImpl implements View {
 
+    private final JFrame frame;
     private final JPanel fixedPanel;
     private Scene scene;
-    private final Map<String, Scene> scenes;
+    private final Map<GameStatus, Scene> scenes;
 
     /**
      * @param controller the game controller.
      */
     public ViewImpl(final Controller controller) {
         final int w = Dimensions.getWindowWidth(), h = Dimensions.getWindowHeight();
-        final JFrame frame = new JFrame("Qbert");
+        this.frame = new JFrame("Qbert");
         fixedPanel = new JPanel(new CardLayout());
         frame.getContentPane().add(this.fixedPanel);
         frame.setSize(w, h);
@@ -44,10 +45,10 @@ public class ViewImpl implements View {
 
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(final WindowEvent ev) {
-                System.exit(-1);
+                controller.terminate();
             }
             public void windowClosed(final WindowEvent ev) {
-                System.exit(-1);
+                controller.terminate();
             }
         });
 
@@ -56,11 +57,15 @@ public class ViewImpl implements View {
 
         this.scenes = new HashMap<>();
 
-        this.addScene(new SceneIntro(w, h, controller), GameStatus.INTRODUCTION.name());
-        this.addScene(new SceneMenu(w, h, controller), GameStatus.MENU.name());
-        this.addScene(new SceneGame(w, h, controller), GameStatus.GAMEPLAY.name());
-        this.addScene(new SceneRanking(w, h, controller), GameStatus.RANKING.name());
-        this.addScene(new SceneRanking(w, h, controller), GameStatus.GAMEOVER.name());
+        this.addScene(new SceneIntro(w, h, controller), GameStatus.INTRODUCTION);
+        this.addScene(new SceneMenu(w, h, controller), GameStatus.MENU);
+        this.addScene(new SceneGame(w, h, controller), GameStatus.GAMEPLAY);
+        this.addScene(new SceneRanking(w, h, controller), GameStatus.RANKING);
+        this.addScene(new SceneRanking(w, h, controller), GameStatus.GAMEOVER);
+
+        if (!this.scenes.keySet().equals(GameStatus.getAll())) {
+            throw new UnsupportedOperationException();
+        }
     }
 
     @Override
@@ -77,20 +82,25 @@ public class ViewImpl implements View {
     }
 
     @Override
-    public final void addScene(final Scene scene, final String sceneName) {
-        this.fixedPanel.add((Component) scene, sceneName);
-        this.scenes.put(sceneName, scene);
+    public final void addScene(final Scene scene, final GameStatus status) {
+        this.fixedPanel.add((Component) scene, status.name());
+        this.scenes.put(status, scene);
     }
 
     @Override
-    public final void setScene(final String sceneName) {
-        ((CardLayout) this.fixedPanel.getLayout()).show(this.fixedPanel, sceneName);
-        this.scene = this.scenes.get(sceneName);
+    public final void setScene(final GameStatus status) {
+        ((CardLayout) this.fixedPanel.getLayout()).show(this.fixedPanel, status.name());
+        this.scene = this.scenes.get(status);
         this.scene.focus();
     }
 
     @Override
     public final Scene getScene() {
         return this.scene;
+    }
+
+    @Override
+    public final void closeWindow() {
+        this.frame.dispose();
     }
 }

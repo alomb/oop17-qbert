@@ -1,46 +1,28 @@
 package qbert.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import qbert.model.models.Game;
-import qbert.model.models.GameOver;
-import qbert.model.models.Introduction;
-import qbert.model.models.Menu;
 import qbert.model.models.Model;
-import qbert.model.models.Ranking;
 
-public class GameStatusManager {
+/**
+ * The responsible of {@link GameStatus} management and {@link Model} replacement.
+ * {@link Model}s are instantiated immediately and associated to a specific and
+ * unique {@link GameStatus}, changing the current {@link GameStatus} its possible to
+ * retrieve the relative {@link Model}.
+ */
+public interface GameStatusManager {
 
-    private final Map<GameStatus, Model> models;
-    private GameStatus currentGameStatus;
+    /**
+     * @return the current {@link GameStatus} associated {@link Model}
+     */
+    Model getModel();
 
-    public GameStatusManager(final GameStatus firstGameStatus, final Controller controller) {
-        this.models = new HashMap<>();
+    /**
+     * @return the current {@link GameStatus}
+     */
+    GameStatus getCurrentStatus();
 
-        this.models.put(GameStatus.INTRODUCTION, new Introduction(controller));
-        this.models.put(GameStatus.MENU, new Menu(controller));
-        this.models.put(GameStatus.RANKING, new Ranking(controller));
-        this.models.put(GameStatus.GAMEPLAY, new Game(controller));
-        this.models.put(GameStatus.GAMEOVER, new GameOver(controller));
-            
-        if (!this.models.keySet().equals(GameStatus.getAll())) {
-            throw new UnsupportedOperationException();
-        }
+    /**
+     * @param newGameStatus the new {@link GameStatus}
+     */
+    void setCurrentStatus(GameStatus newGameStatus);
 
-        this.currentGameStatus = firstGameStatus;
-    }
-
-    public final Model getModel() {
-        return this.models.get(this.currentGameStatus);
-    }
-
-    public final GameStatus getCurrentStatus() {
-        return this.currentGameStatus;
-    }
-
-    public final void setCurrentStatus(final GameStatus newGameStatus) {
-        this.currentGameStatus = newGameStatus;
-        this.getModel().initialize();
-    }
 }

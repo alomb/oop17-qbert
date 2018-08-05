@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import qbert.model.characters.Player;
-import qbert.model.states.QbertOnDiskState;
+import qbert.model.characters.states.QbertOnDiskState;
 import qbert.model.Disk;
 import qbert.model.DiskImpl;
 import qbert.model.LevelSettings;

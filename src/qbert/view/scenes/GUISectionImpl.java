@@ -3,8 +3,6 @@ package qbert.view.scenes;
 import java.awt.Color;
 import java.util.Optional;
 
-import qbert.model.models.TextSize;
-
 /**
  * The implementation of {@link GUISection}.
  */

@@ -1,10 +1,10 @@
 package qbert.model.characters;
 
 import qbert.controller.Sounds;
+import qbert.model.characters.states.CharacterState;
+import qbert.model.characters.states.QbertStandingState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
-import qbert.model.states.CharacterState;
-import qbert.model.states.QbertStandingState;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.DownUpwardCharacterGC;
 import qbert.view.characters.PlayerGC;

@@ -8,7 +8,7 @@ import qbert.controller.GameStatus;
 import qbert.model.Level;
 import qbert.model.LevelSettings;
 import qbert.model.characters.Player;
-import qbert.model.states.MoveState;
+import qbert.model.characters.states.MoveState;
 import qbert.view.Renderable;
 
 /**
@@ -158,6 +158,4 @@ public class Game implements Model {
         this.scoreAndLives.addData("LIVES: " + this.lives);
         this.scoreAndLives.addData("CHANGE COLOR TO:");
     }
-    
-    
 }

@@ -1,8 +1,8 @@
 package qbert.model.characters;
 
+import qbert.model.characters.states.DeathState;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
-import qbert.model.states.DeathState;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CharacterGC;
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import qbert.model.characters.Character;
 import qbert.model.characters.Player;
-import qbert.model.states.SpawnState;
+import qbert.model.characters.states.SpawnState;
 import qbert.model.utilities.Position2D;
 
 /**

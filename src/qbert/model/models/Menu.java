@@ -55,7 +55,7 @@ public class Menu implements Model {
 
     @Override
     public final void initialize() {
-        this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index+1).mapToObj(i -> i).collect(Collectors.toSet()));
+        this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
     }
 
     @Override
@@ -92,10 +92,9 @@ public class Menu implements Model {
             this.controller.changeScene(GameStatus.GAMEPLAY); 
         } else if (Menu.index == Menu.RANKING) {
             this.controller.changeScene(GameStatus.RANKING); 
-        }else if (Menu.index == Menu.EXIT) {
-            System.exit(0);
+        } else if (Menu.index == Menu.EXIT) {
+            this.controller.terminate();
         }
-        
     }
 
     @Override

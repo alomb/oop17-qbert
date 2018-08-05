@@ -1,8 +1,8 @@
 package qbert.model.characters;
 
-import qbert.model.states.CharacterState;
-import qbert.model.states.DownwardCharStandingState;
-import qbert.model.states.SpawnState;
+import qbert.model.characters.states.CharacterState;
+import qbert.model.characters.states.DownwardCharStandingState;
+import qbert.model.characters.states.SpawnState;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CharacterGC;
 

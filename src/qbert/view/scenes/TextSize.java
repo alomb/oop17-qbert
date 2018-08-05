@@ -1,4 +1,4 @@
-package qbert.model.models;
+package qbert.view.scenes;
 
 /**
  * The model abstraction of GUI text dimensions (between lines and text's).

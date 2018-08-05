@@ -1,14 +1,14 @@
 package qbert.model.characters;
 
 import qbert.controller.Sounds;
+import qbert.model.characters.states.CharacterState;
+import qbert.model.characters.states.CoilyAdultStandingState;
+import qbert.model.characters.states.CoilyBallStandingState;
+import qbert.model.characters.states.FallState;
+import qbert.model.characters.states.SpawnState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
-import qbert.model.states.CharacterState;
-import qbert.model.states.CoilyAdultStandingState;
-import qbert.model.states.CoilyBallStandingState;
-import qbert.model.states.FallState;
-import qbert.model.states.SpawnState;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CoilyGC;
 import qbert.view.characters.DownUpwardCharacterGC;

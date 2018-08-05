@@ -34,8 +34,8 @@ public class ControllerImpl implements Controller {
     private LevelConfigurationReader lcr;
     private final GameEngine gameEngine;
     private final GameStatusManager statusManager;
-    
-    private BlockingQueue gamePoint = new ArrayBlockingQueue<>(1);
+
+    private final BlockingQueue<Integer> gamePoint = new ArrayBlockingQueue<>(1);
 
     private final View view;
 
@@ -44,7 +44,7 @@ public class ControllerImpl implements Controller {
      */
     public ControllerImpl(final GameStatus firstGameStatus) {
         this.lcr = new LevelConfigurationReaderImpl();
-        this.statusManager = new GameStatusManager(firstGameStatus, this);
+        this.statusManager = new GameStatusManagerImpl(firstGameStatus, this);
 
         this.view = new ViewImpl(this);
         this.gameEngine = new GameEngine(this.view);
@@ -75,7 +75,7 @@ public class ControllerImpl implements Controller {
     @Override
     public final void changeScene(final GameStatus newGameStatus) {
         this.statusManager.setCurrentStatus(newGameStatus);
-        this.view.setScene(this.statusManager.getCurrentStatus().name());
+        this.view.setScene(this.statusManager.getCurrentStatus());
         this.gameEngine.setup(this.statusManager.getModel());
     }
 
@@ -88,24 +88,27 @@ public class ControllerImpl implements Controller {
     public final List<Renderable> getRenderables() {
         return this.statusManager.getModel().getRenderables();
     }
-    
-    public void setScore(Integer i) {
-        gamePoint.clear();
-        gamePoint.add(i);
+
+    @Override
+    public final void setScore(final Integer value) {
+        this.gamePoint.clear();
+        this.gamePoint.add(value);
     }
-    
-    public Integer getScore() {
-        return (Integer)gamePoint.poll();
+
+    @Override
+    public final Integer getScore() {
+        return this.gamePoint.poll();
     }
-    
-    public List<Map<String,Integer>> getRank() {
-        List<Map<String,Integer>> rank = new ArrayList<Map<String,Integer>>();
+
+    @Override
+    public final List<Map<String, Integer>> getRank() {
+        List<Map<String, Integer>> rank = new ArrayList<Map<String, Integer>>();
         //Read file
         try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
             String line;
             while ((line = br.readLine()) != null) {
                 Map<String, Integer> mapTmp = new TreeMap<String, Integer>();
-                mapTmp.put(line.split(":")[0],Integer.parseInt(line.split(":")[1]));
+                mapTmp.put(line.split(":")[0], Integer.parseInt(line.split(":")[1]));
                 rank.add(mapTmp);
             }
         } catch (FileNotFoundException e) {
@@ -115,7 +118,7 @@ public class ControllerImpl implements Controller {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         //Order list 
         Collections.sort(rank, new Comparator<Map<String, Integer>>() {
             @Override
@@ -131,19 +134,26 @@ public class ControllerImpl implements Controller {
                 return val2.compareTo(val1);
             }
         });
-        
+
         return rank;
     }
-    
-    public void addRank(String s, Integer i) {
+
+    @Override
+    public final void addRank(final String s, final Integer i) {
         Writer output;
         try {
             output = new BufferedWriter(new FileWriter(urlFile, true));
-            output.append("\r\n"+s+":"+i);
+            output.append("\r\n" + s + ":" + i);
             output.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public final void terminate() {
+        this.view.closeWindow();
+        this.gameEngine.stop();
     }
 }
