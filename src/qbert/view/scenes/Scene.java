@@ -31,7 +31,7 @@ public interface Scene extends KeyListener {
      * @param g the {@link Graphics} for the scene
      * @param gui the GUI to draw
      */
-    void drawString(Graphics g, GUILogic gui);
+    void drawGUI(Graphics g, GUILogic gui);
 
     /**
      * @param position the {@link TextPosition} an index of the map ({@link TextPosition}, {@link Optional}<{@link GUISectionImpl}>)

@@ -109,43 +109,28 @@ public abstract class SceneImpl extends JPanel implements Scene {
     }
 
     @Override
-    public final void drawString(final Graphics g, final GUILogic gui) {
+    public final void drawGUI(final Graphics g, final GUILogic gui) {
         if (this.sections.get(gui.getPosition()).isPresent()) {
             g.setFont(this.getFont(gui.getSize()));
 
             final GUISection section = this.sections.get(gui.getPosition()).get();
-
-            final int xOffset = section.getXOffset();
-            final int yOffset =  section.getYOffset();
 
             final Color color = section.getColor();
             final Optional<Color> selectedColor = section.getSelectedColor().isPresent()
                             ? Optional.of(this.getSection(gui.getPosition()).get().getSelectedColor().get()) : Optional.empty();
 
             g.setColor(color);
-
             for (int i = 0; i < gui.getData().size(); i++) {
                 if (!gui.getSelected().contains(i)) {
-                    if (gui.isCentered()) {
-                        this.drawCenteredString(g, gui.getData().get(i), 
-                                new Position2D(xOffset, yOffset + g.getFont().getSize() * i * 2), g.getFont());
-                    } else {
-                        g.drawString(gui.getData().get(i), xOffset, yOffset + g.getFont().getSize() * i * 2);
-                    }
+                    this.drawLine(g, gui, section, i);
                 }
             }
 
             if (selectedColor.isPresent()) {
                 g.setColor(selectedColor.get());
-
                 for (int i = 0; i < gui.getData().size(); i++) {
                     if (gui.getSelected().contains(i)) {
-                        if (gui.isCentered()) {
-                            this.drawCenteredString(g, gui.getData().get(i), 
-                                    new Position2D(xOffset, yOffset + g.getFont().getSize() * i * 2), g.getFont());
-                        } else {
-                            g.drawString(gui.getData().get(i), xOffset, yOffset + g.getFont().getSize() * i * 2);
-                        }
+                        this.drawLine(g, gui, section, i);
                     }
                 }
             }
@@ -165,6 +150,10 @@ public abstract class SceneImpl extends JPanel implements Scene {
         this.sections.put(position, Optional.of(section));
     }
 
+    /**
+     * @param size the {@link TextSize} the size label
+     * @return the size in pixel
+     */
     private Font getFont(final TextSize size) {
         switch (size) {
             case SMALL:
@@ -175,6 +164,24 @@ public abstract class SceneImpl extends JPanel implements Scene {
                 return this.largeFont;
             default:
                 return this.smallFont;
+        }
+    }
+
+    /**
+     * @param g the {@link Graphics} used
+     * @param gui the {@link GUILogic} containing the data
+     * @param section the {@link GUISection} containing the style
+     * @param index the line index
+     */
+    private void drawLine(final Graphics g, final GUILogic gui, final GUISection section, final int index) {
+        final int xOffset = section.getXOffset();
+        final int yOffset =  section.getYOffset();
+
+        if (gui.isCentered()) {
+            this.drawCenteredString(g, gui.getData().get(index), 
+                    new Position2D(xOffset, yOffset + g.getFont().getSize() * index * 2), g.getFont());
+        } else {
+            g.drawString(gui.getData().get(index), xOffset, yOffset + g.getFont().getSize() * index * 2);
         }
     }
 }

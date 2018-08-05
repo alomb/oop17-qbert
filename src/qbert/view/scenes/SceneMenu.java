@@ -39,7 +39,7 @@ public class SceneMenu extends SceneImpl {
         this.controller = controller;
 
         this.addSection(TextPosition.TITLE, new GUISectionImpl(this.yellow, Optional.empty(), 0, -Math.round(Dimensions.getWindowHeight() / 2.5f)));
-        this.addSection(TextPosition.CENTER, new GUISectionImpl(this.green, Optional.of(this.red) , 0, Math.round(Dimensions.getWindowHeight() / 8.5f)));
+        this.addSection(TextPosition.CENTER, new GUISectionImpl(this.green, Optional.of(this.red), 0, Math.round(Dimensions.getWindowHeight() / 8.5f)));
         this.addSection(TextPosition.FOOT, new GUISectionImpl(this.green, Optional.empty(), 0, Math.round(Dimensions.getWindowHeight() / 2.5f)));
     }
 
@@ -50,7 +50,7 @@ public class SceneMenu extends SceneImpl {
                     c.getGraphicComponent().getPosition().getY(), this);
         });
 
-        this.controller.getGUI().forEach(gui -> this.drawString(g, gui));
+        this.controller.getGUI().forEach(gui -> this.drawGUI(g, gui));
     }
 
     @Override

@@ -44,7 +44,7 @@ public class SceneGame extends SceneImpl {
             g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(), c.getGraphicComponent().getPosition().getY(), this);
         });
 
-        this.controller.getGUI().forEach(gui -> this.drawString(g, gui));
+        this.controller.getGUI().forEach(gui -> this.drawGUI(g, gui));
     }
 
     @Override
