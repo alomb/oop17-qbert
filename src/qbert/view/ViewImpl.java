@@ -18,6 +18,7 @@ import qbert.model.utilities.Dimensions;
 import qbert.view.scenes.Scene;
 import qbert.view.scenes.SceneGame;
 import qbert.view.scenes.SceneIntro;
+import qbert.view.scenes.SceneMenu;
 
 /**
  * The implementation of {@link View}.
@@ -55,7 +56,9 @@ public class ViewImpl implements View {
         this.scenes = new HashMap<>();
 
         this.addScene(new SceneIntro(w, h, controller), GameStatus.INTRODUCTION.name());
+        this.addScene(new SceneMenu(w, h, controller), GameStatus.MENU.name());
         this.addScene(new SceneGame(w, h, controller), GameStatus.GAMEPLAY.name());
+
     }
 
     @Override

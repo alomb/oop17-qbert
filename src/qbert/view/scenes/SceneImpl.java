@@ -128,7 +128,7 @@ public abstract class SceneImpl extends JPanel implements Scene {
                 if (!gui.getSelected().contains(i)) {
                     if (gui.isCentered()) {
                         this.drawCenteredString(g, gui.getData().get(i), 
-                                new Position2D(xOffset, yOffset), g.getFont());
+                                new Position2D(xOffset, yOffset+ g.getFont().getSize()*i*2), g.getFont());
                     } else {
                         g.drawString(gui.getData().get(i), xOffset, yOffset + g.getFont().getSize() * i * 2);
                     }
@@ -142,7 +142,7 @@ public abstract class SceneImpl extends JPanel implements Scene {
                     if (gui.getSelected().contains(i)) {
                         if (gui.isCentered()) {
                             this.drawCenteredString(g, gui.getData().get(i), 
-                                    new Position2D(xOffset, yOffset), g.getFont());
+                                    new Position2D(xOffset, yOffset + g.getFont().getSize()*i*2), g.getFont());
                         } else {
                             g.drawString(gui.getData().get(i), xOffset, yOffset + g.getFont().getSize() * i * 2);
                         }

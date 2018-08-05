@@ -5,6 +5,7 @@ import java.util.Map;
 
 import qbert.model.Game;
 import qbert.model.Introduction;
+import qbert.model.Menu;
 import qbert.model.Model;
 
 public class GameStatusManager {
@@ -16,6 +17,7 @@ public class GameStatusManager {
         this.models = new HashMap<>();
 
         this.models.put(GameStatus.INTRODUCTION, new Introduction(controller));
+        this.models.put(GameStatus.MENU, new Menu(controller));
         this.models.put(GameStatus.GAMEPLAY, new Game(controller));
 
         if (!this.models.keySet().equals(GameStatus.getAll())) {

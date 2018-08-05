@@ -142,7 +142,7 @@ public class Introduction implements Model {
         }
 
         if (this.hasFinished()) {
-            this.controller.changeScene(GameStatus.GAMEPLAY); 
+            this.controller.changeScene(GameStatus.MENU); 
         }
     }
 
