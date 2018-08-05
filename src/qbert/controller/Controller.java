@@ -58,7 +58,7 @@ public interface Controller {
     /**
      * @return from the current ranking
      */
-    List<Map<String,Integer>> getRank();
+    Map<String,Integer> getRank();
     
     /**
      * @return from the current ranking

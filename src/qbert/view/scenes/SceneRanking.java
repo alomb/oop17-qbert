@@ -40,7 +40,7 @@ public class SceneRanking extends SceneImpl {
         this.addSection(TextPosition.TITLE, 
                 new GUISectionImpl(this.yellow, Optional.empty(), 0, -Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.LARGE));
         this.addSection(TextPosition.CENTER, 
-                new GUISectionImpl(this.green, Optional.of(this.red), 0, Math.round(Dimensions.getWindowHeight() / 8.5f), true, TextSize.SMALL));
+                new GUISectionImpl(this.green, Optional.of(this.red), 0, Math.round(Dimensions.getWindowHeight() / 50.5f), true, TextSize.SMALL));
         this.addSection(TextPosition.FOOT, 
                 new GUISectionImpl(this.green, Optional.empty(), 0, Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.SMALL));
     }

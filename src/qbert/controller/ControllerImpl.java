@@ -7,11 +7,19 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.TreeMap;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -30,7 +38,7 @@ import qbert.view.ViewImpl;
  */
 public class ControllerImpl implements Controller {
 
-    private final String urlFile = "res/ranking.txt";
+    private final String urlFile = "ranking.txt";
     private LevelConfigurationReader lcr;
     private final GameEngine gameEngine;
     private final GameStatusManager statusManager;
@@ -98,15 +106,13 @@ public class ControllerImpl implements Controller {
         return (Integer)gamePoint.poll();
     }
     
-    public List<Map<String,Integer>> getRank() {
-        List<Map<String,Integer>> rank = new ArrayList<Map<String,Integer>>();
+    public Map<String,Integer> getRank() {
+        Map<String,Integer> rank = new TreeMap<String,Integer>();
         //Read file
         try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
             String line;
             while ((line = br.readLine()) != null) {
-                Map<String, Integer> mapTmp = new TreeMap<String, Integer>();
-                mapTmp.put(line.split(":")[0],Integer.parseInt(line.split(":")[1]));
-                rank.add(mapTmp);
+                rank.put(line.split("\\?")[0],Integer.parseInt(line.split("\\?")[1]));
             }
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
@@ -116,30 +122,34 @@ public class ControllerImpl implements Controller {
             e.printStackTrace();
         }
         
-        //Order list 
-        Collections.sort(rank, new Comparator<Map<String, Integer>>() {
-            @Override
-            public int compare(Map<String, Integer> map1, Map<String, Integer> map2) {
-                Integer val1 = 0;
-                Integer val2 = 0;
-                for (Map.Entry<String, Integer> entry : map1.entrySet()) {
-                    val1 = entry.getValue();
+        //convert map to a List
+        List<Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(rank.entrySet());
+
+        //sorting the list with a comparator
+        Collections.sort(list, new Comparator<Entry<String, Integer>>() {
+                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                        return (o2.getValue()).compareTo(o1.getValue());
                 }
-                for (Map.Entry<String, Integer> entry : map2.entrySet()) {
-                    val2 = entry.getValue();
-                }
-                return val2.compareTo(val1);
-            }
         });
+
+        //convert sortedMap back to Map
+        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+        for (Entry<String, Integer> entry : list) {
+                sortedMap.put(entry.getKey(), entry.getValue());
+        }
         
-        return rank;
+        return sortedMap;
     }
     
+    
     public void addRank(String s, Integer i) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date = new Date();
+        
         Writer output;
         try {
             output = new BufferedWriter(new FileWriter(urlFile, true));
-            output.append("\r\n"+s+":"+i);
+            output.append("\r\n"+s+'#'+dateFormat.format(date)+'?'+i);
             output.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
