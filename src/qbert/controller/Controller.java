@@ -2,9 +2,9 @@ package qbert.controller;
 
 import java.util.List;
 
-import qbert.input.Command;
-import qbert.model.GUILogic;
+import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
+import qbert.model.models.GUILogic;
 import qbert.view.Renderable;
 
 /**

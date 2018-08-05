@@ -3,10 +3,10 @@ package qbert.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import qbert.model.Game;
-import qbert.model.Introduction;
-import qbert.model.Menu;
-import qbert.model.Model;
+import qbert.model.models.Game;
+import qbert.model.models.Introduction;
+import qbert.model.models.Menu;
+import qbert.model.models.Model;
 
 public class GameStatusManager {
 

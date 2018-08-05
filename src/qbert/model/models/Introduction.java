@@ -1,4 +1,4 @@
-package qbert.model;
+package qbert.model.models;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,7 +93,7 @@ public class Introduction implements Model {
         this.instructionsIndex = Introduction.INSTRUCTIONSTEP - 1;
         this.steps = 1;
 
-        this.guiBody.getSelected().addAll(IntStream.range(this.instructionsIndex, this.guiBody.getData().size()).mapToObj(i -> i).collect(Collectors.toSet()));
+        this.guiBody.selectSet(IntStream.range(this.instructionsIndex, this.guiBody.getData().size()).mapToObj(i -> i).collect(Collectors.toSet()));
 
         this.qbert.setCurrentPosition(new Position2D(new Position2D(Dimensions.getSpawningLogQBert())));
         this.qbert.getGraphicComponent().setPosition(new Position2D(Introduction.QBERTPOSITION));
@@ -125,7 +125,7 @@ public class Introduction implements Model {
         if (!this.qbert.isMoving()) {
             if (this.steps < Introduction.MAXSTEP) {
                 this.instructionsIndex += Introduction.INSTRUCTIONSTEP;
-                this.guiBody.getSelected().removeAll(IntStream.rangeClosed(0, instructionsIndex).mapToObj(i -> i).collect(Collectors.toSet()));
+                this.guiBody.deselectSet(IntStream.rangeClosed(0, instructionsIndex).mapToObj(i -> i).collect(Collectors.toSet()));
             }
             this.steps++;
 

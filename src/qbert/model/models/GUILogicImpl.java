@@ -1,4 +1,4 @@
-package qbert.model;
+package qbert.model.models;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,7 +51,22 @@ public class GUILogicImpl implements GUILogic {
 
     @Override
     public final Set<Integer> getSelected() {
-        return this.selected;
+        return Collections.unmodifiableSet(this.selected);
+    }
+
+    @Override
+    public final void deselectAll() {
+        this.selected.clear();
+    }
+
+    @Override
+    public final void selectSet(final Set<Integer> set) {
+        this.selected.addAll(set);
+    }
+
+    @Override
+    public final void deselectSet(final Set<Integer> set) {
+        this.selected.removeAll(set);
     }
 
     @Override

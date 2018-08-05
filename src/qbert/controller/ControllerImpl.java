@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.jdom2.JDOMException;
 
-import qbert.input.Command;
-import qbert.model.GUILogic;
+import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
+import qbert.model.models.GUILogic;
 import qbert.view.Renderable;
 import qbert.view.View;
 import qbert.view.ViewImpl;

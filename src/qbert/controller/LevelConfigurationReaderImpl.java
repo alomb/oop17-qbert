@@ -16,9 +16,9 @@ import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
-import qbert.model.EnemyInfoImpl;
 import qbert.model.LevelSettings;
 import qbert.model.LevelSettingsImpl;
+import qbert.model.spawner.EnemyInfoImpl;
 import qbert.view.ColorComposition;
 
 /**

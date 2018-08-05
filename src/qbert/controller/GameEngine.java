@@ -1,10 +1,10 @@
 package qbert.controller;
 
-import qbert.model.Model;
+import qbert.controller.input.Command;
+import qbert.model.models.Model;
 
 import java.util.Optional;
 
-import qbert.input.Command;
 import qbert.view.View;
 
 /**

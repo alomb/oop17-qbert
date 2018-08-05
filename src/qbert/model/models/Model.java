@@ -1,4 +1,4 @@
-package qbert.model;
+package qbert.model.models;
 
 import java.util.List;
 

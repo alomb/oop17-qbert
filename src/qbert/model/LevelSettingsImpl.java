@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import qbert.model.components.PointComponent;
+import qbert.model.spawner.EnemyInfoImpl;
 
 /**
  * The implementation of {@link LevelSettings}.

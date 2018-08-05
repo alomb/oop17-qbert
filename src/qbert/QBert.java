@@ -1,4 +1,4 @@
-package qbert.launcher;
+package qbert;
 
 import qbert.controller.Controller;
 import qbert.controller.ControllerImpl;
@@ -8,14 +8,17 @@ import qbert.controller.LoadResources;
 /**
  * The class used to launch the game.
  */
-public final class QBertLauncher {
+public final class QBert {
 
-    public static void main(String[] args) {
-        new QBertLauncher();
+    /**
+     * @param args the argument passed by the console
+     */
+    public static void main(final String[] args) {
+        new QBert();
     }
 
-    public QBertLauncher() {
-        LoadResources lr = new LoadResources();
+    private QBert() {
+        final LoadResources lr = new LoadResources();
         lr.load();
         final Controller controller = new ControllerImpl(GameStatus.INTRODUCTION);
         controller.setupGameEngine();

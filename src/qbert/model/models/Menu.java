@@ -1,4 +1,4 @@
-package qbert.model;
+package qbert.model.models;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,9 +15,8 @@ import qbert.view.Renderable;
  */
 public class Menu implements Model {
 
-    private int instructionsindex;
-    private static int index = 0;
-    private static final int MAXVALUE = 2;
+    private static int index;
+    private static final int MAXVALUE = 1;
     private static final int MINVALUE = 0;
     private static final int PLAY = 0;
     private static final int EXIT = 1;
@@ -57,17 +56,15 @@ public class Menu implements Model {
 
     @Override
     public final void initialize() {
-        this.instructionsindex = Menu.index;
-
-        this.guiBody.getSelected().addAll(IntStream.range(0, 1).mapToObj(i -> i).collect(Collectors.toSet()));
+        this.guiBody.selectSet(IntStream.range(0, 1).mapToObj(i -> i).collect(Collectors.toSet()));
     }
 
     @Override
-    public void moveDown() {
-        if(Menu.index < Menu.MAXVALUE) {
-            this.guiBody.getSelected().clear();
-            Menu.index++;  
-            this.guiBody.getSelected().addAll(IntStream.range(Menu.index, Menu.index+1).mapToObj(i -> i).collect(Collectors.toSet()));
+    public final void moveDown() {
+        if (Menu.index < Menu.MAXVALUE) {
+            this.guiBody.deselectAll();
+            Menu.index++;
+            this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
         }
     }
 
@@ -82,11 +79,11 @@ public class Menu implements Model {
     }
 
     @Override
-    public void moveUp() {
-        if(Menu.index > Menu.MINVALUE) {
-            this.guiBody.getSelected().clear();
-            Menu.index--;   
-            this.guiBody.getSelected().addAll(IntStream.range(Menu.index, Menu.index+1).mapToObj(i -> i).collect(Collectors.toSet()));
+    public final void moveUp() {
+        if (Menu.index > Menu.MINVALUE) {
+            this.guiBody.deselectAll();
+            Menu.index--;
+            this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
         }
     }
 
@@ -94,8 +91,8 @@ public class Menu implements Model {
     public final void confirm() {
         if (Menu.index == Menu.PLAY) {
             this.controller.changeScene(GameStatus.GAMEPLAY); 
-        }else if(Menu.index == Menu.EXIT){
-            System.exit(1);
+        } else if (Menu.index == Menu.EXIT) {
+            System.exit(0);
         }
     }
 
@@ -116,6 +113,5 @@ public class Menu implements Model {
     @Override
     public final boolean hasFinished() {
         return false;
-        
     }
 }

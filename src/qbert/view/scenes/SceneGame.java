@@ -6,12 +6,12 @@ import java.awt.event.KeyEvent;
 import java.util.Optional;
 
 import qbert.controller.Controller;
-import qbert.input.Confirm;
-import qbert.input.MoveDown;
-import qbert.input.MoveLeft;
-import qbert.input.MoveRight;
-import qbert.input.MoveUp;
-import qbert.model.TextPosition;
+import qbert.controller.input.Confirm;
+import qbert.controller.input.MoveDown;
+import qbert.controller.input.MoveLeft;
+import qbert.controller.input.MoveRight;
+import qbert.controller.input.MoveUp;
+import qbert.model.models.TextPosition;
 import qbert.model.utilities.Dimensions;
 
 /**
@@ -40,7 +40,6 @@ public class SceneGame extends SceneImpl {
 
     @Override
     public final void draw(final Graphics g) {
-        System.out.println(this.controller.getRenderables());
         this.controller.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex()).forEach(c -> {
             g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(), c.getGraphicComponent().getPosition().getY(), this);
         });

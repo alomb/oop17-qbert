@@ -1,4 +1,4 @@
-package qbert.model;
+package qbert.model.models;
 
 /**
  * The model abstraction of GUI text dimensions (between lines and text's).

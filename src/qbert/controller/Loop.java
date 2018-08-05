@@ -1,7 +1,7 @@
 package qbert.controller;
 
-import qbert.input.Command;
-import qbert.model.Model;
+import qbert.controller.input.Command;
+import qbert.model.models.Model;
 
 /**
  * An interface for a generic loop.

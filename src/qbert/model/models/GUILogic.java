@@ -1,4 +1,4 @@
-package qbert.model;
+package qbert.model.models;
 
 import java.util.List;
 import java.util.Set;
@@ -32,6 +32,21 @@ public interface GUILogic {
      * @return the set of lines' indexes that are selected 
      */
     Set<Integer> getSelected();
+
+    /**
+     * Clean current selected lines.
+     */
+    void deselectAll();
+
+    /**
+     * @param set the {@link Set} of lines (indexes) to be selected
+     */
+    void selectSet(Set<Integer> set);
+
+    /**
+     * @param set the {@link Set} of lines (indexes) to be deselected
+     */
+    void deselectSet(Set<Integer> set);
 
     /**
      * @return true if the GUI lines alignment is centered

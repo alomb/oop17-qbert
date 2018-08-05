@@ -13,6 +13,9 @@ import qbert.model.characters.Player;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
+import qbert.model.models.Game;
+import qbert.model.spawner.Spawner;
+import qbert.model.spawner.SpawnerImpl;
 import qbert.model.states.DeathState;
 import qbert.model.states.FallState;
 import qbert.model.states.LandState;
@@ -177,7 +180,6 @@ public final class Level {
 
     private Renderable getTargetColor() {
         final Optional<Integer> i = settings.getColorMap().keySet().stream().collect(Collectors.toList()).stream().max((o1, o2) -> o1.compareTo(o2));
-        System.out.println(settings.getColorMap().keySet());
         if (i.isPresent()) {
             final GraphicComponent gc = new GraphicComponentImpl(settings.getColorMap().get(i.get()), new Position2D(Math.round(Dimensions.getWindowWidth() / 9f), Math.round(Dimensions.getWindowHeight() / 4f)));
             final Renderable ro = new RenderableObject(gc);

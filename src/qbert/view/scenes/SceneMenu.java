@@ -6,11 +6,10 @@ import java.awt.event.KeyEvent;
 import java.util.Optional;
 
 import qbert.controller.Controller;
-import qbert.controller.Sounds;
-import qbert.input.Confirm;
-import qbert.input.MoveDown;
-import qbert.input.MoveUp;
-import qbert.model.TextPosition;
+import qbert.controller.input.Confirm;
+import qbert.controller.input.MoveDown;
+import qbert.controller.input.MoveUp;
+import qbert.model.models.TextPosition;
 import qbert.model.utilities.Dimensions;
 
 /**
@@ -66,7 +65,6 @@ public class SceneMenu extends SceneImpl {
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_KP_DOWN) {
             this.controller.notifyCommand(new MoveDown());
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            //To win levels for debug
             this.controller.notifyCommand(new Confirm());
         }
     }

@@ -23,7 +23,6 @@ public class GraphicComponentImpl implements GraphicComponent {
 
     @Override
     public final BufferedImage getSprite() {
-        System.out.println("opapapa");
         return this.image;
     }
 

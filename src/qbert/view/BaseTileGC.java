@@ -39,7 +39,6 @@ public class BaseTileGC implements TileGC {
                     Dimensions.getBackgroundX() + Dimensions.getCubeWidth() / 2 * logicPos.getX(),
                     (Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight()) - (Dimensions.getCubeHeight() * (logicPos.getY() + 1) + Dimensions.getTileHeight() / 2)
             );
-        System.out.println(this.spritePos);
     }
 
     @Override

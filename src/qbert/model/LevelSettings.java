@@ -3,6 +3,8 @@ package qbert.model;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
+import qbert.model.spawner.EnemyInfoImpl;
+
 /**
  * The interface for the management of the settings of the current level/round.
  */

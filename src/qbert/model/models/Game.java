@@ -1,10 +1,12 @@
-package qbert.model;
+package qbert.model.models;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
+import qbert.model.Level;
+import qbert.model.LevelSettings;
 import qbert.model.characters.Player;
 import qbert.model.states.MoveState;
 import qbert.view.Renderable;

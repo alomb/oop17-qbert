@@ -4,8 +4,8 @@ import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.util.Optional;
 
-import qbert.model.GUILogic;
-import qbert.model.TextPosition;
+import qbert.model.models.GUILogic;
+import qbert.model.models.TextPosition;
 
 /**
  * The interface for a common application scene.

@@ -1,4 +1,4 @@
-package qbert.model;
+package qbert.model.models;
 
 /**
  * Labels used by model to represent scene GUI slots. A scene could have different GUI styles 

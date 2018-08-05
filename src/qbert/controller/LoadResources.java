@@ -156,13 +156,11 @@ public class LoadResources {
         Dimensions.setSpawningLogPointRight(new Position2D(Dimensions.MAP_SPAWNING_POINT_RIGHT_X, Dimensions.MAP_SPAWNING_POINT_RIGHT_Y));
         Dimensions.setSpawningLogQBert(new Position2D(Dimensions.MAP_SPAWNING_QBERT_X, Dimensions.MAP_SPAWNING_QBERT_Y));
 
-        System.out.println("H: " + Dimensions.getBackgroundHeight() + " W: " + Dimensions.getBackgroundWidth() + " th " + Sprites.blueTile.getHeight() + " by " + Dimensions.getBackgroundY());
     }
 
     private BufferedImage loadImg(final String pathOut) throws Exception {
         BufferedImage res = null;
         final URL spriteUrl = new URL(new URL("file:"), pathOut);
-        System.out.println(spriteUrl.toString());
         try {
             res = ImageIO.read(spriteUrl);
         } catch (IOException e) {

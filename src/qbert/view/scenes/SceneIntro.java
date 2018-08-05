@@ -7,8 +7,8 @@ import java.util.Optional;
 
 import qbert.controller.Controller;
 import qbert.controller.Sounds;
-import qbert.input.Confirm;
-import qbert.model.TextPosition;
+import qbert.controller.input.Confirm;
+import qbert.model.models.TextPosition;
 import qbert.model.utilities.Dimensions;
 
 /**
