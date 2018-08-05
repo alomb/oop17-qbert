@@ -53,11 +53,10 @@ public class Introduction implements Model {
         final GUILogic guiTitle;
         final GUILogic guiFoot;
 
-        guiTitle = new GUILogicImpl(TextSize.LARGE, TextPosition.TITLE);
+        guiTitle = new GUILogicImpl(TextPosition.TITLE);
         guiTitle.addData("Q*bert");
-        guiTitle.setCentered(true);
 
-        this.guiBody = new GUILogicImpl(TextSize.SMALL, TextPosition.RIGHTSIDE);
+        this.guiBody = new GUILogicImpl(TextPosition.RIGHTSIDE);
         this.guiBody.addData("JUMP ON SQUARES TO");
         this.guiBody.addData("CHANGE THEM TO");
         this.guiBody.addData("THE TARGET COLOR");
@@ -76,9 +75,8 @@ public class Introduction implements Model {
         this.guiBody.addData("TO HIS DEATH");
         this.guiBody.addData("");
 
-        guiFoot = new GUILogicImpl(TextSize.SMALL, TextPosition.FOOT);
+        guiFoot = new GUILogicImpl(TextPosition.FOOT);
         guiFoot.addData("Press Enter to continue...");
-        guiFoot.setCentered(true);
 
         this.guiList = new ArrayList<>();
         this.guiList.add(guiTitle);

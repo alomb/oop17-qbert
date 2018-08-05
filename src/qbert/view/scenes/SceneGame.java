@@ -12,6 +12,7 @@ import qbert.controller.input.MoveLeft;
 import qbert.controller.input.MoveRight;
 import qbert.controller.input.MoveUp;
 import qbert.model.models.TextPosition;
+import qbert.model.models.TextSize;
 import qbert.model.utilities.Dimensions;
 
 /**
@@ -34,8 +35,10 @@ public class SceneGame extends SceneImpl {
         this.setBackground(this.backgroundColor);
         this.controller = controller;
 
-        this.addSection(TextPosition.LEFTSIDE, new GUISectionImpl(this.textColor, Optional.empty(), Math.round(Dimensions.getWindowWidth() / 10f), Math.round(Dimensions.getWindowHeight() / 8f)));
-        this.addSection(TextPosition.RIGHTSIDE, new GUISectionImpl(this.textColor, Optional.empty(), Math.round(Dimensions.getWindowWidth() / 1.25f), Math.round(Dimensions.getWindowHeight() / 8f)));
+        this.addSection(TextPosition.LEFTSIDE, 
+                new GUISectionImpl(this.textColor, Optional.empty(), Math.round(Dimensions.getWindowWidth() / 10f), Math.round(Dimensions.getWindowHeight() / 8f), false, TextSize.SMALL));
+        this.addSection(TextPosition.RIGHTSIDE, 
+                new GUISectionImpl(this.textColor, Optional.empty(), Math.round(Dimensions.getWindowWidth() / 1.25f), Math.round(Dimensions.getWindowHeight() / 8f), false, TextSize.SMALL));
     }
 
     @Override

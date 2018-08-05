@@ -14,18 +14,14 @@ public class GUILogicImpl implements GUILogic {
     private final List<String> data;
     private final Set<Integer> selected;
 
-    private boolean centered;
-    private final TextSize size;
     private final TextPosition position;
 
     /**
-     * @param size the GUI {@link TextSize}
      * @param position the GUI {@link TextPosition}
      */
-    public GUILogicImpl(final TextSize size, final TextPosition position) {
+    public GUILogicImpl(final TextPosition position) {
         this.data = new ArrayList<>();
         this.selected = new HashSet<>();
-        this.size = size;
         this.position = position;
     }
 
@@ -67,21 +63,6 @@ public class GUILogicImpl implements GUILogic {
     @Override
     public final void deselectSet(final Set<Integer> set) {
         this.selected.removeAll(set);
-    }
-
-    @Override
-    public final boolean isCentered() {
-        return this.centered;
-    }
-
-    @Override
-    public final void setCentered(final boolean centered) {
-        this.centered = centered;
-    }
-
-    @Override
-    public final TextSize getSize() {
-        return this.size;
     }
 
     @Override

@@ -37,8 +37,8 @@ public class Game implements Model {
     public Game(final Controller controller) {
         this.controller = controller;
         this.gui = new ArrayList<>();
-        this.levelAndRound = new GUILogicImpl(TextSize.SMALL, TextPosition.RIGHTSIDE);
-        this.scoreAndLives = new GUILogicImpl(TextSize.SMALL, TextPosition.LEFTSIDE);
+        this.levelAndRound = new GUILogicImpl(TextPosition.RIGHTSIDE);
+        this.scoreAndLives = new GUILogicImpl(TextPosition.LEFTSIDE);
         this.gui.add(this.levelAndRound);
         this.gui.add(this.scoreAndLives);
     }

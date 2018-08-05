@@ -111,10 +111,10 @@ public abstract class SceneImpl extends JPanel implements Scene {
     @Override
     public final void drawGUI(final Graphics g, final GUILogic gui) {
         if (this.sections.get(gui.getPosition()).isPresent()) {
-            g.setFont(this.getFont(gui.getSize()));
 
             final GUISection section = this.sections.get(gui.getPosition()).get();
 
+            g.setFont(this.getFont(section.getSize()));
             final Color color = section.getColor();
             final Optional<Color> selectedColor = section.getSelectedColor().isPresent()
                             ? Optional.of(this.getSection(gui.getPosition()).get().getSelectedColor().get()) : Optional.empty();
@@ -177,7 +177,7 @@ public abstract class SceneImpl extends JPanel implements Scene {
         final int xOffset = section.getXOffset();
         final int yOffset =  section.getYOffset();
 
-        if (gui.isCentered()) {
+        if (section.isCentered()) {
             this.drawCenteredString(g, gui.getData().get(index), 
                     new Position2D(xOffset, yOffset + g.getFont().getSize() * index * 2), g.getFont());
         } else {

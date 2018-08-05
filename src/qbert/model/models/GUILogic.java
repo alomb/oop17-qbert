@@ -49,21 +49,6 @@ public interface GUILogic {
     void deselectSet(Set<Integer> set);
 
     /**
-     * @return true if the GUI lines alignment is centered
-     */
-    boolean isCentered();
-
-    /**
-     * @param centered a boolean used to set the lines alignment centered
-     */
-    void setCentered(boolean centered);
-
-    /**
-     * @return the {@link TextSize} of the GUI
-     */
-    TextSize getSize();
-
-    /**
      * @return the {@link TextPosition} of the GUI
      */
     TextPosition getPosition();

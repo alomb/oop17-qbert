@@ -33,18 +33,15 @@ public class Menu implements Model {
         final GUILogic guiTitle;
         final GUILogic guiFoot;
 
-        guiTitle = new GUILogicImpl(TextSize.LARGE, TextPosition.TITLE);
+        guiTitle = new GUILogicImpl(TextPosition.TITLE);
         guiTitle.addData("Menu'");
-        guiTitle.setCentered(true);
 
-        this.guiBody = new GUILogicImpl(TextSize.MEDIUM, TextPosition.CENTER);
+        this.guiBody = new GUILogicImpl(TextPosition.CENTER);
         this.guiBody.addData("PLAY");
         this.guiBody.addData("EXIT");
-        this.guiBody.setCentered(true);
 
-        guiFoot = new GUILogicImpl(TextSize.SMALL, TextPosition.FOOT);
+        guiFoot = new GUILogicImpl(TextPosition.FOOT);
         guiFoot.addData("Move with arrow key");
-        guiFoot.setCentered(true);
 
         this.guiList = new ArrayList<>();
         this.guiList.add(guiTitle);
