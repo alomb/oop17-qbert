@@ -1,6 +1,7 @@
 package qbert.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
@@ -43,4 +44,25 @@ public interface Controller {
      * @return from the current model a list of images to be rendered
      */
     List<Renderable> getRenderables();
+    
+    /**
+     * @param value of score point at finish game
+     */
+    void setScore(Integer i);
+    
+    /**
+     * @return value of score point at finish game
+     */
+    Integer getScore();
+    
+    /**
+     * @return from the current ranking
+     */
+    List<Map<String,Integer>> getRank();
+    
+    /**
+     * @return from the current ranking
+     */
+    void addRank(String s, Integer i);
+    
 }

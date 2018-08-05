@@ -13,7 +13,11 @@ public enum GameStatus {
 
     GAMEPLAY,
     
-    MENU;
+    MENU,
+    
+    RANKING,
+    
+    GAMEOVER;
 
     public static Set<GameStatus> getAll() {
         return Arrays.asList(GameStatus.values()).stream().collect(Collectors.toSet());

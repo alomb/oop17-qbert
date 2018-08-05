@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import qbert.model.models.Game;
+import qbert.model.models.GameOver;
 import qbert.model.models.Introduction;
 import qbert.model.models.Menu;
 import qbert.model.models.Model;
+import qbert.model.models.Ranking;
 
 public class GameStatusManager {
 
@@ -18,8 +20,10 @@ public class GameStatusManager {
 
         this.models.put(GameStatus.INTRODUCTION, new Introduction(controller));
         this.models.put(GameStatus.MENU, new Menu(controller));
+        this.models.put(GameStatus.RANKING, new Ranking(controller));
         this.models.put(GameStatus.GAMEPLAY, new Game(controller));
-
+        this.models.put(GameStatus.GAMEOVER, new GameOver(controller));
+            
         if (!this.models.keySet().equals(GameStatus.getAll())) {
             throw new UnsupportedOperationException();
         }

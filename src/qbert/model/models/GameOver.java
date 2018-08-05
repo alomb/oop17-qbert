@@ -3,8 +3,11 @@ package qbert.model.models;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import javax.swing.JTextField;
 
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
@@ -13,37 +16,31 @@ import qbert.view.Renderable;
 /**
  * The implementation of {@link Model} for application menu scene logic.
  */
-public class Menu implements Model {
+public class GameOver implements Model {
 
-    private static int index;
-    private static final int MAXVALUE = 2;
-    private static final int MINVALUE = 0;
-    private static final int PLAY = 0;
-    private static final int RANKING = 1;
-    private static final int EXIT = 2;
     private final GUILogic guiBody;
-
+    
     private final List<GUILogic> guiList;
     private final Controller controller;
+    
+    private List<Map<String,Integer>> rank;
+    private String fit="AA";
 
     /**
      * Initialize GUI data and logic.
      * @param controller the game controller.
      */
-    public Menu(final Controller controller) {
+    public GameOver(final Controller controller) {
         final GUILogic guiTitle;
         final GUILogic guiFoot;
-
+        
         guiTitle = new GUILogicImpl(TextPosition.TITLE);
-        guiTitle.addData("Menu'");
+        guiTitle.addData("GAMEOVER");
 
         this.guiBody = new GUILogicImpl(TextPosition.CENTER);
-        this.guiBody.addData("PLAY");
-        this.guiBody.addData("RANKING");
-        this.guiBody.addData("EXIT");
-
+        
         guiFoot = new GUILogicImpl(TextPosition.FOOT);
-        guiFoot.addData("Move with arrow key");
+        guiFoot.addData("Set your name!");
 
         this.guiList = new ArrayList<>();
         this.guiList.add(guiTitle);
@@ -55,21 +52,26 @@ public class Menu implements Model {
 
     @Override
     public final void initialize() {
-        this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index+1).mapToObj(i -> i).collect(Collectors.toSet()));
+        this.guiBody.removeAllData();
+        this.guiBody.selectSet(IntStream.range(0, 1).mapToObj(i -> i).collect(Collectors.toSet()));
+        
+        rank = controller.getRank();
+        
+        rank.forEach(item->{
+            this.guiBody.addData("Player: " + item.entrySet().stream().findFirst().get().getKey() + " Point: " + item.entrySet().stream().findFirst().get().getValue());
+        });
+        
+        rank.clear();
     }
 
     @Override
     public final void moveDown() {
-        if (Menu.index < Menu.MAXVALUE) {
-            this.guiBody.deselectAll();
-            Menu.index++;
-            this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
-        }
+        
     }
 
     @Override
     public void moveLeft() {
-
+        
     }
 
     @Override
@@ -79,23 +81,13 @@ public class Menu implements Model {
 
     @Override
     public final void moveUp() {
-        if (Menu.index > Menu.MINVALUE) {
-            this.guiBody.deselectAll();
-            Menu.index--;
-            this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
-        }
+        
     }
 
     @Override
     public final void confirm() {
-        if (Menu.index == Menu.PLAY) {
-            this.controller.changeScene(GameStatus.GAMEPLAY); 
-        } else if (Menu.index == Menu.RANKING) {
-            this.controller.changeScene(GameStatus.RANKING); 
-        }else if (Menu.index == Menu.EXIT) {
-            System.exit(0);
-        }
-        
+        this.controller.addRank(this.fit, this.controller.getScore());
+        this.controller.changeScene(GameStatus.MENU);
     }
 
     @Override

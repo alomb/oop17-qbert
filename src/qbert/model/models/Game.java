@@ -62,7 +62,8 @@ public class Game implements Model {
         this.updateScoreAndLives();
 
         if (this.hasFinished()) {
-            this.controller.changeScene(GameStatus.INTRODUCTION);
+            this.controller.setScore(this.score);
+            this.controller.changeScene(GameStatus.GAMEOVER);
         }
     }
 
@@ -157,4 +158,6 @@ public class Game implements Model {
         this.scoreAndLives.addData("LIVES: " + this.lives);
         this.scoreAndLives.addData("CHANGE COLOR TO:");
     }
+    
+    
 }

@@ -19,6 +19,7 @@ import qbert.view.scenes.Scene;
 import qbert.view.scenes.SceneGame;
 import qbert.view.scenes.SceneIntro;
 import qbert.view.scenes.SceneMenu;
+import qbert.view.scenes.SceneRanking;
 
 /**
  * The implementation of {@link View}.
@@ -58,7 +59,8 @@ public class ViewImpl implements View {
         this.addScene(new SceneIntro(w, h, controller), GameStatus.INTRODUCTION.name());
         this.addScene(new SceneMenu(w, h, controller), GameStatus.MENU.name());
         this.addScene(new SceneGame(w, h, controller), GameStatus.GAMEPLAY.name());
-
+        this.addScene(new SceneRanking(w, h, controller), GameStatus.RANKING.name());
+        this.addScene(new SceneRanking(w, h, controller), GameStatus.GAMEOVER.name());
     }
 
     @Override
