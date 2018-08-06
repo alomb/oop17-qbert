@@ -67,7 +67,8 @@ public abstract class BasicAnimation extends MovementAnimation {
     }
 
     /**
-     * Animation to move the character in a clockwise arc.
+     * Animation to move the character in a clockwise arc, increasing the angle. The Y-axis is
+     * reversed so to increase y in the imaginary goniometric circle it must be decreased.
      */
     public static class ArcClockwise extends BasicAnimation {
 
@@ -75,25 +76,28 @@ public abstract class BasicAnimation extends MovementAnimation {
         private final Position2D centerPos;
 
         private int currentAngle;
-        private static final int TARGETANGLE = 360;
+        private final int targetAngle;
 
         /**
          * @param startPos the first {@link Position2D}
          * @param targetPos the last {@link Position2D}
+         * @param startAngle the first current angle value
+         * @param targetAngle the last current angle value
          */
-        public ArcClockwise(final Position2D startPos, final Position2D targetPos) {
+        public ArcClockwise(final Position2D startPos, final Position2D targetPos, final int startAngle, final int targetAngle) {
             super(startPos, targetPos);
             this.radius = Math.abs(this.getCurrentPosition().getX() - targetPos.getX()) / 2;
 
             this.centerPos = new Position2D((int) (this.getCurrentPosition().getX() + this.radius), this.getCurrentPosition().getY());
-            this.currentAngle = 180;
+            this.currentAngle = startAngle;
+            this.targetAngle = targetAngle;
         }
 
         @Override
         public final void calculateNext() {
             this.currentAngle += this.getAnimationSpeed();
-            if (this.currentAngle > ArcClockwise.TARGETANGLE) {
-                this.currentAngle = ArcClockwise.TARGETANGLE;
+            if (this.currentAngle > this.targetAngle) {
+                this.currentAngle = this.targetAngle;
                 this.setCurrentPosition(this.getTargetPosition());
             } else {
                 this.setCurrentPosition(BasicAnimation.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
@@ -102,7 +106,8 @@ public abstract class BasicAnimation extends MovementAnimation {
     }
 
     /**
-     * Animation to move the character in a counterclockwise arc.
+     * Animation to move the character in a counterclockwise arc, decreasing the angle. The Y-axis is
+     * reversed so to increase y in the imaginary goniometric circle it must be decreased.
      */
     public static class ArcCounterclockwise extends BasicAnimation {
 
@@ -110,25 +115,28 @@ public abstract class BasicAnimation extends MovementAnimation {
         private final Position2D centerPos;
 
         private int currentAngle;
-        private static final int TARGETANGLE = -180;
+        private final int targetAngle;
 
         /**
          * @param startPos the first {@link Position2D}
          * @param targetPos the last {@link Position2D}
+         * @param startAngle the first current angle value
+         * @param targetAngle the last current angle value
          */
-        public ArcCounterclockwise(final Position2D startPos, final Position2D targetPos) {
+        public ArcCounterclockwise(final Position2D startPos, final Position2D targetPos, final int startAngle, final int targetAngle) {
             super(startPos, targetPos);
             this.radius = Math.abs(this.getCurrentPosition().getX() - targetPos.getX()) / 2;
 
             this.centerPos = new Position2D((int) (this.getCurrentPosition().getX() - this.radius), this.getCurrentPosition().getY());
-            this.currentAngle = 0;
+            this.currentAngle = startAngle;
+            this.targetAngle = targetAngle;
         }
 
         @Override
         public final void calculateNext() {
             this.currentAngle -= this.getAnimationSpeed();
-            if (this.currentAngle < ArcCounterclockwise.TARGETANGLE) {
-                this.currentAngle = ArcCounterclockwise.TARGETANGLE;
+            if (this.currentAngle < this.targetAngle) {
+                this.currentAngle = this.targetAngle;
                 this.setCurrentPosition(this.getTargetPosition());
             } else {
                 this.setCurrentPosition(BasicAnimation.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));

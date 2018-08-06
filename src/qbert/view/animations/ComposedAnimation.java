@@ -13,6 +13,10 @@ public class ComposedAnimation extends MovementAnimation {
     private final Queue<Animation> animations;
     private static final int QUEUESIZE = 2;
 
+    private static final int ANGLE0 = 0;
+    private static final int ANGLE180 = 180;
+    private static final int ANGLE360 = 360;
+
     /**
      * @param startPos the first {@link Position2D}
      * @param targetPos the last {@link Position2D}
@@ -55,7 +59,7 @@ public class ComposedAnimation extends MovementAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(targetPos.getX(), startPos.getY());
 
-            this.getAnimations().add(new BasicAnimation.ArcClockwise(startPos, intermediatePosition));
+            this.getAnimations().add(new BasicAnimation.ArcClockwise(startPos, intermediatePosition, ANGLE180, ANGLE360));
             this.getAnimations().add(new BasicAnimation.Down(intermediatePosition, targetPos));
         }
     }
@@ -73,7 +77,7 @@ public class ComposedAnimation extends MovementAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(targetPos.getX(), startPos.getY());
 
-            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(startPos, intermediatePosition));
+            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(startPos, intermediatePosition, ANGLE0, -ANGLE180));
             this.getAnimations().add(new BasicAnimation.Down(intermediatePosition, targetPos));
         }
     }
@@ -92,7 +96,7 @@ public class ComposedAnimation extends MovementAnimation {
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
             this.getAnimations().add(new BasicAnimation.Up(startPos, intermediatePosition));
-            this.getAnimations().add(new BasicAnimation.ArcClockwise(intermediatePosition, targetPos));
+            this.getAnimations().add(new BasicAnimation.ArcClockwise(intermediatePosition, targetPos, ANGLE180, ANGLE360));
 
         }
     }
@@ -111,7 +115,7 @@ public class ComposedAnimation extends MovementAnimation {
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
             this.getAnimations().add(new BasicAnimation.Up(startPos, intermediatePosition));
-            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(intermediatePosition, targetPos));
+            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(intermediatePosition, targetPos, ANGLE0, -ANGLE180));
         }
     }
 }

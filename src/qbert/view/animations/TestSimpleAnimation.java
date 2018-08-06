@@ -15,7 +15,11 @@ import qbert.model.utilities.Position2D;
 public class TestSimpleAnimation {
 
     private final Random random = new Random();
+
     private static final float SPEED = 7;
+    private static final int ANGLE0 = 0;
+    private static final int ANGLE180 = 180;
+    private static final int ANGLE360 = 360;
 
     private List<Position2D> returnArrayOfRandomPosition2D(final int size) {
         final List<Position2D> result = new ArrayList<>();
@@ -83,14 +87,14 @@ public class TestSimpleAnimation {
         for (int i = 0; i < size; i++) {
             final Position2D target = new Position2D(source.getX() + this.random.nextInt(20), source.getY());
             final Position2D targetCounter = new Position2D(source.getX() - this.random.nextInt(20), source.getY());
-            Animation anim = new BasicAnimation.ArcClockwise(source, target);
+            Animation anim = new BasicAnimation.ArcClockwise(source, target, ANGLE180, ANGLE360);
 
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }
             assertEquals(source, target);
 
-            anim = new BasicAnimation.ArcCounterclockwise(source, targetCounter);
+            anim = new BasicAnimation.ArcCounterclockwise(source, targetCounter, ANGLE0, -ANGLE180);
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }
