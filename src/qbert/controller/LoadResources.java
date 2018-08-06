@@ -80,7 +80,6 @@ public class LoadResources {
             convertSvgToPng("res/svg/TileGreen.svg", "../img/png/TileGreen.png");
             convertSvgToPng("res/svg/TileGrey.svg", "../img/png/TileGrey.png");
             convertSvgToPng("res/svg/TilePink.svg", "../img/png/TilePink.png");
-            convertSvgToPng("res/svg/TilePurple.svg", "../img/png/TilePurple.png");
             convertSvgToPng("res/svg/TileYellow.svg", "../img/png/TileYellow.png");
             convertSvgToPng("res/svg/Life.svg", "../img/png/Life.png");
             convertSvgToPng("res/svg/Disk1.svg", "../img/png/Disk1.png");
@@ -130,7 +129,6 @@ public class LoadResources {
               Sprites.greenTile = loadImg("../img/png/TileGreen.png"); 
               Sprites.greyTile = loadImg("../img/png/TileGrey.png");
               Sprites.pinkTile = loadImg("../img/png/TilePink.png");
-              Sprites.purpleTile = loadImg("../img/png/TilePurple.png");
               Sprites.yellowTile = loadImg("../img/png/TileYellow.png");
               Sprites.life = loadImg("../img/png/Life.png");
 
