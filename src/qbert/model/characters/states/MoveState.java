@@ -2,7 +2,6 @@ package qbert.model.characters.states;
 
 import qbert.model.characters.Character;
 import qbert.model.characters.DownUpwardCharacter;
-import qbert.model.utilities.Position2D;
 
 /**
  * The {@link CharacterState} used for all directions movement states.
@@ -32,8 +31,6 @@ public abstract class MoveState extends WaitAnimationState {
         public DownLeft(final Character character) {
             super(character);
             this.getCharacter().getGraphicComponent().setMoveDownLeftAnimation();
-            this.getCharacter().setNextPosition(
-                    new Position2D(getCharacter().getCurrentPosition().getX() - 1, getCharacter().getCurrentPosition().getY() - 1));
         }
     }
 
@@ -48,8 +45,6 @@ public abstract class MoveState extends WaitAnimationState {
         public DownRight(final Character character) {
             super(character);
             this.getCharacter().getGraphicComponent().setMoveDownRightAnimation();
-            this.getCharacter().setNextPosition(
-                    new Position2D(getCharacter().getCurrentPosition().getX() + 1, getCharacter().getCurrentPosition().getY() - 1));
         }
     }
 
@@ -64,8 +59,6 @@ public abstract class MoveState extends WaitAnimationState {
         public UpRight(final DownUpwardCharacter character) {
             super(character);
             character.getDownUpwardGraphicComponent().setMoveUpRightAnimation();
-            this.getCharacter().setNextPosition(
-                    new Position2D(getCharacter().getCurrentPosition().getX() + 1, getCharacter().getCurrentPosition().getY() + 1));
         }
     }
 
@@ -80,8 +73,6 @@ public abstract class MoveState extends WaitAnimationState {
         public UpLeft(final DownUpwardCharacter character) {
             super(character);
             character.getDownUpwardGraphicComponent().setMoveUpLeftAnimation();
-            this.getCharacter().setNextPosition(
-                    new Position2D(getCharacter().getCurrentPosition().getX() - 1, getCharacter().getCurrentPosition().getY() + 1));
         }
     }
 }

@@ -9,6 +9,7 @@ import qbert.model.Level;
 import qbert.model.LevelSettings;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.MoveState;
+import qbert.model.utilities.Position2D;
 import qbert.view.Renderable;
 
 /**
@@ -95,6 +96,9 @@ public class Game implements Model {
     public final void moveDown() {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
+            qbert.setNextPosition(
+                    new Position2D(qbert.getCurrentPosition().getX() - 1, qbert.getCurrentPosition().getY() - 1));
+
             qbert.setCurrentState(new MoveState.DownLeft(qbert));
         }
     }
@@ -103,6 +107,9 @@ public class Game implements Model {
     public final void moveLeft() {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
+            qbert.setNextPosition(
+                    new Position2D(qbert.getCurrentPosition().getX() - 1, qbert.getCurrentPosition().getY() + 1));
+
             qbert.setCurrentState(new MoveState.UpLeft(qbert));
         }
     }
@@ -111,6 +118,9 @@ public class Game implements Model {
     public final void moveRight() {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
+            qbert.setNextPosition(
+                new Position2D(qbert.getCurrentPosition().getX() + 1, qbert.getCurrentPosition().getY() - 1));
+
             qbert.setCurrentState(new MoveState.DownRight(qbert));
         }
     }
@@ -119,6 +129,9 @@ public class Game implements Model {
     public final void moveUp() {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
+            qbert.setNextPosition(
+                    new Position2D(qbert.getCurrentPosition().getX() + 1, qbert.getCurrentPosition().getY() + 1));
+
             qbert.setCurrentState(new MoveState.UpRight(qbert));
         }
     }
