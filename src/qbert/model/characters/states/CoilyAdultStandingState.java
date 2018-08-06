@@ -62,5 +62,7 @@ public class CoilyAdultStandingState extends WaitTimerState {
         } else {
             this.getCharacter().setCurrentState(new MoveState.DownLeft(this.coily));
         }
+
+        this.getCharacter().getNextPosition().vectorSum(new Position2D(dx, dy));
     }
 }

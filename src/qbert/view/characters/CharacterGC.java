@@ -66,8 +66,14 @@ public interface CharacterGC extends GraphicComponent {
     void flipOnYImage();
 
     /**
+     * A method to flip on X axis the current sprite.
+     */
+    void flipOnXImage();
+
+    /**
      * This function is called to update the graphics, e.g., the current {@link Animation}.
      * @param graphicsSpeed the graphics' speed calculated from the time passed since the last game cycle 
      */
     void updateGraphics(float graphicsSpeed);
+
 }

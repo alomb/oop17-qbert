@@ -67,6 +67,29 @@ public abstract class BasicAnimation extends MovementAnimation {
     }
 
     /**
+     * Animation for moving the sprite rightward.
+     */
+    public static class Right extends BasicAnimation {
+
+        /**
+         * @param startPos the first {@link Position2D}
+         * @param targetPos the last {@link Position2D}
+         */
+        public Right(final Position2D startPos, final Position2D targetPos) {
+            super(startPos, targetPos);
+        }
+
+        @Override
+        public final void calculateNext() {
+            this.getCurrentPosition().setX((int) (this.getCurrentPosition().getX() + this.getAnimationSpeed()));
+
+            if (this.getTargetPosition().getX() < this.getCurrentPosition().getX()) {
+                this.getCurrentPosition().setY(this.getTargetPosition().getX());
+            }
+        }
+    }
+
+    /**
      * Animation to move the character in a clockwise arc, increasing the angle. The Y-axis is
      * reversed so to increase y in the imaginary goniometric circle it must be decreased.
      */
@@ -86,9 +109,16 @@ public abstract class BasicAnimation extends MovementAnimation {
          */
         public ArcClockwise(final Position2D startPos, final Position2D targetPos, final int startAngle, final int targetAngle) {
             super(startPos, targetPos);
-            this.radius = Math.abs(this.getCurrentPosition().getX() - targetPos.getX()) / 2;
 
-            this.centerPos = new Position2D((int) (this.getCurrentPosition().getX() + this.radius), this.getCurrentPosition().getY());
+            //If the given target position has equals X coordinate then radius and centered is calculated on Y axis
+            if (this.getCurrentPosition().getX() == targetPos.getX()) {
+                this.radius = Math.abs(this.getCurrentPosition().getY() - targetPos.getY()) / 2;
+                this.centerPos = new Position2D(this.getCurrentPosition().getX(), (int) (this.getCurrentPosition().getY() - this.radius));
+            } else {
+                this.radius = Math.abs(this.getCurrentPosition().getX() - targetPos.getX()) / 2;
+                this.centerPos = new Position2D((int) (this.getCurrentPosition().getX() + this.radius), this.getCurrentPosition().getY());
+            }
+
             this.currentAngle = startAngle;
             this.targetAngle = targetAngle;
         }
@@ -125,9 +155,16 @@ public abstract class BasicAnimation extends MovementAnimation {
          */
         public ArcCounterclockwise(final Position2D startPos, final Position2D targetPos, final int startAngle, final int targetAngle) {
             super(startPos, targetPos);
-            this.radius = Math.abs(this.getCurrentPosition().getX() - targetPos.getX()) / 2;
 
-            this.centerPos = new Position2D((int) (this.getCurrentPosition().getX() - this.radius), this.getCurrentPosition().getY());
+            //If the given target position has equals X coordinate then radius and centered is calculated on Y axis
+            if (this.getCurrentPosition().getX() == targetPos.getX()) {
+                this.radius = Math.abs(this.getCurrentPosition().getY() - targetPos.getY()) / 2;
+                this.centerPos = new Position2D(this.getCurrentPosition().getX(), (int) (this.getCurrentPosition().getY() + this.radius));
+            } else {
+                this.radius = Math.abs(this.getCurrentPosition().getX() - targetPos.getX()) / 2;
+                this.centerPos = new Position2D((int) (this.getCurrentPosition().getX() - this.radius), this.getCurrentPosition().getY());
+            }
+
             this.currentAngle = startAngle;
             this.targetAngle = targetAngle;
         }

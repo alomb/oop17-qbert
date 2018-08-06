@@ -107,6 +107,14 @@ public abstract class CharacterGCImpl implements CharacterGC {
     }
 
     @Override
+    public final void flipOnXImage() {
+        final AffineTransform transformation = AffineTransform.getScaleInstance(1, -1);
+        transformation.translate(0, -this.getSpriteHeight());
+        final AffineTransformOp operation = new AffineTransformOp(transformation, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        this.setSprite(operation.filter(this.getSprite(), null));
+    }
+
+    @Override
     public final void updateGraphics(final float graphicsSpeed) {
         this.setPosition(this.animation.updateAnimation(graphicsSpeed));
     }

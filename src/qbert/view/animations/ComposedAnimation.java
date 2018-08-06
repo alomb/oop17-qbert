@@ -14,7 +14,9 @@ public class ComposedAnimation extends MovementAnimation {
     private static final int QUEUESIZE = 2;
 
     private static final int ANGLE0 = 0;
+    private static final int ANGLE90 = 90;
     private static final int ANGLE180 = 180;
+    private static final int ANGLE270 = 270;
     private static final int ANGLE360 = 360;
 
     /**
@@ -65,6 +67,24 @@ public class ComposedAnimation extends MovementAnimation {
     }
 
     /**
+     * Animation for a down-right jump -90 degrees rotated. Up becomes Left, Down becomes Right.
+     */
+    public static class JumpDownRightRightward extends ComposedAnimation {
+
+        /**
+         * @param startPos the first {@link Position2D}
+         * @param targetPos the last {@link Position2D}
+         */
+        public JumpDownRightRightward(final Position2D startPos, final Position2D targetPos) {
+            super(startPos, targetPos);
+            final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
+
+            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(startPos, intermediatePosition, ANGLE270, ANGLE90));
+            this.getAnimations().add(new BasicAnimation.Right(intermediatePosition, targetPos));
+        }
+    }
+
+    /**
      * Animation for a down-left jump.
      */
     public static class JumpDownLeft extends ComposedAnimation {
@@ -79,6 +99,24 @@ public class ComposedAnimation extends MovementAnimation {
 
             this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(startPos, intermediatePosition, ANGLE0, -ANGLE180));
             this.getAnimations().add(new BasicAnimation.Down(intermediatePosition, targetPos));
+        }
+    }
+
+    /**
+     * Animation for a down-left jump -90 degrees rotated. Up becomes Left, Down becomes Right.
+     */
+    public static class JumpDownLeftRightward extends ComposedAnimation {
+
+        /**
+         * @param startPos the first {@link Position2D}
+         * @param targetPos the last {@link Position2D}
+         */
+        public JumpDownLeftRightward(final Position2D startPos, final Position2D targetPos) {
+            super(startPos, targetPos);
+            final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
+
+            this.getAnimations().add(new BasicAnimation.ArcClockwise(startPos, intermediatePosition, ANGLE90, ANGLE270));
+            this.getAnimations().add(new BasicAnimation.Right(intermediatePosition, targetPos));
         }
     }
 

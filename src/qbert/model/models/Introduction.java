@@ -31,6 +31,7 @@ public class Introduction implements Model {
     private static final int MAXSTEP = 4;
 
     private final Player qbert;
+
     private static final float SPEED = 0.35f;
     private static final Position2D QBERTPOSITION = 
             new Position2D(Math.round(Dimensions.getWindowWidth() / 3f), Math.round(Dimensions.getWindowHeight() / 2.75f));
