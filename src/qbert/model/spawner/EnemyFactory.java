@@ -11,7 +11,7 @@ public interface EnemyFactory {
 
     /**
      * @param speed the QBert speed
-     * @return the {@link Player} representing Qbert
+     * @return the {@link Player} representing {@link Qbert}
      */
     Player createQbert(float speed);
 
@@ -19,28 +19,35 @@ public interface EnemyFactory {
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
      * @param qbert the {@link Player} reference
-     * @return the {@link Snake} representing Coily enemy
+     * @return the {@link Snake} representing {@link Coily} enemy
      */
     Snake createCoily(float speed, int standingTime, Player qbert);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @return the {@link Character} representing RedBall enemy
+     * @return the {@link Character} representing {@link RedBall} enemy
      */
     Character createRedBall(float speed, int standingTime);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @return the {@link Character} representing GreenBall
+     * @return the {@link Character} representing {@link GreenBall}
      */
     Character createGreenBall(float speed, int standingTime);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @return the {@link Character} representing Sam or Slick
+     * @return the {@link Character} representing {@link SamAndSlick}
      */
     Character createSamAndSlick(float speed, int standingTime);
+
+    /**
+     * @param speed the {@link Character} movement speed
+     * @param standingTime the time passed on standing state
+     * @return the {@link Character} representing {@link Wrongway}
+     */
+    Character createWrongway(float speed, int standingTime);
 }

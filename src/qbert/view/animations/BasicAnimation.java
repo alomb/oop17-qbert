@@ -84,7 +84,7 @@ public abstract class BasicAnimation extends MovementAnimation {
             this.getCurrentPosition().setX((int) (this.getCurrentPosition().getX() + this.getAnimationSpeed()));
 
             if (this.getTargetPosition().getX() < this.getCurrentPosition().getX()) {
-                this.getCurrentPosition().setY(this.getTargetPosition().getX());
+                this.getCurrentPosition().setX(this.getTargetPosition().getX());
             }
         }
     }

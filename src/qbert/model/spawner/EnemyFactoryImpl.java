@@ -2,6 +2,7 @@ package qbert.model.spawner;
 
 import qbert.model.characters.Character;
 import qbert.model.characters.Snake;
+import qbert.model.characters.Wrongway;
 import qbert.model.characters.Coily;
 import qbert.model.characters.GreenBall;
 import qbert.model.characters.Player;
@@ -17,6 +18,7 @@ import qbert.view.characters.CoilyGCImpl;
 import qbert.view.characters.DownwardCharacterGCImpl;
 import qbert.view.characters.PlayerGC;
 import qbert.view.characters.PlayerGCImpl;
+import qbert.view.characters.RightwardCharacterGC;
 
 import java.util.Random;
 /**
@@ -65,6 +67,14 @@ public class EnemyFactoryImpl implements EnemyFactory {
                 ? new DownwardCharacterGCImpl(Sprites.slickStanding, Sprites.slickMoving, randomPos)
                 : new DownwardCharacterGCImpl(Sprites.samStanding, Sprites.samMoving, randomPos);
         return new SamAndSlick(logicalPos, speed, graphics, standingTime);
+    }
+
+    @Override
+    public final Character createWrongway(final float speed, final int standingTime) {
+        final Position2D logicalPos = new Position2D(0, 0);
+        final RightwardCharacterGC graphics = new RightwardCharacterGC(Sprites.wrongwayStanding, Sprites.wrongwayMoving, new Position2D(-Dimensions.getSpawningHeight(), Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight() * 2));
+
+        return new Wrongway(logicalPos, speed, graphics, standingTime);
     }
 
     private Position2D getRandomPos() {

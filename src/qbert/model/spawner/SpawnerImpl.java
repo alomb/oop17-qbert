@@ -82,7 +82,7 @@ public final class SpawnerImpl implements Spawner {
     public void death(final Character character) {
         final String name = character.getClass().getSimpleName();
 
-        if (this.mapInfo.get(name).getCurrentQuantity() > 0) {
+        if (this.mapInfo.get(name) != null && this.mapInfo.get(name).getCurrentQuantity() > 0) {
             this.mapInfo.get(name).decCurrentQuantity();
         }
     }

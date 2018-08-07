@@ -1,6 +1,5 @@
 package qbert.model.characters;
 
-
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.utilities.Position2D;
@@ -20,7 +19,6 @@ public class Wrongway extends RightwardCharacter {
      */
     public Wrongway(final Position2D startPos, final Float speed, final RightwardCharacterGC graphics, final Integer standingTime) {
         super(startPos, speed, graphics, standingTime);
-        this.setCurrentState(this.getStandingState());
     }
 
     @Override

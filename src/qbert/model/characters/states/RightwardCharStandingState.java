@@ -27,10 +27,8 @@ public class RightwardCharStandingState extends WaitTimerState {
             newPos.setX(newPos.getX() + 1);
 
             if (newPos.getY() == Dimensions.MAP_BOTTOM_EDGE || Math.random() > 0.5) {
-                //newPos.setY(newPos.getY() + 1);
-                //nextState = new MoveState.DownLeft(this.getCharacter());
-                newPos.setY(newPos.getY() - 1);
-                nextState = new MoveState.DownRight(this.getCharacter());
+                newPos.setY(newPos.getY() + 1);
+                nextState = new MoveState.DownLeft(this.getCharacter());
             } else {
                 newPos.setY(newPos.getY() - 1);
                 nextState = new MoveState.DownRight(this.getCharacter());

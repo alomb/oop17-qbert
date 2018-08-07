@@ -18,7 +18,7 @@ public class RightwardCharacterGC extends CharacterGCImpl {
     private final BufferedImage moveSprite;
 
     private final int jumpWidth = Dimensions.getCubeHeight();
-    private final int jumpHeight = Dimensions.getTileWidth();
+    private final int jumpHeight = Dimensions.getTileWidth() / 2;
 
     private final Position2D landPos;
 
@@ -36,7 +36,7 @@ public class RightwardCharacterGC extends CharacterGCImpl {
         super(standSprite, startSpritePos);
         this.standSprite = standSprite;
         this.moveSprite = moveSprite;
-        this.landPos = new Position2D(this.getSpawnPosition().getX(), (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - this.getSpriteHeight()); 
+        this.landPos = new Position2D(Dimensions.getBackgroundX(), this.getSpawnPosition().getY()); 
         this.up = true;
     }
 
@@ -69,13 +69,14 @@ public class RightwardCharacterGC extends CharacterGCImpl {
         if (!this.up) {
             this.flipOnXImage();
         }
-        this.setCurrentAnimation(new BasicAnimation.Right(this.getPosition(), new Position2D(Dimensions.getDeathHeight(), this.getPosition().getY())));
+        this.setCurrentAnimation(new BasicAnimation.Right(this.getPosition(), new Position2D(this.getPosition().getX() + Dimensions.getDeathHeight(), this.getPosition().getY())));
     }
 
     @Override
     public final void setMoveDownLeftAnimation() {
         this.setSprite(this.moveSprite);
-        this.up = true;
+        this.up = false;
+        this.flipOnXImage();
         this.setCurrentAnimation(new ComposedAnimation.JumpDownLeftRightward(this.getPosition(), 
                 new Position2D(this.getPosition().getX() + this.jumpHeight, this.getPosition().getY() - this.jumpWidth)));
     }
@@ -83,8 +84,7 @@ public class RightwardCharacterGC extends CharacterGCImpl {
     @Override
     public final void setMoveDownRightAnimation() {
         this.setSprite(this.moveSprite);
-        this.up = false;
-        this.flipOnXImage();
+        this.up = true;
         this.setCurrentAnimation(new ComposedAnimation.JumpDownRightRightward(this.getPosition(), 
                 new Position2D(this.getPosition().getX() + this.jumpHeight, this.getPosition().getY() + this.jumpWidth)));
     }

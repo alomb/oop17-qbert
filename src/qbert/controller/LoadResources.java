@@ -90,6 +90,8 @@ public class LoadResources {
             convertSvgToPng("res/svg/SamStand.svg", "../img/png/SamStand.png");
             convertSvgToPng("res/svg/SlickMove.svg", "../img/png/SlickMove.png");
             convertSvgToPng("res/svg/SlickStand.svg", "../img/png/SlickStand.png");
+            convertSvgToPng("res/svg/WrongWayMove.svg", "../img/png/WrongWayMove.png");
+            convertSvgToPng("res/svg/WrongWayStand.svg", "../img/png/WrongWayStand.png");
 
         } catch (Exception e) {
             System.out.println("Error convert " + e.getMessage());
@@ -131,6 +133,8 @@ public class LoadResources {
               Sprites.pinkTile = loadImg("../img/png/TilePink.png");
               Sprites.yellowTile = loadImg("../img/png/TileYellow.png");
               Sprites.life = loadImg("../img/png/Life.png");
+              Sprites.wrongwayStanding = loadImg("../img/png/WrongWayStand.png");
+              Sprites.wrongwayMoving = loadImg("../img/png/WrongWayMove.png");
 
         } catch (Exception e) {
             System.out.println("Error load " + e.toString());
