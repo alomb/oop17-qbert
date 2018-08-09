@@ -11,9 +11,20 @@ import qbert.model.utilities.Position2D;
  */
 public abstract class AbstractTileGC implements TileGC {
 
-    protected Position2D spritePos;
-    protected final Map<Integer, BufferedImage> sprites;
-    protected int spriteIndex;
+    /**
+     * Physical Position of the sprite in the screen.
+     */
+    private Position2D spritePos;
+
+    /**
+     * Map of available sprite for the tile.
+     */
+    private final Map<Integer, BufferedImage> sprites;
+
+    /**
+     * Index of the active sprite.
+     */
+    private int spriteIndex;
 
     /**
      * @param sprites the map of colors orderly indexed
@@ -69,5 +80,12 @@ public abstract class AbstractTileGC implements TileGC {
     @Override 
     public final boolean isTargetColor() {
         return this.spriteIndex == this.sprites.size() - 1;
+    }
+
+    /**
+     * @return The number of available sprite.
+     */
+    public final int getSpriteNumber() {
+        return this.sprites.size();
     }
 }

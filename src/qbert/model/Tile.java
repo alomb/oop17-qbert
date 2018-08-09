@@ -2,13 +2,13 @@ package qbert.model;
 
 import qbert.model.components.PointComponent;
 import qbert.model.utilities.Position2D;
-import qbert.view.Renderable;
+import qbert.view.RenderableBackground;
 import qbert.view.TileGC;
 
 /**
  * Class representing the single {@link Tile} in which the player needs to land to score points.
  */
-public class Tile implements GameObject, Renderable {
+public class Tile extends RenderableBackground implements GameObject {
     private Position2D position;
     private final TileGC graphicComponent;
 
@@ -18,6 +18,7 @@ public class Tile implements GameObject, Renderable {
      * @param graphics Component dealing the tile graphics
      */
     public Tile(final Position2D pos, final TileGC graphics) {
+        super();
         this.graphicComponent = graphics;
         this.graphicComponent.setPosition(new Position2D(pos));
         this.position = new Position2D(pos);
@@ -66,12 +67,6 @@ public class Tile implements GameObject, Renderable {
                 return PointComponent.INTERMEDIATE_COLOR_SCORE;
             }
         }
-        return 0;
-    }
-
-    //TODO: Maybe to be moved in an abstract class
-    @Override
-    public int getZIndex() {
         return 0;
     }
 }
