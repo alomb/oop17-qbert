@@ -47,5 +47,4 @@ public class Qbert extends CharacterImpl implements Player {
     public final DownUpwardCharacterGC getDownUpwardGraphicComponent() {
         return this.graphics;
     }
-
 }

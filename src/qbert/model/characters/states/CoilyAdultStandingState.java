@@ -2,6 +2,7 @@ package qbert.model.characters.states;
 
 import qbert.model.characters.Snake;
 import qbert.model.characters.Player;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 
 /**
@@ -38,19 +39,19 @@ public class CoilyAdultStandingState extends WaitTimerState {
         final int dx, dy;
 
         if (targetPosition.getX() > myPosition.getX()) {
-            dx = 1;
+            dx = this.getCharacter().getStep();
         } else if (targetPosition.getX() < myPosition.getX()) {
-            dx = -1;
+            dx = -this.getCharacter().getStep();
         } else {
-            dx = ((Math.random() > 0.5) ? 1 : -1);
+            dx = ((Math.random() > 0.5) ? this.getCharacter().getStep() : -this.getCharacter().getStep());
         }
 
-        if (targetPosition.getY() > myPosition.getY() || myPosition.getY() == 0) {
-            dy = 1;
+        if (targetPosition.getY() > myPosition.getY() || myPosition.getY() == Dimensions.MAP_BOTTOM_EDGE) {
+            dy = this.getCharacter().getStep();
         } else if (targetPosition.getY() == myPosition.getY()) {
-            dy = ((Math.random() > 0.5) ? 1 : -1);
+            dy = ((Math.random() > 0.5) ? this.getCharacter().getStep() : -this.getCharacter().getStep());
         } else {
-            dy = -1;
+            dy = -this.getCharacter().getStep();
         }
 
         if (dx > 0 && dy > 0) {

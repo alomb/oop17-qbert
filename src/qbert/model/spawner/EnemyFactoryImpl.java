@@ -72,7 +72,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public final Character createWrongway(final float speed, final int standingTime) {
         final Position2D logicalPos = new Position2D(0, 0);
-        final RightwardCharacterGC graphics = new RightwardCharacterGC(Sprites.wrongwayStanding, Sprites.wrongwayMoving, new Position2D(-Dimensions.getSpawningHeight(), Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight() * 2));
+        final RightwardCharacterGC graphics = new RightwardCharacterGC(Sprites.wrongwayStanding, Sprites.wrongwayMoving, new Position2D(-Dimensions.getSpawningHeight(), Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
 
         return new Wrongway(logicalPos, speed, graphics, standingTime);
     }

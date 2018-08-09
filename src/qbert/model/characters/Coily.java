@@ -38,6 +38,7 @@ public class Coily extends CharacterImpl implements Snake {
         this.standingTime = standingTime;
         this.qbert = qbert;
         this.setCurrentState(new SpawnState(this));
+
     }
 
     @Override

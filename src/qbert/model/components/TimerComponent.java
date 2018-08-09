@@ -97,7 +97,8 @@ public class TimerComponent {
                 //Check if entity is colliding with QBert
                 //TODO: Exclude collision detection from time freezing
                 if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !qbert.isMoving() && !e.isMoving()
-                        || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())) {
+                        || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())
+                        || ((qbert.getCurrentPosition().getX() - 1 == e.getCurrentPosition().getX() ||  qbert.getCurrentPosition().getX() + 1 == e.getCurrentPosition().getX()) && qbert.getCurrentPosition().getY() + 1 == e.getCurrentPosition().getY() && !e.isMoving() && !qbert.isMoving())) {
                     e.collide(qbert, this.points, this);
                 }
             }

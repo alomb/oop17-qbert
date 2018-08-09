@@ -6,29 +6,19 @@ package qbert.model.utilities;
 public final class Dimensions {
 
     /**
-     * Index representing the exact difference between X and Y axes of positions just beyond the left limit of the map.
-     */
-    public static final int MAP_LEFT_TOP_EDGE = 2;
-
-    /**
-     * Index representing the exact sum between X and Y axes of positions just beyond the right limit of the map.
-     */
-    public static final int MAP_RIGHT_TOP_EDGE = 14;
-
-    /**
      * Index representing the lowest Y axis value before the bottom limit of the map.
      */
-    public static final int MAP_BOTTOM_EDGE = 0;
+    public static final int MAP_BOTTOM_EDGE = 1;
 
     /**
      * Number of columns in the map.
      */
-    public static final int MAP_COLUMNS = 13;
+    public static final int MAP_COLUMNS = 27;
 
     /**
      * Number of rows in the map.
      */
-    public static final int MAP_ROWS = 7;
+    public static final int MAP_ROWS = 14;
 
     /**
      * Index representing the Z axis positioned behind the map.
@@ -38,32 +28,32 @@ public final class Dimensions {
     /**
      * Index representing the X axis value of the left spawning position.
      */
-    public static final int MAP_SPAWNING_POINT_LEFT_X = 5;
+    public static final int MAP_SPAWNING_POINT_LEFT_X = 11;
 
     /**
      * Index representing the Y axis value of the left spawning position.
      */
-    public static final int MAP_SPAWNING_POINT_LEFT_Y = 5;
+    public static final int MAP_SPAWNING_POINT_LEFT_Y = 11;
 
     /**
      * Index representing the X axis value of the right spawning position.
      */
-    public static final int MAP_SPAWNING_POINT_RIGHT_X = 7;
+    public static final int MAP_SPAWNING_POINT_RIGHT_X = 15;
 
     /**
      * Index representing the Y axis value of the right spawning position.
      */
-    public static final int MAP_SPAWNING_POINT_RIGHT_Y = 5;
+    public static final int MAP_SPAWNING_POINT_RIGHT_Y = 11;
 
     /**
      * Index representing the X axis value of the QBert spawning position.
      */
-    public static final int MAP_SPAWNING_QBERT_X = 6;
+    public static final int MAP_SPAWNING_QBERT_X = 13;
 
     /**
      * Index representing the Y axis value of the QBert spawning position.
      */
-    public static final int MAP_SPAWNING_QBERT_Y = 6;
+    public static final int MAP_SPAWNING_QBERT_Y = 13;
 
     private static int screenHeight;
     private static int screenWidth;

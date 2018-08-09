@@ -1,6 +1,7 @@
 package qbert.model.characters.states;
 
 import qbert.model.characters.Snake;
+import qbert.model.utilities.Dimensions;
 
 /**
  * The {@link CharacterState} used by {@link Snake} in its egg form when it 
@@ -22,7 +23,7 @@ public class CoilyBallStandingState extends DownwardCharStandingState {
 
     @Override
     public final boolean canAdvance() {
-        if (this.getCharacter().getCurrentPosition().getY() == 0) {
+        if (this.getCharacter().getCurrentPosition().getY() == Dimensions.MAP_BOTTOM_EDGE) {
             this.coily.transform();
             this.getCharacter().setCurrentState(this.getCharacter().getStandingState());
             return false;

@@ -24,13 +24,13 @@ public class RightwardCharStandingState extends WaitTimerState {
         CharacterState nextState;
         final Position2D newPos = new Position2D(getCharacter().getCurrentPosition());
         if (this.canAdvance()) {
-            newPos.setX(newPos.getX() + 1);
-
-            if (newPos.getY() == Dimensions.MAP_BOTTOM_EDGE || Math.random() > 0.5) {
-                newPos.setY(newPos.getY() + 1);
+            System.out.println(newPos);
+            newPos.setX(newPos.getX() + this.getCharacter().getStep());
+            if (newPos.getY() <= Dimensions.MAP_BOTTOM_EDGE || Math.random() > 0.5) {
+                newPos.setY(newPos.getY() + this.getCharacter().getStep());
                 nextState = new MoveState.DownLeft(this.getCharacter());
             } else {
-                newPos.setY(newPos.getY() - 1);
+                newPos.setY(newPos.getY() - this.getCharacter().getStep());
                 nextState = new MoveState.DownRight(this.getCharacter());
             }
             this.getCharacter().setNextPosition(newPos);

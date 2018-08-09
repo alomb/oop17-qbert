@@ -97,7 +97,7 @@ public class Game implements Model {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
             qbert.setNextPosition(
-                    new Position2D(qbert.getCurrentPosition().getX() - 1, qbert.getCurrentPosition().getY() - 1));
+                    new Position2D(qbert.getCurrentPosition().getX() - qbert.getStep(), qbert.getCurrentPosition().getY() - qbert.getStep()));
 
             qbert.setCurrentState(new MoveState.DownLeft(qbert));
         }
@@ -108,7 +108,7 @@ public class Game implements Model {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
             qbert.setNextPosition(
-                    new Position2D(qbert.getCurrentPosition().getX() - 1, qbert.getCurrentPosition().getY() + 1));
+                    new Position2D(qbert.getCurrentPosition().getX() - qbert.getStep(), qbert.getCurrentPosition().getY() + qbert.getStep()));
 
             qbert.setCurrentState(new MoveState.UpLeft(qbert));
         }
@@ -119,7 +119,7 @@ public class Game implements Model {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
             qbert.setNextPosition(
-                new Position2D(qbert.getCurrentPosition().getX() + 1, qbert.getCurrentPosition().getY() - 1));
+                new Position2D(qbert.getCurrentPosition().getX() + qbert.getStep(), qbert.getCurrentPosition().getY() - qbert.getStep()));
 
             qbert.setCurrentState(new MoveState.DownRight(qbert));
         }
@@ -130,7 +130,7 @@ public class Game implements Model {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
             qbert.setNextPosition(
-                    new Position2D(qbert.getCurrentPosition().getX() + 1, qbert.getCurrentPosition().getY() + 1));
+                    new Position2D(qbert.getCurrentPosition().getX() + qbert.getStep(), qbert.getCurrentPosition().getY() + qbert.getStep()));
 
             qbert.setCurrentState(new MoveState.UpRight(qbert));
         }

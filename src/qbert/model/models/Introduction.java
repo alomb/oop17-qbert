@@ -129,7 +129,7 @@ public class Introduction implements Model {
             this.steps++;
 
             this.qbert.setNextPosition(
-                    new Position2D(qbert.getCurrentPosition().getX() + 1, qbert.getCurrentPosition().getY() - 1));
+                    new Position2D(qbert.getCurrentPosition().getX() + qbert.getStep(), qbert.getCurrentPosition().getY() - qbert.getStep()));
 
             this.qbert.setCurrentState(new MoveState.DownRight(this.qbert));
         }

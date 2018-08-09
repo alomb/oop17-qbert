@@ -23,12 +23,12 @@ public class DownwardCharStandingState extends WaitTimerState {
         CharacterState nextState;
         final Position2D newPos = new Position2D(getCharacter().getCurrentPosition());
         if (this.canAdvance()) {
-            newPos.setY(newPos.getY() - 1);
+            newPos.setY(newPos.getY() - this.getCharacter().getStep());
             if (Math.random() > 0.5) {
-                newPos.setX(newPos.getX() + 1);
+                newPos.setX(newPos.getX() + this.getCharacter().getStep());
                 nextState = new MoveState.DownRight(this.getCharacter());
             } else {
-                newPos.setX(newPos.getX() - 1);
+                newPos.setX(newPos.getX() - this.getCharacter().getStep());
                 nextState = new MoveState.DownLeft(this.getCharacter());
             }
             this.getCharacter().setNextPosition(newPos);

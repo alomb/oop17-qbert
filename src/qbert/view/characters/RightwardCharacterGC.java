@@ -36,7 +36,7 @@ public class RightwardCharacterGC extends CharacterGCImpl {
         super(standSprite, startSpritePos);
         this.standSprite = standSprite;
         this.moveSprite = moveSprite;
-        this.landPos = new Position2D(Dimensions.getBackgroundX(), this.getSpawnPosition().getY()); 
+        this.landPos = new Position2D(Dimensions.getBackgroundX() - this.jumpHeight, this.getSpawnPosition().getY()); 
         this.up = true;
     }
 

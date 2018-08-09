@@ -1,12 +1,15 @@
 package qbert.model.components;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import qbert.model.characters.Player;
 import qbert.model.characters.states.QbertOnDiskState;
@@ -29,6 +32,7 @@ import qbert.view.BaseTileGC;
 public class MapComponent {
 
     private final Map<Integer, Map<Integer, Tile>> tiles;
+    private final Map<Integer, List<Integer>> sideTiles;
     private final Map<Integer, Map<Integer, Optional<Disk>>> disks;
 
     /**
@@ -41,50 +45,84 @@ public class MapComponent {
         final Random rand = new Random();
 
         final Map<Integer, BufferedImage> colors = settings.getColorMap();
-        tiles = new HashMap<>();
+        this.tiles = new HashMap<>();
+        this.sideTiles = new HashMap<>();
 
-        for (int i = 0; i < Dimensions.MAP_COLUMNS; i++) {
-            final Map<Integer, Tile> column = new HashMap<>();
+        for (int i = 1; i < Dimensions.MAP_ROWS; i += 2) {
+            for (int j = i; j < Dimensions.MAP_COLUMNS - i; j += 4) {
 
-            for (int j = 0; j <= i && j < Dimensions.MAP_COLUMNS - i; j++) {
-                if (i % 2 == j % 2) {
-                    TileGC gComponent;
-                    if (settings.isReversible()) {
-                        gComponent = new ReversibleTileGC(colors);
-                    } else {
-                        gComponent = new BaseTileGC(colors);
-                    }
-                    column.put(j, new Tile(new Position2D(i, j), gComponent));
-                    tiles.put(i, column);
+                System.out.println(j + " " + i);
+                TileGC gComponent;
+                if (settings.isReversible()) {
+                    gComponent = new ReversibleTileGC(colors);
+                } else {
+                    gComponent = new BaseTileGC(colors);
                 }
+
+                if (!this.tiles.containsKey(j)) {
+                    final Map<Integer, Tile> column = new HashMap<>();
+                    column.put(i, new Tile(new Position2D(j, i), gComponent));
+                    tiles.put(j, column);
+                } else {
+                    tiles.get(j).put(i, new Tile(new Position2D(j, i), gComponent));
+                }
+            }
+        }
+
+        for (int i = 0; i < Dimensions.MAP_ROWS; i += 2) {
+            for (int j = i; j < Dimensions.MAP_COLUMNS - i; j += 4) {
+
+                System.out.println("R  " + j + " " + i);
+
+                if (!this.sideTiles.containsKey(j)) {
+                    this.sideTiles.put(j, new ArrayList<Integer>());
+                }
+                this.sideTiles.get(j).add(i);
+            }
+        }
+
+        for (int i = 0; i < Dimensions.MAP_ROWS; i += 2) {
+            for (int j = i + 2; j < Dimensions.MAP_COLUMNS - i + 2; j += 4) {
+
+                System.out.println("L  " + j + " " + i);
+
+                if (!this.sideTiles.containsKey(j)) {
+                    this.sideTiles.put(j, new ArrayList<Integer>());
+                }
+                this.sideTiles.get(j).add(i);
             }
         }
 
         disks = new HashMap<>();
 
-        for (int i = 1; i <= Dimensions.MAP_ROWS; i++) {
+        for (int i = 3; i <= Dimensions.MAP_ROWS; i += 2) {
             final Map<Integer, Optional<Disk>> row = new HashMap<>();
             final Map<Integer, Optional<Disk>> row2 = new HashMap<>();
             row.put(i, Optional.empty());
             row2.put(i, Optional.empty());
 
-            disks.put(i - 2, row);
-            disks.put((Dimensions.MAP_ROWS - i) * 2 + i, row2);
+            disks.put(i - 4, row);
+            disks.put(Dimensions.MAP_COLUMNS - i + 3, row2);
         }
 
         while (disksToPlace > 0) {
-            final int n = rand.nextInt(Dimensions.MAP_ROWS - 1) + 1;
+            final List<Integer> yes = IntStream.iterate(3, i -> i + 2).limit((Dimensions.MAP_ROWS / 2) - 1).mapToObj(i -> i).collect(Collectors.toList()); 
             final int side = rand.nextInt(2);
-            final int y = n;
+
+            Collections.shuffle(yes);
+            final int y = yes.stream().findFirst().get();
             int x;
 
-            if (side > 0) {
-                x = n - 2;
-            } else {
-                x = Dimensions.MAP_COLUMNS + 1 - n;
-            }
+            System.out.println(yes);
 
-            if (!disks.get(x).get(y).isPresent()) {
+            if (side > 0) {
+                x = y - 4;
+            } else {
+                x = Dimensions.MAP_COLUMNS + 3 - y;
+            }
+            System.out.println(x + " " + y);
+
+            if (disks.containsKey(x) && disks.get(x).containsKey(y) && !disks.get(x).get(y).isPresent()) {
                 final Map<Integer, BufferedImage> im = new HashMap<>();
                 im.put(0, Sprites.disk1);
                 im.put(1, Sprites.disk2);
@@ -95,6 +133,7 @@ public class MapComponent {
                 disks.get(x).put(y, Optional.of(disk));
 
                 disksToPlace--;
+                System.out.println();
             }
         }
         this.reset();
@@ -105,8 +144,11 @@ public class MapComponent {
      * @param pos Position of the required {@link Tile}
      * @return {@link Tile} in the requested {@link Position2D}
      */
-   public Tile getTile(final Position2D pos) {
-       return tiles.get(pos.getX()).get(pos.getY());
+   public Optional<Tile> getTile(final Position2D pos) {
+       if (this.tiles.containsKey(pos.getX()) && this.tiles.get(pos.getX()).containsKey(pos.getY())) {
+           return Optional.of(tiles.get(pos.getX()).get(pos.getY()));
+       }
+       return Optional.empty();
    }
 
    private void reset() {
@@ -151,7 +193,11 @@ public class MapComponent {
     * @return Number of points given by the action
     */
    public int incrementColor(final Position2D pos) {
-       return this.getTile(pos).increment();
+       if (this.getTile(pos).isPresent()) {
+           return this.getTile(pos).get().increment();
+       } else {
+           return 0;
+       }
    }
 
    /**
@@ -159,7 +205,9 @@ public class MapComponent {
     * @param pos Position of the {@link Tile}
     */
    public void resetColor(final Position2D pos) {
-       this.getTile(pos).reset();
+       if (this.getTile(pos).isPresent()) {
+           this.getTile(pos).get().reset();
+       }
    }
 
    /**
@@ -168,7 +216,8 @@ public class MapComponent {
     * @return True if the position is below the map
     */
    public boolean isBelowMap(final Position2D logicPos) {
-       return logicPos.getY() < Dimensions.MAP_BOTTOM_EDGE;
+       return !(this.getTile(logicPos).isPresent() 
+               || (this.sideTiles.containsKey(logicPos.getX()) && this.sideTiles.get(logicPos.getX()).contains(logicPos.getY())));
    }
 
    /**
@@ -177,8 +226,8 @@ public class MapComponent {
     * @return True if the position is beyond the map
     */
    public boolean isOverMap(final Position2D logicPos) {
-       return logicPos.getX() + logicPos.getY() == Dimensions.MAP_RIGHT_TOP_EDGE 
-               || logicPos.getY() - logicPos.getX() == Dimensions.MAP_LEFT_TOP_EDGE;
+       return !(this.getTile(logicPos).isPresent() 
+               || (this.sideTiles.containsKey(logicPos.getX()) && this.sideTiles.get(logicPos.getX()).contains(logicPos.getY())));
    }
 
    /**
@@ -197,7 +246,7 @@ public class MapComponent {
     */
    public boolean checkForDisk(final Player qbert) {
        final Position2D logicPos = qbert.getNextPosition();
-       if (this.isOverMap(logicPos)) {
+       if (this.isOverMap(logicPos) && disks.containsKey(logicPos.getX()) && disks.get(logicPos.getX()).containsKey(logicPos.getY())) {
            final Optional<Disk> disk = disks.get(logicPos.getX()).get(logicPos.getY());
            if (disk.isPresent()) {
                disks.get(logicPos.getX()).put(logicPos.getY(), Optional.empty());

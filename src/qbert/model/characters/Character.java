@@ -26,6 +26,11 @@ public interface Character extends GameObject, Renderable, Collidable {
     void setNextPosition(Position2D nextGridPos);
 
     /**
+     * @return how long the {@link Character} normally moves on logic position.
+     */
+    int getStep();
+
+    /**
      * @return the {@link Character} movement speed
      */
     float getSpeed();

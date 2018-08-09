@@ -36,8 +36,8 @@ public class BaseTileGC implements TileGC {
     @Override
     public final void setPosition(final Position2D logicPos) {
             this.spritePos = new Position2D(
-                    Dimensions.getBackgroundX() + Dimensions.getCubeWidth() / 2 * logicPos.getX(),
-                    (Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight()) - (Dimensions.getCubeHeight() * (logicPos.getY() + 1) + Dimensions.getTileHeight() / 2)
+                    Dimensions.getBackgroundX() + (Dimensions.getCubeWidth() / 2) * ((logicPos.getX() - 1) / 2),
+                    (Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight()) - (Dimensions.getCubeHeight() * (((logicPos.getY() - 1) / 2) + 1) + Dimensions.getTileHeight() / 2)
             );
     }
 
