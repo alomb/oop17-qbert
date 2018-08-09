@@ -138,7 +138,7 @@ public abstract class BasicAnimation extends MovementAnimation {
                 this.radius = Math.abs(this.getCurrentPosition().getY() - targetPos.getY()) / 2;
 
                 //If the target has an Y coordinate that is less than the current the center of the circumference is under the current position, above otherwise
-                if (this.getCurrentPosition().getY() > this.getCurrentPosition().getY()) {
+                if (this.getCurrentPosition().getY() > this.getTargetPosition().getY()) {
                     this.centerPos = new Position2D(this.getCurrentPosition().getX(), (int) (this.getCurrentPosition().getY() - this.radius));
                 } else {
                     this.centerPos = new Position2D(this.getCurrentPosition().getX(), (int) (this.getCurrentPosition().getY() + this.radius));
@@ -190,7 +190,7 @@ public abstract class BasicAnimation extends MovementAnimation {
                 this.radius = Math.abs(this.getCurrentPosition().getY() - targetPos.getY()) / 2;
 
                 //If the target has an Y coordinate that is more than the current the center of the circumference is above the current position, under otherwise
-                if (this.getCurrentPosition().getY() < this.getCurrentPosition().getY()) {
+                if (this.getCurrentPosition().getY() < this.getTargetPosition().getY()) {
                     this.centerPos = new Position2D(this.getCurrentPosition().getX(), (int) (this.getCurrentPosition().getY() + this.radius));
                 } else {
                     this.centerPos = new Position2D(this.getCurrentPosition().getX(), (int) (this.getCurrentPosition().getY() - this.radius)); 

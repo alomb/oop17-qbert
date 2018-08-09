@@ -4,6 +4,7 @@ import java.util.stream.Collectors;
 
 import qbert.model.characters.Coily;
 import qbert.model.characters.Player;
+import qbert.model.characters.Ugg;
 import qbert.model.characters.states.FallState;
 import qbert.model.characters.states.LandState;
 import qbert.model.spawner.Spawner;
@@ -77,6 +78,12 @@ public class TimerComponent {
             final Position2D logicPos = e.getNextPosition();
             //Check if entity is just landed 
             if (e.getCurrentState() instanceof LandState) {
+
+                //Checking if entity collides with qbert falling out the map sides
+                if (((qbert.getCurrentPosition().getX() - 1 == e.getNextPosition().getX() ||  qbert.getCurrentPosition().getX() + 1 == e.getNextPosition().getX()) && qbert.getCurrentPosition().getY() + 1 == e.getNextPosition().getY()) && !qbert.isMoving()) {
+                    e.collide(qbert, this.points, this);
+                }
+
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(logicPos)) {
                     e.setCurrentState(new FallState(e));
