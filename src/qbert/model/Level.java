@@ -147,8 +147,6 @@ public final class Level {
                 this.timerCallback = false;
             }
 
-            timer.update(elapsed);
-
             Position2D qLogicPos = qbert.getNextPosition();
 
             if (qbert.isDead()) {
@@ -173,6 +171,8 @@ public final class Level {
                     Sounds.playSound("QBertGoesOverTheEdge.wav");
                 }
             }
+
+            timer.update(elapsed);
         } else {
             this.waitTimer -= elapsed;
         }

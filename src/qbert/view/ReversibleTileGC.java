@@ -18,7 +18,7 @@ public class ReversibleTileGC extends AbstractTileGC {
     @Override
     public final boolean setNextSprite() {
         if (this.getSpriteIndex() < this.getSpriteNumber() - 1) {
-            this.setSprite(this.getSpriteIndex());
+            this.setSprite(this.getSpriteIndex() + 1);
             return true;
         } else {
             this.setSprite(0);
