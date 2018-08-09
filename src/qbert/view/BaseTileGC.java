@@ -17,8 +17,8 @@ public class BaseTileGC extends AbstractTileGC {
 
     @Override
     public final boolean setNextSprite() {
-        if (this.spriteIndex < this.sprites.size() - 1) {
-            this.spriteIndex++;
+        if (this.getSpriteIndex() < this.getSpriteNumber() - 1) {
+            this.setSprite(this.getSpriteIndex() + 1);
             return true;
         }
         return false;
