@@ -2,6 +2,7 @@ package qbert.model.spawner;
 
 import qbert.model.characters.Character;
 import qbert.model.characters.Snake;
+import qbert.model.characters.Ugg;
 import qbert.model.characters.Wrongway;
 import qbert.model.characters.Coily;
 import qbert.model.characters.GreenBall;
@@ -16,6 +17,7 @@ import qbert.view.characters.CharacterGC;
 import qbert.view.characters.CoilyGC;
 import qbert.view.characters.CoilyGCImpl;
 import qbert.view.characters.DownwardCharacterGCImpl;
+import qbert.view.characters.LeftwardCharacterGC;
 import qbert.view.characters.PlayerGC;
 import qbert.view.characters.PlayerGCImpl;
 import qbert.view.characters.RightwardCharacterGC;
@@ -75,6 +77,14 @@ public class EnemyFactoryImpl implements EnemyFactory {
         final RightwardCharacterGC graphics = new RightwardCharacterGC(Sprites.wrongwayStanding, Sprites.wrongwayMoving, new Position2D(-Dimensions.getSpawningHeight(), Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
 
         return new Wrongway(logicalPos, speed, graphics, standingTime);
+    }
+
+    @Override
+    public final Character createUgg(final float speed, final int standingTime) {
+        final Position2D logicalPos = new Position2D(26, 0);
+        final LeftwardCharacterGC graphics = new LeftwardCharacterGC(Sprites.uggStanding, Sprites.uggMoving, new Position2D(Dimensions.getWindowWidth() + Dimensions.getSpawningHeight(), Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
+
+        return new Ugg(logicalPos, speed, graphics, standingTime);
     }
 
     private Position2D getRandomPos() {

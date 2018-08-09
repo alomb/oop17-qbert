@@ -51,7 +51,6 @@ public class MapComponent {
         for (int i = 1; i < Dimensions.MAP_ROWS; i += 2) {
             for (int j = i; j < Dimensions.MAP_COLUMNS - i; j += 4) {
 
-                System.out.println(j + " " + i);
                 TileGC gComponent;
                 if (settings.isReversible()) {
                     gComponent = new ReversibleTileGC(colors);
@@ -72,8 +71,6 @@ public class MapComponent {
         for (int i = 0; i < Dimensions.MAP_ROWS; i += 2) {
             for (int j = i; j < Dimensions.MAP_COLUMNS - i; j += 4) {
 
-                System.out.println("R  " + j + " " + i);
-
                 if (!this.sideTiles.containsKey(j)) {
                     this.sideTiles.put(j, new ArrayList<Integer>());
                 }
@@ -83,8 +80,6 @@ public class MapComponent {
 
         for (int i = 0; i < Dimensions.MAP_ROWS; i += 2) {
             for (int j = i + 2; j < Dimensions.MAP_COLUMNS - i + 2; j += 4) {
-
-                System.out.println("L  " + j + " " + i);
 
                 if (!this.sideTiles.containsKey(j)) {
                     this.sideTiles.put(j, new ArrayList<Integer>());
@@ -113,14 +108,11 @@ public class MapComponent {
             final int y = yes.stream().findFirst().get();
             int x;
 
-            System.out.println(yes);
-
             if (side > 0) {
                 x = y - 4;
             } else {
                 x = Dimensions.MAP_COLUMNS + 3 - y;
             }
-            System.out.println(x + " " + y);
 
             if (disks.containsKey(x) && disks.get(x).containsKey(y) && !disks.get(x).get(y).isPresent()) {
                 final Map<Integer, BufferedImage> im = new HashMap<>();
@@ -133,7 +125,6 @@ public class MapComponent {
                 disks.get(x).put(y, Optional.of(disk));
 
                 disksToPlace--;
-                System.out.println();
             }
         }
         this.reset();

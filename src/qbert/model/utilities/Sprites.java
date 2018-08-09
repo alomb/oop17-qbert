@@ -41,4 +41,6 @@ public class Sprites {
     public static BufferedImage life;
     public static BufferedImage wrongwayStanding;
     public static BufferedImage wrongwayMoving;
+    public static BufferedImage uggStanding;
+    public static BufferedImage uggMoving;
 }

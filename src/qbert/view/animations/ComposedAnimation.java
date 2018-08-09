@@ -85,6 +85,24 @@ public class ComposedAnimation extends MovementAnimation {
     }
 
     /**
+     * Animation for a down-right jump +90 degrees rotated. Up becomes Right, Down becomes Left.
+     */
+    public static class JumpDownRightLeftward extends ComposedAnimation {
+
+        /**
+         * @param startPos the first {@link Position2D}
+         * @param targetPos the last {@link Position2D}
+         */
+        public JumpDownRightLeftward(final Position2D startPos, final Position2D targetPos) {
+            super(startPos, targetPos);
+            final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
+
+            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(startPos, intermediatePosition, ANGLE90, -ANGLE90));
+            this.getAnimations().add(new BasicAnimation.Left(intermediatePosition, targetPos));
+        }
+    }
+
+    /**
      * Animation for a down-left jump.
      */
     public static class JumpDownLeft extends ComposedAnimation {
@@ -117,6 +135,24 @@ public class ComposedAnimation extends MovementAnimation {
 
             this.getAnimations().add(new BasicAnimation.ArcClockwise(startPos, intermediatePosition, ANGLE90, ANGLE270));
             this.getAnimations().add(new BasicAnimation.Right(intermediatePosition, targetPos));
+        }
+    }
+
+    /**
+     * Animation for a down-left jump -90 degrees rotated. Up becomes Left, Down becomes Right.
+     */
+    public static class JumpDownLeftLeftward extends ComposedAnimation {
+
+        /**
+         * @param startPos the first {@link Position2D}
+         * @param targetPos the last {@link Position2D}
+         */
+        public JumpDownLeftLeftward(final Position2D startPos, final Position2D targetPos) {
+            super(startPos, targetPos);
+            final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
+
+            this.getAnimations().add(new BasicAnimation.ArcClockwise(startPos, intermediatePosition, -ANGLE90, ANGLE90));
+            this.getAnimations().add(new BasicAnimation.Left(intermediatePosition, targetPos));
         }
     }
 

@@ -50,4 +50,11 @@ public interface EnemyFactory {
      * @return the {@link Character} representing {@link Wrongway}
      */
     Character createWrongway(float speed, int standingTime);
+
+    /**
+     * @param speed the {@link Character} movement speed
+     * @param standingTime the time passed on standing state
+     * @return the {@link Character} representing {@link Ugg}
+     */
+    Character createUgg(float speed, int standingTime);
 }
