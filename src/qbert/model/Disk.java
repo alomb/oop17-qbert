@@ -1,12 +1,11 @@
 package qbert.model;
 
 import qbert.view.DiskGC;
-import qbert.view.Renderable;
 
 /**
  * An extension of {@link GameObject} for disks.
  */
-public interface Disk extends GameObject, Renderable {
+public interface Disk extends GameObject {
 
     /**
      * @return the linked {@link DiskGC}

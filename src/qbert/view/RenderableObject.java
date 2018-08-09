@@ -3,7 +3,7 @@ package qbert.view;
 /**
  * Implementation of Renderable Interface.
  */
-public class RenderableObject implements Renderable {
+public class RenderableObject extends RenderableBackground {
 
     private final GraphicComponent graphicComponent;
 
@@ -12,18 +12,13 @@ public class RenderableObject implements Renderable {
      * @param g {@link GraphicComponent} of the object represented by the class
      */
     public RenderableObject(final GraphicComponent g) {
+        super();
         this.graphicComponent = g;
     }
 
     @Override
     public final GraphicComponent getGraphicComponent() {
         return this.graphicComponent;
-    }
-
-    //TODO: Maybe to be moved in an abstract class
-    @Override
-    public int getZIndex() {
-        return 0;
     }
 
 }

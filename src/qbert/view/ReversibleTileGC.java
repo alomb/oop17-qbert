@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * Implementation of {@link TileGC} which rotates the colors endlessly.
  */
-public class ReversibleTileGC extends BaseTileGC {
+public class ReversibleTileGC extends AbstractTileGC {
 
     /**
      * @param sprites the map of colors orderly indexed
@@ -16,12 +16,12 @@ public class ReversibleTileGC extends BaseTileGC {
     }
 
     @Override
-    public boolean setNextSprite() {
-        if (this.spriteIndex < this.sprites.size() - 1) {
-            this.spriteIndex++;
+    public final boolean setNextSprite() {
+        if (this.getSpriteIndex() < this.getSpriteNumber() - 1) {
+            this.setSprite(this.getSpriteIndex());
             return true;
         } else {
-            this.spriteIndex = 0;
+            this.setSprite(0);
             return false;
         }
     }

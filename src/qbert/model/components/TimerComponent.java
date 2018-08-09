@@ -52,12 +52,12 @@ public class TimerComponent {
             this.timeout();
         }
 
+        this.updateDisks(elapsed);
+        this.updateQbert(elapsed);
+
         if (!pauseEntities) {
             this.updateEntities(elapsed);
         }
-
-        this.updateDisks(elapsed);
-        this.updateQbert(elapsed);
     }
 
     /**
