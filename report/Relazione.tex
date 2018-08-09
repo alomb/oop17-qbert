@@ -59,14 +59,14 @@ Fra le difficoltà che si potrebbero incontrare potrebbe esserci quella di costr
 \centering{}
 \includegraphics[width=\linewidth]{img/Analisi}
 \caption{Schema dell'analisi e modello del dominio}
-\label{img:Analisis}
+\label{img:Analysis}
 \end{figure}
 
 \chapter{Design}
 
 \section{Architettura}
 
-L'architettura dell'applicazione è realizzata utilizzando il pattern architetturale MVC in quanto permette facilmente di separare la logica e i dati della applicazione della effettiva tecnica adottata per la visualizzazione di questi. La applicazione e la relativa architettura può essere spezzata in varie implementazioni associate allo stato nella quale si trova attualmente.
+L'architettura dell'applicazione è realizzata utilizzando il pattern architetturale MVC in quanto permette facilmente di separare la logica e i dati della applicazione dalla effettiva tecnica adottata per la visualizzazione di questi. La applicazione e la relativa architettura può essere spezzata in varie implementazioni associate allo stato nella quale si trova attualmente.
 
 L'interfaccia Model fornisce tutte le funzionalità comuni ad ogni fase della applicazione per comunicare al Controller i dati da mostrare e presentare i comandi in grado di influenzare l'esecuzione della logica interna. La gestione dello stato corrente e la relativa implementazione lato model è fatta da una entità preposta del Controller detta GameStatusManager. 
 
