@@ -4,11 +4,9 @@ import java.util.stream.Collectors;
 
 import qbert.model.characters.Coily;
 import qbert.model.characters.Player;
-import qbert.model.characters.Ugg;
 import qbert.model.characters.states.FallState;
 import qbert.model.characters.states.LandState;
 import qbert.model.spawner.Spawner;
-import qbert.model.spawner.SpawnerImpl;
 import qbert.model.utilities.Position2D;
 
 /**

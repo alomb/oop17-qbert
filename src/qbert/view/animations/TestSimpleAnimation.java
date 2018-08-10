@@ -61,14 +61,14 @@ public class TestSimpleAnimation {
         for (int i = 0; i < size; i++) {
             final Position2D targetDown = new Position2D(source.getX(), this.random.nextInt(10) + source.getY());
             final Position2D targetUp = new Position2D(source.getX(), source.getY() - this.random.nextInt(10));
-            Animation anim = new BasicAnimation.Down(source, targetDown);
+            Animation anim = new StraightMovementAnimation(source, targetDown);
 
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }
             assertEquals(source, targetDown);
 
-            anim = new BasicAnimation.Up(source, targetUp);
+            anim = new StraightMovementAnimation(source, targetUp);
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }
@@ -77,7 +77,7 @@ public class TestSimpleAnimation {
     }
 
     /**
-     * Test {@link ArcClockwise} and {@link ArcCounterClockwise}.
+     * Test {@link ArcClockwiseAnimation} and {@link ArcCounterClockwise}.
      */
     @Test
     public void testMoveAnimation() {
@@ -87,14 +87,14 @@ public class TestSimpleAnimation {
         for (int i = 0; i < size; i++) {
             final Position2D target = new Position2D(source.getX() + this.random.nextInt(20), source.getY());
             final Position2D targetCounter = new Position2D(source.getX() - this.random.nextInt(20), source.getY());
-            Animation anim = new BasicAnimation.ArcClockwise(source, target, ANGLE180, ANGLE360);
+            Animation anim = new ArcClockwiseAnimation(source, target, ANGLE180, ANGLE360);
 
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }
             assertEquals(source, target);
 
-            anim = new BasicAnimation.ArcCounterclockwise(source, targetCounter, ANGLE0, -ANGLE180);
+            anim = new ArcCounterclockwiseAnimation(source, targetCounter, ANGLE0, -ANGLE180);
             while (!anim.hasFinished()) {
                 source = anim.updateAnimation(TestSimpleAnimation.SPEED);
             }

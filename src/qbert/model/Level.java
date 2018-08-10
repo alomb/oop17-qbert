@@ -149,10 +149,6 @@ public final class Level {
 
             Position2D qLogicPos = qbert.getNextPosition();
 
-            if (qbert.isDead()) {
-                this.death();
-            }
-
             //Check if entity is just landed 
             if (qbert.getCurrentState() instanceof LandState) {
                 //Checking if entity is outside the map
@@ -173,6 +169,11 @@ public final class Level {
             }
 
             timer.update(elapsed);
+
+            if (qbert.isDead()) {
+                this.death();
+            }
+
         } else {
             this.waitTimer -= elapsed;
         }

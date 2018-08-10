@@ -67,4 +67,15 @@ public abstract class MovementAnimation implements Animation {
      * It is called in updateAnimation(), when hasFinished() return false.
      */
     protected abstract void calculateNext();
+
+    /**
+     * @param centerPos the circumference center {@link Position2D}
+     * @param angle the rotation angle
+     * @param radius the circumference radius
+     * @return the {@link Position2D} after the rotation
+     */
+    public static Position2D calculateCircumferenceCoords(final Position2D centerPos, final int angle, final double radius) {
+        return new Position2D(Math.round((float) (centerPos.getX() + Math.cos(Math.toRadians(angle)) * radius)),
+                Math.round((float) (centerPos.getY() + Math.sin(Math.toRadians(angle)) * radius)));
+    }
 }

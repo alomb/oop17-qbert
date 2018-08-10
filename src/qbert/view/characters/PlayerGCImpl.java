@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.DisplaceAnimation;
-import qbert.view.animations.UpwardDiagonalAnimation;
+import qbert.view.animations.ComposedAnimation;
 
 /**
  * GC stands for graphic component, this implementation is used to manage the {@link Player}.
@@ -35,7 +35,7 @@ public class PlayerGCImpl extends DownUpwardCharacterGCImpl implements PlayerGC 
     @Override
     public final void setDeathAnimation() {
         this.setPosition(new Position2D(this.getPosition().getX(), 
-                this.getPosition().getY() + (this.getSpriteHeight() - deathSprite.getHeight())));
+                this.getPosition().getY() - Math.abs(this.getSpriteHeight() - this.deathSprite.getHeight())));
         this.setSprite(this.deathSprite);
         if (this.isRight()) {
             this.flipOnYImage();
@@ -53,7 +53,7 @@ public class PlayerGCImpl extends DownUpwardCharacterGCImpl implements PlayerGC 
     @Override
     public final void setOnDiskAnimation() {
         this.setSprite(this.onDiskSprite);
-        final Position2D ondiskendPos = new Position2D(Dimensions.getSpawningQBert().getX(), Dimensions.getSpawningQBert().getY() - this.getSpriteHeight() * 2);
-        this.setCurrentAnimation(new UpwardDiagonalAnimation(this.getPosition(), ondiskendPos));
+        final Position2D intermediatePos = new Position2D(Dimensions.getSpawningQBert().getX(), Dimensions.getSpawningQBert().getY() - this.getSpriteHeight() * 2);
+        this.setCurrentAnimation(new ComposedAnimation.OnDisk(this.getPosition(), intermediatePos, new Position2D(Dimensions.getSpawningQBert())));
     }
 }

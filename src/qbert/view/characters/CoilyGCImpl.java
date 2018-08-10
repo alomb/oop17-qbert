@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.view.animations.BasicAnimation;
+import qbert.view.animations.StraightMovementAnimation;
 
 /**
  * The implementation of {@link CoilyGC}.
@@ -52,6 +52,6 @@ public class CoilyGCImpl extends DownUpwardCharacterGCImpl implements CoilyGC {
         if (!this.isRight()) {
             this.flipOnYImage();
         }
-        this.setCurrentAnimation(new BasicAnimation.Down(this.getSpawnPosition(), this.landPos));
+        this.setCurrentAnimation(new StraightMovementAnimation(this.getSpawnPosition(), this.landPos));
     }
 }

@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.animations.ComposedAnimation;
-import qbert.view.animations.BasicAnimation;
+import qbert.view.animations.StraightMovementAnimation;
 import qbert.view.animations.StandingAnimation;
 
 /**
@@ -60,7 +60,7 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
         if (!this.right) {
             this.flipOnYImage();
         }
-        this.setCurrentAnimation(new BasicAnimation.Down(this.getSpawnPosition(), this.landPos));
+        this.setCurrentAnimation(new StraightMovementAnimation(this.getSpawnPosition(), this.landPos));
     }
 
     @Override
@@ -69,7 +69,7 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
         if (!this.right) {
             this.flipOnYImage();
         }
-        this.setCurrentAnimation(new BasicAnimation.Down(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.getDeathHeight())));
+        this.setCurrentAnimation(new StraightMovementAnimation(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.getDeathHeight())));
     }
 
     @Override

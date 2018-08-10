@@ -144,8 +144,10 @@ public class LoadResources {
             System.out.println("Error load " + e.toString());
         }
 
-        Dimensions.setDeathHeight(Dimensions.getWindowHeight() + 200);
-        Dimensions.setSpawningHeight(-100);
+        Dimensions.setSpawningHeight(-Dimensions.getWindowHeight() / 3);
+        Dimensions.setDeathHeight(Dimensions.getWindowHeight() + Dimensions.getSpawningHeight());
+        Dimensions.setSideSpawningHeight(Dimensions.getWindowWidth() / 3);
+        Dimensions.setSideDeathHeight(Dimensions.getWindowWidth() + Dimensions.getSideSpawningHeight());
         Dimensions.setSpawningPointLeft(new Position2D(Math.round(new Float(Dimensions.getWindowWidth()) / 2f) - Sprites.blueTile.getWidth(), -500));
         Dimensions.setSpawningPointRight(new Position2D(Math.round(new Float(Dimensions.getWindowWidth()) / 2f), -500));
         Dimensions.setBackgroundHeight(Sprites.blueBackground.getHeight());

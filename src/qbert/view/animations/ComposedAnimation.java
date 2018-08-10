@@ -11,7 +11,7 @@ import qbert.model.utilities.Position2D;
 public class ComposedAnimation extends MovementAnimation {
 
     private final Queue<Animation> animations;
-    private static final int QUEUESIZE = 2;
+    private static final int QUEUESIZE = 3;
 
     private static final int ANGLE0 = 0;
     private static final int ANGLE90 = 90;
@@ -61,8 +61,8 @@ public class ComposedAnimation extends MovementAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(targetPos.getX(), startPos.getY());
 
-            this.getAnimations().add(new BasicAnimation.ArcClockwise(startPos, intermediatePosition, ANGLE180, ANGLE360));
-            this.getAnimations().add(new BasicAnimation.Down(intermediatePosition, targetPos));
+            this.getAnimations().add(new ArcClockwiseAnimation(startPos, intermediatePosition, ANGLE180, ANGLE360));
+            this.getAnimations().add(new StraightMovementAnimation(intermediatePosition, targetPos));
         }
     }
 
@@ -79,8 +79,8 @@ public class ComposedAnimation extends MovementAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(startPos, intermediatePosition, ANGLE270, ANGLE90));
-            this.getAnimations().add(new BasicAnimation.Right(intermediatePosition, targetPos));
+            this.getAnimations().add(new ArcCounterclockwiseAnimation(startPos, intermediatePosition, ANGLE270, ANGLE90));
+            this.getAnimations().add(new StraightMovementAnimation(intermediatePosition, targetPos));
         }
     }
 
@@ -97,8 +97,8 @@ public class ComposedAnimation extends MovementAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(startPos, intermediatePosition, ANGLE90, -ANGLE90));
-            this.getAnimations().add(new BasicAnimation.Left(intermediatePosition, targetPos));
+            this.getAnimations().add(new ArcCounterclockwiseAnimation(startPos, intermediatePosition, ANGLE90, -ANGLE90));
+            this.getAnimations().add(new StraightMovementAnimation(intermediatePosition, targetPos));
         }
     }
 
@@ -115,8 +115,8 @@ public class ComposedAnimation extends MovementAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(targetPos.getX(), startPos.getY());
 
-            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(startPos, intermediatePosition, ANGLE0, -ANGLE180));
-            this.getAnimations().add(new BasicAnimation.Down(intermediatePosition, targetPos));
+            this.getAnimations().add(new ArcCounterclockwiseAnimation(startPos, intermediatePosition, ANGLE0, -ANGLE180));
+            this.getAnimations().add(new StraightMovementAnimation(intermediatePosition, targetPos));
         }
     }
 
@@ -133,8 +133,8 @@ public class ComposedAnimation extends MovementAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new BasicAnimation.ArcClockwise(startPos, intermediatePosition, ANGLE90, ANGLE270));
-            this.getAnimations().add(new BasicAnimation.Right(intermediatePosition, targetPos));
+            this.getAnimations().add(new ArcClockwiseAnimation(startPos, intermediatePosition, ANGLE90, ANGLE270));
+            this.getAnimations().add(new StraightMovementAnimation(intermediatePosition, targetPos));
         }
     }
 
@@ -151,8 +151,8 @@ public class ComposedAnimation extends MovementAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new BasicAnimation.ArcClockwise(startPos, intermediatePosition, -ANGLE90, ANGLE90));
-            this.getAnimations().add(new BasicAnimation.Left(intermediatePosition, targetPos));
+            this.getAnimations().add(new ArcClockwiseAnimation(startPos, intermediatePosition, -ANGLE90, ANGLE90));
+            this.getAnimations().add(new StraightMovementAnimation(intermediatePosition, targetPos));
         }
     }
 
@@ -169,8 +169,8 @@ public class ComposedAnimation extends MovementAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new BasicAnimation.Up(startPos, intermediatePosition));
-            this.getAnimations().add(new BasicAnimation.ArcClockwise(intermediatePosition, targetPos, ANGLE180, ANGLE360));
+            this.getAnimations().add(new StraightMovementAnimation(startPos, intermediatePosition));
+            this.getAnimations().add(new ArcClockwiseAnimation(intermediatePosition, targetPos, ANGLE180, ANGLE360));
 
         }
     }
@@ -188,8 +188,27 @@ public class ComposedAnimation extends MovementAnimation {
             super(startPos, targetPos);
             final Position2D intermediatePosition = new Position2D(startPos.getX(), targetPos.getY());
 
-            this.getAnimations().add(new BasicAnimation.Up(startPos, intermediatePosition));
-            this.getAnimations().add(new BasicAnimation.ArcCounterclockwise(intermediatePosition, targetPos, ANGLE0, -ANGLE180));
+            this.getAnimations().add(new StraightMovementAnimation(startPos, intermediatePosition));
+            this.getAnimations().add(new ArcCounterclockwiseAnimation(intermediatePosition, targetPos, ANGLE0, -ANGLE180));
+        }
+    }
+
+    /**
+     * Animation for qbert on disk movement.
+     */
+    public static class OnDisk extends ComposedAnimation {
+
+        /**
+         * @param startPos the first {@link Position2D}
+         * @param intermediatePos the intermediate {@link Position2D} between the two animations
+         * @param targetPos the last {@link Position2D}
+         */
+        public OnDisk(final Position2D startPos,  final Position2D intermediatePos, final Position2D targetPos) {
+            super(startPos, targetPos);
+
+            this.getAnimations().add(new StraightMovementAnimation(startPos, new Position2D(startPos.getX(), intermediatePos.getY())));
+            this.getAnimations().add(new StraightMovementAnimation(new Position2D(startPos.getX(), intermediatePos.getY()), intermediatePos));
+            this.getAnimations().add(new StraightMovementAnimation(intermediatePos, targetPos));
         }
     }
 }

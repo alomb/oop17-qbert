@@ -13,7 +13,8 @@ import qbert.view.characters.CoilyGCImpl;
 import qbert.view.characters.DownUpwardCharacterGC;
 import qbert.view.characters.DownwardCharacterGCImpl;
 import qbert.view.animations.ComposedAnimation;
-import qbert.view.animations.BasicAnimation;
+import qbert.view.animations.StraightMovementAnimation;
+
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
@@ -103,7 +104,7 @@ public class TestCharacterGraphicComponent {
         final CharacterGC cgc = new DownwardCharacterGCImpl(image, image, new Position2D(Dimensions.getSpawningPointLeft()));
         assertEquals(cgc.getPosition(), Dimensions.getSpawningPointLeft());
         cgc.setSpawnAnimation();
-        assertTrue(cgc.getCurrentAnimation() instanceof BasicAnimation.Down);
+        assertTrue(cgc.getCurrentAnimation() instanceof StraightMovementAnimation);
         this.finishAnimation(cgc);
         assertEquals(cgc.getPosition(), new Position2D(Dimensions.getSpawningPointLeft().getX(), 
                 (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - TestCharacterGraphicComponent.SPRITEHEIGHT));
@@ -149,7 +150,7 @@ public class TestCharacterGraphicComponent {
         }
 
         cgc.setFallAnimation();
-        assertTrue(cgc.getCurrentAnimation() instanceof BasicAnimation.Down);
+        assertTrue(cgc.getCurrentAnimation() instanceof StraightMovementAnimation);
         this.finishAnimation(cgc);
         assertEquals(cgc.getPosition(), new Position2D(cgc.getPosition().getX(), Dimensions.getDeathHeight()));
     }

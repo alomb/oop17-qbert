@@ -60,7 +60,9 @@ public final class Dimensions {
     private static int windowHeight;
     private static int windowWidth;
     private static int deathHeight;
+    private static int sideDeathHeight;
     private static int spawningHeight;
+    private static int sideSpawningHeight;
     private static int cubeHeight;
     private static int cubeWidth;
     private static int tileHeight;
@@ -149,6 +151,20 @@ public final class Dimensions {
     }
 
     /**
+     * @return the death height
+     */
+    public static int getSideDeathHeight() {
+        return sideDeathHeight;
+    }
+
+    /**
+     * @param sideDeathHeight the death height
+     */
+    public static void setSideDeathHeight(final int sideDeathHeight) {
+        Dimensions.sideDeathHeight = sideDeathHeight;
+    }
+
+    /**
      * @return the spawning height
      */
     public static int getSpawningHeight() {
@@ -160,6 +176,20 @@ public final class Dimensions {
      */
     public static void setSpawningHeight(final int spawningHeight) {
         Dimensions.spawningHeight = spawningHeight;
+    }
+
+    /**
+     * @return the spawning height
+     */
+    public static int getSideSpawningHeight() {
+        return sideSpawningHeight;
+    }
+
+    /**
+     * @param sideSpawningHeight the spawning height for characters who spawn laterally
+     */
+    public static void setSideSpawningHeight(final int sideSpawningHeight) {
+        Dimensions.sideSpawningHeight = sideSpawningHeight;
     }
 
     /**
@@ -361,5 +391,4 @@ public final class Dimensions {
     private Dimensions() {
 
     }
-
 }

@@ -27,7 +27,6 @@ public final class SpawnerImpl implements Spawner {
         this.gameCharacters = new ArrayList<>();
         this.qbert = ef.createQbert(qBertSpeed);
         this.mapInfo = mapInfo;
-        this.gameCharacters.add(ef.createWrongway(0.35f, 1000));
     }
 
     @Override

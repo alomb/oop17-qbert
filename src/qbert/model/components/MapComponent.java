@@ -133,7 +133,8 @@ public class MapComponent {
     /**
      * Gets the {@link Tile} located in the said {@link Position2D}.
      * @param pos Position of the required {@link Tile}
-     * @return {@link Tile} in the requested {@link Position2D}
+     * @return an {@link Optional} containing the {@link Tile} if there is one 
+     * in the requested {@link Position2D}, otherwise an {@link Optional} empty
      */
    public Optional<Tile> getTile(final Position2D pos) {
        if (this.tiles.containsKey(pos.getX()) && this.tiles.get(pos.getX()).containsKey(pos.getY())) {
@@ -202,32 +203,13 @@ public class MapComponent {
    }
 
    /**
-    * Checks if the given position is placed below the bottom limit of the map.
-    * @param logicPos Position to check
-    * @return True if the position is below the map
-    */
-   public boolean isBelowMap(final Position2D logicPos) {
-       return !(this.getTile(logicPos).isPresent() 
-               || (this.sideTiles.containsKey(logicPos.getX()) && this.sideTiles.get(logicPos.getX()).contains(logicPos.getY())));
-   }
-
-   /**
-    * Checks if the given position is placed beyond the left or right limit of the map.
-    * @param logicPos Position to check
-    * @return True if the position is beyond the map
-    */
-   public boolean isOverMap(final Position2D logicPos) {
-       return !(this.getTile(logicPos).isPresent() 
-               || (this.sideTiles.containsKey(logicPos.getX()) && this.sideTiles.get(logicPos.getX()).contains(logicPos.getY())));
-   }
-
-   /**
     * Checks if the given position is placed outside the map.
     * @param logicPos Position to check
     * @return True if the position is outside the map
     */
    public boolean isOnVoid(final Position2D logicPos) {
-       return this.isBelowMap(logicPos) || this.isOverMap(logicPos);
+       return !(this.getTile(logicPos).isPresent() 
+               || (this.sideTiles.containsKey(logicPos.getX()) && this.sideTiles.get(logicPos.getX()).contains(logicPos.getY())));
    }
 
    /**
@@ -237,7 +219,7 @@ public class MapComponent {
     */
    public boolean checkForDisk(final Player qbert) {
        final Position2D logicPos = qbert.getNextPosition();
-       if (this.isOverMap(logicPos) && disks.containsKey(logicPos.getX()) && disks.get(logicPos.getX()).containsKey(logicPos.getY())) {
+       if (this.isOnVoid(logicPos) && disks.containsKey(logicPos.getX()) && disks.get(logicPos.getX()).containsKey(logicPos.getY())) {
            final Optional<Disk> disk = disks.get(logicPos.getX()).get(logicPos.getY());
            if (disk.isPresent()) {
                disks.get(logicPos.getX()).put(logicPos.getY(), Optional.empty());

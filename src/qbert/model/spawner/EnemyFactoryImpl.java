@@ -74,7 +74,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public final Character createWrongway(final float speed, final int standingTime) {
         final Position2D logicalPos = new Position2D(0, 0);
-        final RightwardCharacterGC graphics = new RightwardCharacterGC(Sprites.wrongwayStanding, Sprites.wrongwayMoving, new Position2D(-Dimensions.getSpawningHeight(), Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
+        final RightwardCharacterGC graphics = new RightwardCharacterGC(Sprites.wrongwayStanding, Sprites.wrongwayMoving, new Position2D(-Dimensions.getSideSpawningHeight(), Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
 
         return new Wrongway(logicalPos, speed, graphics, standingTime);
     }
@@ -82,7 +82,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public final Character createUgg(final float speed, final int standingTime) {
         final Position2D logicalPos = new Position2D(26, 0);
-        final LeftwardCharacterGC graphics = new LeftwardCharacterGC(Sprites.uggStanding, Sprites.uggMoving, new Position2D(Dimensions.getWindowWidth() + Dimensions.getSpawningHeight(), Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
+        final LeftwardCharacterGC graphics = new LeftwardCharacterGC(Sprites.uggStanding, Sprites.uggMoving, new Position2D(Dimensions.getWindowWidth() + Dimensions.getSideSpawningHeight(), Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
 
         return new Ugg(logicalPos, speed, graphics, standingTime);
     }
