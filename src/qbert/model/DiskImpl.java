@@ -1,8 +1,8 @@
 package qbert.model;
 
 import qbert.model.utilities.Position2D;
-import qbert.view.DiskGC;
-import qbert.view.RenderableBackground;
+import qbert.model.components.graphics.DiskGC;
+import qbert.model.components.graphics.RenderableBackground;
 
 /**
  * The implementation of {@link DiskGC}.

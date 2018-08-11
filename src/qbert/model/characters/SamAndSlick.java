@@ -5,7 +5,7 @@ import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.CharacterGC;
+import qbert.model.components.graphics.CharacterGC;
 
 /**
  * This class models two enemies Sam and Slick who jumps downward until they fall

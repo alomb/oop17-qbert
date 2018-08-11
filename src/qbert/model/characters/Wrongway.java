@@ -3,7 +3,7 @@ package qbert.model.characters;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.RightwardCharacterGC;
+import qbert.model.components.graphics.RightwardCharacterGC;
 
 /**
  * An enemy who falls from the right and move rightward until it falls on the other side

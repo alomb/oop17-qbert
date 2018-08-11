@@ -27,7 +27,7 @@ import org.jdom2.JDOMException;
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
 import qbert.model.models.GUILogic;
-import qbert.view.Renderable;
+import qbert.model.components.graphics.Renderable;
 import qbert.view.View;
 import qbert.view.ViewImpl;
 

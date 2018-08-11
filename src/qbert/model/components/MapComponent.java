@@ -20,11 +20,11 @@ import qbert.model.Tile;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
-import qbert.view.DiskGC;
-import qbert.view.DiskGCImpl;
-import qbert.view.ReversibleTileGC;
-import qbert.view.TileGC;
-import qbert.view.BaseTileGC;
+import qbert.model.components.graphics.DiskGC;
+import qbert.model.components.graphics.DiskGCImpl;
+import qbert.model.components.graphics.ReversibleTileGC;
+import qbert.model.components.graphics.TileGC;
+import qbert.model.components.graphics.BaseTileGC;
 
 /**
  * Component managing information about the game map and its collections of {@link Tile} and {@link Disk}.

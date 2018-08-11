@@ -7,7 +7,7 @@ import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.CharacterGC;
+import qbert.model.components.graphics.CharacterGC;
 
 /**
  * A generic implementation of the {@link Character} interface that provides many common functionalities for

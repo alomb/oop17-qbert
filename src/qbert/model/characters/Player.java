@@ -1,7 +1,7 @@
 package qbert.model.characters;
 
 import qbert.model.components.sounds.PlayerSC;
-import qbert.view.characters.PlayerGC;
+import qbert.model.components.graphics.PlayerGC;
 
 /**
  * Interface that extends {@link Character} used to manage {@link Qbert}, 

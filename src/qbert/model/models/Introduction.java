@@ -17,9 +17,9 @@ import qbert.model.components.sounds.QbertSC;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
-import qbert.view.Renderable;
-import qbert.view.characters.PlayerGC;
-import qbert.view.characters.PlayerGCImpl;
+import qbert.model.components.graphics.Renderable;
+import qbert.model.components.graphics.PlayerGC;
+import qbert.model.components.graphics.PlayerGCImpl;
 
 /**
  * The implementation of {@link Model} for application introductive scene logic.

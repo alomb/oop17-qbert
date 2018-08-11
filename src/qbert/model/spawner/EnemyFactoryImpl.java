@@ -18,14 +18,14 @@ import qbert.model.characters.SamAndSlick;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
-import qbert.view.characters.CharacterGC;
-import qbert.view.characters.CoilyGC;
-import qbert.view.characters.CoilyGCImpl;
-import qbert.view.characters.DownwardCharacterGCImpl;
-import qbert.view.characters.LeftwardCharacterGC;
-import qbert.view.characters.PlayerGC;
-import qbert.view.characters.PlayerGCImpl;
-import qbert.view.characters.RightwardCharacterGC;
+import qbert.model.components.graphics.CharacterGC;
+import qbert.model.components.graphics.CoilyGC;
+import qbert.model.components.graphics.CoilyGCImpl;
+import qbert.model.components.graphics.DownwardCharacterGCImpl;
+import qbert.model.components.graphics.LeftwardCharacterGC;
+import qbert.model.components.graphics.PlayerGC;
+import qbert.model.components.graphics.PlayerGCImpl;
+import qbert.model.components.graphics.RightwardCharacterGC;
 
 import java.util.Random;
 /**

@@ -11,7 +11,7 @@ import javax.swing.JTextField;
 
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
-import qbert.view.Renderable;
+import qbert.model.components.graphics.Renderable;
 
 /**
  * The implementation of {@link Model} for application menu scene logic.

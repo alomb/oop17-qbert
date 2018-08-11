@@ -21,11 +21,11 @@ import qbert.model.spawner.Spawner;
 import qbert.model.spawner.SpawnerImpl;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.view.GenericGC;
-import qbert.view.GraphicComponent;
-import qbert.view.GraphicComponentImpl;
-import qbert.view.Renderable;
-import qbert.view.RenderableObject;
+import qbert.model.components.graphics.GenericGC;
+import qbert.model.components.graphics.GraphicComponent;
+import qbert.model.components.graphics.GraphicComponentImpl;
+import qbert.model.components.graphics.Renderable;
+import qbert.model.components.graphics.RenderableObject;
 
 public final class Level {
 
