@@ -1,5 +1,8 @@
 package qbert.model.components;
 
+import qbert.model.Level;
+import qbert.model.characters.Player;
+
 /**
  * Component managing informations about player points.
  */
@@ -64,12 +67,13 @@ public class PointComponent {
     /**
      * Increments the current points value of the given amount.
      * @param amount Number of points gained
+     * @param qbert Instance of the player
      */
-    public void score(final int amount) {
+    public void score(final int amount, final Player qbert) {
         points += amount;
         if (points - amount < lifeThreshold && points >= lifeThreshold) {
             lifeThreshold += PointComponent.STANDARD_LIFE_THRESHOLD;
-            //TODO: Gain Life
+            qbert.gainLife();
         }
     }
 

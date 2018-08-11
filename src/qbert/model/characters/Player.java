@@ -16,6 +16,21 @@ public interface Player extends DownUpwardCharacter {
     PlayerGC getPlayerGraphicComponent();
 
     /**
+     * Makes the player gain 1 life.
+     */
+    void gainLife();
+
+    /**
+     * Makes the player loose 1 life.
+     */
+    void looseLife();
+
+    /**
+     * @return Number of lives left
+     */
+    int getLivesNumber();
+
+    /**
      * @return {@link PlayerSC} of this {@link Player}
      */
     PlayerSC getPlayerSoundComponent();
