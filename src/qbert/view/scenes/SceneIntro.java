@@ -6,7 +6,6 @@ import java.awt.event.KeyEvent;
 import java.util.Optional;
 
 import qbert.controller.Controller;
-import qbert.controller.Sounds;
 import qbert.controller.input.Confirm;
 import qbert.model.models.TextPosition;
 import qbert.model.utilities.Dimensions;
@@ -32,8 +31,6 @@ public class SceneIntro extends SceneImpl {
         this.setBackground(this.backgroundColor);
 
         this.controller = controller;
-
-        Sounds.playSound("InsertACoin.wav");
 
         this.addSection(TextPosition.TITLE, 
                 new GUISectionImpl(this.yellow, Optional.empty(), 0, -Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.LARGE));

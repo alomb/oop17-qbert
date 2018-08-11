@@ -163,7 +163,7 @@ public class Game implements Model {
         this.levelAndRound.addData("ROUND: " + this.roundNumber);
 
         final LevelSettings ls = controller.getLevelSettings(this.levelNumber, this.roundNumber);
-        this.gameLevel = new Level(ls, lives, score);
+        this.gameLevel = new Level(ls, lives, score, this.controller);
         this.gameLevel.addObserver(this);
     }
 

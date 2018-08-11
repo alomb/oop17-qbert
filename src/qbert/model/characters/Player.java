@@ -1,5 +1,6 @@
 package qbert.model.characters;
 
+import qbert.model.components.sounds.PlayerSC;
 import qbert.view.characters.PlayerGC;
 
 /**
@@ -13,4 +14,9 @@ public interface Player extends DownUpwardCharacter {
      * @return the {@link PlayerGC} of this {@link Player}
      */
     PlayerGC getPlayerGraphicComponent();
+
+    /**
+     * @return {@link PlayerSC} of this {@link Player}
+     */
+    PlayerSC getPlayerSoundComponent();
 }

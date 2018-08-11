@@ -1,6 +1,5 @@
 package qbert.model.characters;
 
-import qbert.controller.Sounds;
 import qbert.model.characters.states.CharacterState;
 import qbert.model.characters.states.CoilyAdultStandingState;
 import qbert.model.characters.states.CoilyBallStandingState;
@@ -9,6 +8,7 @@ import qbert.model.characters.states.SpawnState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
+import qbert.model.components.sounds.CharacterSC;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.CoilyGC;
 import qbert.view.characters.DownUpwardCharacterGC;
@@ -19,6 +19,7 @@ import qbert.view.characters.DownUpwardCharacterGC;
 public class Coily extends CharacterImpl implements Snake {
 
     private final CoilyGC graphics;
+    private final CharacterSC sounds;
     private final int standingTime;
     private final Player qbert;
 
@@ -27,14 +28,16 @@ public class Coily extends CharacterImpl implements Snake {
     /**
      * @param startPos the first {@link Position2D} of the {@link DownUpwardCharacte} in the map
      * @param speed the {@link DownUpwardCharacter} movement speed
-     * @param graphics the {@link DownUpwardCharacte}'s {@link CoilyGC}
+     * @param graphics the {@link DownUpwardCharacter}'s {@link CoilyGC}
+     * @param sounds the {@link DownUpwardCharacter}'s {@link CharacterSC}
      * @param standingTime the time passed on standing state
      * @param qbert the {@link Player} reference
      */
-    public Coily(final Position2D startPos, final float speed, final CoilyGC graphics, 
+    public Coily(final Position2D startPos, final float speed, final CoilyGC graphics, final CharacterSC sounds,
             final int standingTime, final Player qbert) {
         super(startPos, speed, graphics);
         this.graphics = graphics;
+        this.sounds = sounds;
         this.standingTime = standingTime;
         this.qbert = qbert;
         this.setCurrentState(new SpawnState(this));
@@ -48,6 +51,11 @@ public class Coily extends CharacterImpl implements Snake {
     }
 
     @Override
+    public final CharacterSC getCharacterSoundComponent() {
+        return this.sounds;
+    }
+
+    @Override
     public final DownUpwardCharacterGC getDownUpwardGraphicComponent() {
         return this.graphics;
     }
@@ -56,7 +64,7 @@ public class Coily extends CharacterImpl implements Snake {
     public final void setCurrentState(final CharacterState state) {
         super.setCurrentState(state);
         if (state instanceof FallState) {
-            Sounds.playSound("CoilyGoesOverTheEdge.wav");
+            this.sounds.setFallSound();
         }
     }
 
@@ -73,16 +81,17 @@ public class Coily extends CharacterImpl implements Snake {
     public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
         qbert.setDead(true);
         if (this.adult) {
-            Sounds.playSound("CoilyBites.wav");
+            this.sounds.setKillSound();
         } else {
-            Sounds.playSound("QbertDeath1.wav");
+            this.qbert.getPlayerSoundComponent().setDeathSound();
         }
     }
 
     @Override
     public final void land(final MapComponent map, final PointComponent points) {
         if (this.adult) {
-            Sounds.playSound("CoilyHops.wav");
+            this.sounds.setHopSound();
         }
     }
+
 }

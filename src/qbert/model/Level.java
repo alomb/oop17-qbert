@@ -6,15 +6,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import qbert.controller.Sounds;
+import qbert.controller.Controller;
 import qbert.model.characters.Character;
 import qbert.model.characters.Coily;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.DeathState;
 import qbert.model.characters.states.FallState;
 import qbert.model.characters.states.LandState;
-import qbert.model.characters.states.QbertOnDiskState;
-import qbert.model.characters.states.QbertStandingState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
@@ -41,15 +39,17 @@ public final class Level {
     private Renderable background;
 
     private LevelSettings settings;
+    private Controller controller;
 
     private int waitTimer = 0;
     private Game gameObserver;
 
-    public Level(LevelSettings levelSettings, final int lives, final int score) {
+    public Level(LevelSettings levelSettings, final int lives, final int score, final Controller controller) {
         this.lives = lives;
 
         this.settings = levelSettings;
-        this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed());
+        this.controller = controller;
+        this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed(), controller);
 
         this.points = new PointComponent();
         this.points.score(score);
@@ -162,9 +162,9 @@ public final class Level {
                 /* se Qbert e' sul disco pulisco la mappa, tranne Coily */
                 if (this.map.checkForDisk(qbert)) {
                     this.resetDisk();
-                    Sounds.playSound("RidingADisk.wav");
+                    this.qbert.getPlayerSoundComponent().setOnDiskSound();
                 } else if (qbert.getCurrentState() instanceof FallState) {
-                    Sounds.playSound("QBertGoesOverTheEdge.wav");
+                    this.qbert.getPlayerSoundComponent().setFallSound();
                 }
             }
 
