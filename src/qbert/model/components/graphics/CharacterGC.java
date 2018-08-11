@@ -1,7 +1,6 @@
 package qbert.model.components.graphics;
 
 import qbert.model.utilities.Position2D;
-import qbert.model.components.graphics.GraphicComponent;
 import qbert.view.characters.Animation;
 
 /**

@@ -89,7 +89,7 @@ public class Menu implements Model {
     @Override
     public final void confirm() {
         if (Menu.index == Menu.PLAY) {
-            this.controller.changeScene(GameStatus.GAMEPLAY); 
+            this.controller.changeScene(GameStatus.INTRODUCTION); 
         } else if (Menu.index == Menu.RANKING) {
             this.controller.changeScene(GameStatus.RANKING); 
         } else if (Menu.index == Menu.EXIT) {

@@ -43,13 +43,13 @@ public final class Level {
         this.settings = levelSettings;
         this.controller = controller;
         this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed(), controller);
-
+        this.qbert = this.spawner.spawnQbert();
+        
         this.points = new PointComponent();
         this.points.score(score, qbert);
 
         this.map = new MapComponent(settings);
 
-        this.qbert = this.spawner.spawnQbert();
         this.timer = new TimerComponent(qbert, spawner, points, map, this);
 
         final GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.getBackgroundX(), Dimensions.getBackgroundY()));
