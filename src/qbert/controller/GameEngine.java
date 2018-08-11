@@ -114,7 +114,9 @@ public class GameEngine implements Loop {
      * The method used to update graphics (View).
      */
     private void render() {
-        this.gameScene.render();
+        if (!this.stopped) {
+            this.gameScene.render();
+        }
     }
 
     @Override

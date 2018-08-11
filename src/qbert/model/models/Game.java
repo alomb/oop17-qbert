@@ -84,12 +84,20 @@ public class Game implements Model {
 
     @Override
     public final List<Renderable> getRenderables() {
-        return this.gameLevel.getRenderables();
+        if (this.gameLevel != null) {
+            return this.gameLevel.getRenderables();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @Override
     public final List<GUILogic> getGUI() {
-        return this.gui;
+        if (this.gameLevel != null) {
+            return this.gui;
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @Override

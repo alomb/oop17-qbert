@@ -66,9 +66,9 @@ Fra le difficoltà che si potrebbero incontrare potrebbe esserci quella di costr
 
 \section{Architettura}
 
-L'architettura dell'applicazione è realizzata utilizzando il pattern architetturale MVC in quanto permette facilmente di separare la logica e i dati della applicazione dalla effettiva tecnica adottata per la visualizzazione di questi. La applicazione e la relativa architettura può essere spezzata in varie implementazioni associate allo stato nella quale si trova attualmente.
+L'architettura dell'applicazione è realizzata utilizzando il pattern architetturale MVC in quanto permette facilmente di separare la logica e i dati della applicazione dalla effettiva tecnica adottata per la visualizzazione di questi. La applicazione e quindi la relativa architettura sono suddivise in varie implementazioni a seconda dello stato nelle quali si trovano.
 
-L'interfaccia Model fornisce tutte le funzionalità comuni ad ogni fase della applicazione per comunicare al Controller i dati da mostrare e presentare i comandi in grado di influenzare l'esecuzione della logica interna. La gestione dello stato corrente e la relativa implementazione lato model è fatta da una entità preposta del Controller detta GameStatusManager. 
+L'interfaccia Model fornisce tutte le funzionalità comuni ad ogni stato della applicazione per comunicare al Controller i dati da mostrare e presentare i comandi capace di ricevere e in grado di influenzare l'esecuzione della logica interna. La gestione dello stato corrente e la relativa implementazione lato model è fatta da una entità preposta del Controller detta GameStatusManager. 
 
 \begin{figure}[H]
 \centering{}
@@ -77,9 +77,9 @@ L'interfaccia Model fornisce tutte le funzionalità comuni ad ogni fase della ap
 \label{img:ControllerModel}
 \end{figure}
 
-Il Controller si occupa principalmente di gestire il dialogo fra Model e View, oltre che di fornire numerose funzionalità per la lettura e scrittura su file di diversi tipi di dati persistenti. Il Controller deve inoltre gestire una componente vitale della applicazione detta Loop, che permette di aggiornare grafica e logica nel tempo, sostituendo in pratica gli elementi da aggiornare quando cambia lo stato del programma.
+Il Controller si occupa principalmente di gestire il dialogo fra Model e View, oltre che di fornire numerose funzionalità per la lettura e scrittura su file di dfferenti tipi di dati persistenti. Il Controller deve inoltre gestire una componente vitale della applicazione detta Loop, che permette di aggiornare la grafica e la logica di gioco nel tempo, sostituendo il Model quando cambia lo stato del programma.
 
-Il dialogo fra Controller e View è più stabile in quanto è la View stessa ad associare a differenti scene lo stato di gioco e di realizzare effettivamente il cambio da una scena all'altra. Scene svolge effettivamente la renderizzazione grafica sfruttando particolari classi che aggiorna il Model e che confezionano tutte le informazioni necessarie per disegnare correttamente immagini (Renderable) e GUI (GUILogic).
+Il dialogo fra Controller e View è più stabile in quanto è la View stessa ad associare alle differenti scene lo stato di gioco e di realizzare effettivamente il cambio da una scena all'altra. Scene svolge effettivamente la renderizzazione grafica sfruttando particolari classi, aggiornate dal Model, che confezionano tutti i dati necessari per disegnare correttamente immagini (Renderable) e GUI (GUILogic).
 
 \begin{figure}[H]
 \centering{}
@@ -89,6 +89,28 @@ Il dialogo fra Controller e View è più stabile in quanto è la View stessa ad 
 \end{figure}
 
 \section{Design dettagliato}
+
+\begin{flushright}
+\item\subsubsection{Alessandro Lombardi - Animazione dei personaggi}
+\end{flushright}
+
+Durante la fase di analisi è stato scelto di dividere quella che era la posizione "logica" del personaggio, ovvero la posizione nella griglia immaginaria disegnata dai cubi del terreno di gioco, da quella "fisica", ovvero la coordinata del pixel nella finestra di gioco, dove si posiziona l'angolo in alto a sinistra dell'immagine di forma rettangolare del personaggio. Questo ha comportato anche una divisione degli aspetti grafici da quelli logici e la scelta di considerare i movimenti come il salto, la caduta etc.. vere e proprie animazioni. La gestione dei dati necessari alla renderizzazione grafica dei personaggi, quali la posizione, lo sprite e la dimensione di questo, sono gestiti dalle classi che implementano \emph{CharacterGC}. La gerarchia di classi concrete ed astratte che segue è modellata sulle animazioni svolte dai vari personaggi con lo scopo di riutilizzare al massimo le funzionalità in comune.
+
+\begin{figure}[H]
+\centering{}
+\includegraphics[width=\linewidth]{img/GerarchiaCGC}
+\caption{La gerarchia dei Graphic Component dei personaggi}
+\label{img:GerarchiaCGC}
+\end{figure}
+
+Le animazioni dei personaggi sono state sviluppate sfruttando il pattern \textbf{Iterator} essendo queste delle sequenze di posizioni bidimensionali nella finestra di gioco e/o di immagini. La interfaccia \emph{Animation} nasconde le modalità di scorrimento e le condizioni di termine dell’animazione, richiedendo però dettagli sulla velocità di esecuzione. L’implementazione \emph{MovementAnimation} di \emph{Animation} è particolarmente specifica per quelle animazioni basate sul movimento della posizione dell'immagine. \emph{MovementAnimation} è una classe astratta che contiene l’implementazione di molti metodi utili per le animazioni di movimento ma che lascia alle classi concrete l’effettiva decisione del calcolo delle posizioni, tramite il metodo calculateNext() invocato nel \textbf{Template Method} updateAnimation(float animationSpeed). \emph{ComposedAnimation} permette di costruire animazioni più complesse formate da singole semplici animazioni.
+
+\begin{figure}[H]
+\centering{}
+\includegraphics[width=\linewidth]{img/AnimazioniPersonaggi}
+\caption{Le animazioni dei personaggi}
+\label{img:AnimazioniPersonaggi}
+\end{figure}
 
 
 \chapter{Sviluppo}
