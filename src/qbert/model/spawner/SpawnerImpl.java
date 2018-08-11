@@ -27,12 +27,13 @@ public final class SpawnerImpl implements Spawner {
      * @param mapInfo the map of the characters
      * @param qBertSpeed the player speed
      * @param controller the game {@link Controller}
+     * @param qbertLives number of lives the {@link Player} is starting the level with
      */
-    public SpawnerImpl(final Map<String, EnemyInfoImpl> mapInfo, final float qBertSpeed, final Controller controller) {
+    public SpawnerImpl(final Map<String, EnemyInfoImpl> mapInfo, final float qBertSpeed, final Controller controller, final int qbertLives) {
         this.gameCharacters = new ArrayList<>();
         this.mapInfo = mapInfo;
         this.controller = controller;
-        this.qbert = ef.createQbert(qBertSpeed, controller);
+        this.qbert = ef.createQbert(qBertSpeed, controller, qbertLives);
     }
 
     @Override

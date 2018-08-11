@@ -1,6 +1,5 @@
 package qbert.model.components;
 
-import qbert.model.Level;
 import qbert.model.characters.Player;
 
 /**

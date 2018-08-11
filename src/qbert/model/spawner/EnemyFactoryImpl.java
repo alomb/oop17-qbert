@@ -34,12 +34,12 @@ import java.util.Random;
 public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
-    public final Player createQbert(final float speed, final Controller controller) {
+    public final Player createQbert(final float speed, final Controller controller, final int qbertLives) {
         final PlayerGC graphics = new PlayerGCImpl(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
                 Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(Dimensions.getSpawningQBert()));
         final PlayerSC sounds = new QbertSC(controller);
 
-        return new Qbert(Dimensions.getSpawningLogQBert(), speed, graphics, sounds);
+        return new Qbert(Dimensions.getSpawningLogQBert(), speed, graphics, sounds, qbertLives);
     }
 
     @Override
