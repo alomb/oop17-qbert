@@ -76,7 +76,7 @@ public class TimerComponent {
         if (!pauseEntities) {
             this.updateEntities(elapsed);
         }
-        
+
         if (this.laterPauseEntities) {
             this.laterPauseEntities = false;
             this.pauseEntities = true;
@@ -94,7 +94,6 @@ public class TimerComponent {
             if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !qbert.isMoving() && !e.isMoving()
                     || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())
                     || ((qbert.getCurrentPosition().getX() - 1 == e.getCurrentPosition().getX() ||  qbert.getCurrentPosition().getX() + 1 == e.getCurrentPosition().getX()) && qbert.getCurrentPosition().getY() + 1 == e.getCurrentPosition().getY() && !e.isMoving() && !qbert.isMoving())) {
-                System.out.println("Colliding");
                 e.collide(qbert, this.points, this);
             }
         });
@@ -117,21 +116,18 @@ public class TimerComponent {
     public void updateQbert(final float elapsed) {
         if (qbert.isDead()) {
             qbert.setCurrentState(new DeathState(qbert));
-            System.out.println("Curr: " + qbert.getCurrentPosition());
-            System.out.println("Next: " + qbert.getNextPosition());
                 this.pauseEverything = true;
                 this.setTimeout(() -> {
-                    //TODO: Loose life
+                    //TODO: Temporary
+                    qbert.looseLife();
                     //TODO: Test
                     //Test to check if it's better to directly remove entities from the list
                     spawner.updateGameCharacters(spawner.getGameCharacters().stream().peek(e -> {
                         e.setCurrentState(new DeathState(e));
                         spawner.death(e);
-                        System.out.println("Removing: " + e);
                     }).filter(e -> !e.isDead()).collect(Collectors.toList()));
                     spawner.respawnQbert();
                     this.pauseEverything = false;
-                    System.out.println("Restore");
                 }, TimerComponent.DEATH_WAIT_TIME);
         }
 
@@ -160,7 +156,6 @@ public class TimerComponent {
                         break;
                     }
                 }
-                System.out.println("Found: " + found);
                 if (!found) {
                     qbert.land(this.map, this.points);
                     qbert.setCurrentState(qbert.getStandingState());
@@ -203,7 +198,7 @@ public class TimerComponent {
                     e.setCurrentState(new FallState(e));
 
                     if (e instanceof Coily) {
-                        this.points.score(PointComponent.COILY_FALL_SCORE);
+                        this.points.score(PointComponent.COILY_FALL_SCORE, qbert);
                     }
                 } else {
                     //Old Version
@@ -225,7 +220,6 @@ public class TimerComponent {
             if (e.isDead()) {
                 //Notify Spawner
                 spawner.death(e);
-                System.out.println("Removing: " + e);
             }
         }).filter(e -> !e.isDead()).collect(Collectors.toList())); /* togliere parentesi se modifico */
     }

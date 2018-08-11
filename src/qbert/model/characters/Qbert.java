@@ -15,6 +15,7 @@ import qbert.view.characters.PlayerGC;
 public class Qbert extends CharacterImpl implements Player {
 
     private final PlayerGC graphics;
+    private int lives;
 
     /**
      * @param startPos the first {@link Position2D} of the {@link Player} in the map
@@ -25,6 +26,9 @@ public class Qbert extends CharacterImpl implements Player {
         super(startPos, speed, graphics);
         this.graphics = graphics;
         this.setCurrentState(this.getStandingState());
+
+        //TODO: Maybe take from constructor
+        this.lives = 3;
     }
 
     @Override
@@ -34,7 +38,7 @@ public class Qbert extends CharacterImpl implements Player {
 
     @Override
     public final void land(final MapComponent map, final PointComponent points) {
-        points.score(map.incrementColor(this.getNextPosition()));
+        points.score(map.incrementColor(this.getNextPosition()), this);
         Sounds.playSound("QbertHops.wav");
     }
 
@@ -46,5 +50,20 @@ public class Qbert extends CharacterImpl implements Player {
     @Override
     public final DownUpwardCharacterGC getDownUpwardGraphicComponent() {
         return this.graphics;
+    }
+
+    @Override
+    public final void gainLife() {
+        this.lives++;
+    }
+
+    @Override
+    public final void looseLife() {
+        this.lives--;
+    }
+
+    @Override
+    public final int getLivesNumber() {
+        return this.lives;
     }
 }

@@ -6,15 +6,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import qbert.controller.Sounds;
 import qbert.model.characters.Character;
-import qbert.model.characters.Coily;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.DeathState;
-import qbert.model.characters.states.FallState;
-import qbert.model.characters.states.LandState;
-import qbert.model.characters.states.QbertOnDiskState;
-import qbert.model.characters.states.QbertStandingState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
@@ -32,7 +26,6 @@ import qbert.view.RenderableObject;
 public final class Level {
 
     private Player qbert;
-    private int lives;
     private Spawner spawner;
     private PointComponent points;
     private MapComponent map;
@@ -44,20 +37,20 @@ public final class Level {
     private Game gameObserver;
 
     public Level(LevelSettings levelSettings, final int lives, final int score) {
-        this.lives = lives;
+        //TODO: Rrmove this.lives = lives;
 
         this.settings = levelSettings;
         this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed());
 
         this.points = new PointComponent();
-        this.points.score(score);
+        this.points.score(score, qbert);
 
         this.map = new MapComponent(settings);
 
         this.qbert = this.spawner.spawnQbert();
         this.timer = new TimerComponent(qbert, spawner, points, map, this);
 
-        GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.getBackgroundX(), Dimensions.getBackgroundY()));
+        final GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.getBackgroundX(), Dimensions.getBackgroundY()));
         this.background = new RenderableObject(backgroundGC);
     }
 
@@ -91,7 +84,7 @@ public final class Level {
 
     public void checkStatus() {
         int coloredTiles = 0;
-        for (Tile t : this.map.getTileList()) {
+        for (final Tile t : this.map.getTileList()) {
             if (t.getColor() == this.settings.getColorsNumber()) {
                 coloredTiles++;
             }
@@ -103,12 +96,12 @@ public final class Level {
     }
 
     public int getLives() {
-        return this.lives;
+        return qbert.getLivesNumber();
     }
 
     public void changeRound() {
-        this.points.score(this.settings.getRoundScore());
-        this.points.score(PointComponent.UNUSED_DISK_SCORE * map.getDiskList().size());
+        this.points.score(this.settings.getRoundScore(), qbert);
+        this.points.score(PointComponent.UNUSED_DISK_SCORE * map.getDiskList().size(), qbert);
 
         this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
 
@@ -131,8 +124,7 @@ public final class Level {
         final Optional<Integer> i = settings.getColorMap().keySet().stream().collect(Collectors.toList()).stream().max((o1, o2) -> o1.compareTo(o2));
         if (i.isPresent()) {
             final GraphicComponent gc = new GraphicComponentImpl(settings.getColorMap().get(i.get()), new Position2D(Math.round(Dimensions.getWindowWidth() / 9f), Math.round(Dimensions.getWindowHeight() / 4f)));
-            final Renderable ro = new RenderableObject(gc);
-            return ro;
+            return new RenderableObject(gc);
         }
 
         return null;
