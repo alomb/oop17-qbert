@@ -40,13 +40,25 @@ public class PointComponent {
      */
     public static final int ROUND_SCORE = 1500;
 
+    /**
+     * Amount of points to be scored to get the first bonus life.
+     */
+    public static final int INITIAL_LIFE_THRESHOLD = 8000;
+
+    /**
+     * Amount of points to be scored to get the bonus lives after the first.
+     */
+    public static final int STANDARD_LIFE_THRESHOLD = 14000;
+
     private int points;
+    private int lifeThreshold;
 
     /**
      * Constructor of PointComponent class.
      */
     public PointComponent() {
         this.points = 0;
+        this.lifeThreshold = PointComponent.INITIAL_LIFE_THRESHOLD;
     }
 
     /**
@@ -54,7 +66,11 @@ public class PointComponent {
      * @param amount Number of points gained
      */
     public void score(final int amount) {
-        this.points += amount;
+        points += amount;
+        if (points - amount < lifeThreshold && points >= lifeThreshold) {
+            lifeThreshold += PointComponent.STANDARD_LIFE_THRESHOLD;
+            //TODO: Gain Life
+        }
     }
 
     /**
