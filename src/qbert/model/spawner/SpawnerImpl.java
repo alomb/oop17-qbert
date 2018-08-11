@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import qbert.controller.Controller;
 import qbert.model.characters.Character;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.SpawnState;
@@ -19,14 +21,18 @@ public final class SpawnerImpl implements Spawner {
     private final EnemyFactory ef = new EnemyFactoryImpl();
     private final Map<String, EnemyInfoImpl> mapInfo;
 
+    private final Controller controller;
+
     /**
      * @param mapInfo the map of the characters
      * @param qBertSpeed the player speed
+     * @param controller the game {@link Controller}
      */
-    public SpawnerImpl(final Map<String, EnemyInfoImpl> mapInfo, final float qBertSpeed) {
+    public SpawnerImpl(final Map<String, EnemyInfoImpl> mapInfo, final float qBertSpeed, final Controller controller) {
         this.gameCharacters = new ArrayList<>();
-        this.qbert = ef.createQbert(qBertSpeed);
         this.mapInfo = mapInfo;
+        this.controller = controller;
+        this.qbert = ef.createQbert(qBertSpeed, controller);
     }
 
     @Override
@@ -49,22 +55,22 @@ public final class SpawnerImpl implements Spawner {
                     final Character character;
                     switch (entry.getKey()) {
                     case "Coily":
-                        character = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.qbert);
+                        character = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.qbert, this.controller);
                         character.setCurrentPosition(new Position2D(-1, -1)); ////////////
                         this.gameCharacters.add(character);
                         break;
                     case "RedBall":
-                        character = ef.createRedBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
+                        character = ef.createRedBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
                         character.setCurrentPosition(new Position2D(-1, -1)); ////////////
                         this.gameCharacters.add(character);
                         break;
                     case "GreenBall":
-                        character = ef.createGreenBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
+                        character = ef.createGreenBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
                         character.setCurrentPosition(new Position2D(-1, -1)); ////////////
                         this.gameCharacters.add(character);
                         break;
                     case "SamAndSlick":
-                        character = ef.createSamAndSlick(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
+                        character = ef.createSamAndSlick(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
                         character.setCurrentPosition(new Position2D(-1, -1)); ////////////
                         this.gameCharacters.add(character);
                         break;

@@ -1,5 +1,6 @@
 package qbert.model.characters;
 
+import qbert.model.components.sounds.PlayerSC;
 import qbert.view.characters.PlayerGC;
 
 /**
@@ -28,4 +29,9 @@ public interface Player extends DownUpwardCharacter {
      * @return Number of lives left
      */
     int getLivesNumber();
+
+    /**
+     * @return {@link PlayerSC} of this {@link Player}
+     */
+    PlayerSC getPlayerSoundComponent();
 }

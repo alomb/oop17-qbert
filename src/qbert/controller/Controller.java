@@ -2,6 +2,9 @@ package qbert.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+
+import javax.sound.sampled.Clip;
 
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
@@ -62,8 +65,8 @@ public interface Controller {
     List<Map<String, Integer>> getRank();
 
     /**
-     * @param s
-     * @param i
+     * @param s 
+     * @param i 
      */
     void addRank(String s, Integer i);
 
@@ -73,4 +76,14 @@ public interface Controller {
      */
     void terminate();
 
+    /**
+     * @param soundEffect the {@link SoundEffectFile} value representing the .wav file to be loaded
+     * @return the {@link Clip} of the sound effect to be played
+     */
+    Clip uploadClip(SoundEffectFile soundEffect);
+
+    /**
+     * @param queue the {@link Queue} to be emptied
+     */
+    void emptyClipQueue(Queue<Clip> queue);
 }

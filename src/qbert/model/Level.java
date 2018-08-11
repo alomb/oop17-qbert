@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
+import qbert.controller.Controller;
 import qbert.model.characters.Character;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.DeathState;
@@ -33,14 +35,14 @@ public final class Level {
     private Renderable background;
 
     private LevelSettings settings;
+    private Controller controller;
 
     private Game gameObserver;
 
-    public Level(LevelSettings levelSettings, final int lives, final int score) {
-        //TODO: Rrmove this.lives = lives;
-
+    public Level(LevelSettings levelSettings, final int lives, final int score, final Controller controller) {
         this.settings = levelSettings;
-        this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed());
+        this.controller = controller;
+        this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed(), controller);
 
         this.points = new PointComponent();
         this.points.score(score, qbert);

@@ -1,6 +1,5 @@
 package qbert.model.characters;
 
-import qbert.controller.Sounds;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.utilities.Position2D;
@@ -28,6 +27,6 @@ public class RedBall extends DownwardCharacter {
     @Override
     public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
         qbert.setDead(true);
-        Sounds.playSound("QbertDeath1.wav");
+        qbert.getPlayerSoundComponent().setDeathSound();
     }
 }

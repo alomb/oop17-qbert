@@ -13,6 +13,7 @@ import qbert.model.characters.Player;
 import qbert.model.characters.Qbert;
 import qbert.model.characters.states.LandState;
 import qbert.model.characters.states.MoveState;
+import qbert.model.components.sounds.QbertSC;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
@@ -49,7 +50,9 @@ public class Introduction implements Model {
         final PlayerGC graphics = new PlayerGCImpl(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
                 Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(new Position2D(Introduction.QBERTPOSITION)));
 
-        this.qbert = new Qbert(Dimensions.getSpawningLogQBert(), SPEED, graphics);
+        this.controller = controller;
+
+        this.qbert = new Qbert(Dimensions.getSpawningLogQBert(), SPEED, graphics, new QbertSC(this.controller));
 
         final GUILogic guiTitle;
         final GUILogic guiFoot;
@@ -83,8 +86,6 @@ public class Introduction implements Model {
         this.guiList.add(guiTitle);
         this.guiList.add(this.guiBody);
         this.guiList.add(guiFoot);
-
-        this.controller = controller;
     }
 
     @Override

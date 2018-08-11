@@ -1,5 +1,9 @@
 package qbert.view;
 
+import java.util.Queue;
+
+import javax.sound.sampled.Clip;
+
 import qbert.controller.GameStatus;
 import qbert.view.scenes.Scene;
 
@@ -34,5 +38,11 @@ public interface View {
      * its subcomponents and all of its owned children.
      */
     void closeWindow();
+
+    /**
+     * This method plays the sound effects associated with the clips contained in the queue.
+     * @param clipToPlay the {@link Queue} containing the sound effects clips to be played
+     */
+    void play(Queue<Clip> clipToPlay);
 
 }

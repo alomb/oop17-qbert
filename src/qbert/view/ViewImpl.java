@@ -7,7 +7,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -102,5 +104,14 @@ public class ViewImpl implements View {
     @Override
     public final void closeWindow() {
         this.frame.dispose();
+    }
+
+    @Override
+    public final synchronized void play(final Queue<Clip> clipToPlay) {
+        new Thread(new Runnable() {
+            public void run() {
+                clipToPlay.poll().start();
+            }
+        }).start();
     }
 }

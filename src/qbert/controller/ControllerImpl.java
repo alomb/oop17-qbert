@@ -2,6 +2,7 @@ package qbert.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -12,9 +13,14 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.TreeMap;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import org.jdom2.JDOMException;
 
@@ -155,5 +161,24 @@ public class ControllerImpl implements Controller {
     public final void terminate() {
         this.view.closeWindow();
         this.gameEngine.stop();
+    }
+
+    @Override
+    public final Clip uploadClip(final SoundEffectFile soundEffect) {
+        Clip clip = null;
+        try {
+            clip = AudioSystem.getClip();
+            final AudioInputStream inputStream = AudioSystem
+                    .getAudioInputStream(new File(getClass().getResource("/sounds/").getFile() + soundEffect.getFile()));
+            clip.open(inputStream);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return clip;
+    }
+
+    @Override
+    public final void emptyClipQueue(final Queue<Clip> queue) {
+        this.view.play(queue);
     }
 }

@@ -2,7 +2,6 @@ package qbert.model.components;
 
 import java.util.stream.Collectors;
 
-import qbert.controller.Sounds;
 import qbert.model.Level;
 import qbert.model.characters.Coily;
 import qbert.model.characters.Player;
@@ -169,9 +168,9 @@ public class TimerComponent {
                         c.setCurrentState(new DeathState(c)); /////////////////////////
                     }
                 });
-                Sounds.playSound("RidingADisk.wav");
+                this.qbert.getPlayerSoundComponent().setOnDiskSound();
             } else if (qbert.getCurrentState() instanceof FallState) {
-                Sounds.playSound("QBertGoesOverTheEdge.wav");
+                this.qbert.getPlayerSoundComponent().setFallSound();
             }
         }
     }
