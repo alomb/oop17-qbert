@@ -35,7 +35,7 @@ public class LoadResources {
     }
 
     public void load() {
-        String PATH = System.getProperty("user.home") + "/qbert/img/";
+        final String PATH = System.getProperty("user.home") + "/qbert/img/";
 
         final File directory = new File(PATH);
         if (!directory.exists()) {
