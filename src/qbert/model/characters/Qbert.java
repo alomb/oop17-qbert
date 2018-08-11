@@ -14,6 +14,11 @@ import qbert.view.characters.PlayerGC;
  */
 public class Qbert extends CharacterImpl implements Player {
 
+    /**
+     * Number of lives which Qbert has on the start of the game.
+     */
+    private static final int DEFAULT_LIVES_NUMBER = 3;
+
     private final PlayerGC graphics;
     private int lives;
 
@@ -26,9 +31,7 @@ public class Qbert extends CharacterImpl implements Player {
         super(startPos, speed, graphics);
         this.graphics = graphics;
         this.setCurrentState(this.getStandingState());
-
-        //TODO: Maybe take from constructor
-        this.lives = 3;
+        this.lives = Qbert.DEFAULT_LIVES_NUMBER;
     }
 
     @Override
