@@ -1,5 +1,6 @@
 package qbert.controller;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -7,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -168,9 +170,11 @@ public class ControllerImpl implements Controller {
         Clip clip = null;
         try {
             clip = AudioSystem.getClip();
-            final AudioInputStream inputStream = AudioSystem
-                    .getAudioInputStream(new File(getClass().getResource("/sounds/").getFile() + soundEffect.getFile()));
+
+            final AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+                    new BufferedInputStream(ControllerImpl.class.getResourceAsStream("/sounds/" + soundEffect.getFile().toString())));
             clip.open(inputStream);
+            inputStream.close();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

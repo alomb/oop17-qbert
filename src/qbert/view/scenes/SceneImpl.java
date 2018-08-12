@@ -4,12 +4,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -26,15 +23,6 @@ import qbert.model.utilities.Position2D;
  */
 public abstract class SceneImpl extends JPanel implements Scene {
 
-    private Font smallFont;
-    private final float smallSize = Dimensions.getWindowHeight() / 60f;
-
-    private Font mediumFont;
-    private final float mediumSize = Dimensions.getWindowHeight() / 30f;
-
-    private Font largeFont;
-    private final float largeSize = Dimensions.getWindowHeight() / 10f;
-
     private final Map<TextPosition, Optional<GUISectionImpl>> sections;
 
     /**
@@ -44,21 +32,6 @@ public abstract class SceneImpl extends JPanel implements Scene {
     public SceneImpl(final int w, final int h) {
         super();
         this.setSize(w, h);
-
-        try {
-            final URL url = getClass().getResource("/arcade_n.ttf");
-            final File fontFile = new File(url.getPath());
-            final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-
-            this.largeFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(this.largeSize);
-            ge.registerFont(this.largeFont);
-            this.mediumFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(this.mediumSize);
-            ge.registerFont(this.mediumFont);
-            this.smallFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(this.smallSize);
-            ge.registerFont(this.smallFont);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         this.sections = new HashMap<>();
     }
@@ -113,7 +86,10 @@ public abstract class SceneImpl extends JPanel implements Scene {
 
             final GUISection section = this.sections.get(gui.getPosition()).get();
 
-            g.setFont(this.getFont(section.getSize()));
+            if (section.getSize().getFont().isPresent()) {
+                g.setFont(section.getSize().getFont().get());
+            }
+
             final Color color = section.getColor();
             final Optional<Color> selectedColor = section.getSelectedColor().isPresent()
                             ? Optional.of(this.getSection(gui.getPosition()).get().getSelectedColor().get()) : Optional.empty();
@@ -147,23 +123,6 @@ public abstract class SceneImpl extends JPanel implements Scene {
     @Override
     public final void addSection(final TextPosition position, final GUISectionImpl section) {
         this.sections.put(position, Optional.of(section));
-    }
-
-    /**
-     * @param size the {@link TextSize} the size label
-     * @return the size in pixel
-     */
-    private Font getFont(final TextSize size) {
-        switch (size) {
-            case SMALL:
-                return this.smallFont;
-            case MEDIUM:
-                return this.mediumFont;
-            case LARGE:
-                return this.largeFont;
-            default:
-                return this.smallFont;
-        }
     }
 
     /**
