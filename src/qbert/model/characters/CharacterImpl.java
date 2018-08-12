@@ -1,13 +1,13 @@
 package qbert.model.characters;
 
+import qbert.model.characters.states.CharacterState;
+import qbert.model.characters.states.FallState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
-import qbert.model.states.CharacterState;
-import qbert.model.states.FallState;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.CharacterGC;
+import qbert.model.components.graphics.CharacterGC;
 
 /**
  * A generic implementation of the {@link Character} interface that provides many common functionalities for
@@ -28,6 +28,7 @@ public abstract class CharacterImpl implements Character {
 
     private boolean dead;
     private CharacterState currentState;
+    private final int step;
 
     /**
      * @param startPos the logical first {@link Position2D} in the map
@@ -40,6 +41,7 @@ public abstract class CharacterImpl implements Character {
         this.graphics = graphics;
         this.dead = false;
         this.nextPos = new Position2D(startPos);
+        this.step = 2;
     }
 
     @Override
@@ -60,6 +62,11 @@ public abstract class CharacterImpl implements Character {
     @Override
     public final void setNextPosition(final Position2D nextGridPos) {
         this.nextPos = new Position2D(nextGridPos);
+    }
+
+    @Override
+    public final int getStep() {
+        return step;
     }
 
     @Override

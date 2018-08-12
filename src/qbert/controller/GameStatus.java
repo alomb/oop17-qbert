@@ -9,16 +9,34 @@ import java.util.stream.Collectors;
  */
 public enum GameStatus {
 
+    /**
+     * Show the user a brief animated introduction to the game rules.
+     */
     INTRODUCTION,
 
-    GAMEPLAY,
-    
+    /**
+     * Let the user to decide which application functionality use.
+     */
     MENU,
-    
+
+    /**
+     * The user is playing a match.
+     */
+    GAMEPLAY,
+
+    /**
+     * Show the user a list of matches, including players name and score.
+     */
     RANKING,
-    
+
+    /**
+     * Let the user conclude a match.
+     */
     GAMEOVER;
 
+    /**
+     * @return all the {@link GameStatus}
+     */
     public static Set<GameStatus> getAll() {
         return Arrays.asList(GameStatus.values()).stream().collect(Collectors.toSet());
     }

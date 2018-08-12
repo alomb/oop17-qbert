@@ -1,5 +1,6 @@
 package qbert.model.spawner;
 
+import qbert.controller.Controller;
 import qbert.model.characters.Character;
 import qbert.model.characters.Snake;
 import qbert.model.characters.Player;
@@ -11,36 +12,57 @@ public interface EnemyFactory {
 
     /**
      * @param speed the QBert speed
-     * @return the {@link Player} representing Qbert
+     * @param controller the game {@link Controller}
+     * @return the {@link Player} representing {@link Qbert}
      */
-    Player createQbert(float speed);
+    Player createQbert(float speed, Controller controller);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
      * @param qbert the {@link Player} reference
-     * @return the {@link Snake} representing Coily enemy
+     * @param controller the game {@link Controller}
+     * @return the {@link Snake} representing {@link Coily} enemy
      */
-    Snake createCoily(float speed, int standingTime, Player qbert);
+    Snake createCoily(float speed, int standingTime, Player qbert, Controller controller);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @return the {@link Character} representing RedBall enemy
+     * @param controller the game {@link Controller}
+     * @return the {@link Character} representing {@link RedBall} enemy
      */
-    Character createRedBall(float speed, int standingTime);
+    Character createRedBall(float speed, int standingTime, Controller controller);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @return the {@link Character} representing GreenBall
+     * @param controller the game {@link Controller}
+     * @return the {@link Character} representing {@link GreenBall}
      */
-    Character createGreenBall(float speed, int standingTime);
+    Character createGreenBall(float speed, int standingTime, Controller controller);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @return the {@link Character} representing Sam or Slick
+     * @param controller the game {@link Controller}
+     * @return the {@link Character} representing {@link SamAndSlick}
      */
-    Character createSamAndSlick(float speed, int standingTime);
+    Character createSamAndSlick(float speed, int standingTime, Controller controller);
+
+    /**
+     * @param speed the {@link Character} movement speed
+     * @param standingTime the time passed on standing state
+     * @param controller the game {@link Controller}
+     * @return the {@link Character} representing {@link Wrongway}
+     */
+    Character createWrongway(float speed, int standingTime, Controller controller);
+
+    /**
+     * @param speed the {@link Character} movement speed
+     * @param standingTime the time passed on standing state
+     * @param controller the game {@link Controller}
+     * @return the {@link Character} representing {@link Ugg}
+     */
+    Character createUgg(float speed, int standingTime, Controller controller);
 }

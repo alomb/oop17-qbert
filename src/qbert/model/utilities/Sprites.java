@@ -37,9 +37,10 @@ public class Sprites {
     public static BufferedImage greenTile;
     public static BufferedImage greyTile;
     public static BufferedImage pinkTile;
-    public static BufferedImage purpleTile;
     public static BufferedImage yellowTile;
     public static BufferedImage life;
-
-
+    public static BufferedImage wrongwayStanding;
+    public static BufferedImage wrongwayMoving;
+    public static BufferedImage uggStanding;
+    public static BufferedImage uggMoving;
 }

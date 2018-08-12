@@ -20,7 +20,7 @@ public final class QBert {
     private QBert() {
         final LoadResources lr = new LoadResources();
         lr.load();
-        final Controller controller = new ControllerImpl(GameStatus.INTRODUCTION);
+        final Controller controller = new ControllerImpl(GameStatus.MENU);
         controller.setupGameEngine();
     }
 

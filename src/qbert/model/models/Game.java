@@ -8,8 +8,9 @@ import qbert.controller.GameStatus;
 import qbert.model.Level;
 import qbert.model.LevelSettings;
 import qbert.model.characters.Player;
-import qbert.model.states.MoveState;
-import qbert.view.Renderable;
+import qbert.model.characters.states.MoveState;
+import qbert.model.utilities.Position2D;
+import qbert.model.components.graphics.Renderable;
 
 /**
  * The implementation of {@link Model} for gameplay logic.
@@ -83,18 +84,29 @@ public class Game implements Model {
 
     @Override
     public final List<Renderable> getRenderables() {
-        return this.gameLevel.getRenderables();
+        if (this.gameLevel != null) {
+            return this.gameLevel.getRenderables();
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @Override
     public final List<GUILogic> getGUI() {
-        return this.gui;
+        if (this.gameLevel != null) {
+            return this.gui;
+        } else {
+            return new ArrayList<>();
+        }
     }
 
     @Override
     public final void moveDown() {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
+            qbert.setNextPosition(
+                    new Position2D(qbert.getCurrentPosition().getX() - qbert.getStep(), qbert.getCurrentPosition().getY() - qbert.getStep()));
+
             qbert.setCurrentState(new MoveState.DownLeft(qbert));
         }
     }
@@ -103,6 +115,9 @@ public class Game implements Model {
     public final void moveLeft() {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
+            qbert.setNextPosition(
+                    new Position2D(qbert.getCurrentPosition().getX() - qbert.getStep(), qbert.getCurrentPosition().getY() + qbert.getStep()));
+
             qbert.setCurrentState(new MoveState.UpLeft(qbert));
         }
     }
@@ -111,6 +126,9 @@ public class Game implements Model {
     public final void moveRight() {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
+            qbert.setNextPosition(
+                new Position2D(qbert.getCurrentPosition().getX() + qbert.getStep(), qbert.getCurrentPosition().getY() - qbert.getStep()));
+
             qbert.setCurrentState(new MoveState.DownRight(qbert));
         }
     }
@@ -119,6 +137,9 @@ public class Game implements Model {
     public final void moveUp() {
         final Player qbert = this.gameLevel.getQBert();
         if (!qbert.isMoving() && !qbert.isDead()) {
+            qbert.setNextPosition(
+                    new Position2D(qbert.getCurrentPosition().getX() + qbert.getStep(), qbert.getCurrentPosition().getY() + qbert.getStep()));
+
             qbert.setCurrentState(new MoveState.UpRight(qbert));
         }
     }
@@ -142,7 +163,7 @@ public class Game implements Model {
         this.levelAndRound.addData("ROUND: " + this.roundNumber);
 
         final LevelSettings ls = controller.getLevelSettings(this.levelNumber, this.roundNumber);
-        this.gameLevel = new Level(ls, lives, score);
+        this.gameLevel = new Level(ls, lives, score, this.controller);
         this.gameLevel.addObserver(this);
     }
 
@@ -158,6 +179,4 @@ public class Game implements Model {
         this.scoreAndLives.addData("LIVES: " + this.lives);
         this.scoreAndLives.addData("CHANGE COLOR TO:");
     }
-    
-    
 }

@@ -1,12 +1,13 @@
 package qbert.model;
 
 import qbert.model.utilities.Position2D;
-import qbert.view.DiskGC;
+import qbert.model.components.graphics.DiskGC;
+import qbert.model.components.graphics.RenderableBackground;
 
 /**
  * The implementation of {@link DiskGC}.
  */
-public class DiskImpl implements Disk {
+public class DiskImpl extends RenderableBackground implements Disk {
 
     private Position2D position;
     private final DiskGC graphics;
@@ -49,11 +50,5 @@ public class DiskImpl implements Disk {
     @Override
     public final void update(final float elapsedTime) {
         this.graphics.update(elapsedTime);
-    }
-
-    //TODO: Forse da spostare in una classe astratta
-    @Override
-    public int getZIndex() {
-        return 0;
     }
 }

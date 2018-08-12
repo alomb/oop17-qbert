@@ -2,7 +2,7 @@ package qbert.model.models;
 
 import java.util.List;
 
-import qbert.view.Renderable;
+import qbert.model.components.graphics.Renderable;
 
 /**
  * The interface for a generic MVC model class, enabled to store data and manage some logic and

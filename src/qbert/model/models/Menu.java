@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
-import qbert.view.Renderable;
+import qbert.model.components.graphics.Renderable;
 
 /**
  * The implementation of {@link Model} for application menu scene logic.
@@ -55,7 +55,7 @@ public class Menu implements Model {
 
     @Override
     public final void initialize() {
-        this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index+1).mapToObj(i -> i).collect(Collectors.toSet()));
+        this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
     }
 
     @Override
@@ -89,13 +89,12 @@ public class Menu implements Model {
     @Override
     public final void confirm() {
         if (Menu.index == Menu.PLAY) {
-            this.controller.changeScene(GameStatus.GAMEPLAY); 
+            this.controller.changeScene(GameStatus.INTRODUCTION); 
         } else if (Menu.index == Menu.RANKING) {
             this.controller.changeScene(GameStatus.RANKING); 
-        }else if (Menu.index == Menu.EXIT) {
-            System.exit(0);
+        } else if (Menu.index == Menu.EXIT) {
+            this.controller.terminate();
         }
-        
     }
 
     @Override

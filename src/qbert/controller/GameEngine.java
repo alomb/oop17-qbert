@@ -8,8 +8,9 @@ import java.util.Optional;
 import qbert.view.View;
 
 /**
- * The class containing the game loop and responsible of communications between {@link ViewImpl} and {@link Model}.
- * It also provides a keyboard input management using Command pattern.
+ * The implementation of {@link Loop} that could be used as an engine to update an associated
+ * {@link Model} and render the {@link View}. It also store inputs from {@link Controller} 
+ * (from {@link View}) and pass them to current {@link Model}.
  */
 public class GameEngine implements Loop {
 
@@ -46,16 +47,18 @@ public class GameEngine implements Loop {
      */
     @Override
     public final void mainLoop() {
-        this.render();
-        long lastTime = System.currentTimeMillis(); 
-        while (this.running) {
-            final long current = System.currentTimeMillis();
-            final int elapsed = (int) (current - lastTime);
-            this.processInput();
-            this.gameUpdate(elapsed);
+        if (this.game != null) {
             this.render();
-            this.waitForNextFrame(current);
-            lastTime = current;
+            long lastTime = System.currentTimeMillis(); 
+            while (this.running) {
+                final long current = System.currentTimeMillis();
+                final int elapsed = (int) (current - lastTime);
+                this.processInput();
+                this.gameUpdate(elapsed);
+                this.render();
+                this.waitForNextFrame(current);
+                lastTime = current;
+            }
         }
     }
 
@@ -111,7 +114,9 @@ public class GameEngine implements Loop {
      * The method used to update graphics (View).
      */
     private void render() {
-        this.gameScene.render();
+        if (!this.stopped) {
+            this.gameScene.render();
+        }
     }
 
     @Override

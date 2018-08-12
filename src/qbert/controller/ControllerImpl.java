@@ -2,6 +2,7 @@ package qbert.controller;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,27 +10,29 @@ import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Queue;
 import java.util.TreeMap;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import org.jdom2.JDOMException;
 
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
 import qbert.model.models.GUILogic;
-import qbert.view.Renderable;
+import qbert.model.components.graphics.Renderable;
 import qbert.view.View;
 import qbert.view.ViewImpl;
 
@@ -42,8 +45,8 @@ public class ControllerImpl implements Controller {
     private LevelConfigurationReader lcr;
     private final GameEngine gameEngine;
     private final GameStatusManager statusManager;
-    
-    private BlockingQueue gamePoint = new ArrayBlockingQueue<>(1);
+
+    private final BlockingQueue<Integer> gamePoint = new ArrayBlockingQueue<>(1);
 
     private final View view;
 
@@ -52,7 +55,7 @@ public class ControllerImpl implements Controller {
      */
     public ControllerImpl(final GameStatus firstGameStatus) {
         this.lcr = new LevelConfigurationReaderImpl();
-        this.statusManager = new GameStatusManager(firstGameStatus, this);
+        this.statusManager = new GameStatusManagerImpl(firstGameStatus, this);
 
         this.view = new ViewImpl(this);
         this.gameEngine = new GameEngine(this.view);
@@ -83,7 +86,7 @@ public class ControllerImpl implements Controller {
     @Override
     public final void changeScene(final GameStatus newGameStatus) {
         this.statusManager.setCurrentStatus(newGameStatus);
-        this.view.setScene(this.statusManager.getCurrentStatus().name());
+        this.view.setScene(this.statusManager.getCurrentStatus());
         this.gameEngine.setup(this.statusManager.getModel());
     }
 
@@ -96,14 +99,16 @@ public class ControllerImpl implements Controller {
     public final List<Renderable> getRenderables() {
         return this.statusManager.getModel().getRenderables();
     }
-    
-    public void setScore(Integer i) {
-        gamePoint.clear();
-        gamePoint.add(i);
+
+    @Override
+    public final void setScore(final Integer value) {
+        this.gamePoint.clear();
+        this.gamePoint.add(value);
     }
-    
-    public Integer getScore() {
-        return (Integer)gamePoint.poll();
+
+    @Override
+    public final Integer getScore() {
+        return this.gamePoint.poll();
     }
     
     public Map<String,Integer> getRank() {
@@ -156,4 +161,31 @@ public class ControllerImpl implements Controller {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public final void terminate() {
+        this.view.closeWindow();
+        this.gameEngine.stop();
+    }
+
+    @Override
+    public final Clip uploadClip(final SoundEffectFile soundEffect) {
+        Clip clip = null;
+        try {
+            clip = AudioSystem.getClip();
+            final AudioInputStream inputStream = AudioSystem
+                    .getAudioInputStream(new File(getClass().getResource("/sounds/").getFile() + soundEffect.getFile()));
+            clip.open(inputStream);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return clip;
+    }
+
+    @Override
+    public void emptyClipQueue(Queue<Clip> queue) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

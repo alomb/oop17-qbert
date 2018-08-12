@@ -2,12 +2,12 @@ package qbert.model.characters;
 
 import qbert.model.Collidable;
 import qbert.model.GameObject;
+import qbert.model.characters.states.CharacterState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
-import qbert.model.states.CharacterState;
 import qbert.model.utilities.Position2D;
-import qbert.view.Renderable;
-import qbert.view.characters.CharacterGC;
+import qbert.model.components.graphics.Renderable;
+import qbert.model.components.graphics.CharacterGC;
 
 /**
  * An interface representing a visible and movable game character. It provides
@@ -24,6 +24,11 @@ public interface Character extends GameObject, Renderable, Collidable {
      * @param nextGridPos the {@link Position2D} where the {@link Character} is moving
      */
     void setNextPosition(Position2D nextGridPos);
+
+    /**
+     * @return how long the {@link Character} normally moves on logic position.
+     */
+    int getStep();
 
     /**
      * @return the {@link Character} movement speed

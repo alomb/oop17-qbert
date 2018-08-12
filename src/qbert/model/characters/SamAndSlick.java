@@ -1,11 +1,11 @@
 package qbert.model.characters;
 
+import qbert.model.characters.states.DeathState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
-import qbert.model.states.DeathState;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.CharacterGC;
+import qbert.model.components.graphics.CharacterGC;
 
 /**
  * This class models two enemies Sam and Slick who jumps downward until they fall
@@ -30,7 +30,7 @@ public class SamAndSlick extends DownwardCharacter {
 
     @Override
     public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
-        points.score(PointComponent.KILL_SAM_SLICK_SCORE);
+        points.score(PointComponent.KILL_SAM_SLICK_SCORE, qbert);
         this.setCurrentState(new DeathState(this));
     }
 }

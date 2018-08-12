@@ -6,34 +6,28 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import qbert.controller.Sounds;
+
+import qbert.controller.Controller;
 import qbert.model.characters.Character;
-import qbert.model.characters.Coily;
 import qbert.model.characters.Player;
+import qbert.model.characters.states.DeathState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.models.Game;
 import qbert.model.spawner.Spawner;
 import qbert.model.spawner.SpawnerImpl;
-import qbert.model.states.DeathState;
-import qbert.model.states.FallState;
-import qbert.model.states.LandState;
-import qbert.model.states.QbertOnDiskState;
-import qbert.model.states.QbertStandingState;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.view.GenericGC;
-import qbert.view.GraphicComponent;
-import qbert.view.GraphicComponentImpl;
-import qbert.view.Renderable;
-import qbert.view.RenderableObject;
+import qbert.model.components.graphics.GenericGC;
+import qbert.model.components.graphics.GraphicComponent;
+import qbert.model.components.graphics.GraphicComponentImpl;
+import qbert.model.components.graphics.Renderable;
+import qbert.model.components.graphics.RenderableObject;
 
 public final class Level {
 
     private Player qbert;
-    private int lives;
-    private boolean timerCallback = false;
     private Spawner spawner;
     private PointComponent points;
     private MapComponent map;
@@ -41,25 +35,24 @@ public final class Level {
     private Renderable background;
 
     private LevelSettings settings;
+    private Controller controller;
 
-    private int waitTimer = 0;
     private Game gameObserver;
 
-    public Level(LevelSettings levelSettings, final int lives, final int score) {
-        this.lives = lives;
-
+    public Level(LevelSettings levelSettings, final int lives, final int score, final Controller controller) {
         this.settings = levelSettings;
-        this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed());
-
+        this.controller = controller;
+        this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed(), controller);
+        this.qbert = this.spawner.spawnQbert();
+        
         this.points = new PointComponent();
-        this.points.score(score);
+        this.points.score(score, qbert);
 
         this.map = new MapComponent(settings);
 
-        this.qbert = this.spawner.spawnQbert();
-        this.timer = new TimerComponent(qbert, spawner, points, map);
+        this.timer = new TimerComponent(qbert, spawner, points, map, this);
 
-        GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.getBackgroundX(), Dimensions.getBackgroundY()));
+        final GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.getBackgroundX(), Dimensions.getBackgroundY()));
         this.background = new RenderableObject(backgroundGC);
     }
 
@@ -69,14 +62,6 @@ public final class Level {
 
     public void notifyEndLevel() {
         this.gameObserver.changeRound();
-    }
-
-    public void resetDisk() {
-        this.spawner.getGameCharacters().forEach(c -> {
-            if (!(c instanceof Coily)) {
-                c.setCurrentState(new DeathState(c)); /////////////////////////
-            }
-        });
     }
 
     public MapComponent getMap() {
@@ -101,7 +86,7 @@ public final class Level {
 
     public void checkStatus() {
         int coloredTiles = 0;
-        for (Tile t : this.map.getTileList()) {
+        for (final Tile t : this.map.getTileList()) {
             if (t.getColor() == this.settings.getColorsNumber()) {
                 coloredTiles++;
             }
@@ -113,21 +98,20 @@ public final class Level {
     }
 
     public int getLives() {
-        return this.lives;
+        return qbert.getLivesNumber();
     }
 
     public void changeRound() {
-        this.points.score(this.settings.getRoundScore());
-        this.points.score(PointComponent.UNUSED_DISK_SCORE * map.getDiskList().size());
+        this.points.score(this.settings.getRoundScore(), qbert);
+        this.points.score(PointComponent.UNUSED_DISK_SCORE * map.getDiskList().size(), qbert);
 
         this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
-        this.notifyEndLevel();
-    }
 
-    public void death() {
-        this.waitTimer = 2000;
-        this.timerCallback = true;
-        this.qbert.setCurrentState(new DeathState(this.getQBert()));
+        //TODO: Start of animation
+        timer.freezeEverything(() -> {
+            //TODO: End of animation
+            this.notifyEndLevel();
+        }, TimerComponent.ROUND_WAIT_TIME);
     }
 
     public List<Renderable> getRenderables() {
@@ -135,91 +119,16 @@ public final class Level {
     }
 
     public void update(final float elapsed) {
-        if (!update) {
-            return;
-        }
-
-        if (this.waitTimer <= 0) {
-            if (this.timerCallback) {
-                this.lives--;
-                spawner.respawnQbert();
-                this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
-                this.timerCallback = false;
-            }
-
-            timer.update(elapsed);
-
-            Position2D qLogicPos = qbert.getNextPosition();
-
-            if (qbert.isDead()) {
-                this.death();
-            }
-
-            //Check if entity is just landed 
-            if (qbert.getCurrentState() instanceof LandState) {
-                //Checking if entity is outside the map
-                if (this.map.isOnVoid(qLogicPos)) {
-                    qbert.setCurrentState(new FallState(qbert));
-                } else {
-                    qbert.land(this.map, this.points);
-                    qbert.setCurrentState(qbert.getStandingState());
-                    this.checkStatus();
-                }
-                /* se Qbert e' sul disco pulisco la mappa, tranne Coily */
-                if (this.map.checkForDisk(qbert)) {
-                    this.resetDisk();
-                    Sounds.playSound("RidingADisk.wav");
-                } else if (qbert.getCurrentState() instanceof FallState) {
-                    Sounds.playSound("QBertGoesOverTheEdge.wav");
-                }
-            }
-        } else {
-            this.waitTimer -= elapsed;
-        }
+        timer.update(elapsed);
     }
 
     private Renderable getTargetColor() {
         final Optional<Integer> i = settings.getColorMap().keySet().stream().collect(Collectors.toList()).stream().max((o1, o2) -> o1.compareTo(o2));
         if (i.isPresent()) {
             final GraphicComponent gc = new GraphicComponentImpl(settings.getColorMap().get(i.get()), new Position2D(Math.round(Dimensions.getWindowWidth() / 9f), Math.round(Dimensions.getWindowHeight() / 4f)));
-            final Renderable ro = new RenderableObject(gc);
-            return ro;
+            return new RenderableObject(gc);
         }
 
         return null;
-    }
-
-    //Debug options
-
-    private boolean update = true;
-    private boolean updateEntities = true;
-    private boolean immortality = false;
-
-    /**
-     * Temporary debug function that adds 1 life.
-     */
-    public void gainLife() {
-        lives++;
-    }
-
-    /**
-     * Temporary debug function that gives immortality to Qbert.
-     */
-    public void toggleImmortality() {
-        this.immortality = !this.immortality;
-    }
-
-    /**
-     * Temporary debug function that freezes time.
-     */
-    public void toggleTime() {
-        this.update = !this.update;
-    }
-
-    /**
-     * Temporary debug function that freezes entities.
-     */
-    public void toggleEntities() {
-        this.updateEntities = !this.updateEntities;
     }
 }

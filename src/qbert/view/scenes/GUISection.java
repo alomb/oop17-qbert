@@ -3,8 +3,6 @@ package qbert.view.scenes;
 import java.awt.Color;
 import java.util.Optional;
 
-import qbert.model.models.TextSize;
-
 /**
  * A data container for GUI graphical details. A {@link Scene} could use more {@link GUISection}
  * to have different styles for different parts of the GUI e.g: Title, Body..
@@ -31,8 +29,14 @@ public interface GUISection {
      */
     int getYOffset();
 
+    /**
+     * @return true if the text is centered
+     */
     boolean isCentered();
 
+    /**
+     * @return the section {@link TextSize}
+     */
     TextSize getSize();
 
 }

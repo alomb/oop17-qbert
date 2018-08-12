@@ -12,7 +12,6 @@ import qbert.controller.input.MoveLeft;
 import qbert.controller.input.MoveRight;
 import qbert.controller.input.MoveUp;
 import qbert.model.models.TextPosition;
-import qbert.model.models.TextSize;
 import qbert.model.utilities.Dimensions;
 
 /**

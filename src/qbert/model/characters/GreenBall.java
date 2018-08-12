@@ -1,10 +1,10 @@
 package qbert.model.characters;
 
+import qbert.model.characters.states.DeathState;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
-import qbert.model.states.DeathState;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.CharacterGC;
+import qbert.model.components.graphics.CharacterGC;
 
 /**
  * This class models a green ball that moves like a {@link RedBall} but can be catched
@@ -25,7 +25,7 @@ public class GreenBall extends DownwardCharacter {
     @Override
     public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
         timer.freezeEntities(TimerComponent.GREEN_BALL_FREEZE_TIME);
-        points.score(PointComponent.KILL_GREEN_BALL_SCORE);
+        points.score(PointComponent.KILL_GREEN_BALL_SCORE, qbert);
         this.setCurrentState(new DeathState(this));
     }
 }

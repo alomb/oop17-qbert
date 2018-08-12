@@ -2,14 +2,18 @@ package qbert.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+
+import javax.sound.sampled.Clip;
 
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
 import qbert.model.models.GUILogic;
-import qbert.view.Renderable;
+import qbert.model.components.graphics.Renderable;
 
 /**
- * The game controller.
+ * The application controller, responsible of communication between {@link View} and current
+ * {@link Model} and initialization of {@link GameEngine}. It also provides a lot of I/O operations.
  */
 public interface Controller {
 
@@ -44,25 +48,42 @@ public interface Controller {
      * @return from the current model a list of images to be rendered
      */
     List<Renderable> getRenderables();
-    
+
     /**
      * @param value of score point at finish game
      */
-    void setScore(Integer i);
-    
+    void setScore(Integer value);
+
     /**
      * @return value of score point at finish game
      */
     Integer getScore();
-    
+
     /**
      * @return from the current ranking
      */
     Map<String,Integer> getRank();
     
     /**
-     * @return from the current ranking
+     * @param s 
+     * @param i 
      */
     void addRank(String s, Integer i);
-    
+
+    /**
+     * Close the window in the {@link View} and terminate the {@link GameEngine}
+     * closing the application.
+     */
+    void terminate();
+
+    /**
+     * @param soundEffect the {@link SoundEffectFile} value representing the .wav file to be loaded
+     * @return the {@link Clip} of the sound effect to be played
+     */
+    Clip uploadClip(SoundEffectFile soundEffect);
+
+    /**
+     * @param queue the {@link Queue} to be emptied
+     */
+    void emptyClipQueue(Queue<Clip> queue);
 }

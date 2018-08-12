@@ -1,7 +1,7 @@
 package qbert.model;
 
-import qbert.view.DiskGC;
-import qbert.view.Renderable;
+import qbert.model.components.graphics.DiskGC;
+import qbert.model.components.graphics.Renderable;
 
 /**
  * An extension of {@link GameObject} for disks.

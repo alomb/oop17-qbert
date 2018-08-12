@@ -46,7 +46,8 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
     public void readLevelConfiguration(final int l, final int r) throws JDOMException {
         try {
             final SAXBuilder builder = new SAXBuilder();
-            final Document document = builder.build("res/levelconfig.xml");
+            final Document document = 
+                    builder.build(getClass().getResource("/levelconfig.xml").toString());
 
             final Element root = document.getRootElement();
             final Element level = root.getChild("LEVEL" + l);

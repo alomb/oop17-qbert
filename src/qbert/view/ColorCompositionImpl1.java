@@ -15,8 +15,7 @@ public class ColorCompositionImpl1 extends ColorCompositionImpl {
 
         this.getTilesList().add(Sprites.yellowTile);
         this.getTilesList().add(Sprites.pinkTile);
-        this.getTilesList().add(Sprites.beigeTile);
-        this.getTilesList().add(Sprites.purpleTile);
         this.getTilesList().add(Sprites.greyTile);
+        this.getTilesList().add(Sprites.blueTile);
     }
 }
