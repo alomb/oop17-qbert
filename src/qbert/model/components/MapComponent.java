@@ -20,11 +20,11 @@ import qbert.model.Tile;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
-import qbert.view.DiskGC;
-import qbert.view.DiskGCImpl;
-import qbert.view.ReversibleTileGC;
-import qbert.view.TileGC;
-import qbert.view.BaseTileGC;
+import qbert.model.components.graphics.DiskGC;
+import qbert.model.components.graphics.DiskGCImpl;
+import qbert.model.components.graphics.ReversibleTileGC;
+import qbert.model.components.graphics.TileGC;
+import qbert.model.components.graphics.BaseTileGC;
 
 /**
  * Component managing information about the game map and its collections of {@link Tile} and {@link Disk}.
@@ -115,11 +115,7 @@ public class MapComponent {
             }
 
             if (disks.containsKey(x) && disks.get(x).containsKey(y) && !disks.get(x).get(y).isPresent()) {
-                final Map<Integer, BufferedImage> im = new HashMap<>();
-                im.put(0, Sprites.disk1);
-                im.put(1, Sprites.disk2);
-                im.put(2, Sprites.disk3);
-                im.put(3, Sprites.disk4);
+                final Map<Integer, BufferedImage> im = Sprites.getInstance().getDiskSprites();
                 final DiskGC diskG = new DiskGCImpl(new Position2D(x, y), im, diskVelocity);
                 final Disk disk = new DiskImpl(new Position2D(x, y), diskG);
                 disks.get(x).put(y, Optional.of(disk));

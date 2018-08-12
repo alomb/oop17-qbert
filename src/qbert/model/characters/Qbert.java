@@ -6,8 +6,8 @@ import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.sounds.PlayerSC;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.DownUpwardCharacterGC;
-import qbert.view.characters.PlayerGC;
+import qbert.model.components.graphics.DownUpwardCharacterGC;
+import qbert.model.components.graphics.PlayerGC;
 
 /**
  * This class models the main character of the game controlled by the user.

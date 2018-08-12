@@ -10,8 +10,8 @@ import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.components.sounds.CharacterSC;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.CoilyGC;
-import qbert.view.characters.DownUpwardCharacterGC;
+import qbert.model.components.graphics.CoilyGC;
+import qbert.model.components.graphics.DownUpwardCharacterGC;
 
 /**
  * Implementation of {@link Snake}.

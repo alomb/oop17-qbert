@@ -2,8 +2,6 @@ package qbert.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -19,7 +17,8 @@ import org.jdom2.input.SAXBuilder;
 import qbert.model.LevelSettings;
 import qbert.model.LevelSettingsImpl;
 import qbert.model.spawner.EnemyInfoImpl;
-import qbert.view.ColorComposition;
+import qbert.model.sprites.ColorComposition;
+import qbert.model.utilities.Sprites;
 
 /**
  * The implementation of {@link LevelConfigurationReader}.
@@ -87,15 +86,18 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
     private void setColorComposition() {
         final int rand = new Random().nextInt(4) + 1;
 
-        try {
-            final Class<?> cl = Class.forName("qbert.view.ColorCompositionImpl" + rand);
-            final Constructor<?> cns = cl.getConstructor();
-            final ColorComposition cc = (ColorComposition) cns.newInstance();
-
-            this.colorComposition = cc;
-        } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
-                | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            e.printStackTrace();
+        switch (rand) {
+        case 1:
+            colorComposition = Sprites.getInstance().getBlueColorComposition();
+            break;
+        case 2:
+            colorComposition = Sprites.getInstance().getGreenColorComposition();
+            break;
+        case 3:
+            colorComposition = Sprites.getInstance().getGreyColorComposition();
+            break;
+        default:
+            colorComposition = Sprites.getInstance().getBrownColorComposition();
         }
     }
 

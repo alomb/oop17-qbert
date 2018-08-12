@@ -14,12 +14,13 @@ import qbert.model.characters.Qbert;
 import qbert.model.characters.states.LandState;
 import qbert.model.characters.states.MoveState;
 import qbert.model.components.sounds.QbertSC;
+import qbert.model.sprites.CompleteCharacterSprites;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.utilities.Sprites;
-import qbert.view.Renderable;
-import qbert.view.characters.PlayerGC;
-import qbert.view.characters.PlayerGCImpl;
+import qbert.model.components.graphics.Renderable;
+import qbert.model.components.graphics.PlayerGC;
+import qbert.model.components.graphics.PlayerGCImpl;
 
 /**
  * The implementation of {@link Model} for application introductive scene logic.
@@ -29,7 +30,7 @@ public class Introduction implements Model {
     private int instructionsIndex;
     private static final int INSTRUCTIONSTEP = 4;
     private int steps;
-    private static final int MAXSTEP = 4;
+    private static final int MAXSTEP = 5;
 
     private final Player qbert;
 
@@ -47,9 +48,10 @@ public class Introduction implements Model {
      * @param controller the game controller.
      */
     public Introduction(final Controller controller) {
-        final PlayerGC graphics = new PlayerGCImpl(Sprites.qbertFrontStanding, Sprites.qbertFrontMoving, Sprites.qbertBackStanding, Sprites.qbertBackMoving, 
-                Sprites.qbertDead, Sprites.qbertOnDisk, new Position2D(new Position2D(Introduction.QBERTPOSITION)));
-
+        final CompleteCharacterSprites s = Sprites.getInstance().getQbertSprites();
+        final PlayerGC graphics = new PlayerGCImpl(s.getFrontStandSprite(), s.getFrontMoveSprite(), s.getBackStandSprite(), s.getBackMoveSprite(), 
+                s.getDeathSprite(), s.getOnDiskSprite(), new Position2D(Dimensions.getSpawningQBert()));
+ 
         this.controller = controller;
 
         this.qbert = new Qbert(Dimensions.getSpawningLogQBert(), SPEED, graphics, new QbertSC(this.controller));
@@ -62,22 +64,24 @@ public class Introduction implements Model {
 
         this.guiBody = new GUILogicImpl(TextPosition.RIGHTSIDE);
         this.guiBody.addData("JUMP ON SQUARES TO");
-        this.guiBody.addData("CHANGE THEM TO");
-        this.guiBody.addData("THE TARGET COLOR");
+        this.guiBody.addData(" CHANGE THEM TO");
+        this.guiBody.addData("  THE TARGET COLOR");
         this.guiBody.addData("");
-        this.guiBody.addData("STAY ON PLAYFIELD!");
-
-        this.guiBody.addData("JUMPING OFF RESULTS");
-        this.guiBody.addData("IN A FATAL PLUMMET");
+        this.guiBody.addData("   STAY ON PLAYFIELD!");
+        this.guiBody.addData("    JUMPING OFF RESULTS");
+        this.guiBody.addData("     IN A FATAL PLUMMET");
         this.guiBody.addData("");
-        this.guiBody.addData("AVOID ALL OBJECTS");
-        this.guiBody.addData("AND CREATURES THAT");
-        this.guiBody.addData("ARE NOT GREEN");
+        this.guiBody.addData("      AVOID ALL OBJECTS");
+        this.guiBody.addData("       AND CREATURES THAT");
+        this.guiBody.addData("        ARE NOT GREEN");
         this.guiBody.addData("");
-        this.guiBody.addData("JUMP ON SPINNING DISKS");
-        this.guiBody.addData("TO LURE SNAKE");
-        this.guiBody.addData("TO HIS DEATH");
+        this.guiBody.addData("         JUMP ON SPINNING DISKS");
+        this.guiBody.addData("          TO LURE SNAKE");
+        this.guiBody.addData("           TO HIS DEATH");
         this.guiBody.addData("");
+        this.guiBody.addData("             EXTRA LIFE AT");
+        this.guiBody.addData("              8000 AND EACH");
+        this.guiBody.addData("               ADDITIONAL 14000");
 
         guiFoot = new GUILogicImpl(TextPosition.FOOT);
         guiFoot.addData("Press Enter to continue...");
@@ -145,7 +149,7 @@ public class Introduction implements Model {
         }
 
         if (this.hasFinished()) {
-            this.controller.changeScene(GameStatus.MENU); 
+            this.controller.changeScene(GameStatus.GAMEPLAY); 
         }
     }
 

@@ -10,7 +10,7 @@ import qbert.model.LevelSettings;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.MoveState;
 import qbert.model.utilities.Position2D;
-import qbert.view.Renderable;
+import qbert.model.components.graphics.Renderable;
 
 /**
  * The implementation of {@link Model} for gameplay logic.

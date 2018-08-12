@@ -2,8 +2,8 @@ package qbert.model;
 
 import qbert.model.components.PointComponent;
 import qbert.model.utilities.Position2D;
-import qbert.view.RenderableBackground;
-import qbert.view.TileGC;
+import qbert.model.components.graphics.RenderableBackground;
+import qbert.model.components.graphics.TileGC;
 
 /**
  * Class representing the single {@link Tile} in which the player needs to land to score points.

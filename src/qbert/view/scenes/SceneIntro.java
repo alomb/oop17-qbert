@@ -35,7 +35,7 @@ public class SceneIntro extends SceneImpl {
         this.addSection(TextPosition.TITLE, 
                 new GUISectionImpl(this.yellow, Optional.empty(), 0, -Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.LARGE));
         this.addSection(TextPosition.RIGHTSIDE, 
-                new GUISectionImpl(this.green, Optional.empty(), Math.round(Dimensions.getWindowWidth() / 1.75f), Math.round(Dimensions.getWindowHeight() / 3.5f), false, TextSize.SMALL));
+                new GUISectionImpl(this.green, Optional.empty(), Math.round(Dimensions.getWindowWidth() / 2f), Math.round(Dimensions.getWindowHeight() / 4.25f), false, TextSize.SMALL));
         this.addSection(TextPosition.FOOT, 
                 new GUISectionImpl(this.green, Optional.empty(), 0, Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.SMALL));
     }

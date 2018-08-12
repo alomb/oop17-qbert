@@ -6,8 +6,8 @@ import qbert.model.characters.states.CharacterState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.utilities.Position2D;
-import qbert.view.Renderable;
-import qbert.view.characters.CharacterGC;
+import qbert.model.components.graphics.Renderable;
+import qbert.model.components.graphics.CharacterGC;
 
 /**
  * An interface representing a visible and movable game character. It provides

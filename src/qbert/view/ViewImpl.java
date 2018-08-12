@@ -59,8 +59,8 @@ public class ViewImpl implements View {
 
         this.scenes = new HashMap<>();
 
-        this.addScene(new SceneIntro(w, h, controller), GameStatus.INTRODUCTION);
         this.addScene(new SceneMenu(w, h, controller), GameStatus.MENU);
+        this.addScene(new SceneIntro(w, h, controller), GameStatus.INTRODUCTION);
         this.addScene(new SceneGame(w, h, controller), GameStatus.GAMEPLAY);
         this.addScene(new SceneRanking(w, h, controller), GameStatus.RANKING);
         this.addScene(new SceneRanking(w, h, controller), GameStatus.GAMEOVER);

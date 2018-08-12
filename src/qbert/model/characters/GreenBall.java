@@ -4,7 +4,7 @@ import qbert.model.characters.states.DeathState;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.CharacterGC;
+import qbert.model.components.graphics.CharacterGC;
 
 /**
  * This class models a green ball that moves like a {@link RedBall} but can be catched
