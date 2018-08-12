@@ -1,4 +1,4 @@
-package qbert.model.utilities;
+package qbert.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -11,10 +11,12 @@ import javax.imageio.ImageIO;
 
 import qbert.model.sprites.ColorComposition;
 import qbert.model.sprites.ColorCompositionImpl;
-import qbert.model.sprites.CompleteCharacterSprites;
-import qbert.model.sprites.CompleteCharacterSpritesImpl;
-import qbert.model.sprites.FrontBackCharacterSprites;
-import qbert.model.sprites.FrontCharacterSpritesImpl;
+import qbert.model.sprites.SpecialCharacterSprites;
+import qbert.model.sprites.SpecialCharacterSpritesImpl;
+import qbert.model.sprites.OneSideCharacterSprites;
+import qbert.model.sprites.OneSideCharacterSpritesImpl;
+import qbert.model.utilities.Dimensions;
+import qbert.model.utilities.Position2D;
 
 /**
  * A Singleton used to load images and retrieve group of them for different purposes.
@@ -55,7 +57,6 @@ public final class Sprites {
     private BufferedImage greyTile;
     private BufferedImage pinkTile;
     private BufferedImage yellowTile;
-    private BufferedImage life;
     private BufferedImage wrongwayStanding;
     private BufferedImage wrongwayMoving;
     private BufferedImage uggStanding;
@@ -102,7 +103,6 @@ public final class Sprites {
             this.greyTile = loadImg(imgPath + "TileGrey.png");
             this.pinkTile = loadImg(imgPath + "TilePink.png");
             this.yellowTile = loadImg(imgPath + "TileYellow.png");
-            this.life = loadImg(imgPath + "Life.png");
             this.wrongwayStanding = loadImg(imgPath + "WrongWayStand.png");
             this.wrongwayMoving = loadImg(imgPath + "WrongWayMove.png");
             this.uggStanding = loadImg(imgPath + "UggStand.png");
@@ -162,67 +162,87 @@ public final class Sprites {
     }
 
     /**
-     * @return a {@link CompleteCharacterSprites} containing {@link Qbert}'s sprites
+     * @return a {@link FrontBackCharacterSprites} containing {@link Qbert}'s front sprites
      */
-    public CompleteCharacterSprites getQbertSprites() {
-        return new CompleteCharacterSpritesImpl(this.qbertFrontStanding, this.qbertFrontMoving, this.qbertBackStanding, this.qbertBackMoving, 
-                this.qbertDead, this.qbertOnDisk);
+    public OneSideCharacterSprites getQbertFrontSprites() {
+        return new OneSideCharacterSpritesImpl(this.qbertFrontStanding, this.qbertFrontMoving);
     }
 
     /**
-     * @return a {@link CompleteCharacterSprites} containing {@link Coily}'s sprites
+     * @return a {@link SpecialCharacterSprites} containing {@link Qbert}'s back sprites
      */
-    public FrontBackCharacterSprites getCoilySprites() {
-        return new FrontBackCharacterSprites(this.coilyFrontStanding, this.coilyFrontMoving, this.coilyBackStanding, this.coilyBackMoving);
+    public OneSideCharacterSprites getQbertBackSprites() {
+        return new OneSideCharacterSpritesImpl(this.qbertBackStanding, this.qbertBackMoving);
+    }
+
+    /**
+     * @return a {@link SpecialCharacterSprites} containing {@link Qbert}'s special sprites
+     */
+    public SpecialCharacterSprites getQbertSpecialSprites() {
+        return new SpecialCharacterSpritesImpl(this.qbertDead, this.qbertOnDisk);
+    }
+
+    /**
+     * @return a {@link SpecialCharacterSprites} containing {@link Coily}'s front sprites
+     */
+    public OneSideCharacterSprites getCoilyFrontSprites() {
+        return new OneSideCharacterSpritesImpl(this.coilyFrontStanding, this.coilyFrontMoving);
+    }
+
+    /**
+     * @return a {@link SpecialCharacterSprites} containing {@link Coily}'s back sprites
+     */
+    public OneSideCharacterSprites getCoilyBackSprites() {
+        return new OneSideCharacterSpritesImpl(this.coilyBackStanding, this.coilyBackMoving);
     }
 
     /**
      * @return {@link RedBall} sprites
      */
-    public FrontCharacterSpritesImpl getRedBallSprites() {
-        return new FrontCharacterSpritesImpl(this.redBallStanding, this.redBallMoving);
+    public OneSideCharacterSprites getRedBallSprites() {
+        return new OneSideCharacterSpritesImpl(this.redBallStanding, this.redBallMoving);
     }
 
     /**
      * @return {@link GreenBall} sprites
      */
-    public FrontCharacterSpritesImpl getGreenBallSprites() {
-        return new FrontCharacterSpritesImpl(this.greenBallStanding, this.greenBallMoving);
+    public OneSideCharacterSprites getGreenBallSprites() {
+        return new OneSideCharacterSpritesImpl(this.greenBallStanding, this.greenBallMoving);
     }
 
     /**
      * @return {@link Coily} sprites when it's a ball
      */
-    public FrontCharacterSpritesImpl getPurpleBallSprites() {
-        return new FrontCharacterSpritesImpl(this.purpleBallStanding, this.purpleBallMoving);
+    public OneSideCharacterSprites getPurpleBallSprites() {
+        return new OneSideCharacterSpritesImpl(this.purpleBallStanding, this.purpleBallMoving);
     }
 
     /**
      * @return Slick ({@link SamAndSlick}) sprites
      */
-    public FrontCharacterSpritesImpl getSlickSprites() {
-        return new FrontCharacterSpritesImpl(this.slickStanding, this.slickMoving);
+    public OneSideCharacterSprites getSlickSprites() {
+        return new OneSideCharacterSpritesImpl(this.slickStanding, this.slickMoving);
     }
 
     /**
      * @return Sam ({@link SamAndSlick}) sprites
      */
-    public FrontCharacterSpritesImpl getSamSprites() {
-        return new FrontCharacterSpritesImpl(this.samStanding, this.samMoving);
+    public OneSideCharacterSprites getSamSprites() {
+        return new OneSideCharacterSpritesImpl(this.samStanding, this.samMoving);
     }
 
     /**
      * @return {@link Wrongway} sprites
      */
-    public FrontCharacterSpritesImpl getWrongwaySprites() {
-        return new FrontCharacterSpritesImpl(this.wrongwayStanding, this.wrongwayMoving);
+    public OneSideCharacterSprites getWrongwaySprites() {
+        return new OneSideCharacterSpritesImpl(this.wrongwayStanding, this.wrongwayMoving);
     }
 
     /**
      * @return {@link Ugg} sprites
      */
-    public FrontCharacterSpritesImpl getUggSprites() {
-        return new FrontCharacterSpritesImpl(this.uggStanding, this.uggMoving);
+    public OneSideCharacterSprites getUggSprites() {
+        return new OneSideCharacterSpritesImpl(this.uggStanding, this.uggMoving);
     }
 
     /**
@@ -284,12 +304,5 @@ public final class Sprites {
         tiles.add(this.beigeTile);
         tiles.add(this.blueTile);
         return new ColorCompositionImpl(this.greyBackground, tiles);
-    }
-
-    /**
-     * @return the player life's sprite
-     */
-    public BufferedImage getLifeSprite() {
-        return this.life;
     }
 }

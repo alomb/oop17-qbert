@@ -18,7 +18,6 @@ import qbert.model.LevelSettings;
 import qbert.model.LevelSettingsImpl;
 import qbert.model.spawner.EnemyInfoImpl;
 import qbert.model.sprites.ColorComposition;
-import qbert.model.utilities.Sprites;
 
 /**
  * The implementation of {@link LevelConfigurationReader}.

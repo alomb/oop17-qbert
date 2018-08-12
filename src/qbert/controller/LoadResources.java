@@ -3,13 +3,9 @@ package qbert.controller;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStream;
-
-import javax.imageio.ImageIO;
 
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
@@ -19,8 +15,6 @@ import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
 import qbert.model.utilities.Dimensions;
-import qbert.model.utilities.Position2D;
-import qbert.model.utilities.Sprites;
 
 public class LoadResources {
 
@@ -79,7 +73,6 @@ public class LoadResources {
             convertSvgToPng("/svg/TileGrey.svg", imgPath + "TileGrey.png");
             convertSvgToPng("/svg/TilePink.svg", imgPath + "TilePink.png");
             convertSvgToPng("/svg/TileYellow.svg", imgPath + "TileYellow.png");
-            convertSvgToPng("/svg/Life.svg", imgPath + "Life.png");
             convertSvgToPng("/svg/Disk1.svg", imgPath + "Disk1.png");
             convertSvgToPng("/svg/Disk2.svg", imgPath + "Disk2.png");
             convertSvgToPng("/svg/Disk3.svg", imgPath + "Disk3.png");

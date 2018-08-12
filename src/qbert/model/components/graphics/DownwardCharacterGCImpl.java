@@ -1,7 +1,6 @@
 package qbert.model.components.graphics;
 
-import java.awt.image.BufferedImage;
-
+import qbert.model.sprites.OneSideCharacterSprites;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.ComposedAnimation;
@@ -14,8 +13,7 @@ import qbert.view.characters.StandingAnimation;
  */
 public class DownwardCharacterGCImpl extends CharacterGCImpl {
 
-    private final BufferedImage standSprite;
-    private final BufferedImage moveSprite;
+    private final OneSideCharacterSprites sprites;
 
     private final int jumpWidth = Dimensions.getTileWidth();
     private final int jumpHeight = Dimensions.getCubeHeight();
@@ -28,14 +26,12 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
     private boolean right;
 
     /**
-     * @param standSprite the {@link BufferedImage} containing the {@link Character}'s standing sprite
-     * @param moveSprite the {@link BufferedImage} containing the {@link Character}'s moving sprite
+     * @param sprites the {@link Character} sprites container
      * @param startSpritePos the first position (physic) of the {@link Character}
      */
-    public DownwardCharacterGCImpl(final BufferedImage standSprite, final BufferedImage moveSprite, final Position2D startSpritePos) {
-        super(standSprite, startSpritePos);
-        this.standSprite = standSprite;
-        this.moveSprite = moveSprite;
+    public DownwardCharacterGCImpl(final OneSideCharacterSprites sprites, final Position2D startSpritePos) {
+        super(sprites.getStandSprite(), startSpritePos);
+        this.sprites = sprites;
         this.landPos = new Position2D(this.getSpawnPosition().getX(), (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - this.getSpriteHeight()); 
         this.right = true;
     }
@@ -47,7 +43,7 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
 
     @Override
     public final void setStandingAnimation() {
-        this.setSprite(this.standSprite);
+        this.setSprite(this.sprites.getStandSprite());
         if (!this.right) {
             this.flipOnYImage();
         }
@@ -56,7 +52,7 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
 
     @Override
     public final void setSpawnAnimation() {
-        this.setSprite(this.moveSprite);
+        this.setSprite(this.sprites.getMoveSprite());
         if (!this.right) {
             this.flipOnYImage();
         }
@@ -65,7 +61,7 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
 
     @Override
     public final void setFallAnimation() {
-        this.setSprite(this.moveSprite);
+        this.setSprite(this.sprites.getMoveSprite());
         if (!this.right) {
             this.flipOnYImage();
         }
@@ -74,7 +70,7 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
 
     @Override
     public final void setMoveDownLeftAnimation() {
-        this.setSprite(this.moveSprite);
+        this.setSprite(this.sprites.getMoveSprite());
         this.right = false;
         this.flipOnYImage();
         this.setCurrentAnimation(new ComposedAnimation.JumpDownLeft(this.getPosition(), new Position2D(this.getPosition().getX() - this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
@@ -82,7 +78,7 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
 
     @Override
     public final void setMoveDownRightAnimation() {
-        this.setSprite(this.moveSprite);
+        this.setSprite(this.sprites.getMoveSprite());
         this.right = true;
         this.setCurrentAnimation(new ComposedAnimation.JumpDownRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
     }

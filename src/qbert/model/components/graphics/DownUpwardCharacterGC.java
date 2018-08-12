@@ -1,6 +1,6 @@
 package qbert.model.components.graphics;
 
-import java.awt.image.BufferedImage;
+import qbert.model.sprites.OneSideCharacterSprites;
 
 /**
  * An interface that extends {@link CharacterGC} to add new functionalities
@@ -29,24 +29,14 @@ public interface DownUpwardCharacterGC extends CharacterGC {
     void setRight(boolean right);
 
     /**
-     * @return the current front stand {@link BufferedImage}
+     * @return the {@link OneSideCharacterSprites} containing the front sprites
      */
-    BufferedImage getFrontStandSprite();
+    OneSideCharacterSprites getFrontSprites();
 
     /**
-     * @param frontStandSprite the new front stand {@link BufferedImage}
+     * @param frontSprites the new {@link OneSideCharacterSprites} for front sprites
      */
-    void setFrontStandSprite(BufferedImage frontStandSprite);
-
-    /**
-     * @return the current front move {@link BufferedImage}
-     */
-    BufferedImage getFrontMoveSprite();
-
-    /**
-     * @param frontMoveSprite the new front move {@link BufferedImage}
-     */
-    void setFrontMoveSprite(BufferedImage frontMoveSprite);
+    void setFrontSprites(OneSideCharacterSprites frontSprites);
 
     /**
      * Set the {@link DownUpwardCharacter} relative moving up-right animation.

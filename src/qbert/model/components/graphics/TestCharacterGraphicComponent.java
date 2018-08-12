@@ -5,13 +5,13 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import qbert.controller.LoadResources;
+import qbert.controller.Sprites;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.DisplaceAnimation;
 import qbert.view.characters.ComposedAnimation;
 import qbert.view.characters.StraightMovementAnimation;
 
-import java.awt.image.BufferedImage;
 import java.util.Random;
 
 /**
@@ -21,11 +21,7 @@ public class TestCharacterGraphicComponent {
 
     private static final float SPEED = 7;
 
-    private static final int SPRITEHEIGHT = 5; 
-    private static final int SPRITEWIDTH = 5;
-
-    private final BufferedImage image = new BufferedImage(TestCharacterGraphicComponent.SPRITEWIDTH, 
-            TestCharacterGraphicComponent.SPRITEHEIGHT, BufferedImage.TYPE_INT_ARGB);
+    private static final int SPRITEHEIGHT = 5;
 
     private final Random rnd;
     private static final int TEST = 20;
@@ -97,7 +93,7 @@ public class TestCharacterGraphicComponent {
      */
     @Test
     public void testDownwardCGC() {
-        final CharacterGC cgc = new DownwardCharacterGCImpl(image, image, new Position2D(Dimensions.getSpawningPointLeft()));
+        final CharacterGC cgc = new DownwardCharacterGCImpl(Sprites.getInstance().getGreenBallSprites(), new Position2D(Dimensions.getSpawningPointLeft()));
         assertEquals(cgc.getPosition(), Dimensions.getSpawningPointLeft());
         cgc.setSpawnAnimation();
         assertTrue(cgc.getCurrentAnimation() instanceof StraightMovementAnimation);
@@ -119,7 +115,8 @@ public class TestCharacterGraphicComponent {
      */
     @Test
     public void testDownwardUpwardGC() {
-        final DownUpwardCharacterGC cgc = new CoilyGCImpl(image, image, image, image, image, image, new Position2D(Dimensions.getSpawningPointRight()));
+        final Sprites s = Sprites.getInstance();
+        final DownUpwardCharacterGC cgc = new CoilyGCImpl(s.getPurpleBallSprites(), s.getCoilyFrontSprites(), s.getCoilyBackSprites(), new Position2D(Dimensions.getSpawningPointRight()));
         final Position2D spawnPos = new Position2D(rnd.nextInt(10), rnd.nextInt(10));
         assertEquals(cgc.getPosition(), Dimensions.getSpawningPointRight());
         cgc.setSpawnPosition(spawnPos);

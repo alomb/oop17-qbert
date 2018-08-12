@@ -13,13 +13,13 @@ import java.util.stream.IntStream;
 
 import qbert.model.characters.Player;
 import qbert.model.characters.states.QbertOnDiskState;
+import qbert.controller.Sprites;
 import qbert.model.Disk;
 import qbert.model.DiskImpl;
 import qbert.model.LevelSettings;
 import qbert.model.Tile;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.model.utilities.Sprites;
 import qbert.model.components.graphics.DiskGC;
 import qbert.model.components.graphics.DiskGCImpl;
 import qbert.model.components.graphics.ReversibleTileGC;

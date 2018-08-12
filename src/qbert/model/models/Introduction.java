@@ -9,15 +9,15 @@ import java.util.stream.Stream;
 
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
+import qbert.controller.Sprites;
 import qbert.model.characters.Player;
 import qbert.model.characters.Qbert;
 import qbert.model.characters.states.LandState;
 import qbert.model.characters.states.MoveState;
 import qbert.model.components.sounds.QbertSC;
-import qbert.model.sprites.CompleteCharacterSprites;
+import qbert.model.sprites.SpecialCharacterSprites;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.model.utilities.Sprites;
 import qbert.model.components.graphics.Renderable;
 import qbert.model.components.graphics.PlayerGC;
 import qbert.model.components.graphics.PlayerGCImpl;
@@ -48,9 +48,9 @@ public class Introduction implements Model {
      * @param controller the game controller.
      */
     public Introduction(final Controller controller) {
-        final CompleteCharacterSprites s = Sprites.getInstance().getQbertSprites();
-        final PlayerGC graphics = new PlayerGCImpl(s.getFrontStandSprite(), s.getFrontMoveSprite(), s.getBackStandSprite(), s.getBackMoveSprite(), 
-                s.getDeathSprite(), s.getOnDiskSprite(), new Position2D(Dimensions.getSpawningQBert()));
+        final Sprites sprites = Sprites.getInstance();
+        final PlayerGC graphics = new PlayerGCImpl(sprites.getQbertFrontSprites(), sprites.getQbertBackSprites(), 
+                sprites.getQbertSpecialSprites(), new Position2D(Dimensions.getSpawningQBert()));
  
         this.controller = controller;
 

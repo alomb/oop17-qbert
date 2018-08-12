@@ -1,6 +1,6 @@
 package qbert.model.components.graphics;
 
-import java.awt.image.BufferedImage;
+import qbert.model.sprites.OneSideCharacterSprites;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.ComposedAnimation;
@@ -13,10 +13,9 @@ import qbert.view.characters.StandingAnimation;
  */
 public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implements DownUpwardCharacterGC {
 
-    private BufferedImage frontStandSprite;
-    private BufferedImage frontMoveSprite;
-    private final BufferedImage backStandSprite;
-    private final BufferedImage backMoveSprite;
+    private final OneSideCharacterSprites backSprites;
+    private OneSideCharacterSprites frontSprites;
+
 
     /**
      * A boolean to set true when the character has moved front (down) or is standing front.
@@ -32,21 +31,17 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
     private final int jumpHeight = Dimensions.getCubeHeight();
 
     /**
-     * @param frontStandSprite the {@link BufferedImage} containing the {@link Character}'s standing front sprite
-     * @param frontMoveSprite the {@link BufferedImage} containing the {@link Character}'s moving front sprite
-     * @param backStandSprite the {@link BufferedImage} containing the {@link Character}'s standing back sprite
-     * @param backMoveSprite the {@link BufferedImage} containing the {@link Character}'s moving back sprite
+     * @param frontSprites the {@link OneSideCharacterSprites} containing the {@link Character}'s standing front sprite
+     * @param backSprites the {@link OneSideCharacterSprites} containing the {@link Character}'s standing front sprite
      * @param startSpritePos the first position (physic) of the {@link Character}
      */
-    public DownUpwardCharacterGCImpl(final BufferedImage frontStandSprite, final BufferedImage frontMoveSprite, 
-            final BufferedImage backStandSprite, final BufferedImage backMoveSprite, final Position2D startSpritePos) {
-        super(frontStandSprite, startSpritePos);
+    public DownUpwardCharacterGCImpl(final OneSideCharacterSprites frontSprites, final OneSideCharacterSprites backSprites, final Position2D startSpritePos) {
+        super(frontSprites.getStandSprite(), startSpritePos);
+        this.frontSprites = frontSprites;
+        this.backSprites = backSprites;
+
         this.front = true;
         this.right = true;
-        this.backStandSprite = backStandSprite;
-        this.backMoveSprite = backMoveSprite;
-        this.frontStandSprite = frontStandSprite;
-        this.frontMoveSprite = frontMoveSprite;
     }
  
     @Override
@@ -70,23 +65,13 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
     }
 
     @Override
-    public final BufferedImage getFrontStandSprite() {
-        return this.frontStandSprite;
+    public final OneSideCharacterSprites getFrontSprites() {
+        return this.frontSprites;
     }
 
     @Override
-    public final void setFrontStandSprite(final BufferedImage frontStandSprite) {
-        this.frontStandSprite = frontStandSprite;
-    }
-
-    @Override
-    public final BufferedImage getFrontMoveSprite() {
-        return this.frontMoveSprite;
-    }
-
-    @Override
-    public final void setFrontMoveSprite(final BufferedImage frontMoveSprite) {
-        this.frontMoveSprite = frontMoveSprite;
+    public final void setFrontSprites(final OneSideCharacterSprites frontSprites) {
+        this.frontSprites = frontSprites;
     }
 
     @Override
@@ -95,9 +80,9 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
     @Override
     public final void setStandingAnimation() {
         if (this.front) {
-            this.setSprite(this.frontStandSprite);
+            this.setSprite(this.frontSprites.getStandSprite());
         } else {
-            this.setSprite(this.backStandSprite);
+            this.setSprite(this.backSprites.getStandSprite());
         }
 
         if (!this.right) {
@@ -113,9 +98,9 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
     @Override
     public final void setFallAnimation() {
         if (this.front) {
-            this.setSprite(this.frontMoveSprite);
+            this.setSprite(this.frontSprites.getMoveSprite());
         } else {
-            this.setSprite(this.backMoveSprite);
+            this.setSprite(this.backSprites.getMoveSprite());
         }
 
         if (!this.right) {
@@ -127,7 +112,7 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
 
     @Override
     public final void setMoveDownLeftAnimation() {
-        this.setSprite(this.frontMoveSprite);
+        this.setSprite(this.frontSprites.getMoveSprite());
         this.front = true;
         this.right = false;
         this.flipOnYImage();
@@ -136,7 +121,7 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
 
     @Override
     public final void setMoveDownRightAnimation() {
-        this.setSprite(this.frontMoveSprite);
+        this.setSprite(this.frontSprites.getMoveSprite());
         this.front = true;
         this.right = true;
         this.setCurrentAnimation(new ComposedAnimation.JumpDownRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() + this.jumpHeight)));
@@ -144,7 +129,7 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
 
     @Override
     public final void setMoveUpLeftAnimation() {
-        this.setSprite(this.backMoveSprite);
+        this.setSprite(this.backSprites.getMoveSprite());
         this.front = false;
         this.right = false;
         this.flipOnYImage();
@@ -153,7 +138,7 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
 
     @Override
     public final void setMoveUpRightAnimation() {
-        this.setSprite(this.backMoveSprite);
+        this.setSprite(this.backSprites.getMoveSprite());
         this.front = false;
         this.right = true;
         this.setCurrentAnimation(new ComposedAnimation.JumpUpRight(this.getPosition(), new Position2D(this.getPosition().getX() + this.jumpWidth / 2, this.getPosition().getY() - this.jumpHeight)));

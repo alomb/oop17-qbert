@@ -1,7 +1,7 @@
 package qbert.model.components.graphics;
 
-import java.awt.image.BufferedImage;
-
+import qbert.model.sprites.OneSideCharacterSprites;
+import qbert.model.sprites.SpecialCharacterSprites;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.DisplaceAnimation;
@@ -12,31 +12,24 @@ import qbert.view.characters.ComposedAnimation;
  */
 public class PlayerGCImpl extends DownUpwardCharacterGCImpl implements PlayerGC {
 
-    private final BufferedImage deathSprite;
-    private final BufferedImage onDiskSprite;
+    private final SpecialCharacterSprites specialSprites;
 
     /**
-     * @param frontStandSprite the {@link BufferedImage} containing the {@link Character}'s standing front sprite
-     * @param frontMoveSprite the {@link BufferedImage} containing the {@link Character}'s moving front sprite
-     * @param backStandSprite the {@link BufferedImage} containing the {@link Character}'s standing back sprite
-     * @param backMoveSprite the {@link BufferedImage} containing the {@link Character}'s moving back sprite
-     * @param deathSprite the {@link BufferedImage} containing the {@link Character}'s sprite when it dies
-     * @param onDiskSprite the {@link BufferedImage} containing the {@link Character}'s sprite when it stays on the disk
+     * @param frontSprites the container of the {@link Character} front sprites
+     * @param backSprites the container of the {@link Character} back sprites
+     * @param specialSprites the container of the {@link Character} special sprites
      * @param startSpritePos the first position (physic) of the {@link Character}
      */
-    public PlayerGCImpl(final BufferedImage frontStandSprite, final BufferedImage frontMoveSprite, final BufferedImage backStandSprite,
-            final BufferedImage backMoveSprite, final BufferedImage deathSprite, final BufferedImage onDiskSprite,
-            final Position2D startSpritePos) {
-        super(frontStandSprite, frontMoveSprite, backStandSprite, backMoveSprite, startSpritePos);
-        this.deathSprite = deathSprite;
-        this.onDiskSprite = onDiskSprite;
+    public PlayerGCImpl(final OneSideCharacterSprites frontSprites, final OneSideCharacterSprites backSprites, final SpecialCharacterSprites specialSprites, final Position2D startSpritePos) {
+        super(frontSprites, backSprites, startSpritePos);
+        this.specialSprites = specialSprites;
     }
 
     @Override
     public final void setDeathAnimation() {
         this.setPosition(new Position2D(this.getPosition().getX(), 
-                this.getPosition().getY() - Math.abs(this.getSpriteHeight() - this.deathSprite.getHeight())));
-        this.setSprite(this.deathSprite);
+                this.getPosition().getY() - Math.abs(this.getSpriteHeight() - this.specialSprites.getDeathSprite().getHeight())));
+        this.setSprite(this.specialSprites.getDeathSprite());
         if (this.isRight()) {
             this.flipOnYImage();
         }
@@ -44,7 +37,7 @@ public class PlayerGCImpl extends DownUpwardCharacterGCImpl implements PlayerGC 
 
     @Override
     public final void setSpawnAnimation() {
-        this.setSprite(this.getFrontStandSprite());
+        this.setSprite(this.getFrontSprites().getStandSprite());
         this.setRight(true);
         this.setFront(true);
         this.setCurrentAnimation(new DisplaceAnimation(this.getPosition(), this.getSpawnPosition()));
@@ -52,7 +45,7 @@ public class PlayerGCImpl extends DownUpwardCharacterGCImpl implements PlayerGC 
 
     @Override
     public final void setOnDiskAnimation() {
-        this.setSprite(this.onDiskSprite);
+        this.setSprite(this.specialSprites.getOnDiskSprite());
         final Position2D intermediatePos = new Position2D(Dimensions.getSpawningQBert().getX(), Dimensions.getSpawningQBert().getY() - this.getSpriteHeight() * 2);
         this.setCurrentAnimation(new ComposedAnimation.OnDisk(this.getPosition(), intermediatePos, new Position2D(Dimensions.getSpawningQBert())));
     }
