@@ -1,6 +1,6 @@
 package qbert.model;
 
-import qbert.model.components.PointComponent;
+import qbert.model.components.PointComponentImpl;
 import qbert.model.utilities.Position2D;
 import qbert.model.components.graphics.RenderableBackground;
 import qbert.model.components.graphics.TileGC;
@@ -62,9 +62,9 @@ public class Tile extends RenderableBackground implements GameObject {
     public int increment() {
         if (this.graphicComponent.setNextSprite()) {
             if (this.graphicComponent.isTargetColor()) {
-                return PointComponent.TARGET_COLOR_SCORE;
+                return PointComponentImpl.TARGET_COLOR_SCORE;
             } else {
-                return PointComponent.INTERMEDIATE_COLOR_SCORE;
+                return PointComponentImpl.INTERMEDIATE_COLOR_SCORE;
             }
         }
         return 0;

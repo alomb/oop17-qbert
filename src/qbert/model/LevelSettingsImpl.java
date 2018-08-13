@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import qbert.model.characters.CharactersList;
-import qbert.model.components.PointComponent;
+import qbert.model.components.PointComponentImpl;
 import qbert.model.spawner.EnemyInfoImpl;
 
 /**
@@ -39,7 +39,7 @@ public final class LevelSettingsImpl implements LevelSettings {
         this.colorMap = colorMap;
         this.disksNumber = disksNumber;
         this.mapInfo = mapInfo;
-        this.roundScore = PointComponent.ROUND_SCORE;
+        this.roundScore = PointComponentImpl.ROUND_SCORE;
         this.qBertSpeed = qBertSpeed;
     }
 

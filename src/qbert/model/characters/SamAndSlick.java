@@ -3,6 +3,7 @@ package qbert.model.characters;
 import qbert.model.characters.states.DeathState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
+import qbert.model.components.PointComponentImpl;
 import qbert.model.components.TimerComponent;
 import qbert.model.utilities.Position2D;
 import qbert.model.components.graphics.CharacterGC;
@@ -30,7 +31,7 @@ public class SamAndSlick extends DownwardCharacter {
 
     @Override
     public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
-        points.score(PointComponent.KILL_SAM_SLICK_SCORE, qbert);
+        points.score(PointComponentImpl.KILL_SAM_SLICK_SCORE, qbert);
         this.setCurrentState(new DeathState(this));
     }
 }
