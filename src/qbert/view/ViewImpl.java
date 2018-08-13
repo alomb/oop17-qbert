@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import qbert.LoggerManager;
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
 import qbert.model.utilities.Dimensions;
@@ -54,20 +55,21 @@ public class ViewImpl implements View {
             }
         });
 
-        frame.pack();
-        frame.setVisible(true);
-
         this.scenes = new HashMap<>();
 
-        this.addScene(new SceneMenu(w, h, controller), GameStatus.MENU);
         this.addScene(new SceneIntro(w, h, controller), GameStatus.INTRODUCTION);
         this.addScene(new SceneGame(w, h, controller), GameStatus.GAMEPLAY);
+        this.addScene(new SceneMenu(w, h, controller), GameStatus.MENU);
         this.addScene(new SceneRanking(w, h, controller), GameStatus.RANKING);
         this.addScene(new SceneRanking(w, h, controller), GameStatus.GAMEOVER);
 
         if (!this.scenes.keySet().equals(GameStatus.getAll())) {
-            throw new UnsupportedOperationException();
+            LoggerManager.getInstance().info(this.getClass().getName(), "Not all the game status have been initialized. Program aborted");
+            controller.abort();
         }
+
+        frame.pack();
+        frame.setVisible(true);
     }
 
     @Override
