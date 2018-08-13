@@ -44,22 +44,30 @@ public class ControllerImpl implements Controller {
     private final BlockingQueue<Integer> gamePoint = new ArrayBlockingQueue<>(1);
 
     private final View view;
+    private boolean abort;
 
     /**
      * @param firstGameStatus the first application's {@link GameStatus}
      */
     public ControllerImpl(final GameStatus firstGameStatus) {
+        this.abort = false;
         this.lcr = new LevelConfigurationReaderImpl();
-        this.statusManager = new GameStatusManagerImpl(firstGameStatus, this);
 
+        this.statusManager = new GameStatusManagerImpl(firstGameStatus, this);
         this.view = new ViewImpl(this);
         this.gameEngine = new GameEngine(this.view);
+
+        if (this.abort) {
+            this.terminate();
+        }
     }
 
     @Override
     public final void setupGameEngine() {
-        this.changeScene(this.statusManager.getCurrentStatus());
-        this.gameEngine.mainLoop();
+        if (!this.abort) {
+            this.changeScene(this.statusManager.getCurrentStatus());
+            this.gameEngine.mainLoop();
+        }
     }
 
     @Override
@@ -161,6 +169,11 @@ public class ControllerImpl implements Controller {
     public final void terminate() {
         this.view.closeWindow();
         this.gameEngine.stop();
+    }
+
+    @Override
+    public final void abort() {
+        this.abort = true;
     }
 
     @Override
