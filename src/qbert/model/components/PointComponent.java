@@ -62,6 +62,9 @@ public class PointComponent {
     public PointComponent(final int score) {
         this.points = score;
         this.lifeThreshold = PointComponent.INITIAL_LIFE_THRESHOLD;
+        while (this.lifeThreshold <= this.points) {
+            this.lifeThreshold += PointComponent.STANDARD_LIFE_THRESHOLD;
+        }
     }
 
     /**
@@ -78,7 +81,6 @@ public class PointComponent {
     }
 
     /**
-     * Gets number of points.
      * @return Current player points value
      */
     public int getPoints() {
