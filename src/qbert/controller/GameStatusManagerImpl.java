@@ -3,6 +3,7 @@ package qbert.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import qbert.LoggerManager;
 import qbert.model.models.Game;
 import qbert.model.models.GameOver;
 import qbert.model.models.Introduction;
@@ -34,7 +35,8 @@ public class GameStatusManagerImpl implements GameStatusManager {
         this.currentGameStatus = firstGameStatus;
 
         if (!this.models.keySet().equals(GameStatus.getAll())) {
-            throw new UnsupportedOperationException();
+            controller.abort();
+            LoggerManager.getInstance().info(this.getClass().getName(), "Not all the game status have been initialized. Program aborted");
         }
     }
 

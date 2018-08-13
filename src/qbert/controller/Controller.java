@@ -77,6 +77,11 @@ public interface Controller {
     void terminate();
 
     /**
+     * Method used to abort the application during its setup phase.
+     */
+    void abort();
+
+    /**
      * @param soundEffect the {@link SoundEffectFile} value representing the .wav file to be loaded
      * @return the {@link Clip} of the sound effect to be played
      */
@@ -86,4 +91,5 @@ public interface Controller {
      * @param queue the {@link Queue} to be emptied
      */
     void emptyClipQueue(Queue<Clip> queue);
+
 }

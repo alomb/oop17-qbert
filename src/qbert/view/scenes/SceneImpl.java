@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -34,6 +35,7 @@ public abstract class SceneImpl extends JPanel implements Scene {
         this.setSize(w, h);
 
         this.sections = new HashMap<>();
+        Arrays.asList(TextPosition.values()).forEach(t -> this.sections.put(t, Optional.empty()));
     }
 
     @Override
