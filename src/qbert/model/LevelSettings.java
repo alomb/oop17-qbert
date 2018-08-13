@@ -3,6 +3,7 @@ package qbert.model;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 
+import qbert.model.characters.CharactersList;
 import qbert.model.spawner.EnemyInfoImpl;
 
 /**
@@ -43,7 +44,7 @@ public interface LevelSettings {
     /**
      * @return the map containing enemies information
      */
-    Map<String, EnemyInfoImpl> getMapInfo();
+    Map<CharactersList, EnemyInfoImpl> getMapInfo();
 
     /**
      * @return the player speed

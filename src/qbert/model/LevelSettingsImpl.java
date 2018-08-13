@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.Collections;
 import java.util.Map;
 
+import qbert.model.characters.CharactersList;
 import qbert.model.components.PointComponent;
 import qbert.model.spawner.EnemyInfoImpl;
 
@@ -19,7 +20,7 @@ public final class LevelSettingsImpl implements LevelSettings {
     private final float qBertSpeed;
     private final BufferedImage backgroundImage;
     private final Map<Integer, BufferedImage> colorMap;
-    private final Map<String, EnemyInfoImpl> mapInfo;
+    private final Map<CharactersList, EnemyInfoImpl> mapInfo;
 
     /**
      * @param colorsNumber the number of colors to be set for each tile
@@ -31,7 +32,7 @@ public final class LevelSettingsImpl implements LevelSettings {
      * @param qBertSpeed the player speed
      */
     public LevelSettingsImpl(final int colorsNumber, final boolean reverse, final BufferedImage background, 
-            final Map<Integer, BufferedImage> colorMap, final int disksNumber, final Map<String, EnemyInfoImpl> mapInfo, final float qBertSpeed) {
+            final Map<Integer, BufferedImage> colorMap, final int disksNumber, final Map<CharactersList, EnemyInfoImpl> mapInfo, final float qBertSpeed) {
         this.colorsNumber = colorsNumber;
         this.colorReversible = reverse;
         this.backgroundImage = background;
@@ -73,7 +74,7 @@ public final class LevelSettingsImpl implements LevelSettings {
     }
 
     @Override
-    public Map<String, EnemyInfoImpl> getMapInfo() {
+    public Map<CharactersList, EnemyInfoImpl> getMapInfo() {
         return Collections.unmodifiableMap(mapInfo);
     }
 
