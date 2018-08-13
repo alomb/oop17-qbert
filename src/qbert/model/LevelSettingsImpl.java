@@ -38,7 +38,6 @@ public final class LevelSettingsImpl implements LevelSettings {
         this.colorMap = colorMap;
         this.disksNumber = disksNumber;
         this.mapInfo = mapInfo;
-        new PointComponent();
         this.roundScore = PointComponent.ROUND_SCORE;
         this.qBertSpeed = qBertSpeed;
     }

@@ -44,8 +44,7 @@ public final class Level {
         this.controller = controller;
         this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed(), controller, lives);
         this.qbert = this.spawner.spawnQbert();
-        this.points = new PointComponent();
-        this.points.score(score, qbert);
+        this.points = new PointComponent(score);
 
         this.map = new MapComponent(settings);
 

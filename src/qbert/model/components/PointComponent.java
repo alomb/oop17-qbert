@@ -20,7 +20,7 @@ public class PointComponent {
     /**
      * Points gained after landing on a {@link Tile} changing its color to the target one.
      */
-    public static final int TARGET_COLOR_SCORE = 25;
+    public static final int TARGET_COLOR_SCORE = 250;
 
     /**
      * Points gained after stepping on {@link GreenBall}.
@@ -57,9 +57,10 @@ public class PointComponent {
 
     /**
      * Constructor of PointComponent class.
+     * @param score Initial score
      */
-    public PointComponent() {
-        this.points = 0;
+    public PointComponent(final int score) {
+        this.points = score;
         this.lifeThreshold = PointComponent.INITIAL_LIFE_THRESHOLD;
     }
 
