@@ -20,7 +20,7 @@ public class PointComponent {
     /**
      * Points gained after landing on a {@link Tile} changing its color to the target one.
      */
-    public static final int TARGET_COLOR_SCORE = 250;
+    public static final int TARGET_COLOR_SCORE = 25;
 
     /**
      * Points gained after stepping on {@link GreenBall}.
