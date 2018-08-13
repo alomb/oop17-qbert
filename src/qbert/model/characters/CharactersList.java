@@ -33,7 +33,7 @@ public enum CharactersList {
     /**
      * 
      */
-    SAM_AND_SLICK("SamAndSLick");
+    SAM_AND_SLICK("SamAndSlick");
 
     private final String characterName;
 
