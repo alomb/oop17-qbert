@@ -103,6 +103,7 @@ public class TimerComponent {
         spawner.getGameCharacters().stream().forEach(e -> {
             //Check if entity is colliding with QBert
             if (qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())
+                    || (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && qbert.getNextPosition().equals(e.getNextPosition()) && pauseEntities)
                     || ((qbert.getCurrentPosition().getX() - 1 == e.getCurrentPosition().getX() ||  qbert.getCurrentPosition().getX() + 1 == e.getCurrentPosition().getX()) && qbert.getCurrentPosition().getY() + 1 == e.getCurrentPosition().getY() && !e.isMoving() && !qbert.isMoving())) {
                 e.collide(qbert, this.points, this);
             }
