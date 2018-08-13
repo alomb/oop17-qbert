@@ -37,10 +37,15 @@ public class LoadResources {
     public final boolean load() {
         final String imgPath = System.getProperty("user.home") + "/qbert/img/";
 
-        final Toolkit t; 
-        final Dimension d;
-        t = Toolkit.getDefaultToolkit();
-        d = t.getScreenSize();
+        final File directory = new File(imgPath);
+        if (!directory.exists()) {
+            final boolean directoryCreated = directory.mkdirs();
+            if (!directoryCreated) {
+                return false;
+            }
+        }
+
+        final Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
         Dimensions.setScreenHeight(d.height);
         Dimensions.setScreenWidth(d.width);
@@ -50,13 +55,11 @@ public class LoadResources {
 
         final File[] files = new File(imgPath).listFiles();
 
-        if (files == null) {
-            return false;
-        }
-
-        for (final File file : files) {
-            if (!file.isDirectory()) {
-                this.loadCompleted |= file.delete();
+        if (files != null) {
+            for (final File file : files) {
+                if (!file.isDirectory() && file.exists()) {
+                    this.loadCompleted |= file.delete();
+                }
             }
         }
 
