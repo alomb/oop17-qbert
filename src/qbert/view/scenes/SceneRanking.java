@@ -1,14 +1,12 @@
 package qbert.view.scenes;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Optional;
 
 import qbert.controller.Controller;
 import qbert.controller.input.Confirm;
 import qbert.model.models.TextPosition;
-import qbert.model.utilities.Dimensions;
 
 /**
  * An implementation of {@link Scene} for the game menu scene.
@@ -16,11 +14,6 @@ import qbert.model.utilities.Dimensions;
 public class SceneRanking extends SceneImpl {
 
     private final Controller controller;
-
-    private final Color backgroundColor = new Color(38, 47, 124);
-    private final Color yellow = new Color(237, 228, 61);
-    private final Color green = new Color(86, 168, 26);
-    private final Color red = new Color(255, 0, 0);
 
     /**
      * @param w
@@ -31,27 +24,17 @@ public class SceneRanking extends SceneImpl {
      *            the game controller
      */
     public SceneRanking(final int w, final int h, final Controller controller) {
-        super(w, h);
-        this.setBackground(this.backgroundColor);
+        super(w, h, controller);
+        this.setBackground(Color.BLACK);
 
         this.controller = controller;
 
         this.addSection(TextPosition.TITLE, 
-                new GUISectionImpl(this.yellow, Optional.empty(), 0, -Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.LARGE));
+                new GUISectionImpl(SceneColor.YELLOW.getColor(), Optional.empty(), 50, 20, true, TextSize.LARGE));
         this.addSection(TextPosition.CENTER, 
-                new GUISectionImpl(this.green, Optional.of(this.red), 0, Math.round(Dimensions.getWindowHeight() / 8.5f), true, TextSize.SMALL));
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.of(SceneColor.RED.getColor()), 50, 30, true, TextSize.SMALL));
         this.addSection(TextPosition.FOOT, 
-                new GUISectionImpl(this.green, Optional.empty(), 0, Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.SMALL));
-    }
-
-    @Override
-    public final void draw(final Graphics g) {
-        this.controller.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex()).forEach(c -> {
-            g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(),
-                    c.getGraphicComponent().getPosition().getY(), this);
-        });
-
-        this.controller.getGUI().forEach(gui -> this.drawGUI(g, gui));
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.empty(), 50, 80, true, TextSize.SMALL));
     }
 
     @Override

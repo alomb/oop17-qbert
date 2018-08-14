@@ -1,7 +1,6 @@
 package qbert.view.scenes;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Optional;
 
@@ -12,17 +11,18 @@ import qbert.controller.input.MoveLeft;
 import qbert.controller.input.MoveRight;
 import qbert.controller.input.MoveUp;
 import qbert.model.models.TextPosition;
-import qbert.model.utilities.Dimensions;
 
 /**
  * An implementation of {@link Scene} for the gameplay.
  */
 public class SceneGame extends SceneImpl {
  
-    private final Controller controller;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5098983398542021297L;
 
-    private final Color backgroundColor = new Color(0, 0, 0);
-    private final Color textColor = new Color(255, 255, 255);
+    private final Controller controller;
 
     /**
      * @param w the panel width
@@ -30,23 +30,18 @@ public class SceneGame extends SceneImpl {
      * @param controller the game controller
      */
     public SceneGame(final int w, final int h, final Controller controller) {
-        super(w, h);
-        this.setBackground(this.backgroundColor);
+        super(w, h, controller);
+        this.setBackground(Color.BLACK);
         this.controller = controller;
 
+        final int letfXOffset = 5;
+        final int rightXOffset = 85;
+        final int yOffset = 10;
+
         this.addSection(TextPosition.LEFTSIDE, 
-                new GUISectionImpl(this.textColor, Optional.empty(), Math.round(Dimensions.getWindowWidth() / 10f), Math.round(Dimensions.getWindowHeight() / 8f), false, TextSize.SMALL));
-        this.addSection(TextPosition.RIGHTSIDE, 
-                new GUISectionImpl(this.textColor, Optional.empty(), Math.round(Dimensions.getWindowWidth() / 1.25f), Math.round(Dimensions.getWindowHeight() / 8f), false, TextSize.SMALL));
-    }
-
-    @Override
-    public final void draw(final Graphics g) {
-        this.controller.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex()).forEach(c -> {
-            g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(), c.getGraphicComponent().getPosition().getY(), this);
-        });
-
-        this.controller.getGUI().forEach(gui -> this.drawGUI(g, gui));
+                new GUISectionImpl(Color.WHITE, Optional.empty(), letfXOffset, yOffset, false, TextSize.SMALL));
+        this.addSection(TextPosition.RIGHTSIDE,
+                new GUISectionImpl(Color.WHITE, Optional.empty(), rightXOffset, yOffset, false, TextSize.SMALL));
     }
 
     @Override

@@ -121,7 +121,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
     public final Character createWrongway(final float speed, final int standingTime, final Controller controller) {
-        final Position2D logicalPos = new Position2D(0, 0);
+        final Position2D logicalPos = new Position2D(Dimensions.MAP_BOTTOM_EDGE - 1, Dimensions.MAP_BOTTOM_EDGE - 1);
         final RightwardCharacterGC graphics = new RightwardCharacterGC(Sprites.getInstance().getWrongwaySprites(), 
                 new Position2D(-Sprites.getInstance().getWrongwaySprites().getMoveSprite().getWidth(), Dimensions.getBackgroundPos().getY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
 
@@ -130,7 +130,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
     public final Character createUgg(final float speed, final int standingTime, final Controller controller) {
-        final Position2D logicalPos = new Position2D(26, 0);
+        final Position2D logicalPos = new Position2D(Dimensions.MAP_COLUMNS - 1, Dimensions.MAP_BOTTOM_EDGE - 1);
         final LeftwardCharacterGC graphics = new LeftwardCharacterGC(Sprites.getInstance().getUggSprites(), 
                 new Position2D(Dimensions.getWindowWidth() + Sprites.getInstance().getWrongwaySprites().getMoveSprite().getWidth(), Dimensions.getBackgroundPos().getY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
 

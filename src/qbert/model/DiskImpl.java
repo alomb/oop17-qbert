@@ -18,6 +18,7 @@ public class DiskImpl extends RenderableBackground implements Disk {
      * @param graphics the linked {@link DiskGC}
      */
     public DiskImpl(final Position2D position, final DiskGC graphics) {
+        super();
         this.position = position;
         this.graphics = graphics;
     }

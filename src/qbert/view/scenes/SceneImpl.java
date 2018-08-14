@@ -14,6 +14,7 @@ import java.util.Optional;
 
 import javax.swing.JPanel;
 
+import qbert.controller.Controller;
 import qbert.model.models.GUILogic;
 import qbert.model.models.TextPosition;
 import qbert.model.utilities.Dimensions;
@@ -24,18 +25,25 @@ import qbert.model.utilities.Position2D;
  */
 public abstract class SceneImpl extends JPanel implements Scene {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1521223266538012283L;
     private final Map<TextPosition, Optional<GUISectionImpl>> sections;
+    private final Controller controller;
 
     /**
      * @param w the panel width
      * @param h the panel height
+     * @param controller the application {@link Controller}
      */
-    public SceneImpl(final int w, final int h) {
+    public SceneImpl(final int w, final int h, final Controller controller) {
         super();
         this.setSize(w, h);
 
         this.sections = new HashMap<>();
         Arrays.asList(TextPosition.values()).forEach(t -> this.sections.put(t, Optional.empty()));
+        this.controller = controller;
     }
 
     @Override
@@ -60,7 +68,13 @@ public abstract class SceneImpl extends JPanel implements Scene {
     }
 
     @Override
-    public abstract void draw(Graphics g);
+    public final void draw(final Graphics g) {
+        this.controller.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex()).forEach(c -> {
+            g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(), c.getGraphicComponent().getPosition().getY(), this);
+        });
+
+        this.controller.getGUI().forEach(gui -> this.drawGUI(g, gui));
+    }
 
     @Override
     public abstract void keyTyped(KeyEvent e);
@@ -83,7 +97,43 @@ public abstract class SceneImpl extends JPanel implements Scene {
     }
 
     @Override
-    public final void drawGUI(final Graphics g, final GUILogic gui) {
+    public final Optional<GUISectionImpl> getSection(final TextPosition position) {
+        if (this.sections.containsKey(position) && this.sections.get(position).isPresent()) {
+            return this.sections.get(position);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public final void addSection(final TextPosition position, final GUISectionImpl section) {
+        this.sections.put(position, Optional.of(section));
+    }
+
+    /**
+     * Draw a line of text.
+     * @param g the {@link Graphics} used
+     * @param gui the {@link GUILogic} containing the data
+     * @param section the {@link GUISection} containing the style
+     * @param index the line index
+     */
+    private void drawLine(final Graphics g, final GUILogic gui, final GUISection section, final int index) {
+        final int xOffset = section.getXOffset();
+        final int yOffset =  section.getYOffset();
+
+        if (section.isCentered()) {
+            this.drawCenteredString(g, gui.getData().get(index), 
+                    new Position2D(xOffset, yOffset + g.getFont().getSize() * index * 2), g.getFont());
+        } else {
+            g.drawString(gui.getData().get(index), xOffset, yOffset + g.getFont().getSize() * index * 2);
+        }
+    }
+
+    /**
+     * Convert a {@link GUILogic} to view content, displaying it.
+     * @param g the {@link Graphics} for the scene
+     * @param gui the GUI to draw
+     */
+    private void drawGUI(final Graphics g, final GUILogic gui) {
         if (this.sections.get(gui.getPosition()).isPresent()) {
 
             final GUISection section = this.sections.get(gui.getPosition()).get();
@@ -111,37 +161,6 @@ public abstract class SceneImpl extends JPanel implements Scene {
                     }
                 }
             }
-        }
-    }
-
-    @Override
-    public final Optional<GUISectionImpl> getSection(final TextPosition position) {
-        if (this.sections.containsKey(position) && this.sections.get(position).isPresent()) {
-            return this.sections.get(position);
-        }
-        return Optional.empty();
-    }
-
-    @Override
-    public final void addSection(final TextPosition position, final GUISectionImpl section) {
-        this.sections.put(position, Optional.of(section));
-    }
-
-    /**
-     * @param g the {@link Graphics} used
-     * @param gui the {@link GUILogic} containing the data
-     * @param section the {@link GUISection} containing the style
-     * @param index the line index
-     */
-    private void drawLine(final Graphics g, final GUILogic gui, final GUISection section, final int index) {
-        final int xOffset = section.getXOffset();
-        final int yOffset =  section.getYOffset();
-
-        if (section.isCentered()) {
-            this.drawCenteredString(g, gui.getData().get(index), 
-                    new Position2D(xOffset, yOffset + g.getFont().getSize() * index * 2), g.getFont());
-        } else {
-            g.drawString(gui.getData().get(index), xOffset, yOffset + g.getFont().getSize() * index * 2);
         }
     }
 }

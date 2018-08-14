@@ -1,7 +1,5 @@
 package qbert.view.scenes;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Optional;
 
@@ -10,19 +8,18 @@ import qbert.controller.input.Confirm;
 import qbert.controller.input.MoveDown;
 import qbert.controller.input.MoveUp;
 import qbert.model.models.TextPosition;
-import qbert.model.utilities.Dimensions;
 
 /**
  * An implementation of {@link Scene} for the game menu scene.
  */
 public class SceneMenu extends SceneImpl {
 
-    private final Controller controller;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4717362331792893224L;
 
-    private final Color backgroundColor = new Color(38, 47, 124);
-    private final Color yellow = new Color(237, 228, 61);
-    private final Color green = new Color(86, 168, 26);
-    private final Color red = new Color(255, 0, 0);
+    private final Controller controller;
 
     /**
      * @param w
@@ -33,27 +30,22 @@ public class SceneMenu extends SceneImpl {
      *            the game controller
      */
     public SceneMenu(final int w, final int h, final Controller controller) {
-        super(w, h);
-        this.setBackground(this.backgroundColor);
+        super(w, h, controller);
+        this.setBackground(SceneColor.BLUE.getColor());
 
         this.controller = controller;
 
-        this.addSection(TextPosition.TITLE, 
-                new GUISectionImpl(this.yellow, Optional.empty(), 0, -Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.LARGE));
+        final int xOffset = 50;
+        final int titleYOffset = 10;
+        final int centerYOffset = 50;
+        final int footYOffset = 90;
+
+        this.addSection(TextPosition.TITLE,
+                new GUISectionImpl(SceneColor.YELLOW.getColor(), Optional.empty(), xOffset, titleYOffset, true, TextSize.LARGE));
         this.addSection(TextPosition.CENTER, 
-                new GUISectionImpl(this.green, Optional.of(this.red), 0, Math.round(Dimensions.getWindowHeight() / 8.5f), true, TextSize.MEDIUM));
-        this.addSection(TextPosition.FOOT, 
-                new GUISectionImpl(this.green, Optional.empty(), 0, Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.SMALL));
-    }
-
-    @Override
-    public final void draw(final Graphics g) {
-        this.controller.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex()).forEach(c -> {
-            g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(),
-                    c.getGraphicComponent().getPosition().getY(), this);
-        });
-
-        this.controller.getGUI().forEach(gui -> this.drawGUI(g, gui));
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.of(SceneColor.RED.getColor()), xOffset, centerYOffset, true, TextSize.MEDIUM));
+        this.addSection(TextPosition.FOOT,
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.empty(), xOffset, footYOffset, true, TextSize.SMALL));
     }
 
     @Override

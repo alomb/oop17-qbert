@@ -10,6 +10,7 @@ import qbert.model.characters.Character;
 import qbert.model.characters.CharactersList;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.SpawnState;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 
 /**
@@ -58,32 +59,32 @@ public final class SpawnerImpl implements Spawner {
                     switch (entry.getKey()) {
                     case COILY:
                         character = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.qbert, this.controller);
-                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
                     case RED_BALL:
                         character = ef.createRedBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
-                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
                     case GREEN_BALL:
                         character = ef.createGreenBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
-                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
                     case UGG:
                         character = ef.createUgg(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
-                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
                     case WRONGWAY:
                         character = ef.createWrongway(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
-                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
                     case SAM_AND_SLICK:
                         character = ef.createSamAndSlick(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
-                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
                     default:

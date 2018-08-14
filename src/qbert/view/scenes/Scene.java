@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.util.Optional;
 
-import qbert.model.models.GUILogic;
 import qbert.model.models.TextPosition;
 
 /**
@@ -26,12 +25,6 @@ public interface Scene extends KeyListener {
      * @param g the {@link Graphics} for the scene
      */
     void draw(Graphics g);
-
-    /**
-     * @param g the {@link Graphics} for the scene
-     * @param gui the GUI to draw
-     */
-    void drawGUI(Graphics g, GUILogic gui);
 
     /**
      * @param position the {@link TextPosition} an index of the map ({@link TextPosition}, {@link Optional}<{@link GUISectionImpl}>)

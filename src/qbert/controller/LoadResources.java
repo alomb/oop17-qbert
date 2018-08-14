@@ -37,28 +37,33 @@ public class LoadResources {
     public final boolean load() {
         final String imgPath = System.getProperty("user.home") + "/qbert/img/";
 
-        final File directory = new File(imgPath);
-        if (!directory.exists()) {
-            final boolean directoryCreated = directory.mkdirs();
-            if (!directoryCreated) {
-                return false;
+        try {
+            final File directory = new File(imgPath);
+            if (!directory.exists()) {
+                final boolean directoryCreated = directory.mkdirs();
+                if (!directoryCreated) {
+                    return false;
+                }
             }
+
+            final File[] files = new File(imgPath).listFiles();
+
+            if (files != null) {
+                for (final File file : files) {
+                    if (!file.isDirectory() && file.exists()) {
+                        this.loadCompleted |= file.delete();
+                    }
+                }
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            return false;
         }
 
         final Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
         Dimensions.setWindowHeight(Math.round(new Float(d.height)));
         Dimensions.setWindowWidth(Math.round(new Float(d.width)));
-
-        final File[] files = new File(imgPath).listFiles();
-
-        if (files != null) {
-            for (final File file : files) {
-                if (!file.isDirectory() && file.exists()) {
-                    this.loadCompleted |= file.delete();
-                }
-            }
-        }
 
         convertSvgToPng("/svg/BackgroundBlue.svg", imgPath + "BackgroundBlue.png"); 
         convertSvgToPng("/svg/BackgroundBrown.svg", imgPath + "BackgroundBrown.png"); 

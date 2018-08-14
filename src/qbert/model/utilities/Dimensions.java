@@ -65,6 +65,11 @@ public final class Dimensions {
      */
     public static final int MAP_SPAWNING_QBERT_Y = 13;
 
+    /**
+     * A position that doesn't exist in the grid.
+     */
+    public static final Position2D UNDEFINED_POSITION = new Position2D(-MAP_COLUMNS, -MAP_ROWS);
+
     private static int windowHeight;
     private static int windowWidth;
     private static int cubeHeight;
@@ -73,6 +78,10 @@ public final class Dimensions {
     private static int backgroundHeight;
     private static int backgroundWidth;
     private static Position2D backgroundPos;
+
+    private Dimensions() {
+
+    }
 
     /**
      * @return the window height

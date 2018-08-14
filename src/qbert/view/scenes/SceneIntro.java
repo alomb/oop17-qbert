@@ -1,25 +1,23 @@
 package qbert.view.scenes;
 
-import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 import java.util.Optional;
 
 import qbert.controller.Controller;
 import qbert.controller.input.Confirm;
 import qbert.model.models.TextPosition;
-import qbert.model.utilities.Dimensions;
 
 /**
  * An implementation of {@link Scene} for the game introductive scene.
  */
 public class SceneIntro extends SceneImpl {
 
-    private final Controller controller;
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1970238458959862998L;
 
-    private final Color backgroundColor = new Color(38, 47, 124);
-    private final Color yellow = new Color(237, 228, 61);
-    private final Color green = new Color(86, 168, 26);
+    private final Controller controller;
 
     /**
      * @param w the panel width
@@ -27,27 +25,22 @@ public class SceneIntro extends SceneImpl {
      * @param controller the game controller
      */
     public SceneIntro(final int w, final int h, final Controller controller) {
-        super(w, h);
-        this.setBackground(this.backgroundColor);
+        super(w, h, controller);
+        this.setBackground(SceneColor.BLUE.getColor());
 
         this.controller = controller;
 
-        this.addSection(TextPosition.TITLE, 
-                new GUISectionImpl(this.yellow, Optional.empty(), 0, -Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.LARGE));
-        this.addSection(TextPosition.RIGHTSIDE, 
-                new GUISectionImpl(this.green, Optional.empty(), Math.round(Dimensions.getWindowWidth() / 2f), Math.round(Dimensions.getWindowHeight() / 4.25f), false, TextSize.SMALL));
-        this.addSection(TextPosition.FOOT, 
-                new GUISectionImpl(this.green, Optional.empty(), 0, Math.round(Dimensions.getWindowHeight() / 2.5f), true, TextSize.SMALL));
-    }
+        final int xOffset = 50;
+        final int titleYOffset = 10;
+        final int centerYOffset = 22;
+        final int footYOffset = 90;
 
-    @Override
-    public final void draw(final Graphics g) {
-
-        this.controller.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex()).forEach(c -> {
-            g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(), c.getGraphicComponent().getPosition().getY(), this);
-        });
-
-        this.controller.getGUI().forEach(gui -> this.drawGUI(g, gui));
+        this.addSection(TextPosition.TITLE,
+                new GUISectionImpl(SceneColor.YELLOW.getColor(), Optional.empty(), xOffset, titleYOffset, true, TextSize.LARGE));
+        this.addSection(TextPosition.RIGHTSIDE,
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.empty(), xOffset, centerYOffset, false, TextSize.SMALL));
+        this.addSection(TextPosition.FOOT,
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.empty(), xOffset, footYOffset, true, TextSize.SMALL));
     }
 
     @Override
