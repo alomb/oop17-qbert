@@ -3,8 +3,10 @@ package qbert.model.components;
 import java.util.stream.Collectors;
 
 import qbert.model.Level;
+import qbert.model.characters.Character;
 import qbert.model.characters.Coily;
 import qbert.model.characters.Player;
+import qbert.model.characters.Snake;
 import qbert.model.characters.states.DeathState;
 import qbert.model.characters.states.FallState;
 import qbert.model.characters.states.LandState;
@@ -76,6 +78,9 @@ public class TimerComponentImpl implements TimerComponent {
                 e.update(elapsed);
             });
         }
+        if (spawner.getCoily().isPresent()) {
+            spawner.getCoily().get().update(elapsed);
+        }
 
         this.updateCollisions(elapsed);
 
@@ -95,20 +100,6 @@ public class TimerComponentImpl implements TimerComponent {
      * @param elapsed the time passed since the last game cycle
      */
     private void updateCollisions(final float elapsed) {
-        //Old Version
-        /*
-        spawner.getGameCharacters().stream().forEach(e -> {
-            //Check if entity is colliding with QBert
-            if (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && !qbert.isMoving() && !e.isMoving()
-                    || qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())
-                    || ((qbert.getCurrentPosition().getX() - 1 == e.getCurrentPosition().getX() ||  qbert.getCurrentPosition().getX() + 1 == e.getCurrentPosition().getX()) && qbert.getCurrentPosition().getY() + 1 == e.getCurrentPosition().getY() && !e.isMoving() && !qbert.isMoving())) {
-                e.collide(qbert, this.points, this);
-            }
-        });
-        */
-
-
-        //New Version
         spawner.updateGameCharacters(spawner.getGameCharacters().stream().peek(e -> {
             //Check if entity is colliding with QBert
             if (qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())
@@ -117,6 +108,15 @@ public class TimerComponentImpl implements TimerComponent {
                 e.collide(qbert, this.points, this);
             }
         }).filter(e -> !e.isDead()).collect(Collectors.toList()));
+
+        if (spawner.getCoily().isPresent()) {
+            Snake e = spawner.getCoily().get();
+            if (qbert.getCurrentPosition().equals(e.getNextPosition()) && qbert.getNextPosition().equals(e.getCurrentPosition())
+                    || (qbert.getCurrentPosition().equals(e.getCurrentPosition()) && qbert.getNextPosition().equals(e.getNextPosition()) && pauseEntities)
+                    || ((qbert.getCurrentPosition().getX() - 1 == e.getCurrentPosition().getX() ||  qbert.getCurrentPosition().getX() + 1 == e.getCurrentPosition().getX()) && qbert.getCurrentPosition().getY() + 1 == e.getCurrentPosition().getY() && !e.isMoving() && !qbert.isMoving())) {
+                e.collide(qbert, this.points, this);
+            }
+        }
     }
 
     /**
@@ -146,15 +146,6 @@ public class TimerComponentImpl implements TimerComponent {
             if (this.map.isOnVoid(qLogicPos)) {
                 qbert.setCurrentState(new FallState(qbert));
             } else {
-                //Old Version
-                /*
-                qbert.land(this.map, this.points);
-                qbert.setCurrentState(qbert.getStandingState());
-                //TODO: Remove
-                level.checkStatus();
-                 */
-
-                //New Version
                 boolean found = false;
                 for (final qbert.model.characters.Character e : spawner.getGameCharacters()) {
                     if (qbert.getNextPosition().equals(e.getCurrentPosition()) && (e.getCurrentState() instanceof LandState || !e.isMoving())) {
@@ -172,9 +163,7 @@ public class TimerComponentImpl implements TimerComponent {
             }
             if (this.map.checkForDisk(qbert)) {
                 this.spawner.getGameCharacters().forEach(c -> {
-                    if (!(c instanceof Coily)) {
-                        c.setCurrentState(new DeathState(c)); /////////////////////////
-                    }
+                    c.setCurrentState(new DeathState(c)); /////////////////////////
                 });
                 this.qbert.getPlayerSoundComponent().setOnDiskSound();
             } else if (qbert.getCurrentState() instanceof FallState) {
@@ -208,13 +197,6 @@ public class TimerComponentImpl implements TimerComponent {
                         this.points.score(PointComponentImpl.COILY_FALL_SCORE, qbert);
                     }
                 } else {
-                    //Old Version
-                    /*
-                    e.land(this.map, this.points);
-                    e.setCurrentState(e.getStandingState());
-                    */
-
-                    //New Version
                     if (qbert.getCurrentPosition().equals(e.getNextPosition()) && !qbert.isMoving()) {
                         e.collide(qbert, this.points, this);
                     } else {
@@ -229,6 +211,37 @@ public class TimerComponentImpl implements TimerComponent {
                 spawner.death(e);
             }
         }).filter(e -> !e.isDead()).collect(Collectors.toList())); /* togliere parentesi se modifico */
+
+        if (spawner.getCoily().isPresent()) {
+            Snake e = spawner.getCoily().get();
+            final Position2D logicPos = e.getNextPosition();
+
+            //Check if entity is just landed 
+            if (e.getCurrentState() instanceof LandState) {
+
+                //Checking if entity collides with Qbert falling out the map sides
+                if (((qbert.getCurrentPosition().getX() - 1 == e.getNextPosition().getX() ||  qbert.getCurrentPosition().getX() + 1 == e.getNextPosition().getX()) && qbert.getCurrentPosition().getY() + 1 == e.getNextPosition().getY()) && !qbert.isMoving()) {
+                    e.collide(qbert, this.points, this);
+                }
+
+                //Checking if entity is outside the map
+                if (this.map.isOnVoid(logicPos)) {
+                    e.setCurrentState(new FallState(e));
+                } else {
+                    if (qbert.getCurrentPosition().equals(e.getNextPosition()) && !qbert.isMoving()) {
+                        e.collide(qbert, this.points, this);
+                    } else {
+                        e.land(this.map, this.points);
+                        e.setCurrentState(e.getStandingState());
+                    }
+                }
+            }
+
+            if (e.isDead()) {
+                //Notify Spawner
+                spawner.death(e);
+            }
+        }
     }
 
     /**

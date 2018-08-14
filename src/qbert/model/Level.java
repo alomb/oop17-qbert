@@ -117,7 +117,17 @@ public final class Level {
     }
 
     public List<Renderable> getRenderables() {
-        return Stream.concat(Stream.concat(Stream.of(this.getTargetColor()), Stream.of(this.background)), Stream.concat(Stream.concat(map.getTileList().stream(), map.getDiskList().stream()), Stream.concat(Stream.of(this.qbert), this.spawner.getGameCharacters().stream()))).collect(Collectors.toList());
+        Stream<Renderable> tmp = Stream.concat(
+                    Stream.concat(Stream.of(this.getTargetColor()), Stream.of(this.background)), 
+                        Stream.concat(
+                            Stream.concat(map.getTileList().stream(), map.getDiskList().stream()), 
+                            Stream.concat(Stream.of(this.qbert), this.spawner.getGameCharacters().stream())
+                            )
+                );
+        if (spawner.getCoily().isPresent()) {
+            tmp = Stream.concat(tmp, Stream.of(spawner.getCoily().get()));
+        }
+        return tmp.collect(Collectors.toList());
     }
 
     public void update(final float elapsed) {

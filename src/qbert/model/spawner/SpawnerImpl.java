@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import qbert.controller.Controller;
 import qbert.model.characters.Character;
 import qbert.model.characters.CharactersList;
 import qbert.model.characters.Player;
+import qbert.model.characters.Snake;
 import qbert.model.characters.states.SpawnState;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
@@ -19,6 +21,7 @@ import qbert.model.utilities.Position2D;
 public final class SpawnerImpl implements Spawner {
 
     private final Player qbert;
+    private Optional<Snake> coily = Optional.empty();
     private List<Character> gameCharacters;
     private final EnemyFactory ef = new EnemyFactoryImpl();
     private final Map<CharactersList, EnemyInfoImpl> mapInfo;
@@ -58,9 +61,9 @@ public final class SpawnerImpl implements Spawner {
                     final Character character;
                     switch (entry.getKey()) {
                     case COILY:
-                        character = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.qbert, this.controller);
-                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
-                        this.gameCharacters.add(character);
+                        final Snake snake = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.qbert, this.controller);
+                        snake.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
+                        this.coily = Optional.of(snake);
                         break;
                     case RED_BALL:
                         character = ef.createRedBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
@@ -109,6 +112,11 @@ public final class SpawnerImpl implements Spawner {
     @Override
     public List<Character> getGameCharacters() {
         return Collections.unmodifiableList(this.gameCharacters);
+    }
+
+    @Override
+    public Optional<Snake> getCoily() {
+        return this.coily;
     }
 
     @Override
