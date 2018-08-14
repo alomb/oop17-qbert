@@ -16,7 +16,7 @@ public class LeftwardCharacterGC extends CharacterGCImpl {
     private final OneSideCharacterSprites sprites;
 
     private final int jumpWidth = Dimensions.getCubeHeight();
-    private final int jumpHeight = Dimensions.getTileWidth() / 2;
+    private final int jumpHeight = Dimensions.getCubeWidth() / 2;
 
     private final Position2D landPos;
 
@@ -32,7 +32,7 @@ public class LeftwardCharacterGC extends CharacterGCImpl {
     public LeftwardCharacterGC(final OneSideCharacterSprites sprites, final Position2D startSpritePos) {
         super(sprites.getStandSprite(), startSpritePos);
         this.sprites = sprites;
-        this.landPos = new Position2D(Dimensions.getBackgroundX() + Dimensions.getBackgroundWidth() - this.jumpHeight, this.getSpawnPosition().getY()); 
+        this.landPos = new Position2D(Dimensions.getBackgroundPos().getX() + Dimensions.getBackgroundWidth() - this.jumpHeight, this.getSpawnPosition().getY()); 
         this.up = true;
     }
 
@@ -65,7 +65,8 @@ public class LeftwardCharacterGC extends CharacterGCImpl {
         if (!this.up) {
             this.flipOnXImage();
         }
-        this.setCurrentAnimation(new StraightMovementAnimation(this.getPosition(), new Position2D(this.getPosition().getX() - Dimensions.getSideDeathHeight(), this.getPosition().getY())));
+        this.setCurrentAnimation(new StraightMovementAnimation(this.getPosition(), 
+                new Position2D(-this.getSpriteWidth(), this.getPosition().getY())));
     }
 
     @Override

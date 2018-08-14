@@ -1,6 +1,7 @@
 package qbert.model.characters;
 
 import qbert.model.components.sounds.PlayerSC;
+import qbert.model.utilities.Position2D;
 import qbert.model.components.graphics.PlayerGC;
 
 /**
@@ -34,4 +35,9 @@ public interface Player extends DownUpwardCharacter {
      * @return {@link PlayerSC} of this {@link Player}
      */
     PlayerSC getPlayerSoundComponent();
+
+    /**
+     * @return the first logical {@link Position2D} (spawning position)
+     */
+    Position2D getSpawningPosition();
 }

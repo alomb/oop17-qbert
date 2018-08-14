@@ -47,11 +47,8 @@ public class LoadResources {
 
         final Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
-        Dimensions.setScreenHeight(d.height);
-        Dimensions.setScreenWidth(d.width);
-
-        Dimensions.setWindowHeight(Math.round(new Float(Dimensions.getScreenHeight())));
-        Dimensions.setWindowWidth(Math.round(new Float(Dimensions.getScreenWidth())));
+        Dimensions.setWindowHeight(Math.round(new Float(d.height)));
+        Dimensions.setWindowWidth(Math.round(new Float(d.width)));
 
         final File[] files = new File(imgPath).listFiles();
 
