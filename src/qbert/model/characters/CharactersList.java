@@ -56,7 +56,7 @@ public enum CharactersList {
      * @param name the value of the enumeration constant to be returned
      * @return the enumeration constant corresponding to its value
      */
-    public static CharactersList getEnumCostantByValue(final String name) {
+    public static CharactersList getEnumConstantByValue(final String name) {
         for (final CharactersList c : CharactersList.values()) {
             if (name.equals(c.characterName)) {
                 return c;

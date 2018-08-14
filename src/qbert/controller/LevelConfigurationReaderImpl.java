@@ -67,7 +67,7 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
                 final int spawningTime = Integer.parseInt(character.getAttributeValue("spawningTime"));
                 final int standingTime = Integer.parseInt(character.getAttributeValue("standingTime"));
 
-                this.mapInfo.put(CharactersList.getEnumCostantByValue(name), new EnemyInfoImpl(speed, quantity, spawningTime, standingTime));
+                this.mapInfo.put(CharactersList.getEnumConstantByValue(name), new EnemyInfoImpl(speed, quantity, spawningTime, standingTime));
             }
         } catch (IOException e) {
             e.printStackTrace();

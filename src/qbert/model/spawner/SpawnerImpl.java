@@ -100,8 +100,8 @@ public final class SpawnerImpl implements Spawner {
     public void death(final Character character) {
         final String name = character.getClass().getSimpleName();
 
-        if (this.mapInfo.get(CharactersList.getEnumCostantByValue(name)) != null && this.mapInfo.get(CharactersList.getEnumCostantByValue(name)).getCurrentQuantity() > 0) {
-            this.mapInfo.get(CharactersList.getEnumCostantByValue(name)).decCurrentQuantity();
+        if (this.mapInfo.get(CharactersList.getEnumConstantByValue(name)) != null && this.mapInfo.get(CharactersList.getEnumConstantByValue(name)).getCurrentQuantity() > 0) {
+            this.mapInfo.get(CharactersList.getEnumConstantByValue(name)).decCurrentQuantity();
         }
     }
 
