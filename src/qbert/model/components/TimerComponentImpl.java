@@ -133,6 +133,10 @@ public class TimerComponentImpl implements TimerComponent {
                         e.setCurrentState(new DeathState(e));
                         spawner.death(e);
                     }).filter(e -> !e.isDead()).collect(Collectors.toList()));
+                    if (spawner.getCoily().isPresent()) {
+                        spawner.death(spawner.getCoily().get());
+                        spawner.killCoily();
+                    }
                     spawner.respawnQbert();
                     this.pauseEverything = false;
                 }, TimerComponentImpl.DEATH_ANIMATION_TIME);

@@ -39,10 +39,9 @@ public interface Spawner {
      */
     List<Character> getGameCharacters();
 
-    /**
-     * @return the {@link Snake} instance of the current level/round if present
-     */
     Optional<Snake> getCoily();
+
+    void killCoily();
 
     /**
      * @param gc the list of {@link Character} to be updated

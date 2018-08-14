@@ -118,6 +118,10 @@ public final class SpawnerImpl implements Spawner {
     public Optional<Snake> getCoily() {
         return this.coily;
     }
+    @Override
+    public void killCoily() {
+        this.coily = Optional.empty();
+    }
 
     @Override
     public void updateGameCharacters(final List<Character> gc) {
