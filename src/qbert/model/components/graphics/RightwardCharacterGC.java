@@ -14,7 +14,7 @@ import qbert.view.characters.StandingAnimation;
 public class RightwardCharacterGC extends CharacterGCImpl {
 
     private final int jumpWidth = Dimensions.getCubeHeight();
-    private final int jumpHeight = Dimensions.getTileWidth() / 2;
+    private final int jumpHeight = Dimensions.getCubeWidth() / 2;
 
     private final Position2D landPos;
 
@@ -32,7 +32,7 @@ public class RightwardCharacterGC extends CharacterGCImpl {
     public RightwardCharacterGC(final OneSideCharacterSprites sprites, final Position2D startSpritePos) {
         super(sprites.getStandSprite(), startSpritePos);
         this.sprites = sprites;
-        this.landPos = new Position2D(Dimensions.getBackgroundX() - this.jumpHeight, this.getSpawnPosition().getY()); 
+        this.landPos = new Position2D(Dimensions.getBackgroundPos().getX() - this.jumpHeight, this.getSpawnPosition().getY()); 
         this.up = true;
     }
 
@@ -65,7 +65,8 @@ public class RightwardCharacterGC extends CharacterGCImpl {
         if (!this.up) {
             this.flipOnXImage();
         }
-        this.setCurrentAnimation(new StraightMovementAnimation(this.getPosition(), new Position2D(this.getPosition().getX() + Dimensions.getSideDeathHeight(), this.getPosition().getY())));
+        this.setCurrentAnimation(new StraightMovementAnimation(this.getPosition(), 
+                new Position2D(Dimensions.getWindowWidth() + this.getSpriteWidth(), this.getPosition().getY())));
     }
 
     @Override

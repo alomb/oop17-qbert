@@ -2,7 +2,6 @@ package qbert.model.components.graphics;
 
 import qbert.model.sprites.OneSideCharacterSprites;
 import qbert.model.sprites.SpecialCharacterSprites;
-import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.view.characters.DisplaceAnimation;
 import qbert.view.characters.ComposedAnimation;
@@ -13,6 +12,7 @@ import qbert.view.characters.ComposedAnimation;
 public class PlayerGCImpl extends DownUpwardCharacterGCImpl implements PlayerGC {
 
     private final SpecialCharacterSprites specialSprites;
+    private final Position2D firstSpawningPosition;
 
     /**
      * @param frontSprites the container of the {@link Character} front sprites
@@ -23,6 +23,7 @@ public class PlayerGCImpl extends DownUpwardCharacterGCImpl implements PlayerGC 
     public PlayerGCImpl(final OneSideCharacterSprites frontSprites, final OneSideCharacterSprites backSprites, final SpecialCharacterSprites specialSprites, final Position2D startSpritePos) {
         super(frontSprites, backSprites, startSpritePos);
         this.specialSprites = specialSprites;
+        this.firstSpawningPosition = new Position2D(startSpritePos);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class PlayerGCImpl extends DownUpwardCharacterGCImpl implements PlayerGC 
     @Override
     public final void setOnDiskAnimation() {
         this.setSprite(this.specialSprites.getOnDiskSprite());
-        final Position2D intermediatePos = new Position2D(Dimensions.getSpawningQBert().getX(), Dimensions.getSpawningQBert().getY() - this.getSpriteHeight() * 2);
-        this.setCurrentAnimation(new ComposedAnimation.OnDisk(this.getPosition(), intermediatePos, new Position2D(Dimensions.getSpawningQBert())));
+        final Position2D intermediatePos = new Position2D(this.firstSpawningPosition.getX(), this.firstSpawningPosition.getY() - this.getSpriteHeight() * 2);
+        this.setCurrentAnimation(new ComposedAnimation.OnDisk(this.getPosition(), intermediatePos, new Position2D(this.firstSpawningPosition)));
     }
 }

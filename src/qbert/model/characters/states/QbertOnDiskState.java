@@ -1,7 +1,6 @@
 package qbert.model.characters.states;
 
 import qbert.model.characters.Player;
-import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 
 /**
@@ -15,13 +14,14 @@ public class QbertOnDiskState extends WaitAnimationState {
     public QbertOnDiskState(final Player qbert) {
         super(qbert);
         qbert.setCurrentPosition(new Position2D(qbert.getNextPosition()));
-        qbert.setNextPosition(Dimensions.getSpawningLogQBert());
+        qbert.setNextPosition(qbert.getSpawningPosition());
         qbert.getPlayerGraphicComponent().setOnDiskAnimation();
     }
 
     @Override
     public final void conclude() {
-        this.getCharacter().getGraphicComponent().setSpawnPosition(Dimensions.getSpawningQBert());
+        this.getCharacter().getGraphicComponent().setSpawnPosition(
+                new Position2D(this.getCharacter().getGraphicComponent().getPosition()));
         this.getCharacter().setCurrentState(new SpawnState(this.getCharacter()));
     }
 

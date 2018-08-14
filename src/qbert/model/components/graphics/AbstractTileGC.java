@@ -47,8 +47,8 @@ public abstract class AbstractTileGC implements TileGC {
     @Override
     public final void setPosition(final Position2D logicPos) {
             this.spritePos = new Position2D(
-                    Dimensions.getBackgroundX() + (Dimensions.getCubeWidth() / 2) * ((logicPos.getX() - 1) / 2),
-                    (Dimensions.getBackgroundY() + Dimensions.getBackgroundHeight()) - (Dimensions.getCubeHeight() * (((logicPos.getY() - 1) / 2) + 1) + Dimensions.getTileHeight() / 2)
+                    Dimensions.getBackgroundPos().getX() + (Dimensions.getCubeWidth() / 2) * ((logicPos.getX() - 1) / 2),
+                    (Dimensions.getBackgroundPos().getY() + Dimensions.getBackgroundHeight()) - (Dimensions.getCubeHeight() * (((logicPos.getY() - 1) / 2) + 1) + Dimensions.getTileHeight() / 2)
             );
     }
 

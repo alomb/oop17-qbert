@@ -53,7 +53,8 @@ public final class Level {
 
         this.timer = new TimerComponentImpl(qbert, spawner, points, map, this);
 
-        final GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.getBackgroundX(), Dimensions.getBackgroundY()));
+        final GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), 
+                new Position2D(Dimensions.getBackgroundPos().getX(), Dimensions.getBackgroundPos().getY()));
         this.background = new RenderableObject(backgroundGC);
     }
 

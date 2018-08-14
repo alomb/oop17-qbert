@@ -27,7 +27,7 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
      */
     private boolean right;
 
-    private final int jumpWidth = Dimensions.getTileWidth();
+    private final int jumpWidth = Dimensions.getCubeWidth();
     private final int jumpHeight = Dimensions.getCubeHeight();
 
     /**
@@ -107,7 +107,8 @@ public abstract class DownUpwardCharacterGCImpl extends CharacterGCImpl implemen
             this.flipOnYImage();
         }
 
-        this.setCurrentAnimation(new StraightMovementAnimation(this.getPosition(), new Position2D(this.getPosition().getX(), Dimensions.getDeathHeight())));
+        this.setCurrentAnimation(new StraightMovementAnimation(this.getPosition(), 
+                new Position2D(this.getPosition().getX(), Dimensions.getWindowHeight() + this.getSpriteHeight())));
     }
 
     @Override

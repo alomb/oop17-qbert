@@ -112,26 +112,13 @@ public final class Sprites {
           System.out.println("Error load " + e.toString());
       }
 
-      Dimensions.setSpawningHeight(-Dimensions.getWindowHeight() / 3);
-      Dimensions.setDeathHeight(Dimensions.getWindowHeight() - Dimensions.getSpawningHeight());
-      Dimensions.setSideSpawningHeight(Dimensions.getWindowWidth() / 3);
-      Dimensions.setSideDeathHeight(Dimensions.getWindowWidth() + Dimensions.getSideSpawningHeight());
-      Dimensions.setSpawningPointLeft(new Position2D(Math.round(new Float(Dimensions.getWindowWidth()) / 2f) - this.blueTile.getWidth(), -500));
-      Dimensions.setSpawningPointRight(new Position2D(Math.round(new Float(Dimensions.getWindowWidth()) / 2f), -500));
       Dimensions.setBackgroundHeight(this.blueBackground.getHeight());
       Dimensions.setBackgroundWidth(this.blueBackground.getWidth());
-      Dimensions.setBackgroundX(Math.round(new Float(Dimensions.getWindowWidth() - Dimensions.getBackgroundWidth()) / 2f));
-      Dimensions.setBackgroundY(Math.round(new Float(Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2f));
-      Dimensions.setCubeHeight(Math.round(new Float(Dimensions.getBackgroundHeight()) / 7f));
-      Dimensions.setCubeWidth(Math.round(new Float(Dimensions.getBackgroundWidth()) / 7f));
+      Dimensions.setBackgroundPos(new Position2D(Math.round(new Float(Dimensions.getWindowWidth() - Dimensions.getBackgroundWidth()) / 2f), 
+              Math.round(new Float(Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2f)));
+      Dimensions.setCubeHeight(Math.round(new Float(Dimensions.getBackgroundHeight()) / Dimensions.MAP_TILES_ROWS));
+      Dimensions.setCubeWidth(Math.round(new Float(Dimensions.getBackgroundWidth()) / Dimensions.MAP_TILES_COLUMNS));
       Dimensions.setTileHeight(this.blueTile.getHeight());
-      Dimensions.setTileWidth(this.blueTile.getWidth());
-      Dimensions.setSpawningQBert(new Position2D(Math.round(new Float(Dimensions.getWindowWidth()) / 2f) - Math.round(new Float(this.qbertFrontMoving.getWidth()) / 2f), 
-              Dimensions.getBackgroundY() - this.qbertFrontStanding.getHeight()));
-      Dimensions.setSpawningLogPointLeft(new Position2D(Dimensions.MAP_SPAWNING_POINT_LEFT_X, Dimensions.MAP_SPAWNING_POINT_LEFT_Y));
-      Dimensions.setSpawningLogPointRight(new Position2D(Dimensions.MAP_SPAWNING_POINT_RIGHT_X, Dimensions.MAP_SPAWNING_POINT_RIGHT_Y));
-      Dimensions.setSpawningLogQBert(new Position2D(Dimensions.MAP_SPAWNING_QBERT_X, Dimensions.MAP_SPAWNING_QBERT_Y));
-
     }
 
     /**
