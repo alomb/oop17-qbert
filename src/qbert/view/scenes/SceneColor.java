@@ -3,8 +3,7 @@ package qbert.view.scenes;
 import java.awt.Color;
 
 /**
- * @author Alessandro
- *
+ * Enum used to retrieve a color tone used in the application.
  */
 public enum SceneColor {
 

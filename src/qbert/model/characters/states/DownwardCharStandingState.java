@@ -19,7 +19,7 @@ public class DownwardCharStandingState extends WaitTimerState {
     }
 
     @Override
-    public final void conclude() {
+    protected final void conclude() {
         CharacterState nextState;
         final Position2D newPos = new Position2D(getCharacter().getCurrentPosition());
         if (this.canAdvance()) {
@@ -39,7 +39,7 @@ public class DownwardCharStandingState extends WaitTimerState {
     /**
      * @return true if the {@link Character} wants to keep going down or return false otherwise, probably changing the state
      */
-    public boolean canAdvance() {
+    protected boolean canAdvance() {
         return true;
     }
 }

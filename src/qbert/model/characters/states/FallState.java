@@ -26,7 +26,7 @@ public class FallState extends WaitAnimationState {
     }
 
     @Override
-    public final void conclude() {
+    protected final void conclude() {
         this.getCharacter().setCurrentState(new DeathState(this.getCharacter()));
     }
 }

@@ -28,7 +28,7 @@ public class CoilyAdultStandingState extends WaitTimerState {
     }
 
     @Override
-    public final void conclude() {
+    protected final void conclude() {
         final Position2D targetPosition = new Position2D(this.qbert.getCurrentPosition());
         final Position2D myPosition = new Position2D(this.getCharacter().getCurrentPosition());
 
