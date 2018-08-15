@@ -3,7 +3,6 @@ package qbert.model.characters;
 import qbert.model.characters.states.CharacterState;
 import qbert.model.characters.states.CoilyAdultStandingState;
 import qbert.model.characters.states.CoilyBallStandingState;
-import qbert.model.characters.states.FallState;
 import qbert.model.characters.states.SpawnState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
@@ -51,21 +50,14 @@ public class Coily extends CharacterImpl implements Snake {
     }
 
     @Override
-    public final CharacterSC getCharacterSoundComponent() {
+    public final CharacterSC getCharcaterSoundComponent() {
         return this.sounds;
     }
+
 
     @Override
     public final DownUpwardCharacterGC getDownUpwardGraphicComponent() {
         return this.graphics;
-    }
-
-    @Override
-    public final void setCurrentState(final CharacterState state) {
-        super.setCurrentState(state);
-        if (state instanceof FallState) {
-            this.sounds.setFallSound();
-        }
     }
 
     @Override
@@ -93,5 +85,4 @@ public class Coily extends CharacterImpl implements Snake {
             this.sounds.setHopSound();
         }
     }
-
 }

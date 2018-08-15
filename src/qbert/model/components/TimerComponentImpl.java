@@ -3,8 +3,8 @@ package qbert.model.components;
 import java.util.stream.Collectors;
 
 import qbert.model.Level;
-import qbert.model.characters.Character;
 import qbert.model.characters.Coily;
+import qbert.model.characters.DownUpwardCharacter;
 import qbert.model.characters.Player;
 import qbert.model.characters.Snake;
 import qbert.model.characters.states.DeathState;
@@ -148,7 +148,14 @@ public class TimerComponentImpl implements TimerComponent {
         if (qbert.getCurrentState() instanceof LandState) {
             //Checking if entity is outside the map
             if (this.map.isOnVoid(qLogicPos)) {
-                qbert.setCurrentState(new FallState(qbert));
+                if (this.map.checkForDisk(qbert)) {
+                    this.spawner.getGameCharacters().forEach(c -> {
+                        c.setCurrentState(new DeathState(c)); /////////////////////////
+                    });
+                    this.qbert.getPlayerSoundComponent().setOnDiskSound();
+                } else {
+                    qbert.setCurrentState(new FallState(qbert));
+                }
             } else {
                 boolean found = false;
                 for (final qbert.model.characters.Character e : spawner.getGameCharacters()) {
@@ -164,14 +171,6 @@ public class TimerComponentImpl implements TimerComponent {
                     //TODO: Remove
                     level.checkStatus();
                 }
-            }
-            if (this.map.checkForDisk(qbert)) {
-                this.spawner.getGameCharacters().forEach(c -> {
-                    c.setCurrentState(new DeathState(c)); /////////////////////////
-                });
-                this.qbert.getPlayerSoundComponent().setOnDiskSound();
-            } else if (qbert.getCurrentState() instanceof FallState) {
-                this.qbert.getPlayerSoundComponent().setFallSound();
             }
         }
     }
@@ -217,7 +216,7 @@ public class TimerComponentImpl implements TimerComponent {
         }).filter(e -> !e.isDead()).collect(Collectors.toList())); /* togliere parentesi se modifico */
 
         if (spawner.getCoily().isPresent()) {
-            Snake e = spawner.getCoily().get();
+            final DownUpwardCharacter e = spawner.getCoily().get();
             final Position2D logicPos = e.getNextPosition();
 
             //Check if entity is just landed 

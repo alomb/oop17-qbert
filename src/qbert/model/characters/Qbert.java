@@ -4,6 +4,7 @@ import qbert.model.characters.states.CharacterState;
 import qbert.model.characters.states.QbertStandingState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
+import qbert.model.components.sounds.CharacterSC;
 import qbert.model.components.sounds.PlayerSC;
 import qbert.model.utilities.Position2D;
 import qbert.model.components.graphics.DownUpwardCharacterGC;
@@ -88,6 +89,11 @@ public class Qbert extends CharacterImpl implements Player {
 
     @Override
     public final PlayerSC getPlayerSoundComponent() {
+        return this.sounds;
+    }
+
+    @Override
+    public final CharacterSC getCharcaterSoundComponent() {
         return this.sounds;
     }
 
