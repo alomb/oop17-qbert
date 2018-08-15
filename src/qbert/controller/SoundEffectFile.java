@@ -20,6 +20,11 @@ public enum SoundEffectFile {
     /**
      * 
      */
+    WIN_A_ROUND_MUSIC("WinningARound.wav"),
+
+    /**
+     * 
+     */
     QBERT_HOPS("QbertHops.wav"),
 
     /**

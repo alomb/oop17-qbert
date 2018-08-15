@@ -35,6 +35,11 @@ public class QbertSC implements PlayerSC {
     }
 
     @Override
+    public void setWinningARoundSound() {
+
+    }
+
+    @Override
     public final void setHopSound() {
         this.clipToPlay.add(this.controller.uploadClip(SoundEffectFile.QBERT_HOPS));
         this.notifyPlaySound();

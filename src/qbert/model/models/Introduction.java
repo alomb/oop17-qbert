@@ -17,6 +17,8 @@ import qbert.model.spawner.EnemyFactoryImpl;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.components.graphics.Renderable;
+import qbert.model.components.sounds.GameSC;
+import qbert.model.components.sounds.SoundComponent;
 
 /**
  * The implementation of {@link Model} for application introductive scene logic.
@@ -39,12 +41,15 @@ public class Introduction implements Model {
     private final List<GUILogic> guiList;
     private final Controller controller;
 
+    private final SoundComponent sounds;
+
     /**
      * Initialize GUI data and logic.
      * @param controller the game controller.
      */
     public Introduction(final Controller controller) {
         this.controller = controller;
+        this.sounds = new GameSC(this.controller);
 
         final EnemyFactory factory = new EnemyFactoryImpl();
         this.qbert = factory.createQbert(SPEED, controller, 1);
@@ -95,6 +100,8 @@ public class Introduction implements Model {
         this.qbert.setCurrentPosition(new Position2D(qbert.getSpawningPosition()));
         this.qbert.getGraphicComponent().setPosition(new Position2D(Introduction.QBERTPOSITION));
         this.qbert.setCurrentState(this.qbert.getStandingState());
+
+        this.sounds.setCoinSound();
     }
 
     @Override
