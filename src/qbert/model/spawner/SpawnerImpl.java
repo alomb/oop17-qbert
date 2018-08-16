@@ -58,9 +58,6 @@ public final class SpawnerImpl implements Spawner {
         for (final Map.Entry<CharactersList, EnemyInfoImpl> entry : mapInfo.entrySet()) {
             if (entry.getValue().getSpawningTime() <= entry.getValue().getElapsedTime()) {
                 entry.getValue().resetElapsedTime();
-                if (entry.getKey().equals(CharactersList.RED_BALL)) {
-                    System.out.println(entry.getValue().getCurrentQuantity());
-                }
                 if (entry.getValue().getCurrentQuantity() < entry.getValue().getTotalQuantity()) {
                     final Character character;
                     switch (entry.getKey()) {
