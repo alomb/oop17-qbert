@@ -3,8 +3,12 @@ package qbert.controller;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.OutputStream;
 
 import org.apache.batik.transcoder.TranscoderInput;
@@ -23,6 +27,7 @@ import qbert.model.utilities.Dimensions;
 public class LoadResources {
 
     private boolean loadCompleted;
+    private String urlFile = "res/imageconfig.txt"; 
 
     /**
      * Initialize variables.
@@ -65,44 +70,16 @@ public class LoadResources {
         Dimensions.setWindowHeight(Math.round(new Float(d.height)));
         Dimensions.setWindowWidth(Math.round(new Float(d.width)));
 
-        convertSvgToPng("/svg/BackgroundBlue.svg", imgPath + "BackgroundBlue.png"); 
-        convertSvgToPng("/svg/BackgroundBrown.svg", imgPath + "BackgroundBrown.png"); 
-        convertSvgToPng("/svg/BackgroundGreen.svg", imgPath + "BackgroundGreen.png"); 
-        convertSvgToPng("/svg/BackgroundGrey.svg", imgPath + "BackgroundGrey.png"); 
-        convertSvgToPng("/svg/CoilyBackMove.svg", imgPath + "CoilyBackMove.png"); 
-        convertSvgToPng("/svg/CoilyBackStand.svg", imgPath + "CoilyBackStand.png"); 
-        convertSvgToPng("/svg/CoilyFrontMove.svg", imgPath + "CoilyFrontMove.png"); 
-        convertSvgToPng("/svg/CoilyFrontStand.svg", imgPath + "CoilyFrontStand.png");
-        convertSvgToPng("/svg/GreenBallMove.svg", imgPath + "GreenBallMove.png"); 
-        convertSvgToPng("/svg/GreenBallStand.svg", imgPath + "GreenBallStand.png");
-        convertSvgToPng("/svg/PurpleBallMove.svg", imgPath + "PurpleBallMove.png"); 
-        convertSvgToPng("/svg/PurpleBallStand.svg", imgPath + "PurpleBallStand.png");
-        convertSvgToPng("/svg/QbertBackMove.svg", imgPath + "QbertBackMove.png"); 
-        convertSvgToPng("/svg/QbertBackStand.svg", imgPath + "QbertBackStand.png"); 
-        convertSvgToPng("/svg/QbertFrontMove.svg", imgPath + "QbertFrontMove.png"); 
-        convertSvgToPng("/svg/QbertFrontStand.svg", imgPath + "QbertFrontStand.png");
-        convertSvgToPng("/svg/QbertDead.svg", imgPath + "QbertDead.png");
-        convertSvgToPng("/svg/QbertOnDisk.svg", imgPath + "QbertOnDisk.png"); 
-        convertSvgToPng("/svg/RedBallMove.svg", imgPath + "RedBallMove.png"); 
-        convertSvgToPng("/svg/RedBallStand.svg", imgPath + "RedBallStand.png");
-        convertSvgToPng("/svg/TileBeige.svg", imgPath + "TileBeige.png");
-        convertSvgToPng("/svg/TileBlue.svg", imgPath + "TileBlue.png");
-        convertSvgToPng("/svg/TileGreen.svg", imgPath + "TileGreen.png");
-        convertSvgToPng("/svg/TileGrey.svg", imgPath + "TileGrey.png");
-        convertSvgToPng("/svg/TilePink.svg", imgPath + "TilePink.png");
-        convertSvgToPng("/svg/TileYellow.svg", imgPath + "TileYellow.png");
-        convertSvgToPng("/svg/Disk1.svg", imgPath + "Disk1.png");
-        convertSvgToPng("/svg/Disk2.svg", imgPath + "Disk2.png");
-        convertSvgToPng("/svg/Disk3.svg", imgPath + "Disk3.png");
-        convertSvgToPng("/svg/Disk4.svg", imgPath + "Disk4.png");
-        convertSvgToPng("/svg/SamMove.svg", imgPath + "SamMove.png");
-        convertSvgToPng("/svg/SamStand.svg", imgPath + "SamStand.png");
-        convertSvgToPng("/svg/SlickMove.svg", imgPath + "SlickMove.png");
-        convertSvgToPng("/svg/SlickStand.svg", imgPath + "SlickStand.png");
-        convertSvgToPng("/svg/WrongWayMove.svg", imgPath + "WrongWayMove.png");
-        convertSvgToPng("/svg/WrongWayStand.svg", imgPath + "WrongWayStand.png");
-        convertSvgToPng("/svg/UggMove.svg", imgPath + "UggMove.png");
-        convertSvgToPng("/svg/UggStand.svg", imgPath + "UggStand.png");
+        try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                convertSvgToPng(line.split("\\+")[0], imgPath + line.split("\\+")[1]);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return this.loadCompleted;
     }
