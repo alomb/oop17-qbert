@@ -195,6 +195,7 @@ public class TimerComponentImpl implements TimerComponent {
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(logicPos)) {
                     e.setCurrentState(new FallState(e));
+                    e.setCurrentState(new DeathState(e));
 
                     if (e instanceof Coily) {
                         this.points.score(PointComponentImpl.COILY_FALL_SCORE, qbert);

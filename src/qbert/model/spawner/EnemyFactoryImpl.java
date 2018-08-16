@@ -47,7 +47,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     /**
      * Initialize some variables.
-     * @param controller the the game {@link Controller}
+     * @param controller the game {@link Controller}
      */
     public EnemyFactoryImpl(final Controller controller) {
         this.spawningPointLeftX = Math.round(new Float(Dimensions.getWindowWidth() / 2f) - Dimensions.getCubeWidth());
