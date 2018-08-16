@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 /**
  * An interface that allows all possible sprites.
  */
-public interface CompleteCharacterSprites extends FrontCharacterSprites, BackCharacterSprites {
+public interface SpecialCharacterSprites {
 
     /**
      * @return the sprite for the character when is dead

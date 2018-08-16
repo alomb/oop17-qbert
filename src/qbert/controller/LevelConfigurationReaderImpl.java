@@ -16,16 +16,16 @@ import org.jdom2.input.SAXBuilder;
 
 import qbert.model.LevelSettings;
 import qbert.model.LevelSettingsImpl;
+import qbert.model.characters.CharactersList;
 import qbert.model.spawner.EnemyInfoImpl;
 import qbert.model.sprites.ColorComposition;
-import qbert.model.utilities.Sprites;
 
 /**
  * The implementation of {@link LevelConfigurationReader}.
  */
 public final class LevelConfigurationReaderImpl implements LevelConfigurationReader {
 
-    private final Map<String, EnemyInfoImpl> mapInfo;
+    private final Map<CharactersList, EnemyInfoImpl> mapInfo;
     private int colorsNumber;
     private boolean reversible;
     private int disksNumber;
@@ -67,7 +67,7 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
                 final int spawningTime = Integer.parseInt(character.getAttributeValue("spawningTime"));
                 final int standingTime = Integer.parseInt(character.getAttributeValue("standingTime"));
 
-                this.mapInfo.put(name, new EnemyInfoImpl(speed, quantity, spawningTime, standingTime));
+                this.mapInfo.put(CharactersList.getEnumConstantByValue(name), new EnemyInfoImpl(speed, quantity, spawningTime, standingTime));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,7 +76,7 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
 
     @Override
     public LevelSettings getLevelSettings() {
-        final Map<String, EnemyInfoImpl> mapInfo = this.getMapInfo();
+        final Map<CharactersList, EnemyInfoImpl> mapInfo = this.getMapInfo();
         final Map<Integer, BufferedImage> colorMap = this.colorComposition.getColorComposition(colorsNumber);
         final BufferedImage background = this.colorComposition.getBackgroundImage();
 
@@ -101,7 +101,7 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
         }
     }
 
-    private Map<String, EnemyInfoImpl> getMapInfo() {
+    private Map<CharactersList, EnemyInfoImpl> getMapInfo() {
         return Collections.unmodifiableMap(mapInfo);
     }
 }

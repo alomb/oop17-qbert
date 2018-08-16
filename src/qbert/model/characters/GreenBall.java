@@ -2,7 +2,9 @@ package qbert.model.characters;
 
 import qbert.model.characters.states.DeathState;
 import qbert.model.components.PointComponent;
+import qbert.model.components.PointComponentImpl;
 import qbert.model.components.TimerComponent;
+import qbert.model.components.TimerComponentImpl;
 import qbert.model.utilities.Position2D;
 import qbert.model.components.graphics.CharacterGC;
 
@@ -24,8 +26,8 @@ public class GreenBall extends DownwardCharacter {
 
     @Override
     public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
-        timer.freezeEntities(TimerComponent.GREEN_BALL_FREEZE_TIME);
-        points.score(PointComponent.KILL_GREEN_BALL_SCORE, qbert);
+        timer.freezeEntities(TimerComponentImpl.GREEN_BALL_FREEZE_TIME);
+        points.score(PointComponentImpl.KILL_GREEN_BALL_SCORE, qbert);
         this.setCurrentState(new DeathState(this));
     }
 }

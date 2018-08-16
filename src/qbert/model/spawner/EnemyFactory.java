@@ -14,8 +14,9 @@ public interface EnemyFactory {
      * @param speed the QBert speed
      * @param controller the game {@link Controller}
      * @return the {@link Player} representing {@link Qbert}
+     * @param qbertLives number of lives the {@link Player} is starting the level with
      */
-    Player createQbert(float speed, Controller controller);
+    Player createQbert(float speed, Controller controller, int qbertLives);
 
     /**
      * @param speed the {@link Character} movement speed

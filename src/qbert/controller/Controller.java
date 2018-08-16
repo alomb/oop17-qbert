@@ -65,16 +65,20 @@ public interface Controller {
     Map<String,Integer> getRank();
     
     /**
-     * @param s 
-     * @param i 
+     * 
      */
-    void addRank(String s, Integer i);
+    void addRank();
 
     /**
      * Close the window in the {@link View} and terminate the {@link GameEngine}
      * closing the application.
      */
     void terminate();
+
+    /**
+     * Method used to abort the application during its setup phase.
+     */
+    void abort();
 
     /**
      * @param soundEffect the {@link SoundEffectFile} value representing the .wav file to be loaded
@@ -86,4 +90,11 @@ public interface Controller {
      * @param queue the {@link Queue} to be emptied
      */
     void emptyClipQueue(Queue<Clip> queue);
+
+    public void addScoreBuilder();
+    
+    public void addCharacterNameBuilder(Integer i);
+    
+    public void resetNameBuilder();
+    
 }

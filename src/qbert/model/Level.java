@@ -12,8 +12,11 @@ import qbert.model.characters.Character;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.DeathState;
 import qbert.model.components.MapComponent;
+import qbert.model.components.MapComponentImpl;
 import qbert.model.components.PointComponent;
+import qbert.model.components.PointComponentImpl;
 import qbert.model.components.TimerComponent;
+import qbert.model.components.TimerComponentImpl;
 import qbert.model.models.Game;
 import qbert.model.spawner.Spawner;
 import qbert.model.spawner.SpawnerImpl;
@@ -27,32 +30,31 @@ import qbert.model.components.graphics.RenderableObject;
 
 public final class Level {
 
-    private Player qbert;
-    private Spawner spawner;
-    private PointComponent points;
-    private MapComponent map;
-    private TimerComponent timer;
-    private Renderable background;
+    private final Player qbert;
+    private final Spawner spawner;
+    private final PointComponent points;
+    private final MapComponent map;
+    private final TimerComponent timer;
+    private final Renderable background;
 
-    private LevelSettings settings;
-    private Controller controller;
+    private final LevelSettings settings;
+    private final Controller controller;
 
     private Game gameObserver;
 
     public Level(LevelSettings levelSettings, final int lives, final int score, final Controller controller) {
         this.settings = levelSettings;
         this.controller = controller;
-        this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed(), controller);
+        this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed(), controller, lives);
         this.qbert = this.spawner.spawnQbert();
-        
-        this.points = new PointComponent();
-        this.points.score(score, qbert);
+        this.points = new PointComponentImpl(score);
 
-        this.map = new MapComponent(settings);
+        this.map = new MapComponentImpl(settings);
 
-        this.timer = new TimerComponent(qbert, spawner, points, map, this);
+        this.timer = new TimerComponentImpl(qbert, spawner, points, map, this);
 
-        final GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), new Position2D(Dimensions.getBackgroundX(), Dimensions.getBackgroundY()));
+        final GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), 
+                new Position2D(Dimensions.getBackgroundPos().getX(), Dimensions.getBackgroundPos().getY()));
         this.background = new RenderableObject(backgroundGC);
     }
 
@@ -103,7 +105,7 @@ public final class Level {
 
     public void changeRound() {
         this.points.score(this.settings.getRoundScore(), qbert);
-        this.points.score(PointComponent.UNUSED_DISK_SCORE * map.getDiskList().size(), qbert);
+        this.points.score(PointComponentImpl.UNUSED_DISK_SCORE * map.getDiskList().size(), qbert);
 
         this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
 
@@ -111,11 +113,21 @@ public final class Level {
         timer.freezeEverything(() -> {
             //TODO: End of animation
             this.notifyEndLevel();
-        }, TimerComponent.ROUND_WAIT_TIME);
+        }, TimerComponentImpl.ROUND_ANIMATION_TIME);
     }
 
     public List<Renderable> getRenderables() {
-        return Stream.concat(Stream.concat(Stream.of(this.getTargetColor()), Stream.of(this.background)), Stream.concat(Stream.concat(map.getTileList().stream(), map.getDiskList().stream()), Stream.concat(Stream.of(this.qbert), this.spawner.getGameCharacters().stream()))).collect(Collectors.toList());
+        Stream<Renderable> tmp = Stream.concat(
+                    Stream.concat(Stream.of(this.getTargetColor()), Stream.of(this.background)), 
+                        Stream.concat(
+                            Stream.concat(map.getTileList().stream(), map.getDiskList().stream()), 
+                            Stream.concat(Stream.of(this.qbert), this.spawner.getGameCharacters().stream())
+                            )
+                );
+        if (spawner.getCoily().isPresent()) {
+            tmp = Stream.concat(tmp, Stream.of(spawner.getCoily().get()));
+        }
+        return tmp.collect(Collectors.toList());
     }
 
     public void update(final float elapsed) {

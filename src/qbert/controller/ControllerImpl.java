@@ -1,5 +1,6 @@
 package qbert.controller;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -32,6 +33,8 @@ import org.jdom2.JDOMException;
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
 import qbert.model.models.GUILogic;
+import qbert.model.models.RankingBuilder;
+import qbert.model.models.RankingBuilder.Builder;
 import qbert.model.components.graphics.Renderable;
 import qbert.view.View;
 import qbert.view.ViewImpl;
@@ -40,8 +43,9 @@ import qbert.view.ViewImpl;
  * The implementation of {@link Controller}.
  */
 public class ControllerImpl implements Controller {
-
-    private final String urlFile = "ranking.txt";
+    
+    private Builder ranking = new RankingBuilder.Builder();
+    private final String urlFile = System.getProperty("user.home") + "/qbert/ranking.txt";
     private LevelConfigurationReader lcr;
     private final GameEngine gameEngine;
     private final GameStatusManager statusManager;
@@ -49,22 +53,30 @@ public class ControllerImpl implements Controller {
     private final BlockingQueue<Integer> gamePoint = new ArrayBlockingQueue<>(1);
 
     private final View view;
+    private boolean abort;
 
     /**
      * @param firstGameStatus the first application's {@link GameStatus}
      */
     public ControllerImpl(final GameStatus firstGameStatus) {
+        this.abort = false;
         this.lcr = new LevelConfigurationReaderImpl();
-        this.statusManager = new GameStatusManagerImpl(firstGameStatus, this);
 
+        this.statusManager = new GameStatusManagerImpl(firstGameStatus, this);
         this.view = new ViewImpl(this);
         this.gameEngine = new GameEngine(this.view);
+
+        if (this.abort) {
+            this.terminate();
+        }
     }
 
     @Override
     public final void setupGameEngine() {
-        this.changeScene(this.statusManager.getCurrentStatus());
-        this.gameEngine.mainLoop();
+        if (!this.abort) {
+            this.changeScene(this.statusManager.getCurrentStatus());
+            this.gameEngine.mainLoop();
+        }
     }
 
     @Override
@@ -113,6 +125,7 @@ public class ControllerImpl implements Controller {
     
     public Map<String,Integer> getRank() {
         Map<String,Integer> rank = new TreeMap<String,Integer>();
+        
         //Read file
         try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
             String line;
@@ -120,24 +133,31 @@ public class ControllerImpl implements Controller {
                 rank.put(line.split("\\?")[0],Integer.parseInt(line.split("\\?")[1]));
             }
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            File file = new File(urlFile);
+            //Create the file
+            try {
+                file.createNewFile();
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+           
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
-        //convert map to a List
+        //Convert map to a List
         List<Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(rank.entrySet());
 
-        //sorting the list with a comparator
+        //Sorting the list with a comparator
         Collections.sort(list, new Comparator<Entry<String, Integer>>() {
                 public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
                         return (o2.getValue()).compareTo(o1.getValue());
                 }
         });
 
-        //convert sortedMap back to Map
+        //Convert sortedMap back to Map
         Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
         for (Entry<String, Integer> entry : list) {
                 sortedMap.put(entry.getKey(), entry.getValue());
@@ -146,21 +166,31 @@ public class ControllerImpl implements Controller {
         return sortedMap;
     }
     
-    
-    public void addRank(String s, Integer i) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date date = new Date();
-        
+    //Scrivere su file
+    public void addRank() {
         Writer output;
         try {
             output = new BufferedWriter(new FileWriter(urlFile, true));
-            output.append("\r\n"+s+'#'+dateFormat.format(date)+'?'+i);
+            output.append(ranking.build().toString());
             output.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
+
+    public void addScoreBuilder() {
+        ranking.addScore(this.getScore());
+    }
+    
+    public void addCharacterNameBuilder(Integer i) {
+        ranking.addChar(i);
+    }
+    
+    public void resetNameBuilder() {
+        ranking.resetName();
+    }
+    
 
     @Override
     public final void terminate() {
@@ -169,13 +199,20 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
+    public final void abort() {
+        this.abort = true;
+    }
+
+    @Override
     public final Clip uploadClip(final SoundEffectFile soundEffect) {
         Clip clip = null;
         try {
             clip = AudioSystem.getClip();
-            final AudioInputStream inputStream = AudioSystem
-                    .getAudioInputStream(new File(getClass().getResource("/sounds/").getFile() + soundEffect.getFile()));
+
+            final AudioInputStream inputStream = AudioSystem.getAudioInputStream(
+                    new BufferedInputStream(ControllerImpl.class.getResourceAsStream("/sounds/" + soundEffect.getFile().toString())));
             clip.open(inputStream);
+            inputStream.close();
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }

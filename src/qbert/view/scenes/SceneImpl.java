@@ -4,18 +4,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import javax.swing.JPanel;
 
+import qbert.controller.Controller;
 import qbert.model.models.GUILogic;
 import qbert.model.models.TextPosition;
 import qbert.model.utilities.Dimensions;
@@ -26,41 +25,25 @@ import qbert.model.utilities.Position2D;
  */
 public abstract class SceneImpl extends JPanel implements Scene {
 
-    private Font smallFont;
-    private final float smallSize = Dimensions.getWindowHeight() / 60f;
-
-    private Font mediumFont;
-    private final float mediumSize = Dimensions.getWindowHeight() / 30f;
-
-    private Font largeFont;
-    private final float largeSize = Dimensions.getWindowHeight() / 10f;
-
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1521223266538012283L;
     private final Map<TextPosition, Optional<GUISectionImpl>> sections;
+    private final Controller controller;
 
     /**
      * @param w the panel width
      * @param h the panel height
+     * @param controller the application {@link Controller}
      */
-    public SceneImpl(final int w, final int h) {
+    public SceneImpl(final int w, final int h, final Controller controller) {
         super();
         this.setSize(w, h);
 
-        try {
-            final URL url = getClass().getResource("/arcade_n.ttf");
-            final File fontFile = new File(url.getPath());
-            final GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-
-            this.largeFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(this.largeSize);
-            ge.registerFont(this.largeFont);
-            this.mediumFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(this.mediumSize);
-            ge.registerFont(this.mediumFont);
-            this.smallFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(this.smallSize);
-            ge.registerFont(this.smallFont);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         this.sections = new HashMap<>();
+        Arrays.asList(TextPosition.values()).forEach(t -> this.sections.put(t, Optional.empty()));
+        this.controller = controller;
     }
 
     @Override
@@ -85,7 +68,13 @@ public abstract class SceneImpl extends JPanel implements Scene {
     }
 
     @Override
-    public abstract void draw(Graphics g);
+    public final void draw(final Graphics g) {
+        this.controller.getRenderables().stream().sorted((a, b) -> a.getZIndex() - b.getZIndex()).forEach(c -> {
+            g.drawImage(c.getGraphicComponent().getSprite(), c.getGraphicComponent().getPosition().getX(), c.getGraphicComponent().getPosition().getY(), this);
+        });
+
+        this.controller.getGUI().forEach(gui -> this.drawGUI(g, gui));
+    }
 
     @Override
     public abstract void keyTyped(KeyEvent e);
@@ -108,12 +97,51 @@ public abstract class SceneImpl extends JPanel implements Scene {
     }
 
     @Override
-    public final void drawGUI(final Graphics g, final GUILogic gui) {
+    public final Optional<GUISectionImpl> getSection(final TextPosition position) {
+        if (this.sections.containsKey(position) && this.sections.get(position).isPresent()) {
+            return this.sections.get(position);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public final void addSection(final TextPosition position, final GUISectionImpl section) {
+        this.sections.put(position, Optional.of(section));
+    }
+
+    /**
+     * Draw a line of text.
+     * @param g the {@link Graphics} used
+     * @param gui the {@link GUILogic} containing the data
+     * @param section the {@link GUISection} containing the style
+     * @param index the line index
+     */
+    private void drawLine(final Graphics g, final GUILogic gui, final GUISection section, final int index) {
+        final int xOffset = section.getXOffset();
+        final int yOffset =  section.getYOffset();
+
+        if (section.isCentered()) {
+            this.drawCenteredString(g, gui.getData().get(index), 
+                    new Position2D(xOffset, yOffset + g.getFont().getSize() * index * 2), g.getFont());
+        } else {
+            g.drawString(gui.getData().get(index), xOffset, yOffset + g.getFont().getSize() * index * 2);
+        }
+    }
+
+    /**
+     * Convert a {@link GUILogic} to view content, displaying it.
+     * @param g the {@link Graphics} for the scene
+     * @param gui the GUI to draw
+     */
+    private void drawGUI(final Graphics g, final GUILogic gui) {
         if (this.sections.get(gui.getPosition()).isPresent()) {
 
             final GUISection section = this.sections.get(gui.getPosition()).get();
 
-            g.setFont(this.getFont(section.getSize()));
+            if (section.getSize().getFont().isPresent()) {
+                g.setFont(section.getSize().getFont().get());
+            }
+
             final Color color = section.getColor();
             final Optional<Color> selectedColor = section.getSelectedColor().isPresent()
                             ? Optional.of(this.getSection(gui.getPosition()).get().getSelectedColor().get()) : Optional.empty();
@@ -133,54 +161,6 @@ public abstract class SceneImpl extends JPanel implements Scene {
                     }
                 }
             }
-        }
-    }
-
-    @Override
-    public final Optional<GUISectionImpl> getSection(final TextPosition position) {
-        if (this.sections.containsKey(position) && this.sections.get(position).isPresent()) {
-            return this.sections.get(position);
-        }
-        return Optional.empty();
-    }
-
-    @Override
-    public final void addSection(final TextPosition position, final GUISectionImpl section) {
-        this.sections.put(position, Optional.of(section));
-    }
-
-    /**
-     * @param size the {@link TextSize} the size label
-     * @return the size in pixel
-     */
-    private Font getFont(final TextSize size) {
-        switch (size) {
-            case SMALL:
-                return this.smallFont;
-            case MEDIUM:
-                return this.mediumFont;
-            case LARGE:
-                return this.largeFont;
-            default:
-                return this.smallFont;
-        }
-    }
-
-    /**
-     * @param g the {@link Graphics} used
-     * @param gui the {@link GUILogic} containing the data
-     * @param section the {@link GUISection} containing the style
-     * @param index the line index
-     */
-    private void drawLine(final Graphics g, final GUILogic gui, final GUISection section, final int index) {
-        final int xOffset = section.getXOffset();
-        final int yOffset =  section.getYOffset();
-
-        if (section.isCentered()) {
-            this.drawCenteredString(g, gui.getData().get(index), 
-                    new Position2D(xOffset, yOffset + g.getFont().getSize() * index * 2), g.getFont());
-        } else {
-            g.drawString(gui.getData().get(index), xOffset, yOffset + g.getFont().getSize() * index * 2);
         }
     }
 }

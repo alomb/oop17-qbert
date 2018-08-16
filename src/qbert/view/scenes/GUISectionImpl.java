@@ -3,6 +3,8 @@ package qbert.view.scenes;
 import java.awt.Color;
 import java.util.Optional;
 
+import qbert.model.utilities.Dimensions;
+
 /**
  * The implementation of {@link GUISection}.
  */
@@ -13,27 +15,30 @@ public class GUISectionImpl implements GUISection {
     private final Optional<Color> selectedColor;
 
     //Text position properties
-    private final int xOffset;
-    private final int yOffset;
+    private final float xOffset;
+    private final float yOffset;
 
     //Text style properties
     private final boolean centered;
     private final TextSize textSize;
 
+    private static final int HUNDRED_PERCENT = 100;
+    private static final int FIFTY_PERCENT = 50;
+
     /**
      * @param color text color
      * @param selectedColor selected text color
-     * @param xOffset X section position offset
-     * @param yOffset Y section position offset
+     * @param xOffset X section position offset in percentage of the window width
+     * @param yOffset Y section position offset in percentage of the window height
      * @param centered true if the text is centered
      * @param textSize the {@link TextSize} of this GUI
      */
     public GUISectionImpl(final Color color, final Optional<Color> selectedColor, 
-            final int xOffset, final int yOffset, final boolean centered, final TextSize textSize) {
+            final float xOffset, final float yOffset, final boolean centered, final TextSize textSize) {
         this.color = color;
         this.selectedColor = selectedColor;
-        this.xOffset = xOffset;
-        this.yOffset = yOffset;
+        this.xOffset = (xOffset < 0 ? 0 : xOffset) > HUNDRED_PERCENT ? HUNDRED_PERCENT : xOffset;
+        this.yOffset = (yOffset < 0 ? 0 : yOffset) > HUNDRED_PERCENT ? HUNDRED_PERCENT : yOffset;
         this.centered = centered;
         this.textSize = textSize;
     }
@@ -50,12 +55,20 @@ public class GUISectionImpl implements GUISection {
 
     @Override
     public final int getXOffset() {
-        return xOffset;
+        float finalXOffset = this.xOffset;
+        if (this.centered) {
+            finalXOffset -= FIFTY_PERCENT;
+        }
+        return Math.round(finalXOffset * Dimensions.getWindowWidth() / HUNDRED_PERCENT);
     }
 
     @Override
     public final int getYOffset() {
-        return yOffset;
+        float finalYOffset = this.yOffset;
+        if (this.centered) {
+            finalYOffset -= FIFTY_PERCENT;
+        }
+        return Math.round(finalYOffset * Dimensions.getWindowHeight() / HUNDRED_PERCENT);
     }
 
     @Override

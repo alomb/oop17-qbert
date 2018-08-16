@@ -35,7 +35,7 @@ public class Menu implements Model {
         final GUILogic guiFoot;
 
         guiTitle = new GUILogicImpl(TextPosition.TITLE);
-        guiTitle.addData("Menu'");
+        guiTitle.addData("Q*BERT");
 
         this.guiBody = new GUILogicImpl(TextPosition.CENTER);
         this.guiBody.addData("PLAY");

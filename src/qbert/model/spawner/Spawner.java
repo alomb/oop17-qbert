@@ -1,9 +1,11 @@
 package qbert.model.spawner;
 
 import java.util.List;
+import java.util.Optional;
 
 import qbert.model.characters.Character;
 import qbert.model.characters.Player;
+import qbert.model.characters.Snake;
 
 /**
  * The interface for the characters spawning management.
@@ -36,6 +38,10 @@ public interface Spawner {
      * @return the list of the {@link Character} of the current level/round
      */
     List<Character> getGameCharacters();
+
+    Optional<Snake> getCoily();
+
+    void killCoily();
 
     /**
      * @param gc the list of {@link Character} to be updated

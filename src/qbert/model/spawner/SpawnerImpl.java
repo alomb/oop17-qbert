@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import qbert.controller.Controller;
 import qbert.model.characters.Character;
+import qbert.model.characters.CharactersList;
 import qbert.model.characters.Player;
+import qbert.model.characters.Snake;
 import qbert.model.characters.states.SpawnState;
+import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 
 /**
@@ -17,9 +21,10 @@ import qbert.model.utilities.Position2D;
 public final class SpawnerImpl implements Spawner {
 
     private final Player qbert;
+    private Optional<Snake> coily = Optional.empty();
     private List<Character> gameCharacters;
     private final EnemyFactory ef = new EnemyFactoryImpl();
-    private final Map<String, EnemyInfoImpl> mapInfo;
+    private final Map<CharactersList, EnemyInfoImpl> mapInfo;
 
     private final Controller controller;
 
@@ -27,12 +32,13 @@ public final class SpawnerImpl implements Spawner {
      * @param mapInfo the map of the characters
      * @param qBertSpeed the player speed
      * @param controller the game {@link Controller}
+     * @param qbertLives number of lives the {@link Player} is starting the level with
      */
-    public SpawnerImpl(final Map<String, EnemyInfoImpl> mapInfo, final float qBertSpeed, final Controller controller) {
+    public SpawnerImpl(final Map<CharactersList, EnemyInfoImpl> mapInfo, final float qBertSpeed, final Controller controller, final int qbertLives) {
         this.gameCharacters = new ArrayList<>();
         this.mapInfo = mapInfo;
         this.controller = controller;
-        this.qbert = ef.createQbert(qBertSpeed, controller);
+        this.qbert = ef.createQbert(qBertSpeed, controller, qbertLives);
     }
 
     @Override
@@ -48,30 +54,40 @@ public final class SpawnerImpl implements Spawner {
 
     @Override
     public void update(final float dt) {
-        for (final Map.Entry<String, EnemyInfoImpl> entry : mapInfo.entrySet()) {
+        for (final Map.Entry<CharactersList, EnemyInfoImpl> entry : mapInfo.entrySet()) {
             if (entry.getValue().getSpawningTime() <= entry.getValue().getElapsedTime()) {
                 entry.getValue().resetElapsedTime();
                 if (entry.getValue().getCurrentQuantity() < entry.getValue().getTotalQuantity()) {
                     final Character character;
                     switch (entry.getKey()) {
-                    case "Coily":
-                        character = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.qbert, this.controller);
-                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
-                        this.gameCharacters.add(character);
+                    case COILY:
+                        final Snake snake = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.qbert, this.controller);
+                        snake.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
+                        this.coily = Optional.of(snake);
                         break;
-                    case "RedBall":
+                    case RED_BALL:
                         character = ef.createRedBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
-                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
-                    case "GreenBall":
+                    case GREEN_BALL:
                         character = ef.createGreenBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
-                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
-                    case "SamAndSlick":
+                    case UGG:
+                        character = ef.createUgg(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
+                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
+                        this.gameCharacters.add(character);
+                        break;
+                    case WRONGWAY:
+                        character = ef.createWrongway(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
+                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
+                        this.gameCharacters.add(character);
+                        break;
+                    case SAM_AND_SLICK:
                         character = ef.createSamAndSlick(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
-                        character.setCurrentPosition(new Position2D(-1, -1)); ////////////
+                        character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
                     default:
@@ -88,14 +104,23 @@ public final class SpawnerImpl implements Spawner {
     public void death(final Character character) {
         final String name = character.getClass().getSimpleName();
 
-        if (this.mapInfo.get(name) != null && this.mapInfo.get(name).getCurrentQuantity() > 0) {
-            this.mapInfo.get(name).decCurrentQuantity();
+        if (this.mapInfo.get(CharactersList.getEnumConstantByValue(name)) != null && this.mapInfo.get(CharactersList.getEnumConstantByValue(name)).getCurrentQuantity() > 0) {
+            this.mapInfo.get(CharactersList.getEnumConstantByValue(name)).decCurrentQuantity();
         }
     }
 
     @Override
     public List<Character> getGameCharacters() {
         return Collections.unmodifiableList(this.gameCharacters);
+    }
+
+    @Override
+    public Optional<Snake> getCoily() {
+        return this.coily;
+    }
+    @Override
+    public void killCoily() {
+        this.coily = Optional.empty();
     }
 
     @Override

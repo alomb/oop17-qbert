@@ -10,17 +10,13 @@ import java.util.stream.Stream;
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
 import qbert.model.characters.Player;
-import qbert.model.characters.Qbert;
 import qbert.model.characters.states.LandState;
 import qbert.model.characters.states.MoveState;
-import qbert.model.components.sounds.QbertSC;
-import qbert.model.sprites.CompleteCharacterSprites;
+import qbert.model.spawner.EnemyFactory;
+import qbert.model.spawner.EnemyFactoryImpl;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.model.utilities.Sprites;
 import qbert.model.components.graphics.Renderable;
-import qbert.model.components.graphics.PlayerGC;
-import qbert.model.components.graphics.PlayerGCImpl;
 
 /**
  * The implementation of {@link Model} for application introductive scene logic.
@@ -48,13 +44,10 @@ public class Introduction implements Model {
      * @param controller the game controller.
      */
     public Introduction(final Controller controller) {
-        final CompleteCharacterSprites s = Sprites.getInstance().getQbertSprites();
-        final PlayerGC graphics = new PlayerGCImpl(s.getFrontStandSprite(), s.getFrontMoveSprite(), s.getBackStandSprite(), s.getBackMoveSprite(), 
-                s.getDeathSprite(), s.getOnDiskSprite(), new Position2D(Dimensions.getSpawningQBert()));
- 
         this.controller = controller;
 
-        this.qbert = new Qbert(Dimensions.getSpawningLogQBert(), SPEED, graphics, new QbertSC(this.controller));
+        final EnemyFactory factory = new EnemyFactoryImpl();
+        this.qbert = factory.createQbert(SPEED, controller, 1);
 
         final GUILogic guiTitle;
         final GUILogic guiFoot;
@@ -99,7 +92,7 @@ public class Introduction implements Model {
 
         this.guiBody.selectSet(IntStream.range(this.instructionsIndex, this.guiBody.getData().size()).mapToObj(i -> i).collect(Collectors.toSet()));
 
-        this.qbert.setCurrentPosition(new Position2D(new Position2D(Dimensions.getSpawningLogQBert())));
+        this.qbert.setCurrentPosition(new Position2D(qbert.getSpawningPosition()));
         this.qbert.getGraphicComponent().setPosition(new Position2D(Introduction.QBERTPOSITION));
         this.qbert.setCurrentState(this.qbert.getStandingState());
     }
@@ -137,6 +130,7 @@ public class Introduction implements Model {
                     new Position2D(qbert.getCurrentPosition().getX() + qbert.getStep(), qbert.getCurrentPosition().getY() - qbert.getStep()));
 
             this.qbert.setCurrentState(new MoveState.DownRight(this.qbert));
+            this.qbert.getPlayerSoundComponent().setHopSound();
         }
     }
 
