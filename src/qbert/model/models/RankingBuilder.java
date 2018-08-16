@@ -20,7 +20,7 @@ public class RankingBuilder {
   }
  
   public String toString() {
-    return "\r\n"+this.name+'#'+this.dateFormat.format(this.date)+'?'+this.score;
+    return this.name+'#'+this.dateFormat.format(this.date)+'?'+this.score;
   }
   
   public String getName() {
@@ -48,12 +48,12 @@ public class RankingBuilder {
       }
       
       public Builder resetName() {
-          _name="";
+          _name=" ";
           return this;
       }
    
       public RankingBuilder build() {
-        return new RankingBuilder(this);
+          return new RankingBuilder(this);
       }
    
     }

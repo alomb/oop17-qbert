@@ -45,6 +45,7 @@ import qbert.view.ViewImpl;
 public class ControllerImpl implements Controller {
     
     private Builder ranking = new RankingBuilder.Builder();
+    private boolean empty = true;
     private final String urlFile = System.getProperty("user.home") + "/qbert/ranking.txt";
     private LevelConfigurationReader lcr;
     private final GameEngine gameEngine;
@@ -132,20 +133,13 @@ public class ControllerImpl implements Controller {
             while ((line = br.readLine()) != null) {
                 rank.put(line.split("\\?")[0],Integer.parseInt(line.split("\\?")[1]));
             }
+            empty=false;
         } catch (FileNotFoundException e) {
             File file = new File(urlFile);
             //Create the file
             try {
                 file.createNewFile();
-                Writer output;
-                try {
-                    output = new BufferedWriter(new FileWriter(urlFile, true));
-                    output.append("Ranking File");
-                    output.close();
-                } catch (IOException e2) {
-                    // TODO Auto-generated catch block
-                    e2.printStackTrace();
-                }
+                empty=true;
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
@@ -180,12 +174,17 @@ public class ControllerImpl implements Controller {
         Writer output;
         try {
             output = new BufferedWriter(new FileWriter(urlFile, true));
-            output.append(ranking.build().toString());
+            if(empty) {
+                output.append(ranking.build().toString());
+            }else {
+                output.append("\r\n"+ranking.build().toString());
+            }
             output.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        
     }
 
     public void addScoreBuilder() {
