@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Optional;
 
+import qbert.LoggerManager;
 import qbert.model.utilities.Dimensions;
 
 /**
@@ -44,9 +45,9 @@ public enum TextSize {
             ge.registerFont(this.font.get());
             in.close();
         } catch (FontFormatException e) {
-            e.printStackTrace();
+            LoggerManager.getInstance().info(e.getMessage(), "Impossibile caricare il font.");
         } catch (IOException e) {
-            e.printStackTrace();
+            LoggerManager.getInstance().info(e.getMessage(), "Impossibile caricare il font.");
         }
     }
 

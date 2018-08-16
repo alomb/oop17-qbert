@@ -27,6 +27,8 @@ import qbert.model.components.graphics.GraphicComponent;
 import qbert.model.components.graphics.GraphicComponentImpl;
 import qbert.model.components.graphics.Renderable;
 import qbert.model.components.graphics.RenderableObject;
+import qbert.model.components.sounds.GameSC;
+import qbert.model.components.sounds.SoundComponent;
 
 public final class Level {
 
@@ -39,12 +41,14 @@ public final class Level {
 
     private final LevelSettings settings;
     private final Controller controller;
+    private final SoundComponent sounds;
 
     private Game gameObserver;
 
     public Level(LevelSettings levelSettings, final int lives, final int score, final Controller controller) {
         this.settings = levelSettings;
         this.controller = controller;
+        this.sounds = new GameSC(this.controller);
         this.spawner = new SpawnerImpl(levelSettings.getMapInfo(), levelSettings.getQBertSpeed(), controller, lives);
         this.qbert = this.spawner.spawnQbert();
         this.points = new PointComponentImpl(score);
@@ -108,6 +112,8 @@ public final class Level {
         this.points.score(PointComponentImpl.UNUSED_DISK_SCORE * map.getDiskList().size(), qbert);
 
         this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
+
+        this.sounds.setWinningARoundSound();
 
         //TODO: Start of animation
         timer.freezeEverything(() -> {

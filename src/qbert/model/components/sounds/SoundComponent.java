@@ -16,6 +16,11 @@ public interface SoundComponent {
    void setGameStartSound();
 
    /**
+    * This method adds the sound effect associated with the completion of a round to the queue.
+    */
+   void setWinningARoundSound();
+
+   /**
     * This method notifies the {@link Controller} the presence of a sound effect to be played.
     */
    void notifyPlaySound();

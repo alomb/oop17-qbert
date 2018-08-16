@@ -39,8 +39,14 @@ public interface Spawner {
      */
     List<Character> getGameCharacters();
 
+    /**
+     * @return the {@link Snake} interface representing Coily enemy
+     */
     Optional<Snake> getCoily();
 
+    /**
+     * This method manages Coily's death.
+     */
     void killCoily();
 
     /**

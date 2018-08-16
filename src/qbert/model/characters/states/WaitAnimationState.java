@@ -26,5 +26,5 @@ public abstract class WaitAnimationState extends CharacterStateImpl {
     /**
      * Undefined method used to accomplish the operations after the conclusion of the animation. 
      */
-    public abstract void conclude();
+    protected abstract void conclude();
 }

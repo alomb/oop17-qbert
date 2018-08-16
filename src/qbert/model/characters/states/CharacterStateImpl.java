@@ -22,7 +22,7 @@ public abstract class CharacterStateImpl implements CharacterState {
     /**
      * @return the {@link Character} associated with this {@link CharacterState}
      */
-    public Character getCharacter() {
+    protected Character getCharacter() {
         return this.character;
     }
 }

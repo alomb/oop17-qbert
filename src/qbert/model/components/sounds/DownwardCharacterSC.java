@@ -6,6 +6,21 @@ package qbert.model.components.sounds;
 public class DownwardCharacterSC implements CharacterSC {
 
     @Override
+    public void setCoinSound() {
+
+    }
+
+    @Override
+    public void setGameStartSound() {
+
+    }
+
+    @Override
+    public void setWinningARoundSound() {
+
+    }
+
+    @Override
     public void setHopSound() {
 
     }
@@ -17,16 +32,6 @@ public class DownwardCharacterSC implements CharacterSC {
 
     @Override
     public void setKillSound() {
-
-    }
-
-    @Override
-    public void setCoinSound() {
-
-    }
-
-    @Override
-    public void setGameStartSound() {
 
     }
 

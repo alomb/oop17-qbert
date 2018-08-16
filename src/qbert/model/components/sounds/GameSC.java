@@ -37,7 +37,14 @@ public class GameSC implements SoundComponent {
     }
 
     @Override
+    public final void setWinningARoundSound() {
+        this.clipToPlay.add(this.controller.uploadClip(SoundEffectFile.WIN_A_ROUND_MUSIC));
+        this.notifyPlaySound();
+    }
+
+    @Override
     public final void notifyPlaySound() {
         this.controller.emptyClipQueue(this.clipToPlay);
     }
+
 }

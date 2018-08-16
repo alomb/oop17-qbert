@@ -20,27 +20,18 @@ public class LeftwardCharStandingState extends WaitTimerState {
     }
 
     @Override
-    public final void conclude() {
+    protected final void conclude() {
         CharacterState nextState;
         final Position2D newPos = new Position2D(getCharacter().getCurrentPosition());
-        if (this.canAdvance()) {
-            newPos.setX(newPos.getX() - this.getCharacter().getStep());
-            if (newPos.getY() <= Dimensions.MAP_BOTTOM_EDGE || Math.random() > 0.5) {
-                newPos.setY(newPos.getY() + this.getCharacter().getStep());
-                nextState = new MoveState.DownRight(this.getCharacter());
-            } else {
-                newPos.setY(newPos.getY() - this.getCharacter().getStep());
-                nextState = new MoveState.DownLeft(this.getCharacter());
-            }
-            this.getCharacter().setNextPosition(newPos);
-            this.getCharacter().setCurrentState(nextState);
+        newPos.setX(newPos.getX() - this.getCharacter().getStep());
+        if (newPos.getY() <= Dimensions.MAP_BOTTOM_EDGE || Math.random() > 0.5) {
+            newPos.setY(newPos.getY() + this.getCharacter().getStep());
+            nextState = new MoveState.DownRight(this.getCharacter());
+        } else {
+            newPos.setY(newPos.getY() - this.getCharacter().getStep());
+            nextState = new MoveState.DownLeft(this.getCharacter());
         }
-    }
-
-    /**
-     * @return true if the {@link Character} wants to keep going down or return false otherwise, probably changing the state
-     */
-    public boolean canAdvance() {
-        return true;
+        this.getCharacter().setNextPosition(newPos);
+        this.getCharacter().setCurrentState(nextState);
     }
 }

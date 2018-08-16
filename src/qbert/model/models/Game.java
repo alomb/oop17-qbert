@@ -11,6 +11,8 @@ import qbert.model.characters.Player;
 import qbert.model.characters.states.MoveState;
 import qbert.model.utilities.Position2D;
 import qbert.model.components.graphics.Renderable;
+import qbert.model.components.sounds.GameSC;
+import qbert.model.components.sounds.SoundComponent;
 
 /**
  * The implementation of {@link Model} for gameplay logic.
@@ -22,6 +24,8 @@ public class Game implements Model {
 
     private Level gameLevel;
     private final Controller controller;
+
+    private final SoundComponent sounds;
 
     private int levelNumber;
     private int roundNumber;
@@ -37,6 +41,7 @@ public class Game implements Model {
      */
     public Game(final Controller controller) {
         this.controller = controller;
+        this.sounds = new GameSC(this.controller);
         this.gui = new ArrayList<>();
         this.levelAndRound = new GUILogicImpl(TextPosition.RIGHTSIDE);
         this.scoreAndLives = new GUILogicImpl(TextPosition.LEFTSIDE);
@@ -54,6 +59,8 @@ public class Game implements Model {
         this.createNewLevel();
         this.updateScoreAndLives();
         this.gameLevel.addObserver(this);
+
+        this.sounds.setGameStartSound();
     }
 
     @Override

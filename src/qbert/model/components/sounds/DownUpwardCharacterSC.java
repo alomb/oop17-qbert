@@ -35,6 +35,11 @@ public class DownUpwardCharacterSC implements CharacterSC {
     }
 
     @Override
+    public void setWinningARoundSound() {
+
+    }
+
+    @Override
     public final void setHopSound() {
         this.clipToPlay.add(this.controller.uploadClip(SoundEffectFile.COILY_HOPS));
         this.notifyPlaySound();

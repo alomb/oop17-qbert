@@ -19,13 +19,6 @@ public abstract class WaitTimerState extends CharacterStateImpl {
         this.triggerTime = triggerTime;
     }
 
-    /**
-     * @return the timer duration
-     */
-    public int getTriggerTime() {
-        return this.triggerTime;
-    }
-
     @Override 
     public final void update(final float dt) {
         if (this.triggerTime <= this.elapsedTime) {
@@ -37,7 +30,14 @@ public abstract class WaitTimerState extends CharacterStateImpl {
     }
 
     /**
+     * @return the timer duration
+     */
+    protected int getTriggerTime() {
+        return this.triggerTime;
+    }
+
+    /**
      * Undefined method used to accomplish the operations after the timer expirations. 
      */
-    public abstract void conclude();
+    protected abstract void conclude();
 }
