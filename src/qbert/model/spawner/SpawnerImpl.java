@@ -23,7 +23,7 @@ public final class SpawnerImpl implements Spawner {
     private final Player qbert;
     private Optional<Snake> coily = Optional.empty();
     private List<Character> gameCharacters;
-    private final EnemyFactory ef = new EnemyFactoryImpl();
+    private final EnemyFactory ef;
     private final Map<CharactersList, EnemyInfoImpl> mapInfo;
 
     private final Controller controller;
@@ -38,7 +38,8 @@ public final class SpawnerImpl implements Spawner {
         this.gameCharacters = new ArrayList<>();
         this.mapInfo = mapInfo;
         this.controller = controller;
-        this.qbert = ef.createQbert(qBertSpeed, controller, qbertLives);
+        this.ef = new EnemyFactoryImpl(this.controller);
+        this.qbert = ef.createQbert(qBertSpeed, qbertLives);
     }
 
     @Override
@@ -61,32 +62,32 @@ public final class SpawnerImpl implements Spawner {
                     final Character character;
                     switch (entry.getKey()) {
                     case COILY:
-                        final Snake snake = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.qbert, this.controller);
+                        final Snake snake = ef.createCoily(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.qbert);
                         snake.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.coily = Optional.of(snake);
                         break;
                     case RED_BALL:
-                        character = ef.createRedBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
+                        character = ef.createRedBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
                         character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
                     case GREEN_BALL:
-                        character = ef.createGreenBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
+                        character = ef.createGreenBall(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
                         character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
                     case UGG:
-                        character = ef.createUgg(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
+                        character = ef.createUgg(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
                         character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
                     case WRONGWAY:
-                        character = ef.createWrongway(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
+                        character = ef.createWrongway(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
                         character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;
                     case SAM_AND_SLICK:
-                        character = ef.createSamAndSlick(entry.getValue().getSpeed(), entry.getValue().getStandingTime(), this.controller);
+                        character = ef.createSamAndSlick(entry.getValue().getSpeed(), entry.getValue().getStandingTime());
                         character.setCurrentPosition(new Position2D(Dimensions.UNDEFINED_POSITION));
                         this.gameCharacters.add(character);
                         break;

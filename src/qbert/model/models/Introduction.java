@@ -51,8 +51,8 @@ public class Introduction implements Model {
         this.controller = controller;
         this.sounds = new GameSC(this.controller);
 
-        final EnemyFactory factory = new EnemyFactoryImpl();
-        this.qbert = factory.createQbert(SPEED, controller, 1);
+        final EnemyFactory factory = new EnemyFactoryImpl(this.controller);
+        this.qbert = factory.createQbert(SPEED, 1);
 
         final GUILogic guiTitle;
         final GUILogic guiFoot;

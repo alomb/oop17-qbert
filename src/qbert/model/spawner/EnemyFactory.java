@@ -1,6 +1,5 @@
 package qbert.model.spawner;
 
-import qbert.controller.Controller;
 import qbert.model.characters.Character;
 import qbert.model.characters.Snake;
 import qbert.model.characters.Player;
@@ -12,58 +11,51 @@ public interface EnemyFactory {
 
     /**
      * @param speed the QBert speed
-     * @param controller the game {@link Controller}
      * @return the {@link Player} representing {@link Qbert}
      * @param qbertLives number of lives the {@link Player} is starting the level with
      */
-    Player createQbert(float speed, Controller controller, int qbertLives);
+    Player createQbert(float speed, int qbertLives);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
      * @param qbert the {@link Player} reference
-     * @param controller the game {@link Controller}
      * @return the {@link Snake} representing {@link Coily} enemy
      */
-    Snake createCoily(float speed, int standingTime, Player qbert, Controller controller);
+    Snake createCoily(float speed, int standingTime, Player qbert);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @param controller the game {@link Controller}
      * @return the {@link Character} representing {@link RedBall} enemy
      */
-    Character createRedBall(float speed, int standingTime, Controller controller);
+    Character createRedBall(float speed, int standingTime);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @param controller the game {@link Controller}
      * @return the {@link Character} representing {@link GreenBall}
      */
-    Character createGreenBall(float speed, int standingTime, Controller controller);
+    Character createGreenBall(float speed, int standingTime);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @param controller the game {@link Controller}
      * @return the {@link Character} representing {@link SamAndSlick}
      */
-    Character createSamAndSlick(float speed, int standingTime, Controller controller);
+    Character createSamAndSlick(float speed, int standingTime);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @param controller the game {@link Controller}
      * @return the {@link Character} representing {@link Wrongway}
      */
-    Character createWrongway(float speed, int standingTime, Controller controller);
+    Character createWrongway(float speed, int standingTime);
 
     /**
      * @param speed the {@link Character} movement speed
      * @param standingTime the time passed on standing state
-     * @param controller the game {@link Controller}
      * @return the {@link Character} representing {@link Ugg}
      */
-    Character createUgg(float speed, int standingTime, Controller controller);
+    Character createUgg(float speed, int standingTime);
 }
