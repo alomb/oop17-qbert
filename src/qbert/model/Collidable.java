@@ -1,6 +1,7 @@
 package qbert.model;
 
 import qbert.model.characters.Player;
+import qbert.model.components.Collision;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 
@@ -9,7 +10,7 @@ import qbert.model.components.TimerComponent;
  */
 public interface Collidable {
 
-    public void checkCollision(final Player qbert, final PointComponent points, final TimerComponent timer);
+    boolean checkCollision(final Player qbert, final PointComponent points, final TimerComponent timer, final Collision collision);
 
     /**
      * Event happening on the collision between the entity and {@link Qbert}.
