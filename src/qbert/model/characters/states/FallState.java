@@ -17,7 +17,7 @@ public class FallState extends WaitAnimationState {
     }
 
     /**
-     * @param character the relative {@link Snake}
+     * @param character the relative {@link DownUpwardCharacter}
      */
     public FallState(final DownUpwardCharacter character) {
         super(character);

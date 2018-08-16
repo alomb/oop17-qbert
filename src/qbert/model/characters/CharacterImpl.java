@@ -123,9 +123,16 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
-        //Do nothing
+    public void checkCollision(final Player qbert, final PointComponent points, final TimerComponent timer) {
+        if (qbert.getCurrentPosition().equals(this.getNextPosition()) && qbert.getNextPosition().equals(this.getCurrentPosition())
+                || (qbert.getCurrentPosition().equals(this.getCurrentPosition()) && qbert.getNextPosition().equals(this.getNextPosition())/* TODO: && pauseEntities*/)
+                || ((qbert.getCurrentPosition().getX() - 1 == this.getCurrentPosition().getX() ||  qbert.getCurrentPosition().getX() + 1 == this.getCurrentPosition().getX()) && qbert.getCurrentPosition().getY() + 1 == this.getCurrentPosition().getY() && !this.isMoving() && !qbert.isMoving())) {
+            this.collide(qbert, points, timer);
+        }
     }
+
+    @Override
+    public abstract void collide(final Player qbert, final PointComponent points, final TimerComponent timer);
 
     @Override
     public final int getZIndex() {

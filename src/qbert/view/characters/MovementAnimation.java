@@ -74,7 +74,7 @@ public abstract class MovementAnimation implements Animation {
      * @param radius the circumference radius
      * @return the {@link Position2D} after the rotation
      */
-    public static Position2D calculateCircumferenceCoords(final Position2D centerPos, final int angle, final double radius) {
+    protected Position2D calculateCircumferenceCoords(final Position2D centerPos, final int angle, final double radius) {
         return new Position2D(Math.round((float) (centerPos.getX() + Math.cos(Math.toRadians(angle)) * radius)),
                 Math.round((float) (centerPos.getY() + Math.sin(Math.toRadians(angle)) * radius)));
     }

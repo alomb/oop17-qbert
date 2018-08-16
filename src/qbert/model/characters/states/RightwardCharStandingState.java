@@ -1,6 +1,6 @@
 package qbert.model.characters.states;
 
-import qbert.model.characters.Character;
+import qbert.model.characters.RightwardCharacter;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 
@@ -10,10 +10,10 @@ import qbert.model.utilities.Position2D;
 public class RightwardCharStandingState extends WaitTimerState {
 
     /**
-     * @param character the {@link Character} linked to this state
+     * @param character the {@link RightwardCharacter} linked to this state
      * @param triggerTime the timer duration
      */
-    public RightwardCharStandingState(final Character character, final int triggerTime) {
+    public RightwardCharStandingState(final RightwardCharacter character, final int triggerTime) {
         super(character, triggerTime);
         this.getCharacter().setCurrentPosition(new Position2D(this.getCharacter().getNextPosition()));
         this.getCharacter().getGraphicComponent().setStandingAnimation();

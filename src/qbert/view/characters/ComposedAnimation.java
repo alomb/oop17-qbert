@@ -29,7 +29,7 @@ public class ComposedAnimation extends MovementAnimation {
     }
 
     @Override
-    public final void calculateNext() {
+    protected final void calculateNext() {
         if (!this.animations.isEmpty()) {
             if (this.animations.peek().hasFinished()) {
                 this.animations.remove();
@@ -44,7 +44,7 @@ public class ComposedAnimation extends MovementAnimation {
     /**
      * @return the queue of animations to perform
      */
-    public final Queue<Animation> getAnimations() {
+    protected final Queue<Animation> getAnimations() {
         return animations;
     }
 

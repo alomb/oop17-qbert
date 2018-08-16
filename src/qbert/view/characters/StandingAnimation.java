@@ -15,7 +15,7 @@ public class StandingAnimation extends MovementAnimation {
     }
 
     @Override
-    public void calculateNext() {
+    protected void calculateNext() {
 
     }
 }
