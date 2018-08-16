@@ -43,7 +43,7 @@ public class ArcClockwiseAnimation extends MovementAnimation {
     }
 
     @Override
-    public final void calculateNext() {
+    protected final void calculateNext() {
         this.currentAngle += this.getAnimationSpeed();
 
         //Check if the angle limit has been reached
@@ -52,7 +52,7 @@ public class ArcClockwiseAnimation extends MovementAnimation {
             this.setCurrentPosition(this.getTargetPosition());
         } else {
             // Calculate position using the goniometric circumference
-            this.setCurrentPosition(MovementAnimation.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
+            this.setCurrentPosition(this.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
         }
     }
 }

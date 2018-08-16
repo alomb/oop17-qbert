@@ -137,7 +137,6 @@ public class Introduction implements Model {
                     new Position2D(qbert.getCurrentPosition().getX() + qbert.getStep(), qbert.getCurrentPosition().getY() - qbert.getStep()));
 
             this.qbert.setCurrentState(new MoveState.DownRight(this.qbert));
-            this.qbert.getPlayerSoundComponent().setHopSound();
         }
     }
 
@@ -146,6 +145,7 @@ public class Introduction implements Model {
         this.qbert.update(elapsed);
 
         if (this.qbert.getCurrentState() instanceof LandState) {
+            this.qbert.getPlayerSoundComponent().setHopSound();
             this.qbert.setCurrentState(this.qbert.getStandingState());
         }
 

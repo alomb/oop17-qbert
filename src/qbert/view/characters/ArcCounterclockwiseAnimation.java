@@ -43,13 +43,13 @@ public class ArcCounterclockwiseAnimation extends MovementAnimation {
     }
 
     @Override
-    public final void calculateNext() {
+    protected final void calculateNext() {
         this.currentAngle -= this.getAnimationSpeed();
         if (this.currentAngle < this.targetAngle) {
             this.currentAngle = this.targetAngle;
             this.setCurrentPosition(this.getTargetPosition());
         } else {
-            this.setCurrentPosition(MovementAnimation.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
+            this.setCurrentPosition(this.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
         }
     }
 }

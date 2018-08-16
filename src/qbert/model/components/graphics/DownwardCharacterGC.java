@@ -11,7 +11,7 @@ import qbert.view.characters.StandingAnimation;
  * GC stands graphic component, this implementation is used to manage characters whose movements are unidirectional and 
  * downward, doesn't support upward animations.
  */
-public class DownwardCharacterGCImpl extends CharacterGCImpl {
+public class DownwardCharacterGC extends CharacterGCImpl {
 
     private final OneSideCharacterSprites sprites;
 
@@ -29,7 +29,7 @@ public class DownwardCharacterGCImpl extends CharacterGCImpl {
      * @param sprites the {@link Character} sprites container
      * @param startSpritePos the first position (physic) of the {@link Character}
      */
-    public DownwardCharacterGCImpl(final OneSideCharacterSprites sprites, final Position2D startSpritePos) {
+    public DownwardCharacterGC(final OneSideCharacterSprites sprites, final Position2D startSpritePos) {
         super(sprites.getStandSprite(), startSpritePos);
         this.sprites = sprites;
         this.landPos = new Position2D(this.getSpawnPosition().getX(), (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - this.getSpriteHeight()); 

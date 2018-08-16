@@ -1,4 +1,4 @@
-package qbert.view.characters;
+package test;
 
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import qbert.model.utilities.Position2D;
+import qbert.view.characters.Animation;
+import qbert.view.characters.ArcClockwiseAnimation;
+import qbert.view.characters.ArcCounterclockwiseAnimation;
+import qbert.view.characters.DisplaceAnimation;
+import qbert.view.characters.StandingAnimation;
+import qbert.view.characters.StraightMovementAnimation;
 
 /**
  * A JUnit class to test basic animations.

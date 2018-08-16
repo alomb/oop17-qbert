@@ -16,7 +16,7 @@ public class DisplaceAnimation extends MovementAnimation {
     }
 
     @Override
-    public final void calculateNext() {
+    protected final void calculateNext() {
         this.setCurrentPosition(this.getTargetPosition());
     }
 }

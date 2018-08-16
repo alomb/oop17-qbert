@@ -1,4 +1,4 @@
-package qbert.model.components.graphics;
+package test;
 
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
@@ -6,9 +6,12 @@ import static org.junit.Assert.assertEquals;
 
 import qbert.controller.LoadResources;
 import qbert.controller.Sprites;
+import qbert.model.components.graphics.CharacterGC;
+import qbert.model.components.graphics.CoilyGCImpl;
+import qbert.model.components.graphics.DownUpwardCharacterGC;
+import qbert.model.components.graphics.DownwardCharacterGC;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.DisplaceAnimation;
 import qbert.view.characters.ComposedAnimation;
 import qbert.view.characters.StraightMovementAnimation;
 
@@ -20,8 +23,6 @@ import java.util.Random;
 public class TestCharacterGraphicComponent {
 
     private static final float SPEED = 7;
-
-    private static final int SPRITEHEIGHT = 5;
 
     private final Random rnd;
     private static final int TEST = 20;
@@ -94,17 +95,18 @@ public class TestCharacterGraphicComponent {
     }
 
     /**
-     * A test method for {@link DownwardCharacterGCImpl}.
+     * A test method for {@link DownwardCharacterGC}.
      */
     @Test
     public void testDownwardCGC() {
-        final CharacterGC cgc = new DownwardCharacterGCImpl(Sprites.getInstance().getGreenBallSprites(), new Position2D(spawningPointLeft));
+        final CharacterGC cgc = new DownwardCharacterGC(Sprites.getInstance().getGreenBallSprites(), new Position2D(spawningPointLeft));
         assertEquals(cgc.getPosition(), this.spawningPointLeft);
+        final Position2D landPos = new Position2D(cgc.getSpawnPosition().getX(), (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - cgc.getSpriteHeight());
         cgc.setSpawnAnimation();
+        assertTrue(cgc.getSprite().equals(Sprites.getInstance().getGreenBallSprites().getMoveSprite()));
         assertTrue(cgc.getCurrentAnimation() instanceof StraightMovementAnimation);
         this.finishAnimation(cgc);
-        assertEquals(cgc.getPosition(), new Position2D(this.spawningPointLeft.getX(), 
-                (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - TestCharacterGraphicComponent.SPRITEHEIGHT));
+        assertEquals(cgc.getPosition(), landPos);
 
         for (int i = 0; i < TestCharacterGraphicComponent.TEST; i++) {
             if (this.rnd.nextFloat() >= 0.5) {
@@ -122,13 +124,12 @@ public class TestCharacterGraphicComponent {
     public void testDownwardUpwardGC() {
         final Sprites s = Sprites.getInstance();
         final DownUpwardCharacterGC cgc = new CoilyGCImpl(s.getPurpleBallSprites(), s.getCoilyFrontSprites(), s.getCoilyBackSprites(), new Position2D(this.spawningPointRight));
-        final Position2D spawnPos = new Position2D(rnd.nextInt(10), rnd.nextInt(10));
+        final Position2D landPos = new Position2D(cgc.getSpawnPosition().getX(), (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - cgc.getSpriteHeight());
         assertEquals(cgc.getPosition(), this.spawningPointRight);
-        cgc.setSpawnPosition(spawnPos);
         cgc.setSpawnAnimation();
-        assertTrue(cgc.getCurrentAnimation() instanceof DisplaceAnimation);
+        assertTrue(cgc.getCurrentAnimation() instanceof StraightMovementAnimation);
         this.finishAnimation(cgc);
-        assertEquals(cgc.getPosition(), spawnPos);
+        assertEquals(cgc.getPosition(), landPos);
 
         for (int i = 0; i < TestCharacterGraphicComponent.TEST; i++) {
             switch (this.rnd.nextInt(4)) {

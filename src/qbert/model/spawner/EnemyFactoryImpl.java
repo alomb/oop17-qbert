@@ -22,7 +22,7 @@ import qbert.model.utilities.Position2D;
 import qbert.model.components.graphics.CharacterGC;
 import qbert.model.components.graphics.CoilyGC;
 import qbert.model.components.graphics.CoilyGCImpl;
-import qbert.model.components.graphics.DownwardCharacterGCImpl;
+import qbert.model.components.graphics.DownwardCharacterGC;
 import qbert.model.components.graphics.LeftwardCharacterGC;
 import qbert.model.components.graphics.PlayerGC;
 import qbert.model.components.graphics.PlayerGCImpl;
@@ -94,7 +94,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
         final OneSideCharacterSprites sprites = Sprites.getInstance().getRedBallSprites();
         final Position2D randomPos = this.getRandomPos(sprites.getMoveSprite().getHeight());
         final Position2D logicalPos = this.getLogicalPos(randomPos);
-        final CharacterGC graphics = new DownwardCharacterGCImpl(sprites, randomPos);
+        final CharacterGC graphics = new DownwardCharacterGC(sprites, randomPos);
 
         return new RedBall(logicalPos, speed, graphics, standingTime);
     }
@@ -104,7 +104,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
         final OneSideCharacterSprites sprites = Sprites.getInstance().getGreenBallSprites();
         final Position2D randomPos = this.getRandomPos(sprites.getMoveSprite().getHeight());
         final Position2D logicalPos = this.getLogicalPos(randomPos);
-        final CharacterGC graphics = new DownwardCharacterGCImpl(Sprites.getInstance().getGreenBallSprites(), randomPos);
+        final CharacterGC graphics = new DownwardCharacterGC(Sprites.getInstance().getGreenBallSprites(), randomPos);
 
         return new GreenBall(logicalPos, speed, graphics, standingTime);
     }
@@ -118,8 +118,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
         final Position2D logicalPos = this.getLogicalPos(randomPos);
 
         final CharacterGC graphics = randomPos == this.spawningLogPointLeft
-                ? new DownwardCharacterGCImpl(slickS, randomPos)
-                : new DownwardCharacterGCImpl(samS, randomPos);
+                ? new DownwardCharacterGC(slickS, randomPos)
+                : new DownwardCharacterGC(samS, randomPos);
 
         return new SamAndSlick(logicalPos, speed, graphics, standingTime);
     }
