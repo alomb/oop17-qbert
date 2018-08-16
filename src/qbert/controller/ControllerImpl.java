@@ -137,6 +137,15 @@ public class ControllerImpl implements Controller {
             //Create the file
             try {
                 file.createNewFile();
+                Writer output;
+                try {
+                    output = new BufferedWriter(new FileWriter(urlFile, true));
+                    output.append("Ranking File");
+                    output.close();
+                } catch (IOException e2) {
+                    // TODO Auto-generated catch block
+                    e2.printStackTrace();
+                }
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
