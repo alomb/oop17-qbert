@@ -42,15 +42,15 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
     }
 
     @Override
-    public void readLevelConfiguration(final int l, final int r) throws JDOMException {
+    public void readLevelConfiguration(final int levelNumber, final int roundNumber) throws JDOMException {
         try {
             final SAXBuilder builder = new SAXBuilder();
             final Document document = 
                     builder.build(getClass().getResource("/levelconfig.xml").toString());
 
             final Element root = document.getRootElement();
-            final Element level = root.getChild("LEVEL" + l);
-            final Element round = level.getChild("ROUND" + r);
+            final Element level = root.getChild("LEVEL" + levelNumber);
+            final Element round = level.getChild("ROUND" + roundNumber);
             this.colorsNumber = Integer.parseInt(round.getAttributeValue("colors"));
             this.reversible = Boolean.parseBoolean(round.getAttributeValue("reversible"));
             this.disksNumber = Integer.parseInt(round.getAttributeValue("disks"));
