@@ -229,9 +229,8 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public void emptyClipQueue(Queue<Clip> queue) {
-        // TODO Auto-generated method stub
-        
+    public final void emptyClipQueue(final Queue<Clip> queue) {
+        this.view.play(queue);
     }
 
 }
