@@ -9,12 +9,14 @@ import java.util.stream.IntStream;
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
 import qbert.model.components.graphics.Renderable;
+import qbert.model.models.RankingBuilder.Builder;
 
 /**
  * The implementation of {@link Model} for application {@link SceneGameOver} scene logic.
  */
 public class GameOver implements Model {
 
+    private Builder ranking = new RankingBuilder.Builder();
     private int index;
 //    private static final int MAXVALUE = 28;
 //    private static final int MINVALUE = 0;
@@ -97,11 +99,11 @@ public class GameOver implements Model {
 
     @Override
     public final void initialize() {
-        this.controller.resetNameBuilder();
+        this.ranking.reset();
         this.index = 0;
         this.guiLeft.deselectAll();
         this.guiLeft.selectSet(IntStream.range(0, 1).mapToObj(i -> i).collect(Collectors.toSet()));
-        this.controller.addScoreBuilder();
+        this.ranking.addScore(this.controller.getScore());
     }
 
     @Override
@@ -134,11 +136,11 @@ public class GameOver implements Model {
     public final void confirm() {
 
         if (this.index >= 0 && this.index < 8) {
-            this.controller.addCharacterNameBuilder(this.index);
+            this.ranking.addChar(this.index);
         } else if (this.index == GameOver.EXIT) { 
             this.controller.changeScene(GameStatus.MENU);
         } else if (this.index == GameOver.CONFIRM) {
-            this.controller.addRank();
+            this.controller.addRank(this.ranking.build().toString());
             this.controller.changeScene(GameStatus.MENU);
         }
     }

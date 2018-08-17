@@ -64,9 +64,10 @@ public interface Controller {
      */
     Map<String, Integer> getRank();
     /**
+     * @param string 
      * 
      */
-    void addRank();
+    void addRank(String string);
 
     /**
      * Close the window in the {@link View} and terminate the {@link GameEngine}
@@ -90,10 +91,4 @@ public interface Controller {
      */
     void emptyClipQueue(Queue<Clip> queue);
 
-    void addScoreBuilder();
-    
-    void addCharacterNameBuilder(Integer i);
-    
-    void resetNameBuilder();
-    
 }

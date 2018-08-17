@@ -30,8 +30,6 @@ import org.jdom2.JDOMException;
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
 import qbert.model.models.GUILogic;
-import qbert.model.models.RankingBuilder;
-import qbert.model.models.RankingBuilder.Builder;
 import qbert.model.components.graphics.Renderable;
 import qbert.view.View;
 import qbert.view.ViewImpl;
@@ -40,8 +38,6 @@ import qbert.view.ViewImpl;
  * The implementation of {@link Controller}.
  */
 public class ControllerImpl implements Controller {
-    private Builder ranking = new RankingBuilder.Builder();
-    private boolean empty;
     private final String urlFile = System.getProperty("user.home") + "/qbert/ranking.txt";
     private LevelConfigurationReader lcr;
     private final GameEngine gameEngine;
@@ -186,41 +182,23 @@ public class ControllerImpl implements Controller {
         return sortedMap;
     }
     /**
-     * We can write in file with that methodm read builder object and write that.
+     * We can write in file with that method read builder object and write that.
+     * @param s to write in file
      */
-    public void addRank() {
+    public void addRank(final String s) {
         Writer output;
         try {
             output = new BufferedWriter(new FileWriter(urlFile, true));
             if (!isEmptyFile()) {
-                output.append("\r\n" + ranking.build().toString());
+                output.append("\r\n" + s);
             } else {
-                output.append(ranking.build().toString());
+                output.append(s);
             }
             output.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-    }
-    /**
-     * Add score to builder object.
-     */
-    public void addScoreBuilder() {
-        ranking.addScore(this.getScore());
-    }
-    /**
-     * Add single letter to object.
-     * @param i is a index in alphabetic letter.
-     */
-    public void addCharacterNameBuilder(final Integer i) {
-        ranking.addChar(i);
-    }
-    /**
-     * Reset object.
-     */
-    public void resetNameBuilder() {
-        ranking.reset();
     }
 
     @Override
