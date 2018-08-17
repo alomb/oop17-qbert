@@ -101,12 +101,11 @@ public class TimerComponentImpl implements TimerComponent {
      */
     private void updateCollisions(final float elapsed) {
         spawner.updateGameCharacters(spawner.getGameCharacters().stream().peek(e -> {
-            //Check if entity is colliding with QBert
-            e.checkCollision(qbert, points, this);
+            e.checkCollision(qbert, points, this, new StandardCollision(pauseEntities));
         }).filter(e -> !e.isDead()).collect(Collectors.toList()));
 
         if (spawner.getCoily().isPresent()) {
-            spawner.getCoily().get().checkCollision(qbert, points, this);
+            spawner.getCoily().get().checkCollision(qbert, points, this, new StandardCollision(pauseEntities));
         }
     }
 
@@ -125,7 +124,6 @@ public class TimerComponentImpl implements TimerComponent {
                         spawner.death(e);
                     }).filter(e -> !e.isDead()).collect(Collectors.toList()));
                     if (spawner.getCoily().isPresent()) {
-                        spawner.death(spawner.getCoily().get());
                         spawner.killCoily();
                     }
                     spawner.respawnQbert();
@@ -150,10 +148,12 @@ public class TimerComponentImpl implements TimerComponent {
             } else {
                 boolean found = false;
                 for (final qbert.model.characters.Character e : spawner.getGameCharacters()) {
-                    if (qbert.getNextPosition().equals(e.getCurrentPosition()) && (e.getCurrentState() instanceof LandState || !e.isMoving())) {
-                        e.collide(qbert, this.points, this);
+                    if (e.checkCollision(qbert, points, this, 
+                            (qbert, entity) -> qbert.getNextPosition().equals(e.getCurrentPosition()) 
+                            && (e.getCurrentState() instanceof LandState 
+                            || !e.isMoving()))
+                    ) {
                         found = true;
-                        break;
                     }
                 }
                 if (!found) {
@@ -179,9 +179,12 @@ public class TimerComponentImpl implements TimerComponent {
             if (e.getCurrentState() instanceof LandState) {
 
                 //Checking if entity collides with Qbert falling out the map sides
-                if (((qbert.getCurrentPosition().getX() - 1 == e.getNextPosition().getX() ||  qbert.getCurrentPosition().getX() + 1 == e.getNextPosition().getX()) && qbert.getCurrentPosition().getY() + 1 == e.getNextPosition().getY()) && !qbert.isMoving()) {
-                    e.collide(qbert, this.points, this);
-                }
+                e.checkCollision(qbert, points, this, (qbert, entity) -> 
+                    ((qbert.getCurrentPosition().getX() - 1 == entity.getNextPosition().getX() 
+                    ||  qbert.getCurrentPosition().getX() + 1 == entity.getNextPosition().getX()) 
+                    && qbert.getCurrentPosition().getY() + 1 == entity.getNextPosition().getY()) 
+                    && !qbert.isMoving()
+                );
 
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(logicPos)) {
@@ -192,9 +195,7 @@ public class TimerComponentImpl implements TimerComponent {
                         this.points.score(PointComponentImpl.COILY_FALL_SCORE, qbert);
                     }
                 } else {
-                    if (qbert.getCurrentPosition().equals(e.getNextPosition()) && !qbert.isMoving()) {
-                        e.collide(qbert, this.points, this);
-                    } else {
+                    if (!e.checkCollision(qbert, points, this, (qbert, entity) -> qbert.getCurrentPosition().equals(entity.getNextPosition()) && !qbert.isMoving())) {
                         e.land(this.map, this.points);
                         e.setCurrentState(e.getStandingState());
                     }
@@ -215,17 +216,17 @@ public class TimerComponentImpl implements TimerComponent {
             if (e.getCurrentState() instanceof LandState) {
 
                 //Checking if entity collides with Qbert falling out the map sides
-                if (((qbert.getCurrentPosition().getX() - 1 == e.getNextPosition().getX() ||  qbert.getCurrentPosition().getX() + 1 == e.getNextPosition().getX()) && qbert.getCurrentPosition().getY() + 1 == e.getNextPosition().getY()) && !qbert.isMoving()) {
-                    e.collide(qbert, this.points, this);
-                }
+                e.checkCollision(qbert, points, this, (qbert, entity) -> 
+                    ((qbert.getCurrentPosition().getX() - 1 == entity.getNextPosition().getX()
+                    || qbert.getCurrentPosition().getX() + 1 == entity.getNextPosition().getX()) 
+                    && qbert.getCurrentPosition().getY() + 1 == e.getNextPosition().getY()) 
+                    && !qbert.isMoving());
 
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(logicPos)) {
                     e.setCurrentState(new FallState(e));
                 } else {
-                    if (qbert.getCurrentPosition().equals(e.getNextPosition()) && !qbert.isMoving()) {
-                        e.collide(qbert, this.points, this);
-                    } else {
+                    if (!e.checkCollision(qbert, points, this, (qbert, entity) -> qbert.getCurrentPosition().equals(entity.getNextPosition()) && !qbert.isMoving())) {
                         e.land(this.map, this.points);
                         e.setCurrentState(e.getStandingState());
                     }

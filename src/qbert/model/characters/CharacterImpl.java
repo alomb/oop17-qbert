@@ -2,6 +2,7 @@ package qbert.model.characters;
 
 import qbert.model.characters.states.CharacterState;
 import qbert.model.characters.states.FallState;
+import qbert.model.components.Collision;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
@@ -123,12 +124,12 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public void checkCollision(final Player qbert, final PointComponent points, final TimerComponent timer) {
-        if (qbert.getCurrentPosition().equals(this.getNextPosition()) && qbert.getNextPosition().equals(this.getCurrentPosition())
-                || (qbert.getCurrentPosition().equals(this.getCurrentPosition()) && qbert.getNextPosition().equals(this.getNextPosition())/* TODO: && pauseEntities*/)
-                || ((qbert.getCurrentPosition().getX() - 1 == this.getCurrentPosition().getX() ||  qbert.getCurrentPosition().getX() + 1 == this.getCurrentPosition().getX()) && qbert.getCurrentPosition().getY() + 1 == this.getCurrentPosition().getY() && !this.isMoving() && !qbert.isMoving())) {
+    public boolean checkCollision(final Player qbert, final PointComponent points, final TimerComponent timer, final Collision collision) {
+        if (collision.check(qbert, this)) {
             this.collide(qbert, points, timer);
+            return true;
         }
+        return false;
     }
 
     @Override
