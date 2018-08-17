@@ -196,7 +196,7 @@ public class ControllerImpl implements Controller {
     }
     
     public void resetNameBuilder() {
-        ranking.resetName();
+        ranking.reset();
     }
     
 
