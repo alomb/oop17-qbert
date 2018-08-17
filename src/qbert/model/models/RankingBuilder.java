@@ -30,7 +30,7 @@ public class RankingBuilder {
   public static class Builder {
       
       private Integer scoreB;
-      private String nameB;  
+      private String nameB ="";  
       private Date dateB = new Date();
       private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
    
