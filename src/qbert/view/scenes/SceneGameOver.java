@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.Optional;
 
-import javax.swing.JTextField;
-
 import qbert.controller.Controller;
 import qbert.controller.input.Confirm;
 import qbert.controller.input.MoveDown;
@@ -17,8 +15,11 @@ import qbert.model.models.TextPosition;
  */
 public class SceneGameOver extends SceneImpl {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4285473916004337637L;
     private final Controller controller;
-    private final JTextField text = new JTextField();
 
     /**
      * @param w
@@ -34,14 +35,25 @@ public class SceneGameOver extends SceneImpl {
 
         this.controller = controller;
 
-        this.addSection(TextPosition.TITLE,
-                new GUISectionImpl(SceneColor.YELLOW.getColor(), Optional.empty(), 50, 20, true, TextSize.LARGE));
-        this.addSection(TextPosition.CENTER,
-                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.of(SceneColor.RED.getColor()), 50, 50, true, TextSize.SMALL));
-        this.addSection(TextPosition.FOOT,
-                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.empty(), 50, 20, true, TextSize.SMALL));
+        final int leftXOffset = 40;
+        final int centerXOffset = 50;
+        final int rightXOffset = 60;
+        final int titleYOffset = 10;
+        final int titleXOffset = 50;
+        final int centerYOffset = 40;
+        final int footYOffset = 90;
 
-        this.add(text);
+        this.addSection(TextPosition.TITLE,
+                new GUISectionImpl(SceneColor.YELLOW.getColor(), Optional.empty(), titleXOffset, titleYOffset, true, TextSize.LARGE));
+        this.addSection(TextPosition.LEFTSIDE,
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.of(SceneColor.RED.getColor()), leftXOffset, centerYOffset, false, TextSize.SMALL));
+        this.addSection(TextPosition.CENTER,
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.of(SceneColor.RED.getColor()), centerXOffset, centerYOffset, false, TextSize.SMALL));
+        this.addSection(TextPosition.RIGHTSIDE,
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.of(SceneColor.RED.getColor()), rightXOffset, centerYOffset, false, TextSize.SMALL));
+        this.addSection(TextPosition.FOOT,
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.empty(), centerXOffset, footYOffset, true, TextSize.SMALL));
+
         this.setVisible(true);
 
     }

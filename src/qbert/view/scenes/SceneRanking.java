@@ -13,6 +13,10 @@ import qbert.model.models.TextPosition;
  */
 public class SceneRanking extends SceneImpl {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 6864029186611923616L;
     private final Controller controller;
 
     /**
@@ -29,12 +33,17 @@ public class SceneRanking extends SceneImpl {
 
         this.controller = controller;
 
+        final int xOffset = 50;
+        final int titleYOffset = 10;
+        final int centerYOffset = 30;
+        final int footYOffset = 80;
+
         this.addSection(TextPosition.TITLE, 
-                new GUISectionImpl(SceneColor.YELLOW.getColor(), Optional.empty(), 50, 20, true, TextSize.LARGE));
+                new GUISectionImpl(SceneColor.YELLOW.getColor(), Optional.empty(), xOffset, titleYOffset, true, TextSize.LARGE));
         this.addSection(TextPosition.CENTER, 
-                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.of(SceneColor.RED.getColor()), 50, 30, true, TextSize.SMALL));
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.of(SceneColor.RED.getColor()), xOffset, centerYOffset, true, TextSize.SMALL));
         this.addSection(TextPosition.FOOT, 
-                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.empty(), 50, 80, true, TextSize.SMALL));
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.empty(), xOffset, footYOffset, true, TextSize.SMALL));
     }
 
     @Override

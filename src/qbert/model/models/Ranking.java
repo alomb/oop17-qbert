@@ -19,7 +19,7 @@ public class Ranking implements Model {
     private final GUILogic guiBody;
     private final List<GUILogic> guiList;
     private final Controller controller;
-    private Map<String, Integer> rank;
+
     /**
      * Initialize GUI data and logic.
      * @param controller the game controller.
@@ -28,7 +28,7 @@ public class Ranking implements Model {
         final GUILogic guiTitle;
         final GUILogic guiFoot;
         guiTitle = new GUILogicImpl(TextPosition.TITLE);
-        guiTitle.addData("RANKING");
+        guiTitle.addData("TOP SCORES:");
         this.guiBody = new GUILogicImpl(TextPosition.CENTER);
 
         guiFoot = new GUILogicImpl(TextPosition.FOOT);
@@ -44,6 +44,7 @@ public class Ranking implements Model {
 
     @Override
     public final void initialize() {
+        final Map<String, Integer> rank;
         this.guiBody.removeAllData();
         this.guiBody.selectSet(IntStream.range(0, 1).mapToObj(i -> i).collect(Collectors.toSet()));
         rank = controller.getRank();

@@ -124,7 +124,7 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public boolean checkCollision(final Player qbert, final PointComponent points, final TimerComponent timer, final Collision collision) {
+    public final boolean checkCollision(final Player qbert, final PointComponent points, final TimerComponent timer, final Collision collision) {
         if (collision.check(qbert, this)) {
             this.collide(qbert, points, timer);
             return true;
@@ -133,7 +133,7 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public abstract void collide(final Player qbert, final PointComponent points, final TimerComponent timer);
+    public abstract void collide(Player qbert, PointComponent points, TimerComponent timer);
 
     @Override
     public final int getZIndex() {

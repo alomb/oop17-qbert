@@ -26,8 +26,6 @@ public final class SpawnerImpl implements Spawner {
     private final EnemyFactory ef;
     private final Map<CharactersList, EnemyInfoImpl> mapInfo;
 
-    private final Controller controller;
-
     /**
      * @param mapInfo the map of the characters
      * @param qBertSpeed the player speed
@@ -37,8 +35,7 @@ public final class SpawnerImpl implements Spawner {
     public SpawnerImpl(final Map<CharactersList, EnemyInfoImpl> mapInfo, final float qBertSpeed, final Controller controller, final int qbertLives) {
         this.gameCharacters = new ArrayList<>();
         this.mapInfo = mapInfo;
-        this.controller = controller;
-        this.ef = new EnemyFactoryImpl(this.controller);
+        this.ef = new EnemyFactoryImpl(controller);
         this.qbert = ef.createQbert(qBertSpeed, qbertLives);
     }
 
