@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -70,7 +72,7 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
                 this.mapInfo.put(CharactersList.getEnumConstantByValue(name), new EnemyInfoImpl(speed, quantity, spawningTime, standingTime));
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
         }
     }
 
