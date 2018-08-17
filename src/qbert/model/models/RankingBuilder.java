@@ -43,7 +43,8 @@ public class RankingBuilder {
         private Integer scoreB;
         private String nameB = "";
         private Date dateB = new Date();
-        private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//        private String[][] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private String[][] alphabet = {{"A", "B", "C", "D", "E", "F", "G"}, {"H", "I", "L", "M", "N", "O", "P"}, {"Q", "R", "S", "T", "U", "V", "Z"}};
 
         /**
          * Constructor.
@@ -63,13 +64,14 @@ public class RankingBuilder {
 
         /**
          * Add char to name of player.
-         * @param i is index in alphabetic
+         * @param row is index in alphabetic bidimensional array(row)
+         * @param column is index in alphabetic bidimensional array(column)
          * @return the entire object
          */
-        public Builder addChar(final Integer i) {
-            if (nameB.length() <= NCHARACTER) {
-                nameB += alphabet.charAt(i);
-            }
+        public Builder addChar(final Integer row, final Integer column) {
+//            if (nameB.length() <= NCHARACTER) {
+                nameB += alphabet[row][column];
+//            }
             return this;
         }
         /**

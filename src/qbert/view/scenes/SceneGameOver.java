@@ -7,6 +7,8 @@ import java.util.Optional;
 import qbert.controller.Controller;
 import qbert.controller.input.Confirm;
 import qbert.controller.input.MoveDown;
+import qbert.controller.input.MoveLeft;
+import qbert.controller.input.MoveRight;
 import qbert.controller.input.MoveUp;
 import qbert.model.models.TextPosition;
 
@@ -71,6 +73,10 @@ public class SceneGameOver extends SceneImpl {
             this.controller.notifyCommand(new MoveUp());
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_KP_DOWN) {
             this.controller.notifyCommand(new MoveDown());
+        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT || e.getKeyCode() == KeyEvent.VK_KP_RIGHT) {
+            this.controller.notifyCommand(new MoveRight());
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_KP_LEFT) {
+            this.controller.notifyCommand(new MoveLeft());
         } else if (e.getKeyCode() == KeyEvent.VK_ENTER && check) {
             this.controller.notifyCommand(new Confirm());
             check = false;

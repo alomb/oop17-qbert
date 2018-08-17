@@ -18,14 +18,16 @@ public class GameOver implements Model {
 
     private Builder ranking = new RankingBuilder.Builder();
     private int index;
+    private int indexC;
 //    private static final int MAXVALUE = 28;
 //    private static final int MINVALUE = 0;
 //    private static final int EXIT = 27;
 //    private static final int CONFIRM = 28;
     private static final int MAXVALUE = 9;
     private static final int MINVALUE = 0;
-    private static final int EXIT = 8;
-    private static final int CONFIRM = 9;
+    private static final int EXIT = 7;
+    private static final int CONFIRM = 8;
+    private static final int COLUMN = 3;
 
     private final GUILogic guiLeft;
     private final GUILogic guiCenter;
@@ -54,33 +56,24 @@ public class GameOver implements Model {
         this.guiLeft.addData("E");
         this.guiLeft.addData("F");
         this.guiLeft.addData("G");
-        this.guiLeft.addData("H");
         this.guiLeft.addData("EXIT");
         this.guiLeft.addData("CONFIRM");
-        //this.guiLeft.addData("I");
-        //this.guiLeft.addData("J");
         this.guiCenter = new GUILogicImpl(TextPosition.CENTER);
-        this.guiCenter.addData("K");
+        this.guiCenter.addData("H");
+        this.guiCenter.addData("I");
         this.guiCenter.addData("L");
         this.guiCenter.addData("M");
         this.guiCenter.addData("N");
         this.guiCenter.addData("O");
         this.guiCenter.addData("P");
-        this.guiCenter.addData("Q");
-        this.guiCenter.addData("R");
-        this.guiCenter.addData("S");
-        this.guiCenter.addData("T");
         this.guiRight = new GUILogicImpl(TextPosition.RIGHTSIDE);
+        this.guiRight.addData("Q");
+        this.guiRight.addData("R");
+        this.guiRight.addData("S");
+        this.guiRight.addData("T");
         this.guiRight.addData("U");
         this.guiRight.addData("V");
-        this.guiRight.addData("W");
-        this.guiRight.addData("X");
-        this.guiRight.addData("Y");
         this.guiRight.addData("Z");
-        //this.guiRight.addData("_");
-        //this.guiRight.addData("@");
-        //this.guiRight.addData("EXIT");
-        //this.guiRight.addData("CONFIRM");
 
         this.footBaseString = "Your name is :";
 
@@ -101,6 +94,7 @@ public class GameOver implements Model {
     public final void initialize() {
         this.ranking.reset();
         this.index = 0;
+        this.indexC = 0;
         this.guiLeft.deselectAll();
         this.guiLeft.selectSet(IntStream.range(0, 1).mapToObj(i -> i).collect(Collectors.toSet()));
         this.ranking.addScore(this.controller.getScore());
@@ -117,10 +111,16 @@ public class GameOver implements Model {
 
     @Override
     public void moveLeft() {
+        if (this.indexC > 0) {
+            this.indexC--;
+        }
     }
 
     @Override
     public void moveRight() {
+        if (this.indexC < this.COLUMN - 1) {
+            this.indexC++;
+        }
     }
 
     @Override
@@ -135,8 +135,8 @@ public class GameOver implements Model {
     @Override
     public final void confirm() {
 
-        if (this.index >= 0 && this.index < 8) {
-            this.ranking.addChar(this.index);
+        if (this.index >= 0 && this.index < 7 && this.indexC <= 3) {
+            this.ranking.addChar(this.indexC, this.index);
             this.guiFoot.removeAllData();
             this.guiFoot.addData("Your name is : " + this.ranking.getName());
         } else if (this.index == GameOver.EXIT) { 
