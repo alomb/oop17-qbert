@@ -8,13 +8,14 @@ import java.awt.event.WindowEvent;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import qbert.LoggerManager;
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
 import qbert.model.utilities.Dimensions;
@@ -64,7 +65,7 @@ public class ViewImpl implements View {
         this.addScene(new SceneRanking(w, h, controller), GameStatus.GAMEOVER);
 
         if (!this.scenes.keySet().equals(GameStatus.getAll())) {
-            LoggerManager.getInstance().info(this.getClass().getName(), "Not all the game status have been initialized. Program aborted");
+            Logger.getGlobal().log(Level.SEVERE, "Not all the game status have been initialized. Program aborted");
             controller.abort();
         }
 

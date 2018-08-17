@@ -42,6 +42,71 @@ public class TestCharacterGraphicComponent {
     }
 
     /**
+     * A test method for {@link DownwardCharacterGC}.
+     */
+    @Test
+    public void testDownwardCGC() {
+        final CharacterGC cgc = new DownwardCharacterGC(Sprites.getInstance().getGreenBallSprites(), new Position2D(spawningPointLeft));
+        assertEquals(cgc.getPosition(), this.spawningPointLeft);
+        final Position2D landPos = new Position2D(cgc.getSpawnPosition().getX(), (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - cgc.getSpriteHeight());
+        cgc.setSpawnAnimation();
+        assertTrue(cgc.getSprite().equals(Sprites.getInstance().getGreenBallSprites().getMoveSprite()));
+        assertTrue(cgc.getCurrentAnimation() instanceof StraightMovementAnimation);
+        this.finishAnimation(cgc);
+        assertEquals(cgc.getPosition(), landPos);
+
+        for (int i = 0; i < TestCharacterGraphicComponent.TEST; i++) {
+            if (this.rnd.nextFloat() >= 0.5) {
+                this.moveDownLeft(cgc);
+            } else {
+                this.moveDownRight(cgc);
+            }
+        }
+
+        cgc.setStandingAnimation();
+        cgc.setFallAnimation();
+        this.finishAnimation(cgc);
+        assertTrue(cgc.getPosition().equals(new Position2D(cgc.getPosition().getX(), Dimensions.getWindowHeight() + cgc.getSpriteHeight())));
+    }
+
+    /**
+     * A test method for {@link CoilyGC} and other {@link DownUpwardCharacterGC}.
+     */
+    @Test
+    public void testDownwardUpwardGC() {
+        final Sprites s = Sprites.getInstance();
+        final DownUpwardCharacterGC cgc = new CoilyGCImpl(s.getPurpleBallSprites(), s.getCoilyFrontSprites(), s.getCoilyBackSprites(), new Position2D(this.spawningPointRight));
+        final Position2D landPos = new Position2D(cgc.getSpawnPosition().getX(), (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - cgc.getSpriteHeight());
+        assertEquals(cgc.getPosition(), this.spawningPointRight);
+        cgc.setSpawnAnimation();
+        assertTrue(cgc.getCurrentAnimation() instanceof StraightMovementAnimation);
+        this.finishAnimation(cgc);
+        assertEquals(cgc.getPosition(), landPos);
+
+        for (int i = 0; i < TestCharacterGraphicComponent.TEST; i++) {
+            switch (this.rnd.nextInt(4)) {
+                case 1:
+                    this.moveDownLeft(cgc);
+                    break;
+                case 2:
+                    this.moveDownRight(cgc);
+                    break;
+                case 3:
+                    this.moveUpLeft(cgc);
+                    break;
+                default:
+                    this.moveUpRight(cgc);
+                    break;
+            }
+        }
+
+        cgc.setFallAnimation();
+        assertTrue(cgc.getCurrentAnimation() instanceof StraightMovementAnimation);
+        this.finishAnimation(cgc);
+        assertEquals(cgc.getPosition(), new Position2D(cgc.getPosition().getX(), Dimensions.getWindowHeight() + cgc.getSpriteHeight()));
+    }
+
+    /**
      * Method that provides an infinite loop to conclude the {@link CharacterGC}'s current animation.
      */
     private void finishAnimation(final CharacterGC cgc) {
@@ -92,65 +157,5 @@ public class TestCharacterGraphicComponent {
         final Position2D oldPos = new Position2D(cgc.getPosition());
         this.finishAnimation(cgc);
         assertEquals(cgc.getPosition(), new Position2D(oldPos.getX() + Dimensions.getCubeWidth() / 2, oldPos.getY() - Dimensions.getCubeHeight()));
-    }
-
-    /**
-     * A test method for {@link DownwardCharacterGC}.
-     */
-    @Test
-    public void testDownwardCGC() {
-        final CharacterGC cgc = new DownwardCharacterGC(Sprites.getInstance().getGreenBallSprites(), new Position2D(spawningPointLeft));
-        assertEquals(cgc.getPosition(), this.spawningPointLeft);
-        final Position2D landPos = new Position2D(cgc.getSpawnPosition().getX(), (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - cgc.getSpriteHeight());
-        cgc.setSpawnAnimation();
-        assertTrue(cgc.getSprite().equals(Sprites.getInstance().getGreenBallSprites().getMoveSprite()));
-        assertTrue(cgc.getCurrentAnimation() instanceof StraightMovementAnimation);
-        this.finishAnimation(cgc);
-        assertEquals(cgc.getPosition(), landPos);
-
-        for (int i = 0; i < TestCharacterGraphicComponent.TEST; i++) {
-            if (this.rnd.nextFloat() >= 0.5) {
-                this.moveDownLeft(cgc);
-            } else {
-                this.moveDownRight(cgc);
-            }
-        }
-    }
-
-    /**
-     * A test method for {@link CoilyGC}.
-     */
-    @Test
-    public void testDownwardUpwardGC() {
-        final Sprites s = Sprites.getInstance();
-        final DownUpwardCharacterGC cgc = new CoilyGCImpl(s.getPurpleBallSprites(), s.getCoilyFrontSprites(), s.getCoilyBackSprites(), new Position2D(this.spawningPointRight));
-        final Position2D landPos = new Position2D(cgc.getSpawnPosition().getX(), (Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2 + Dimensions.getCubeHeight() - cgc.getSpriteHeight());
-        assertEquals(cgc.getPosition(), this.spawningPointRight);
-        cgc.setSpawnAnimation();
-        assertTrue(cgc.getCurrentAnimation() instanceof StraightMovementAnimation);
-        this.finishAnimation(cgc);
-        assertEquals(cgc.getPosition(), landPos);
-
-        for (int i = 0; i < TestCharacterGraphicComponent.TEST; i++) {
-            switch (this.rnd.nextInt(4)) {
-                case 1:
-                    this.moveDownLeft(cgc);
-                    break;
-                case 2:
-                    this.moveDownRight(cgc);
-                    break;
-                case 3:
-                    this.moveUpLeft(cgc);
-                    break;
-                default:
-                    this.moveUpRight(cgc);
-                    break;
-            }
-        }
-
-        cgc.setFallAnimation();
-        assertTrue(cgc.getCurrentAnimation() instanceof StraightMovementAnimation);
-        this.finishAnimation(cgc);
-        assertEquals(cgc.getPosition(), new Position2D(cgc.getPosition().getX(), Dimensions.getWindowHeight() + cgc.getSpriteHeight()));
     }
 }

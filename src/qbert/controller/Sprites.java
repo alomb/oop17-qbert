@@ -2,10 +2,13 @@ package qbert.controller;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -108,8 +111,8 @@ public final class Sprites {
             this.uggStanding = loadImg(imgPath + "UggStand.png");
             this.uggMoving = loadImg(imgPath + "UggMove.png");
 
-      } catch (Exception e) {
-          System.out.println("Error load " + e.toString());
+      } catch (IOException e) {
+          Logger.getGlobal().log(Level.SEVERE, "Error during images loading", e);
       }
 
       Dimensions.setBackgroundHeight(this.blueBackground.getHeight());
@@ -138,14 +141,8 @@ public final class Sprites {
         return result;
     }
 
-    private BufferedImage loadImg(final String pathOut) {
-        BufferedImage res = null;
-        try {
-            res = ImageIO.read(new File(pathOut));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return res;
+    private BufferedImage loadImg(final String pathOut) throws IOException {
+        return ImageIO.read(new File(pathOut));
     }
 
     /**

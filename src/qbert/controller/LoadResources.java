@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
@@ -14,7 +16,6 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
-import qbert.LoggerManager;
 import qbert.model.utilities.Dimensions;
 
 /**
@@ -136,7 +137,7 @@ public class LoadResources {
             streamPng.flush();
             streamPng.close();
         } catch (final Exception e) {
-            LoggerManager.getInstance().info(e.toString(), "Error on svg to png conversion");
+            Logger.getGlobal().log(Level.SEVERE, "Error on svg to png conversion\". Program aborted");
             this.loadCompleted = false;
         }
     }

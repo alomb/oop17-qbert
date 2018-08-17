@@ -2,8 +2,9 @@ package qbert.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import qbert.LoggerManager;
 import qbert.model.models.Game;
 import qbert.model.models.GameOver;
 import qbert.model.models.Introduction;
@@ -36,7 +37,7 @@ public class GameStatusManagerImpl implements GameStatusManager {
 
         if (!this.models.keySet().equals(GameStatus.getAll())) {
             controller.abort();
-            LoggerManager.getInstance().info(this.getClass().getName(), "Not all the game status have been initialized. Program aborted");
+            Logger.getGlobal().log(Level.SEVERE, "Not all the game status have been initialized. Program aborted");
         }
     }
 
