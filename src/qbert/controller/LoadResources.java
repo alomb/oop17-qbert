@@ -7,8 +7,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,7 +29,6 @@ import qbert.model.utilities.Dimensions;
 public class LoadResources {
 
     private boolean loadCompleted;
-    private String urlFile = "res/imageconfig.txt"; 
 
     /**
      * Initialize variables.
@@ -42,6 +42,7 @@ public class LoadResources {
      */
     public final boolean load() {
         final String imgPath = System.getProperty("user.home") + "/qbert/img/";
+        final String imageConfigFileName = "/imageconfig.txt";
 
         try {
             final File directory = new File(imgPath);
@@ -71,10 +72,12 @@ public class LoadResources {
         Dimensions.setWindowHeight(Math.round(new Float(d.height)));
         Dimensions.setWindowWidth(Math.round(new Float(d.width)));
 
-        try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
-            String line;
-            while ((line = br.readLine()) != null) {
+        final InputStream imageConfigIn = LoadResources.class.getResourceAsStream(imageConfigFileName);
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(imageConfigIn))) {
+            String line = br.readLine();
+            while (line != null) {
                 convertSvgToPng(line.split("\\+")[0], imgPath + line.split("\\+")[1]);
+                line = br.readLine();
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

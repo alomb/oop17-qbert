@@ -31,7 +31,7 @@ public interface Scene extends KeyListener {
      * @return the {@link Optional} of {@link GUISectionImpl} mapped to the inserted {@link TextPosition}. If there isn't the key or there isn't 
      * the value return {@link Optional}.empty()
      */
-    Optional<GUISectionImpl> getSection(TextPosition position);
+    Optional<GUISection> getSection(TextPosition position);
 
     /**
      * @param position a new {@link TextPosition}

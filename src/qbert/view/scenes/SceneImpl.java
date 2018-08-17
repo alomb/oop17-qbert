@@ -29,7 +29,7 @@ public abstract class SceneImpl extends JPanel implements Scene {
      * 
      */
     private static final long serialVersionUID = 1521223266538012283L;
-    private final Map<TextPosition, Optional<GUISectionImpl>> sections;
+    private final Map<TextPosition, Optional<GUISection>> sections;
     private final Controller controller;
 
     /**
@@ -97,7 +97,7 @@ public abstract class SceneImpl extends JPanel implements Scene {
     }
 
     @Override
-    public final Optional<GUISectionImpl> getSection(final TextPosition position) {
+    public final Optional<GUISection> getSection(final TextPosition position) {
         if (this.sections.containsKey(position) && this.sections.get(position).isPresent()) {
             return this.sections.get(position);
         }
