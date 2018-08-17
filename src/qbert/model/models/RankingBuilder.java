@@ -14,9 +14,9 @@ public class RankingBuilder {
   public RankingBuilder(){}
   
   public RankingBuilder(Builder builder) {
-    score = builder._score;
-    name = builder._name;
-    date = builder._date;
+    score = builder.scoreB;
+    name = builder.nameB;
+    date = builder.dateB;
   }
  
   public String toString() {
@@ -29,26 +29,27 @@ public class RankingBuilder {
   
   public static class Builder {
       
-      private Integer _score;
-      private String _name;  
-      private Date _date = new Date();
+      private Integer scoreB;
+      private String nameB;  
+      private Date dateB = new Date();
       private String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
    
       public Builder() {
       }
       
       public Builder addScore(Integer i) {
-          _score = i;
+          scoreB = i;
           return this;
       }
       
       public Builder addChar(Integer i) {
-          _name += alphabet.charAt(i);
+          nameB += alphabet.charAt(i);
           return this;
       }
       
-      public Builder resetName() {
-          _name=" ";
+      public Builder reset() {
+          nameB=" ";
+          dateB = new Date();
           return this;
       }
    
