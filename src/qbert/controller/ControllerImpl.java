@@ -44,7 +44,7 @@ import qbert.view.ViewImpl;
  */
 public class ControllerImpl implements Controller {
     private Builder ranking = new RankingBuilder.Builder();
-    private boolean empty = true;
+    private boolean empty;
     private final String urlFile = System.getProperty("user.home") + "/qbert/ranking.txt";
     private LevelConfigurationReader lcr;
     private final GameEngine gameEngine;
@@ -68,6 +68,26 @@ public class ControllerImpl implements Controller {
 
         if (this.abort) {
             this.terminate();
+        }
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
+            while (br.readLine() == null) {
+               empty = true;
+            }
+            empty = false;
+        } catch (FileNotFoundException e) {
+            File file = new File(urlFile);
+            //Create the file
+            try {
+                file.createNewFile();
+                empty = true;
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
@@ -152,7 +172,7 @@ public class ControllerImpl implements Controller {
 
         //Sorting the list with a comparator
         Collections.sort(list, new Comparator<Entry<String, Integer>>() {
-                public int compare( Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2 ) {
+                public int compare(Map.Entry<String, Integer> o1, final Map.Entry<String, Integer> o2) {
                         return (o2.getValue()).compareTo(o1.getValue());
                 }
         });

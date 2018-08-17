@@ -120,7 +120,7 @@ public class GameOver implements Model {
     public final void confirm() {
         if (GameOver.index >= 0 && GameOver.index < 8) {
             this.controller.addCharacterNameBuilder(GameOver.index);
-        }else if (GameOver.index == GameOver.EXIT) { 
+        }else if (GameOver.index == GameOver.EXIT) {
             this.controller.changeScene(GameStatus.MENU);
         }else if (GameOver.index == GameOver.CONFIRM) {
             this.controller.addRank();
