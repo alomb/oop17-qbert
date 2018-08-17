@@ -5,7 +5,7 @@ import qbert.model.utilities.Position2D;
 /**
  * Animation that doesn't move the sprite and is finished.
  */
-public class StandingAnimation extends MovementAnimation {
+public class StandingAnimation extends MovementAnimationImpl {
 
     /**
      * @param startPos the first {@link Position2D}
@@ -15,7 +15,7 @@ public class StandingAnimation extends MovementAnimation {
     }
 
     @Override
-    protected void calculateNext() {
-
+    public final Position2D next() {
+        return this.getCurrentPosition();
     }
 }

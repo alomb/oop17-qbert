@@ -4,7 +4,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.Animation;
+import qbert.view.characters.MovementAnimation;
 
 /**
  * A generic implementation of {@link CharacterGC}.
@@ -16,7 +16,7 @@ public abstract class CharacterGCImpl implements CharacterGC {
     private Position2D spritePos;
     private Position2D spawnPos;
 
-    private Animation animation;
+    private MovementAnimation animation;
 
     /**
      * @param sprite the {@link BufferedImage} containing the {@link Character}'s current sprite
@@ -71,12 +71,12 @@ public abstract class CharacterGCImpl implements CharacterGC {
     }
 
     @Override
-    public final Animation getCurrentAnimation() {
+    public final MovementAnimation getCurrentAnimation() {
         return this.animation;
     }
 
     @Override
-    public final void setCurrentAnimation(final Animation animation) {
+    public final void setCurrentAnimation(final MovementAnimation animation) {
         this.animation = animation;
     }
 

@@ -5,7 +5,7 @@ import qbert.model.utilities.Position2D;
 /**
  * A very rapid animation to move an object from a {@link Position2D} to another instantly.
  */
-public class DisplaceAnimation extends MovementAnimation {
+public class DisplaceAnimation extends MovementAnimationImpl {
 
     /**
      * @param startPos the first {@link Position2D}
@@ -16,7 +16,7 @@ public class DisplaceAnimation extends MovementAnimation {
     }
 
     @Override
-    protected final void calculateNext() {
-        this.setCurrentPosition(this.getTargetPosition());
+    public final Position2D next() {
+        return this.getTargetPosition();
     }
 }

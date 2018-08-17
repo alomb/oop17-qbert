@@ -5,7 +5,7 @@ import qbert.model.utilities.Position2D;
 /**
  * An animation that provides a straight movement to a target point. 
  */
-public class StraightMovementAnimation extends MovementAnimation {
+public class StraightMovementAnimation extends MovementAnimationImpl {
 
     private final double angle;
 
@@ -42,21 +42,24 @@ public class StraightMovementAnimation extends MovementAnimation {
     }
 
     @Override
-    protected final void calculateNext() {
-        this.getCurrentPosition().vectorSum(
-                new Position2D((int) (this.getAnimationSpeed() * Math.cos(angle)), 
-                        (int) (this.getAnimationSpeed() * Math.sin(angle))));
+    public final Position2D next() {
 
-        if (this.upward && this.getCurrentPosition().getY() < this.getTargetPosition().getY()) {
-            this.setCurrentPosition(new Position2D(this.getTargetPosition()));
-        } else if (!this.upward && this.getCurrentPosition().getY() > this.getTargetPosition().getY()) {
-            this.setCurrentPosition(new Position2D(this.getTargetPosition()));
+        final Position2D nextPos = new Position2D(this.getCurrentPosition().getX() + ((int) (this.getAnimationSpeed() * Math.cos(angle))), 
+                this.getCurrentPosition().getY() + ((int) (this.getAnimationSpeed() * Math.sin(angle))));
+
+        if (this.upward && nextPos.getY() < this.getTargetPosition().getY()) {
+            return new Position2D(this.getTargetPosition());
+        } else if (!this.upward && nextPos.getY() > this.getTargetPosition().getY()) {
+            return new Position2D(this.getTargetPosition());
         }
 
-        if (this.rightward && this.getCurrentPosition().getX() > this.getTargetPosition().getX()) {
-            this.setCurrentPosition(new Position2D(this.getTargetPosition()));
-        } else if (!this.rightward && this.getCurrentPosition().getX() < this.getTargetPosition().getX()) {
-            this.setCurrentPosition(new Position2D(this.getTargetPosition()));
+        if (this.rightward && nextPos.getX() > this.getTargetPosition().getX()) {
+            return new Position2D(this.getTargetPosition());
+        } else if (!this.rightward && nextPos.getX() < this.getTargetPosition().getX()) {
+            return new Position2D(this.getTargetPosition());
         }
+
+        return nextPos;
+
     }
 }

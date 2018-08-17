@@ -110,7 +110,7 @@ public class TestCharacterGraphicComponent {
      * Method that provides an infinite loop to conclude the {@link CharacterGC}'s current animation.
      */
     private void finishAnimation(final CharacterGC cgc) {
-        while (cgc.getCurrentAnimation() != null && !cgc.getCurrentAnimation().hasFinished()) {
+        while (cgc.getCurrentAnimation() != null && !cgc.getCurrentAnimation().hasNext()) {
             cgc.updateGraphics(TestCharacterGraphicComponent.SPEED);
         }
     }

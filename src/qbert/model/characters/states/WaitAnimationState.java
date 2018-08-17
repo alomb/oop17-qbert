@@ -16,7 +16,7 @@ public abstract class WaitAnimationState extends CharacterStateImpl {
 
     @Override
     public final void update(final float dt) {
-        if (!this.getCharacter().getGraphicComponent().getCurrentAnimation().hasFinished()) {
+        if (!this.getCharacter().getGraphicComponent().getCurrentAnimation().hasNext()) {
             this.getCharacter().getGraphicComponent().updateGraphics(dt * this.getCharacter().getSpeed());
         } else {
             this.conclude();

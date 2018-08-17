@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{report}
+\documentclass[a4paper,12pt, hidelinks]{report}
 
 \usepackage{alltt, fancyvrb, url}
 \usepackage{authblk}
@@ -106,7 +106,7 @@ Nel caso specifico  è stato scelto di associare a ciascun personaggio uno stato
 \label{img:CharacterStates}
 \end{figure}
 
-E' importante sottolineare che gli stati vengono inizializzati passando il \emph{Character} associato, permettendo allo stato di applicarvi le modifiche necessarie, quindi i costruttori degli stati sono modellati per accettare anche le classi più specifiche della gerarchia dei personaggi, limitando e proteggendo gli stati che devono essere usati solo per certi personaggi. Ad esempio, \emph{QbertOnDiskState} accetta solo \emph{Player}, mentre \emph{FallState} può accettare un \emph{Character} oppure un \emph{DownUpwardCharacter} personalizzando le azioni da compiere di caso in caso.
+E' importante sottolineare che gli stati vengono inizializzati passando il \emph{Character} associato, permettendo allo stato di applicarvi le modifiche necessarie, quindi i costruttori degli stati sono modellati per accettare anche le classi più specifiche della gerarchia dei personaggi, limitando e proteggendo gli stati che devono essere usati solo per certi personaggi. Ad esempio, \emph{QbertOnDiskState} accetta solo \emph{Player}, mentre \emph{FallState} può accettare un \emph{Character} oppure un \emph{DownUpwardCharacter} operando in modo differente.
 
 
 \begin{figure}[H]
@@ -120,7 +120,7 @@ E' importante sottolineare che gli stati vengono inizializzati passando il \emph
 \item\subsubsection{Alessandro Lombardi - Animazione dei personaggi}
 \end{flushright}
 
-Durante la fase di analisi è stato scelto di dividere quella che era la posizione "logica" del personaggio, ovvero la posizione nella griglia immaginaria disegnata dalle facce dei cubi del terreno di gioco, da quella "fisica", ovvero la coordinata del pixel nella finestra di gioco, dove si posiziona l'angolo in alto a sinistra dell'immagine di forma rettangolare del personaggio. Questo ha comportato anche una divisione degli aspetti grafici da quelli logici e la scelta di considerare i movimenti come il salto, la caduta etc.. vere e proprie animazioni. La gestione dei dati necessari alla renderizzazione grafica dei personaggi, quali la posizione, lo sprite e la dimensione di questo, sono gestiti dalle classi che implementano \emph{CharacterGC}. La gerarchia dei Character Graphic Component si basa sul riutilizzo del codice in comune e sulle animazioni supportate, \emph{CharacterGC} fornisce i metodi per la gestione delle animazioni e presenta quelle base. Le interfacce e le classi per la gestione della grafica di Coily e Qbert supportano animazioni per muoversi anche verso l'alto oltre che gestire gli sprite per il fronte e il dietro dei personaggi. Da notare come Coily sfrutti il metodo setFrontSprites(OneSideCharacterSprites frontSprites) per trasformarsi dalla palla viola che è inizialmente alla sua forma finale.
+Durante la fase di analisi è stato scelto di dividere quella che era la posizione "logica" del personaggio, ovvero la posizione nella griglia immaginaria disegnata dalle facce dei cubi del terreno di gioco, da quella "fisica", ovvero la coordinata del pixel nella finestra di gioco, dove si posiziona l'angolo in alto a sinistra dell'immagine rettangolare del personaggio. Questo ha comportato anche una divisione degli aspetti grafici da quelli logici e la scelta di considerare i movimenti come il salto, la caduta etc.. vere e proprie animazioni. La gestione dei dati necessari alla renderizzazione grafica dei personaggi, quali la posizione, lo sprite e la dimensione di questo, sono gestiti dalle classi che implementano \emph{CharacterGC}. La gerarchia dei Character Graphic Component si basa sul riutilizzo del codice in comune e sulle animazioni supportate, \emph{CharacterGC} fornisce i metodi per la gestione delle animazioni e presenta quelle base. Le interfacce e le classi per la gestione della grafica di Coily e Qbert supportano animazioni per muoversi anche verso l'alto oltre che gestire gli sprite per il fronte e il dietro dei personaggi. Da notare come Coily sfrutti il metodo setFrontSprites(OneSideCharacterSprites frontSprites) per trasformarsi dalla palla viola che è inizialmente alla sua forma finale.
 
 \begin{figure}[H]
 \centering{}
@@ -129,7 +129,7 @@ Durante la fase di analisi è stato scelto di dividere quella che era la posizio
 \label{img:GerarchiaCGC}
 \end{figure}
 
-Le animazioni dei personaggi sono state sviluppate sfruttando il pattern \textbf{Iterator} essendo queste delle sequenze di posizioni bidimensionali nella finestra di gioco e/o di immagini. La interfaccia \emph{Animation} nasconde le modalità di scorrimento e le condizioni di termine dell’animazione, richiedendo però dettagli sulla velocità di esecuzione. L’implementazione \emph{MovementAnimation} di \emph{Animation} è particolarmente specifica per quelle animazioni basate sul movimento della posizione dell'immagine. \emph{MovementAnimation} è una classe astratta che contiene l’implementazione di molti metodi utili per le animazioni di movimento ma che lascia alle classi concrete l’effettiva decisione del calcolo delle posizioni, tramite il metodo calculateNext() invocato nel \textbf{Template Method} updateAnimation(float animationSpeed). \emph{ComposedAnimation} permette di costruire animazioni più complesse formate da singole semplici animazioni.
+Le animazioni dei personaggi sono state sviluppate sfruttando il pattern \textbf{Iterator} essendo queste delle sequenze di posizioni bidimensionali nella finestra di gioco. La interfaccia \emph{MovementAnimation} nasconde le modalità con le quali vengono fornite le posizioni e le condizioni di termine dell’animazione, presenta il metodo updateAnimation(float animationSpeed)  che permette dall'esterno di condizionare solo la velocità con la quale eseguire la animazione. L’implementazione \emph{MovementAnimationImpl} di \emph{MovementAnimation} è una classe astratta che contiene l’implementazione dei metodi utili per gestire le posizioni ma che lascia alle classi concrete la politica di scorrimento, quindi il calcolo matematico delle posizioni, nel metodo next() invocato in updateAnimation(float animationSpeed) che fa quindi da \textbf{Template Method}. \emph{ComposedAnimation} permette di costruire animazioni più complesse, gestendo una coda di singole semplici animazioni e controllando l'esecuzione di queste.
 
 \begin{figure}[H]
 \centering{}
@@ -150,7 +150,7 @@ Nello specifico la divisione dei compiti è stata la seguente:
 \begin{itemize}
 	\item \textbf{Giulianini Andrea}:
 
-	\item \textbf{Lombardi Alessandro}: Realizzazione dei personaggi, sia negli aspetti grafici, animazioni e sprites, che in quelli logici, comportamento e strategia di movimento. Gestione dialogo model-view per la gestione della GUI, incapsulamento delle informazioni lato model, come testo e selezione, stilizzazione e formattazione lato view a seconda della parte di pagina occupata. Disegno degli sprites in formato vettoriale.
+	\item \textbf{Lombardi Alessandro}: Realizzazione dei personaggi, sia negli aspetti grafici, animazioni e sprites, che in quelli logici, comportamento e strategia di movimento. Gestione dialogo model-view per la gestione della GUI, incapsulamento delle informazioni lato model, come testo e selezione, stilizzazione e formattazione lato view a seconda della parte di pagina occupata. Disegno delle risorse grafiche in formato vettoriale.
 
 	\item \textbf{Meluzzi Marco}:
 
@@ -162,7 +162,7 @@ Nello specifico la divisione dei compiti è stata la seguente:
 
 	\item \textbf{Giulianini Andrea}:
 
-	\item \textbf{Lombardi Alessandro}: Nello sviluppo delle animazioni e poi successivamente della GUI ho approfondito alcuni aspetti non trattati a lezione circa il funzionamento con il quale swing e awt effettuano il "painting" e la possibile personalizzazione di questo per la nostra applicazione. Sempre nella gestione della GUI ho fatto uso della classe Optional per controllare la presenza o meno nelle varie scene delle implementazioni lato view delle parti di una finestra (\emph{Optional<GUISection>}) e del font. Per il posizionamento centrale delle stringhe basato sulla grandezza della finestra e del font mi sono rivolto a chi lo aveva fatto prima di me (\href{https://stackoverflow.com/questions/27706197/how-can-i-center-graphics-drawstring-in-java}{link}). Ho sfruttato l'API fornita da Java per la gestione di un minimale sistema di logging su file XML o su console, per scopi di debug ma anche segnalazione di errori  fatali per la applicazione.
+	\item \textbf{Lombardi Alessandro}: Nello sviluppo delle animazioni e poi successivamente della GUI ho approfondito alcuni aspetti non trattati a lezione circa il funzionamento con il quale swing e awt effettuano il "painting" e la possibile personalizzazione di questo per la nostra applicazione. Sempre nella gestione della GUI ho fatto uso della classe Optional per controllare la presenza o meno nelle varie scene delle implementazioni lato view delle parti di una finestra (\emph{Optional$\langle GUISection \rangle$}) e del font. Per il posizionamento centrale delle stringhe basato sulla grandezza della finestra e del font mi sono rivolto a chi lo aveva fatto prima di me (\href{https://stackoverflow.com/questions/27706197/how-can-i-center-graphics-drawstring-in-java}{link}). Ho sfruttato l'API fornita da Java per la gestione di un minimale sistema di logging su file XML o su console, per scopi di debug ma anche segnalazione di errori  fatali per la applicazione.
 
 	\item \textbf{Meluzzi Marco}:
 

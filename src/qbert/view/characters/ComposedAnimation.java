@@ -8,9 +8,9 @@ import qbert.model.utilities.Position2D;
 /**
  * An animation made by multiple basic animations stored in a queue.
  */
-public class ComposedAnimation extends MovementAnimation {
+public class ComposedAnimation extends MovementAnimationImpl {
 
-    private final Queue<Animation> animations;
+    private final Queue<MovementAnimation> animations;
     private static final int QUEUESIZE = 3;
 
     private static final int ANGLE0 = 0;
@@ -29,22 +29,23 @@ public class ComposedAnimation extends MovementAnimation {
     }
 
     @Override
-    protected final void calculateNext() {
+    public final Position2D next() {
         if (!this.animations.isEmpty()) {
-            if (this.animations.peek().hasFinished()) {
+            if (this.animations.peek().hasNext()) {
                 this.animations.remove();
             }
             /*In all cases updates the animation if it's not finished, or the next one, if it isn't the last.*/
             if (!this.animations.isEmpty()) {
-                this.setCurrentPosition(this.animations.peek().updateAnimation(this.getAnimationSpeed()));
+                return this.animations.peek().updateAnimation(this.getAnimationSpeed());
             }
         }
+        return this.getTargetPosition();
     }
 
     /**
      * @return the queue of animations to perform
      */
-    protected final Queue<Animation> getAnimations() {
+    protected final Queue<MovementAnimation> getAnimations() {
         return animations;
     }
 

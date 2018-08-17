@@ -16,7 +16,7 @@ import qbert.model.models.TextPosition;
  * An implementation of {@link Scene} for the game menu scene.
  */
 public class SceneGameOver extends SceneImpl {
-    
+
     private boolean check = true;
 
     /**

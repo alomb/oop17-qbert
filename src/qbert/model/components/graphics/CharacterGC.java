@@ -1,7 +1,7 @@
 package qbert.model.components.graphics;
 
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.Animation;
+import qbert.view.characters.MovementAnimation;
 
 /**
  * GC stands for graphic component. This interface extends {@link GraphicComponent} to 
@@ -20,14 +20,14 @@ public interface CharacterGC extends GraphicComponent {
     void setSpawnPosition(Position2D newPos);
 
     /**
-     * @return the current {@link Animation}
+     * @return the current {@link MovementAnimation}
      */
-    Animation getCurrentAnimation();
+    MovementAnimation getCurrentAnimation();
 
     /**
      * @param animation the new animation to set
      */
-    void setCurrentAnimation(Animation animation);
+    void setCurrentAnimation(MovementAnimation animation);
 
     /**
      * Set the {@link Character} relative death animation.
@@ -70,7 +70,7 @@ public interface CharacterGC extends GraphicComponent {
     void flipOnXImage();
 
     /**
-     * This function is called to update the graphics, e.g., the current {@link Animation}.
+     * This function is called to update the graphics, e.g., the current {@link MovementAnimation}.
      * @param graphicsSpeed the graphics' speed calculated from the time passed since the last game cycle 
      */
     void updateGraphics(float graphicsSpeed);

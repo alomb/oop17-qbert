@@ -6,7 +6,7 @@ import qbert.model.utilities.Position2D;
  * Animation to move the character in a clockwise arc, increasing the angle. The Y-axis is
  * reversed so to increase y in the imaginary goniometric circle it must be decreased.
  */
-public class ArcClockwiseAnimation extends MovementAnimation {
+public class ArcClockwiseAnimation extends MovementAnimationImpl {
 
     private final double radius;
     private final Position2D centerPos;
@@ -43,16 +43,17 @@ public class ArcClockwiseAnimation extends MovementAnimation {
     }
 
     @Override
-    protected final void calculateNext() {
+    public
+    final Position2D next() {
         this.currentAngle += this.getAnimationSpeed();
 
         //Check if the angle limit has been reached
         if (this.currentAngle > this.targetAngle) {
             this.currentAngle = this.targetAngle;
-            this.setCurrentPosition(this.getTargetPosition());
+            return this.getTargetPosition();
         } else {
             // Calculate position using the goniometric circumference
-            this.setCurrentPosition(this.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius));
+            return this.calculateCircumferenceCoords(this.centerPos, this.currentAngle, this.radius);
         }
     }
 }
