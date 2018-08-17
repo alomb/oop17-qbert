@@ -62,8 +62,7 @@ public interface Controller {
     /**
      * @return from the current ranking
      */
-    Map<String,Integer> getRank();
-    
+    Map<String, Integer> getRank();
     /**
      * 
      */
@@ -91,10 +90,10 @@ public interface Controller {
      */
     void emptyClipQueue(Queue<Clip> queue);
 
-    public void addScoreBuilder();
+    void addScoreBuilder();
     
-    public void addCharacterNameBuilder(Integer i);
+    void addCharacterNameBuilder(Integer i);
     
-    public void resetNameBuilder();
+    void resetNameBuilder();
     
 }

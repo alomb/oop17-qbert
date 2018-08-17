@@ -9,11 +9,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,18 +66,22 @@ public class ControllerImpl implements Controller {
         if (this.abort) {
             this.terminate();
         }
-        
+    }
+    /**
+     * Check if file ranking is empty or not.
+     */
+    private boolean isEmptyFile() {
         try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
-            while (br.readLine() == null) {
-               empty = true;
+            if (br.readLine() == null) {
+               return true;
             }
-            empty = false;
+            return false;
         } catch (FileNotFoundException e) {
             File file = new File(urlFile);
             //Create the file
             try {
                 file.createNewFile();
-                empty = true;
+                return true;
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
@@ -89,8 +90,8 @@ public class ControllerImpl implements Controller {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return false;
     }
-
     @Override
     public final void setupGameEngine() {
         if (!this.abort) {
@@ -149,16 +150,16 @@ public class ControllerImpl implements Controller {
         Map<String, Integer> rank = new TreeMap<String, Integer>();
         try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
             String line;
-            while ((line = br.readLine()) != null) {
-                rank.put(line.split("\\?")[0], Integer.parseInt(line.split("\\?")[1]));
+            if (!isEmptyFile()) {
+                while ((line = br.readLine()) != null) {
+                    rank.put(line.split("\\?")[0], Integer.parseInt(line.split("\\?")[1]));
+                }
             }
-            empty = false;
         } catch (FileNotFoundException e) {
             File file = new File(urlFile);
             //Create the file
             try {
                 file.createNewFile();
-                empty = true;
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
@@ -191,10 +192,10 @@ public class ControllerImpl implements Controller {
         Writer output;
         try {
             output = new BufferedWriter(new FileWriter(urlFile, true));
-            if (empty) {
-                output.append(ranking.build().toString());
-            } else {
+            if (!isEmptyFile()) {
                 output.append("\r\n" + ranking.build().toString());
+            } else {
+                output.append(ranking.build().toString());
             }
             output.close();
         } catch (IOException e) {
