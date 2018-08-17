@@ -17,12 +17,9 @@ import qbert.model.components.graphics.Renderable;
 public class Ranking implements Model {
 
     private final GUILogic guiBody;
-    
     private final List<GUILogic> guiList;
     private final Controller controller;
-    
-    private Map<String,Integer> rank;
-
+    private Map<String, Integer> rank;
     /**
      * Initialize GUI data and logic.
      * @param controller the game controller.
@@ -30,12 +27,9 @@ public class Ranking implements Model {
     public Ranking(final Controller controller) {
         final GUILogic guiTitle;
         final GUILogic guiFoot;
-        
         guiTitle = new GUILogicImpl(TextPosition.TITLE);
         guiTitle.addData("RANKING");
-
         this.guiBody = new GUILogicImpl(TextPosition.CENTER);
-        
 
         guiFoot = new GUILogicImpl(TextPosition.FOOT);
         guiFoot.addData("Move with arrow key");
@@ -52,24 +46,19 @@ public class Ranking implements Model {
     public final void initialize() {
         this.guiBody.removeAllData();
         this.guiBody.selectSet(IntStream.range(0, 1).mapToObj(i -> i).collect(Collectors.toSet()));
-        
         rank = controller.getRank();
-        
-        rank.forEach((k,v)->{
+        rank.forEach((k, v) -> {
             this.guiBody.addData("Player: " + k + " Point: " + v);
         });
-        
         rank.clear();
     }
 
     @Override
     public final void moveDown() {
-        
     }
 
     @Override
     public void moveLeft() {
-        
     }
 
     @Override
@@ -79,7 +68,6 @@ public class Ranking implements Model {
 
     @Override
     public final void moveUp() {
-        
     }
 
     @Override

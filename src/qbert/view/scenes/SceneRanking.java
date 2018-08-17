@@ -31,10 +31,8 @@ public class SceneRanking extends SceneImpl {
 
         this.addSection(TextPosition.TITLE, 
                 new GUISectionImpl(SceneColor.YELLOW.getColor(), Optional.empty(), 50, 20, true, TextSize.LARGE));
-        
         this.addSection(TextPosition.CENTER, 
                 new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.of(SceneColor.RED.getColor()), 50, 30, true, TextSize.SMALL));
-        
         this.addSection(TextPosition.FOOT, 
                 new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.empty(), 50, 80, true, TextSize.SMALL));
     }

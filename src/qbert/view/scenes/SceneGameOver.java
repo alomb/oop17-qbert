@@ -57,13 +57,13 @@ public class SceneGameOver extends SceneImpl {
             this.controller.notifyCommand(new MoveUp());
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_KP_DOWN) {
             this.controller.notifyCommand(new MoveDown());
-        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            this.controller.notifyCommand(new Confirm());
         }
     }
 
     @Override
     public final void keyReleased(final KeyEvent e) {
-
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            this.controller.notifyCommand(new Confirm());
+        }
     }
 }

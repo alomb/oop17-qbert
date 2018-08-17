@@ -43,7 +43,6 @@ import qbert.view.ViewImpl;
  * The implementation of {@link Controller}.
  */
 public class ControllerImpl implements Controller {
-    
     private Builder ranking = new RankingBuilder.Builder();
     private boolean empty = true;
     private final String urlFile = System.getProperty("user.home") + "/qbert/ranking.txt";
@@ -123,39 +122,37 @@ public class ControllerImpl implements Controller {
     public final Integer getScore() {
         return this.gamePoint.poll();
     }
-    
-    public Map<String,Integer> getRank() {
-        Map<String,Integer> rank = new TreeMap<String,Integer>();
-        
-        //Read file
+    /**
+     * With this method we can know the ranking, read file and insert all in map.
+     */
+    public Map<String, Integer> getRank() {
+        Map<String, Integer> rank = new TreeMap<String, Integer>();
         try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
             String line;
             while ((line = br.readLine()) != null) {
-                rank.put(line.split("\\?")[0],Integer.parseInt(line.split("\\?")[1]));
+                rank.put(line.split("\\?")[0], Integer.parseInt(line.split("\\?")[1]));
             }
-            empty=false;
+            empty = false;
         } catch (FileNotFoundException e) {
             File file = new File(urlFile);
             //Create the file
             try {
                 file.createNewFile();
-                empty=true;
+                empty = true;
             } catch (IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
-           
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
         //Convert map to a List
         List<Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(rank.entrySet());
 
         //Sorting the list with a comparator
         Collections.sort(list, new Comparator<Entry<String, Integer>>() {
-                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                public int compare( Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2 ) {
                         return (o2.getValue()).compareTo(o1.getValue());
                 }
         });
@@ -165,40 +162,45 @@ public class ControllerImpl implements Controller {
         for (Entry<String, Integer> entry : list) {
                 sortedMap.put(entry.getKey(), entry.getValue());
         }
-        
         return sortedMap;
     }
-    
-    //Scrivere su file
+    /**
+     * We can write in file with that methodm read builder object and write that.
+     */
     public void addRank() {
         Writer output;
         try {
             output = new BufferedWriter(new FileWriter(urlFile, true));
-            if(empty) {
+            if (empty) {
                 output.append(ranking.build().toString());
-            }else {
-                output.append("\r\n"+ranking.build().toString());
+            } else {
+                output.append("\r\n" + ranking.build().toString());
             }
             output.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
     }
-
+    /**
+     * Add score to builder object.
+     */
     public void addScoreBuilder() {
         ranking.addScore(this.getScore());
     }
-    
-    public void addCharacterNameBuilder(Integer i) {
+    /**
+     * Add single letter to object.
+     * @param i is a index in alphabetic letter.
+     */
+    public void addCharacterNameBuilder(final Integer i) {
         ranking.addChar(i);
     }
-    
+    /**
+     * Reset object.
+     */
     public void resetNameBuilder() {
         ranking.reset();
     }
-    
 
     @Override
     public final void terminate() {

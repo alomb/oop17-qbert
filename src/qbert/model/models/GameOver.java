@@ -27,13 +27,10 @@ public class GameOver implements Model {
     private static final int MINVALUE = 0;
     private static final int EXIT = 8;
     private static final int CONFIRM = 9;
-    
     private final GUILogic guiBody;
-    
     private final List<GUILogic> guiList;
     private final Controller controller;
-    
-    private Map<String,Integer> rank;
+    private Map<String, Integer> rank;
 
     /**
      * Initialize GUI data and logic.
@@ -42,7 +39,6 @@ public class GameOver implements Model {
     public GameOver(final Controller controller) {
         final GUILogic guiTitle;
         final GUILogic guiFoot;
-        
         guiTitle = new GUILogicImpl(TextPosition.TITLE);
         guiTitle.addData("GAMEOVER");
 
@@ -57,7 +53,6 @@ public class GameOver implements Model {
         this.guiBody.addData("H");
         this.guiBody.addData("EXIT");
         this.guiBody.addData("CONFIRM");
-        
 //        this.guiBody.addData("I");
 //        this.guiBody.addData("J");
 //        this.guiBody.addData("K");
@@ -67,7 +62,6 @@ public class GameOver implements Model {
 //        this.guiBody.addData("O");
 //        this.guiBody.addData("P");
 //        this.guiBody.addData("Q");
-//        
 //        this.guiBody.addData("R");
 //        this.guiBody.addData("S");
 //        this.guiBody.addData("T");
@@ -78,7 +72,6 @@ public class GameOver implements Model {
 //        this.guiBody.addData("Y");
 //        this.guiBody.addData("Z");
 
-        
         guiFoot = new GUILogicImpl(TextPosition.FOOT);
         guiFoot.addData("Set your name!");
 
@@ -94,7 +87,6 @@ public class GameOver implements Model {
     public final void initialize() {
         this.guiBody.selectSet(IntStream.range(0, 1).mapToObj(i -> i).collect(Collectors.toSet()));
         this.controller.addScoreBuilder();
-        
     }
 
     @Override
@@ -108,7 +100,6 @@ public class GameOver implements Model {
 
     @Override
     public void moveLeft() {
-        
     }
 
     @Override
@@ -127,9 +118,9 @@ public class GameOver implements Model {
 
     @Override
     public final void confirm() {
-        if (GameOver.index >= 0 && GameOver.index < 8) {   
+        if (GameOver.index >= 0 && GameOver.index < 8) {
             this.controller.addCharacterNameBuilder(GameOver.index);
-        }else if (GameOver.index == GameOver.EXIT) {
+        }else if (GameOver.index == GameOver.EXIT) { 
             this.controller.changeScene(GameStatus.MENU);
         }else if (GameOver.index == GameOver.CONFIRM) {
             this.controller.addRank();
