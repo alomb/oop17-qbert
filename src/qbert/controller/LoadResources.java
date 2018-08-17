@@ -67,6 +67,8 @@ public class LoadResources {
             return false;
         }
 
+        new LoggerManager();
+
         final Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
         Dimensions.setWindowHeight(Math.round(new Float(d.height)));
