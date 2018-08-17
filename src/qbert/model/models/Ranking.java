@@ -21,7 +21,7 @@ public class Ranking implements Model {
     private final List<GUILogic> guiList;
     private final Controller controller;
     
-    private List<Map<String,Integer>> rank;
+    private Map<String,Integer> rank;
 
     /**
      * Initialize GUI data and logic.
@@ -55,8 +55,8 @@ public class Ranking implements Model {
         
         rank = controller.getRank();
         
-        rank.forEach(item->{
-            this.guiBody.addData("Player: " + item.entrySet().stream().findFirst().get().getKey() + " Point: " + item.entrySet().stream().findFirst().get().getValue());
+        rank.forEach((k,v)->{
+            this.guiBody.addData("Player: " + k + " Point: " + v);
         });
         
         rank.clear();

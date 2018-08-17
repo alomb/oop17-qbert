@@ -121,6 +121,7 @@ public final class SpawnerImpl implements Spawner {
     }
     @Override
     public void killCoily() {
+        this.death(this.coily.get());
         this.coily = Optional.empty();
     }
 

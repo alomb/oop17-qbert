@@ -2,6 +2,7 @@ package qbert.model.characters;
 
 import qbert.model.characters.states.CharacterState;
 import qbert.model.characters.states.FallState;
+import qbert.model.components.Collision;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
@@ -123,9 +124,16 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
-        //Do nothing
+    public boolean checkCollision(final Player qbert, final PointComponent points, final TimerComponent timer, final Collision collision) {
+        if (collision.check(qbert, this)) {
+            this.collide(qbert, points, timer);
+            return true;
+        }
+        return false;
     }
+
+    @Override
+    public abstract void collide(final Player qbert, final PointComponent points, final TimerComponent timer);
 
     @Override
     public final int getZIndex() {

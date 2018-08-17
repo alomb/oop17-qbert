@@ -3,16 +3,22 @@ package qbert.controller;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.util.ArrayList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.TreeMap;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -27,6 +33,8 @@ import org.jdom2.JDOMException;
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
 import qbert.model.models.GUILogic;
+import qbert.model.models.RankingBuilder;
+import qbert.model.models.RankingBuilder.Builder;
 import qbert.model.components.graphics.Renderable;
 import qbert.view.View;
 import qbert.view.ViewImpl;
@@ -35,8 +43,10 @@ import qbert.view.ViewImpl;
  * The implementation of {@link Controller}.
  */
 public class ControllerImpl implements Controller {
-
-    private final String urlFile = "res/ranking.txt";
+    
+    private Builder ranking = new RankingBuilder.Builder();
+    private boolean empty = true;
+    private final String urlFile = System.getProperty("user.home") + "/qbert/ranking.txt";
     private LevelConfigurationReader lcr;
     private final GameEngine gameEngine;
     private final GameStatusManager statusManager;
@@ -113,57 +123,82 @@ public class ControllerImpl implements Controller {
     public final Integer getScore() {
         return this.gamePoint.poll();
     }
-
-    @Override
-    public final List<Map<String, Integer>> getRank() {
-        List<Map<String, Integer>> rank = new ArrayList<Map<String, Integer>>();
+    
+    public Map<String,Integer> getRank() {
+        Map<String,Integer> rank = new TreeMap<String,Integer>();
+        
         //Read file
         try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
             String line;
             while ((line = br.readLine()) != null) {
-                Map<String, Integer> mapTmp = new TreeMap<String, Integer>();
-                mapTmp.put(line.split(":")[0], Integer.parseInt(line.split(":")[1]));
-                rank.add(mapTmp);
+                rank.put(line.split("\\?")[0],Integer.parseInt(line.split("\\?")[1]));
             }
+            empty=false;
         } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            File file = new File(urlFile);
+            //Create the file
+            try {
+                file.createNewFile();
+                empty=true;
+            } catch (IOException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+           
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        
+        //Convert map to a List
+        List<Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(rank.entrySet());
 
-        //Order list 
-        Collections.sort(rank, new Comparator<Map<String, Integer>>() {
-            @Override
-            public int compare(Map<String, Integer> map1, Map<String, Integer> map2) {
-                Integer val1 = 0;
-                Integer val2 = 0;
-                for (Map.Entry<String, Integer> entry : map1.entrySet()) {
-                    val1 = entry.getValue();
+        //Sorting the list with a comparator
+        Collections.sort(list, new Comparator<Entry<String, Integer>>() {
+                public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                        return (o2.getValue()).compareTo(o1.getValue());
                 }
-                for (Map.Entry<String, Integer> entry : map2.entrySet()) {
-                    val2 = entry.getValue();
-                }
-                return val2.compareTo(val1);
-            }
         });
 
-        return rank;
+        //Convert sortedMap back to Map
+        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+        for (Entry<String, Integer> entry : list) {
+                sortedMap.put(entry.getKey(), entry.getValue());
+        }
+        
+        return sortedMap;
     }
-
-    @Override
-    public final void addRank(final String s, final Integer i) {
+    
+    //Scrivere su file
+    public void addRank() {
         Writer output;
         try {
             output = new BufferedWriter(new FileWriter(urlFile, true));
-            output.append("\r\n" + s + ":" + i);
+            if(empty) {
+                output.append(ranking.build().toString());
+            }else {
+                output.append("\r\n"+ranking.build().toString());
+            }
             output.close();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        
     }
+
+    public void addScoreBuilder() {
+        ranking.addScore(this.getScore());
+    }
+    
+    public void addCharacterNameBuilder(Integer i) {
+        ranking.addChar(i);
+    }
+    
+    public void resetNameBuilder() {
+        ranking.resetName();
+    }
+    
 
     @Override
     public final void terminate() {
@@ -193,7 +228,9 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public final void emptyClipQueue(final Queue<Clip> queue) {
-        this.view.play(queue);
+    public void emptyClipQueue(Queue<Clip> queue) {
+        // TODO Auto-generated method stub
+        
     }
+
 }

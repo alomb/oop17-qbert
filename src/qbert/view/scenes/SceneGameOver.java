@@ -8,6 +8,8 @@ import javax.swing.JTextField;
 
 import qbert.controller.Controller;
 import qbert.controller.input.Confirm;
+import qbert.controller.input.MoveDown;
+import qbert.controller.input.MoveUp;
 import qbert.model.models.TextPosition;
 
 /**
@@ -51,7 +53,11 @@ public class SceneGameOver extends SceneImpl {
 
     @Override
     public final void keyPressed(final KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+        if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_KP_UP) {
+            this.controller.notifyCommand(new MoveUp());
+        } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_KP_DOWN) {
+            this.controller.notifyCommand(new MoveDown());
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             this.controller.notifyCommand(new Confirm());
         }
     }
