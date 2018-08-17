@@ -14,6 +14,8 @@ import qbert.model.models.TextPosition;
  * An implementation of {@link Scene} for the game menu scene.
  */
 public class SceneGameOver extends SceneImpl {
+    
+    private boolean check = true;
 
     /**
      * 
@@ -69,13 +71,16 @@ public class SceneGameOver extends SceneImpl {
             this.controller.notifyCommand(new MoveUp());
         } else if (e.getKeyCode() == KeyEvent.VK_DOWN || e.getKeyCode() == KeyEvent.VK_KP_DOWN) {
             this.controller.notifyCommand(new MoveDown());
+        } else if (e.getKeyCode() == KeyEvent.VK_ENTER && check) {
+            this.controller.notifyCommand(new Confirm());
+            check = false;
         }
     }
 
     @Override
     public final void keyReleased(final KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            this.controller.notifyCommand(new Confirm());
+            check = true;
         }
     }
 }

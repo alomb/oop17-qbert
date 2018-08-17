@@ -137,6 +137,8 @@ public class GameOver implements Model {
 
         if (this.index >= 0 && this.index < 8) {
             this.ranking.addChar(this.index);
+            this.guiFoot.removeAllData();
+            this.guiFoot.addData("Your name is : " + this.ranking.getName());
         } else if (this.index == GameOver.EXIT) { 
             this.controller.changeScene(GameStatus.MENU);
         } else if (this.index == GameOver.CONFIRM) {

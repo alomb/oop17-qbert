@@ -72,6 +72,13 @@ public class RankingBuilder {
             }
             return this;
         }
+        /**
+         * Get name during build.
+         * @return nameB 
+         */
+        public String getName() {
+            return nameB;
+        }
 
         /**
          * Reset all data.
