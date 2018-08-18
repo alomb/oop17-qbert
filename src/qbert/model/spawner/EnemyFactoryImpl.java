@@ -90,7 +90,6 @@ public class EnemyFactoryImpl implements EnemyFactory {
         final Position2D randomPos = this.getRandomPos(this.sprites.getPurpleBallSprites().getMoveSprite().getHeight());
         final Position2D logicalPos = this.getLogicalPos(randomPos);
 
-
         final CoilyGC graphics = new CoilyGCImpl(this.sprites.getPurpleBallSprites(), this.sprites.getCoilyFrontSprites(), 
                 this.sprites.getCoilyBackSprites(), randomPos);
         final CharacterSC sounds = new DownUpwardCharacterSC(this.controller);

@@ -1,8 +1,9 @@
 package qbert.model.characters;
 
+import java.util.function.BiPredicate;
+
 import qbert.model.characters.states.CharacterState;
 import qbert.model.characters.states.FallState;
-import qbert.model.components.Collision;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
@@ -124,8 +125,8 @@ public abstract class CharacterImpl implements Character {
     }
 
     @Override
-    public final boolean checkCollision(final Player qbert, final PointComponent points, final TimerComponent timer, final Collision collision) {
-        if (collision.check(qbert, this)) {
+    public final boolean checkCollision(final Player qbert, final PointComponent points, final TimerComponent timer, final BiPredicate<Player, Character> collision) {
+        if (collision.test(qbert, this)) {
             this.collide(qbert, points, timer);
             return true;
         }
