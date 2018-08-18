@@ -44,9 +44,6 @@ public class TimerComponentImpl implements TimerComponent {
         this.points = points;
         this.map = map;
         this.um = new StandardUpdate(qbert, spawner, points, map, this, level);
-
-        //TODO: Remove
-        this.level = level;
     }
 
     /**

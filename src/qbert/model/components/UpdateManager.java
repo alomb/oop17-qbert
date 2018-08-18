@@ -97,16 +97,14 @@ public abstract class UpdateManager {
                     qbert.setCurrentState(new FallState(qbert));
                 }
             } else {
-                boolean found = false;
-                for (final qbert.model.characters.Character e : spawner.getGameCharacters()) {
-                    if (e.checkCollision(qbert, points, timer, 
-                            (qbert, entity) -> qbert.getNextPosition().equals(e.getCurrentPosition()) 
-                            && (e.getCurrentState() instanceof LandState || !e.isMoving()))
-                    ) {
-                        found = true;
-                    }
-                }
-                if (!found) {
+                spawner.getGameCharacters().forEach(e -> 
+                    e.checkCollision(qbert, points, timer, (qbert, entity) -> 
+                        qbert.getNextPosition().equals(e.getCurrentPosition()) 
+                        && (e.getCurrentState() instanceof LandState || !e.isMoving())
+                    )
+                );
+
+                if (!qbert.isDead()) {
                     qbert.land(this.map, this.points);
                     qbert.setCurrentState(qbert.getStandingState());
                     //TODO: Remove
