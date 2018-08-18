@@ -23,7 +23,8 @@ public class GameOver implements Model {
 //    private static final int MINVALUE = 0;
 //    private static final int EXIT = 27;
 //    private static final int CONFIRM = 28;
-    private static final int MAXVALUE = 9;
+    private static final int MAXVALUEFIRSTCOLUMN = 9;
+    private static final int MAXVALUEOTHERCOLUMN = 6;
     private static final int MINVALUE = 0;
     private static final int EXIT = 7;
     private static final int CONFIRM = 8;
@@ -89,46 +90,64 @@ public class GameOver implements Model {
 
         this.controller = controller;
     }
+    private void deselectAll() {
+        this.guiLeft.deselectAll();
+        this.guiCenter.deselectAll();
+        this.guiRight.deselectAll();
+    }
+    private void color() {
+        if (this.indexC == 0) {
+            this.guiLeft.selectSet(IntStream.range(this.index, this.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
+        } else if (this.indexC == 1 && this.index < 7) { 
+            this.guiCenter.selectSet(IntStream.range(this.index, this.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
+        } else if (this.indexC == 2 && this.index < 7) { 
+            this.guiRight.selectSet(IntStream.range(this.index, this.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
+        }
+    }
 
     @Override
     public final void initialize() {
         this.ranking.reset();
         this.index = 0;
         this.indexC = 0;
-        this.guiLeft.deselectAll();
-        this.guiLeft.selectSet(IntStream.range(0, 1).mapToObj(i -> i).collect(Collectors.toSet()));
+        this.deselectAll();
+        this.color();
         this.ranking.addScore(this.controller.getScore());
     }
 
     @Override
     public final void moveDown() {
-        if (this.index < GameOver.MAXVALUE) {
-            this.guiLeft.deselectAll();
-            this.index++;
-            this.guiLeft.selectSet(IntStream.range(this.index, this.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
+        if ((this.indexC >= 1 && this.index < GameOver.MAXVALUEOTHERCOLUMN) || (this.indexC == 0 && this.index < GameOver.MAXVALUEFIRSTCOLUMN)) {
+          this.deselectAll();
+          this.index++;
+          this.color();
         }
     }
 
     @Override
     public void moveLeft() {
         if (this.indexC > 0) {
+            this.deselectAll();
             this.indexC--;
+            this.color();
         }
     }
 
     @Override
     public void moveRight() {
         if (this.indexC < this.COLUMN - 1) {
+            this.deselectAll();
             this.indexC++;
+            this.color();
         }
     }
 
     @Override
     public final void moveUp() {
         if (this.index > GameOver.MINVALUE) {
-            this.guiLeft.deselectAll();
+            this.deselectAll();
             this.index--;
-            this.guiLeft.selectSet(IntStream.range(this.index, this.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
+            this.color();
         }
     }
 
