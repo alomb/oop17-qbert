@@ -25,6 +25,7 @@ public abstract class WaitTimerState extends CharacterStateImpl {
             this.conclude();
             this.elapsedTime = 0;
         } else {
+            this.getCharacter().getGraphicComponent().updateGraphics(dt);
             this.elapsedTime += dt;
         }
     }

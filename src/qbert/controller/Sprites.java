@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 
@@ -25,6 +23,13 @@ import qbert.model.utilities.Position2D;
  * A Singleton used to load images and retrieve group of them for different purposes.
  */
 public final class Sprites {
+
+    private static final String SPRITES_PATH = System.getProperty("user.home") 
+            + System.getProperty("file.separator")
+            + "qbert"
+            + System.getProperty("file.separator")
+            + "sprites"
+            + System.getProperty("file.separator");
 
     private BufferedImage blueBackground;
     private BufferedImage brownBackground;
@@ -68,66 +73,16 @@ public final class Sprites {
     private static volatile Sprites instance;
     private static Object mutex = new Object();
 
-    private Sprites() {
-        final String imgPath = System.getProperty("user.home") + "/qbert/img/";
-
-        try {
-            this.blueBackground = loadImg(imgPath + "BackgroundBlue.png");
-            this.brownBackground = loadImg(imgPath + "BackgroundBrown.png");
-            this.greenBackground = loadImg(imgPath + "BackgroundGreen.png");
-            this.greyBackground = loadImg(imgPath + "BackgroundGrey.png");
-            this.coilyBackMoving = loadImg(imgPath + "CoilyBackMove.png");
-            this.coilyBackStanding = loadImg(imgPath + "CoilyBackStand.png");
-            this.coilyFrontMoving = loadImg(imgPath + "CoilyFrontMove.png");
-            this.coilyFrontStanding = loadImg(imgPath + "CoilyFrontStand.png");
-            this.greenBallMoving = loadImg(imgPath + "GreenBallMove.png");
-            this.greenBallStanding = loadImg(imgPath + "GreenBallStand.png");
-            this.purpleBallMoving = loadImg(imgPath + "PurpleBallMove.png");
-            this.purpleBallStanding = loadImg(imgPath + "PurpleBallStand.png");
-            this.samStanding = loadImg(imgPath + "SamStand.png");
-            this.samMoving = loadImg(imgPath + "SamMove.png");
-            this.slickStanding = loadImg(imgPath + "SlickStand.png");
-            this.slickMoving = loadImg(imgPath + "SlickMove.png");
-            this.disk1 = loadImg(imgPath + "Disk1.png");
-            this.disk2 = loadImg(imgPath + "Disk2.png");
-            this.disk3 = loadImg(imgPath + "Disk3.png");
-            this.disk4 = loadImg(imgPath + "Disk4.png");
-            this.qbertBackMoving = loadImg(imgPath + "QbertBackMove.png"); 
-            this.qbertBackStanding = loadImg(imgPath + "QbertBackStand.png");
-            this.qbertFrontMoving = loadImg(imgPath + "QbertFrontMove.png"); 
-            this.qbertFrontStanding = loadImg(imgPath + "QbertFrontStand.png");
-            this.qbertDead = loadImg(imgPath + "QbertDead.png");
-            this.qbertOnDisk = loadImg(imgPath + "QbertOnDisk.png");
-            this.redBallMoving = loadImg(imgPath + "RedBallMove.png");
-            this.redBallStanding = loadImg(imgPath + "RedBallStand.png");
-            this.beigeTile = loadImg(imgPath + "TileBeige.png");
-            this.blueTile = loadImg(imgPath + "TileBlue.png");
-            this.greenTile = loadImg(imgPath + "TileGreen.png"); 
-            this.greyTile = loadImg(imgPath + "TileGrey.png");
-            this.pinkTile = loadImg(imgPath + "TilePink.png");
-            this.yellowTile = loadImg(imgPath + "TileYellow.png");
-            this.wrongwayStanding = loadImg(imgPath + "WrongWayStand.png");
-            this.wrongwayMoving = loadImg(imgPath + "WrongWayMove.png");
-            this.uggStanding = loadImg(imgPath + "UggStand.png");
-            this.uggMoving = loadImg(imgPath + "UggMove.png");
-
-      } catch (IOException e) {
-          Logger.getGlobal().log(Level.SEVERE, "Error during images loading", e);
-      }
-
-      Dimensions.setBackgroundHeight(this.blueBackground.getHeight());
-      Dimensions.setBackgroundWidth(this.blueBackground.getWidth());
-      Dimensions.setBackgroundPos(new Position2D(Math.round(new Float(Dimensions.getWindowWidth() - Dimensions.getBackgroundWidth()) / 2f), 
-              Math.round(new Float(Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2f)));
-      Dimensions.setCubeHeight(Math.round(new Float(Dimensions.getBackgroundHeight()) / Dimensions.MAP_TILES_ROWS));
-      Dimensions.setCubeWidth(Math.round(new Float(Dimensions.getBackgroundWidth()) / Dimensions.MAP_TILES_COLUMNS));
-      Dimensions.setTileHeight(this.blueTile.getHeight());
+    private Sprites() throws IOException {
+        this.loadSprites();
     }
 
     /**
-     * @return the unique instance of this class
+     * @return an instance of {@link Sprites}
+     * @throws IOException if an error creating {@link Sprites} during the file reading occurs
+     * @throws UnsupportedOperationException
      */
-    public static Sprites getInstance() {
+    public static Sprites getInstance() throws IOException {
         Sprites result = Sprites.instance;
         if (result == null) {
                 synchronized (mutex) {
@@ -141,92 +96,88 @@ public final class Sprites {
         return result;
     }
 
-    private BufferedImage loadImg(final String pathOut) throws IOException {
-        return ImageIO.read(new File(pathOut));
-    }
-
     /**
      * @return a {@link FrontBackCharacterSprites} containing {@link Qbert}'s front sprites
      */
     public OneSideCharacterSprites getQbertFrontSprites() {
-        return new OneSideCharacterSpritesImpl(this.qbertFrontStanding, this.qbertFrontMoving);
+        return new OneSideCharacterSpritesImpl(qbertFrontStanding, qbertFrontMoving);
     }
 
     /**
      * @return a {@link SpecialCharacterSprites} containing {@link Qbert}'s back sprites
      */
     public OneSideCharacterSprites getQbertBackSprites() {
-        return new OneSideCharacterSpritesImpl(this.qbertBackStanding, this.qbertBackMoving);
+        return new OneSideCharacterSpritesImpl(qbertBackStanding, qbertBackMoving);
     }
 
     /**
      * @return a {@link SpecialCharacterSprites} containing {@link Qbert}'s special sprites
      */
     public SpecialCharacterSprites getQbertSpecialSprites() {
-        return new SpecialCharacterSpritesImpl(this.qbertDead, this.qbertOnDisk);
+        return new SpecialCharacterSpritesImpl(qbertDead, qbertOnDisk);
     }
 
     /**
      * @return a {@link SpecialCharacterSprites} containing {@link Coily}'s front sprites
      */
     public OneSideCharacterSprites getCoilyFrontSprites() {
-        return new OneSideCharacterSpritesImpl(this.coilyFrontStanding, this.coilyFrontMoving);
+        return new OneSideCharacterSpritesImpl(coilyFrontStanding, coilyFrontMoving);
     }
 
     /**
      * @return a {@link SpecialCharacterSprites} containing {@link Coily}'s back sprites
      */
     public OneSideCharacterSprites getCoilyBackSprites() {
-        return new OneSideCharacterSpritesImpl(this.coilyBackStanding, this.coilyBackMoving);
+        return new OneSideCharacterSpritesImpl(coilyBackStanding, coilyBackMoving);
     }
 
     /**
      * @return {@link RedBall} sprites
      */
     public OneSideCharacterSprites getRedBallSprites() {
-        return new OneSideCharacterSpritesImpl(this.redBallStanding, this.redBallMoving);
+        return new OneSideCharacterSpritesImpl(redBallStanding, redBallMoving);
     }
 
     /**
      * @return {@link GreenBall} sprites
      */
     public OneSideCharacterSprites getGreenBallSprites() {
-        return new OneSideCharacterSpritesImpl(this.greenBallStanding, this.greenBallMoving);
+        return new OneSideCharacterSpritesImpl(greenBallStanding, greenBallMoving);
     }
 
     /**
      * @return {@link Coily} sprites when it's a ball
      */
     public OneSideCharacterSprites getPurpleBallSprites() {
-        return new OneSideCharacterSpritesImpl(this.purpleBallStanding, this.purpleBallMoving);
+        return new OneSideCharacterSpritesImpl(purpleBallStanding, purpleBallMoving);
     }
 
     /**
      * @return Slick ({@link SamAndSlick}) sprites
      */
     public OneSideCharacterSprites getSlickSprites() {
-        return new OneSideCharacterSpritesImpl(this.slickStanding, this.slickMoving);
+        return new OneSideCharacterSpritesImpl(slickStanding, slickMoving);
     }
 
     /**
      * @return Sam ({@link SamAndSlick}) sprites
      */
     public OneSideCharacterSprites getSamSprites() {
-        return new OneSideCharacterSpritesImpl(this.samStanding, this.samMoving);
+        return new OneSideCharacterSpritesImpl(samStanding, samMoving);
     }
 
     /**
      * @return {@link Wrongway} sprites
      */
     public OneSideCharacterSprites getWrongwaySprites() {
-        return new OneSideCharacterSpritesImpl(this.wrongwayStanding, this.wrongwayMoving);
+        return new OneSideCharacterSpritesImpl(wrongwayStanding, wrongwayMoving);
     }
 
     /**
      * @return {@link Ugg} sprites
      */
     public OneSideCharacterSprites getUggSprites() {
-        return new OneSideCharacterSpritesImpl(this.uggStanding, this.uggMoving);
+        return new OneSideCharacterSpritesImpl(uggStanding, uggMoving);
     }
 
     /**
@@ -234,10 +185,10 @@ public final class Sprites {
      */
     public Map<Integer, BufferedImage> getDiskSprites() {
         final Map<Integer, BufferedImage> sprites = new HashMap<>();
-        sprites.put(0, this.disk1);
-        sprites.put(1, this.disk2);
-        sprites.put(2, this.disk3);
-        sprites.put(3, this.disk4);
+        sprites.put(0, disk1);
+        sprites.put(1, disk2);
+        sprites.put(2, disk3);
+        sprites.put(3, disk4);
         return sprites;
     }
 
@@ -246,11 +197,11 @@ public final class Sprites {
      */
     public ColorComposition getBlueColorComposition() {
         final List<BufferedImage> tiles = new ArrayList<>();
-        tiles.add(this.yellowTile);
-        tiles.add(this.pinkTile);
-        tiles.add(this.greyTile);
-        tiles.add(this.blueTile);
-        return new ColorCompositionImpl(this.blueBackground, tiles);
+        tiles.add(yellowTile);
+        tiles.add(pinkTile);
+        tiles.add(greyTile);
+        tiles.add(blueTile);
+        return new ColorCompositionImpl(blueBackground, tiles);
     }
 
     /**
@@ -258,12 +209,12 @@ public final class Sprites {
      */
     public ColorComposition getBrownColorComposition() {
         final List<BufferedImage> tiles = new ArrayList<>();
-        tiles.add(this.blueTile);
-        tiles.add(this.pinkTile);
-        tiles.add(this.greenTile);
-        tiles.add(this.beigeTile);
-        tiles.add(this.greyTile);
-        return new ColorCompositionImpl(this.brownBackground, tiles);
+        tiles.add(blueTile);
+        tiles.add(pinkTile);
+        tiles.add(greenTile);
+        tiles.add(beigeTile);
+        tiles.add(greyTile);
+        return new ColorCompositionImpl(brownBackground, tiles);
     }
 
     /**
@@ -271,11 +222,11 @@ public final class Sprites {
      */
     public ColorComposition getGreenColorComposition() {
         final List<BufferedImage> tiles = new ArrayList<>();
-        tiles.add(this.yellowTile);
-        tiles.add(this.pinkTile);
-        tiles.add(this.greyTile);
-        tiles.add(this.blueTile);
-        return new ColorCompositionImpl(this.greenBackground, tiles);
+        tiles.add(yellowTile);
+        tiles.add(pinkTile);
+        tiles.add(greyTile);
+        tiles.add(blueTile);
+        return new ColorCompositionImpl(greenBackground, tiles);
     }
 
     /**
@@ -283,10 +234,72 @@ public final class Sprites {
      */
     public ColorComposition getGreyColorComposition() {
         final List<BufferedImage> tiles = new ArrayList<>();
-        tiles.add(this.greenTile);
-        tiles.add(this.pinkTile);
-        tiles.add(this.beigeTile);
-        tiles.add(this.blueTile);
-        return new ColorCompositionImpl(this.greyBackground, tiles);
+        tiles.add(greenTile);
+        tiles.add(pinkTile);
+        tiles.add(beigeTile);
+        tiles.add(blueTile);
+        return new ColorCompositionImpl(greyBackground, tiles);
+    }
+
+    /**
+     * Method used to initialize {@link Sprites}.
+     * @throws IOException
+     */
+    private void loadSprites() throws IOException {
+        blueBackground = loadImg(SPRITES_PATH + "BackgroundBlue.png");
+        brownBackground = loadImg(SPRITES_PATH + "BackgroundBrown.png");
+        greenBackground = loadImg(SPRITES_PATH + "BackgroundGreen.png");
+        greyBackground = loadImg(SPRITES_PATH + "BackgroundGrey.png");
+        coilyBackMoving = loadImg(SPRITES_PATH + "CoilyBackMove.png");
+        coilyBackStanding = loadImg(SPRITES_PATH + "CoilyBackStand.png");
+        coilyFrontMoving = loadImg(SPRITES_PATH + "CoilyFrontMove.png");
+        coilyFrontStanding = loadImg(SPRITES_PATH + "CoilyFrontStand.png");
+        greenBallMoving = loadImg(SPRITES_PATH + "GreenBallMove.png");
+        greenBallStanding = loadImg(SPRITES_PATH + "GreenBallStand.png");
+        purpleBallMoving = loadImg(SPRITES_PATH + "PurpleBallMove.png");
+        purpleBallStanding = loadImg(SPRITES_PATH + "PurpleBallStand.png");
+        samStanding = loadImg(SPRITES_PATH + "SamStand.png");
+        samMoving = loadImg(SPRITES_PATH + "SamMove.png");
+        slickStanding = loadImg(SPRITES_PATH + "SlickStand.png");
+        slickMoving = loadImg(SPRITES_PATH + "SlickMove.png");
+        disk1 = loadImg(SPRITES_PATH + "Disk1.png");
+        disk2 = loadImg(SPRITES_PATH + "Disk2.png");
+        disk3 = loadImg(SPRITES_PATH + "Disk3.png");
+        disk4 = loadImg(SPRITES_PATH + "Disk4.png");
+        qbertBackMoving = loadImg(SPRITES_PATH + "QbertBackMove.png"); 
+        qbertBackStanding = loadImg(SPRITES_PATH + "QbertBackStand.png");
+        qbertFrontMoving = loadImg(SPRITES_PATH + "QbertFrontMove.png"); 
+        qbertFrontStanding = loadImg(SPRITES_PATH + "QbertFrontStand.png");
+        qbertDead = loadImg(SPRITES_PATH + "QbertDead.png");
+        qbertOnDisk = loadImg(SPRITES_PATH + "QbertOnDisk.png");
+        redBallMoving = loadImg(SPRITES_PATH + "RedBallMove.png");
+        redBallStanding = loadImg(SPRITES_PATH + "RedBallStand.png");
+        beigeTile = loadImg(SPRITES_PATH + "TileBeige.png");
+        blueTile = loadImg(SPRITES_PATH + "TileBlue.png");
+        greenTile = loadImg(SPRITES_PATH + "TileGreen.png"); 
+        greyTile = loadImg(SPRITES_PATH + "TileGrey.png");
+        pinkTile = loadImg(SPRITES_PATH + "TilePink.png");
+        yellowTile = loadImg(SPRITES_PATH + "TileYellow.png");
+        wrongwayStanding = loadImg(SPRITES_PATH + "WrongWayStand.png");
+        wrongwayMoving = loadImg(SPRITES_PATH + "WrongWayMove.png");
+        uggStanding = loadImg(SPRITES_PATH + "UggStand.png");
+        uggMoving = loadImg(SPRITES_PATH + "UggMove.png");
+
+        Dimensions.setBackgroundHeight(blueBackground.getHeight());
+        Dimensions.setBackgroundWidth(blueBackground.getWidth());
+        Dimensions.setBackgroundPos(new Position2D(Math.round(new Float(Dimensions.getWindowWidth() - Dimensions.getBackgroundWidth()) / 2f), 
+                Math.round(new Float(Dimensions.getWindowHeight() - Dimensions.getBackgroundHeight()) / 2f)));
+        Dimensions.setCubeHeight(Math.round(new Float(Dimensions.getBackgroundHeight()) / Dimensions.MAP_TILES_ROWS));
+        Dimensions.setCubeWidth(Math.round(new Float(Dimensions.getBackgroundWidth()) / Dimensions.MAP_TILES_COLUMNS));
+        Dimensions.setTileHeight(blueTile.getHeight());
+    }
+
+    /**
+     * @param pathOut the image's name 
+     * @return the relative {@link BufferedImage}
+     * @throws IOException if an error reading the file occurs
+     */
+    private BufferedImage loadImg(final String name) throws IOException {
+        return ImageIO.read(new File(name));
     }
 }

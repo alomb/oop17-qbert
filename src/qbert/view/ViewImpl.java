@@ -67,7 +67,7 @@ public class ViewImpl implements View {
 
         if (!this.scenes.keySet().equals(GameStatus.getAll())) {
             Logger.getGlobal().log(Level.SEVERE, "Not all the game status have been initialized. Program aborted");
-            controller.abort();
+            controller.setAbort();
         }
 
         frame.pack();

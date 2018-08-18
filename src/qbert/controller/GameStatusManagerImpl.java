@@ -36,7 +36,7 @@ public class GameStatusManagerImpl implements GameStatusManager {
         this.currentGameStatus = firstGameStatus;
 
         if (!this.models.keySet().equals(GameStatus.getAll())) {
-            controller.abort();
+            controller.setAbort();
             Logger.getGlobal().log(Level.SEVERE, "Not all the game status have been initialized. Program aborted");
         }
     }

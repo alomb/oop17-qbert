@@ -1,4 +1,4 @@
-package qbert.view.characters;
+package qbert.model.components.graphics.animations;
 
 import qbert.model.utilities.Position2D;
 

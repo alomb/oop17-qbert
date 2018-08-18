@@ -55,7 +55,12 @@ public class ControllerImpl implements Controller {
      */
     public ControllerImpl(final GameStatus firstGameStatus) {
         this.abort = false;
-        this.lcr = new LevelConfigurationReaderImpl();
+        try {
+            this.lcr = new LevelConfigurationReaderImpl();
+        } catch (IOException e) {
+            this.abort = true;
+            e.printStackTrace();
+        }
 
         this.statusManager = new GameStatusManagerImpl(firstGameStatus, this);
         this.view = new ViewImpl(this);
@@ -100,11 +105,14 @@ public class ControllerImpl implements Controller {
 
     @Override
     public final LevelSettings getLevelSettings(final int level, final int round) {
-        this.lcr = new LevelConfigurationReaderImpl();
         try {
+            this.lcr = new LevelConfigurationReaderImpl();
             lcr.readLevelConfiguration(level, round);
         } catch (JDOMException e) {
             Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+            this.terminate();
+        } catch (IOException e) {
+            this.terminate();
         }
         return lcr.getLevelSettings();
     }
@@ -205,12 +213,17 @@ public class ControllerImpl implements Controller {
 
     @Override
     public final void terminate() {
-        this.view.closeWindow();
-        this.gameEngine.stop();
+        if (view != null) {
+            this.view.closeWindow();
+        }
+        if (this.gameEngine != null) {
+            this.gameEngine.stop();
+        }
+        this.abort = true;
     }
 
     @Override
-    public final void abort() {
+    public final void setAbort() {
         this.abort = true;
     }
 

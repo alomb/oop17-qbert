@@ -1,6 +1,9 @@
 package test;
 
+import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.IOException;
 
 import org.junit.Test;
 
@@ -34,29 +37,33 @@ public class TestCharacterState {
      */
     @Test
     public void testDownwardCharacterStates() {
-        final DownwardCharacter character = new RedBall(new Position2D(ROWS - 1, (COLUMNS / 2) + 1),
-                SPEED, new DownwardCharacterGC(Sprites.getInstance().getRedBallSprites(), new Position2D(0, 0)), TIMER);
-        assertTrue(character.getCurrentState() instanceof SpawnState);
-        while (character.getCurrentState() instanceof SpawnState) {
-            character.update(DT);
-        }
-        while (isOnMap(character)) {
-            assertTrue(character.getCurrentState() instanceof LandState);
-            character.setCurrentState(character.getStandingState());
-            while (character.getCurrentState() instanceof DownwardCharStandingState) {
+        try {
+            final DownwardCharacter character = new RedBall(new Position2D(ROWS - 1, (COLUMNS / 2) + 1),
+                    SPEED, new DownwardCharacterGC(Sprites.getInstance().getRedBallSprites(), new Position2D(0, 0)), TIMER);
+            assertTrue(character.getCurrentState() instanceof SpawnState);
+            while (character.getCurrentState() instanceof SpawnState) {
                 character.update(DT);
             }
-            assertTrue(character.getCurrentState() instanceof MoveState);
-            while (character.getCurrentState() instanceof MoveState) {
-                character.update(DT);
+            while (isOnMap(character)) {
+                assertTrue(character.getCurrentState() instanceof LandState);
+                character.setCurrentState(character.getStandingState());
+                while (character.getCurrentState() instanceof DownwardCharStandingState) {
+                    character.update(DT);
+                }
+                assertTrue(character.getCurrentState() instanceof MoveState);
+                while (character.getCurrentState() instanceof MoveState) {
+                    character.update(DT);
+                }
             }
-        }
 
-        character.setCurrentState(new FallState(character));
-        while (character.getCurrentState() instanceof FallState) {
-            character.update(DT);
+            character.setCurrentState(new FallState(character));
+            while (character.getCurrentState() instanceof FallState) {
+                character.update(DT);
+            }
+            assertTrue(character.getCurrentState() instanceof DeathState);
+        } catch (IOException e) {
+            fail();
         }
-        assertTrue(character.getCurrentState() instanceof DeathState);
     }
 
     private boolean isOnMap(final Character character) {

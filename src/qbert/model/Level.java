@@ -1,6 +1,7 @@
 package qbert.model;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public final class Level {
     private final Player qbert;
     private final Spawner spawner;
     private final PointComponent points;
-    private final MapComponent map;
+    private MapComponent map;
     private final TimerComponent timer;
     private final Renderable background;
 
@@ -53,7 +54,11 @@ public final class Level {
         this.qbert = this.spawner.spawnQbert();
         this.points = new PointComponentImpl(score);
 
-        this.map = new MapComponentImpl(settings);
+        try {
+            this.map = new MapComponentImpl(settings);
+        } catch (IOException e) {
+            controller.terminate();
+        }
 
         this.timer = new TimerComponentImpl(qbert, spawner, points, map, this);
 

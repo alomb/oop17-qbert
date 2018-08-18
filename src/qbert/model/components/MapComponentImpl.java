@@ -1,6 +1,7 @@
 package qbert.model.components;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,8 +39,9 @@ public class MapComponentImpl implements MapComponent {
     /**
      * Constructor of MapComponent class.
      * @param settings Object containing the parameters of the current level
+     * @throws IOException 
      */
-    public MapComponentImpl(final LevelSettings settings) {
+    public MapComponentImpl(final LevelSettings settings) throws IOException {
         int disksToPlace = settings.getDisksNumber();
         final int diskVelocity = 40;
         final Random rand = new Random();

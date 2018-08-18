@@ -1,7 +1,7 @@
 package qbert.model.components.graphics;
 
+import qbert.model.components.graphics.animations.MovementAnimation;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.MovementAnimation;
 
 /**
  * GC stands for graphic component. This interface extends {@link GraphicComponent} to 
