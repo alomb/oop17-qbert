@@ -52,8 +52,4 @@ public interface Level {
      * @param elapsed the time passed since the last game cycle
      */
     void update(float elapsed);
-
-    void checkStatus();
-
-    void changeRound();
 }

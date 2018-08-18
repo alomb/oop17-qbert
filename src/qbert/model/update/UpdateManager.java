@@ -2,13 +2,13 @@ package qbert.model.update;
 
 import java.util.stream.Collectors;
 
-import qbert.model.Level;
 import qbert.model.characters.DownUpwardCharacter;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.DeathState;
 import qbert.model.characters.states.FallState;
 import qbert.model.characters.states.LandState;
 import qbert.model.components.MapComponent;
+import qbert.model.components.ModeComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.PointComponentImpl;
 import qbert.model.components.StandardCollision;
@@ -27,24 +27,23 @@ public abstract class UpdateManager implements UpdateStrategy {
     private final PointComponent points;
     private final MapComponent map;
     private final TimerComponent timer;
-
-    private Level level;
+    private final ModeComponent gameMode;
 
     /**
      * @param qbert Instance of {@link Qbert}
      * @param spawner Instance of {@link SpawnerImpl}
      * @param points Instance of {@link PointComponent}
-     * @param map Instance of {@link MapComponen}
+     * @param map Instance of {@link MapComponent}
+     * @param timer Instance of {@link TimerComponent}
+     * @param mode Instance of {@link ModeComponent}
      */
-    public UpdateManager(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final TimerComponent timer, Level level) {
+    public UpdateManager(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final TimerComponent timer, final ModeComponent mode) {
         this.qbert = qbert;
         this.spawner = spawner;
         this.points = points;
         this.map = map;
         this.timer = timer;
-
-        //TODO: Remove
-        this.level = level;
+        this.gameMode = mode;
     }
 
     /**
@@ -145,8 +144,7 @@ public abstract class UpdateManager implements UpdateStrategy {
                 if (!qbert.isDead()) {
                     qbert.land(this.map, this.points);
                     qbert.setCurrentState(qbert.getStandingState());
-                    //TODO: Remove
-                    level.checkStatus();
+                    gameMode.checkStatus(this.timer);
                 }
             }
         }

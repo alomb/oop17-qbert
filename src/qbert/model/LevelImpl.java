@@ -11,6 +11,8 @@ import qbert.model.characters.Player;
 import qbert.model.characters.states.DeathState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.MapComponentImpl;
+import qbert.model.components.ModeComponent;
+import qbert.model.components.ModeComponentImpl;
 import qbert.model.components.PointComponent;
 import qbert.model.components.PointComponentImpl;
 import qbert.model.components.TimerComponent;
@@ -40,13 +42,12 @@ public final class LevelImpl implements Level {
     private final PointComponent points;
     private final MapComponent map;
     private final TimerComponent timer;
+    private final ModeComponent gameMode;
     private final Renderable background;
 
     private final LevelSettings settings;
     private final Controller controller;
     private final SoundComponent sounds;
-
-    private Game gameObserver;
 
     /**
      * Constructor of class LevelImpl.
@@ -64,8 +65,9 @@ public final class LevelImpl implements Level {
         this.points = new PointComponentImpl(score);
 
         this.map = new MapComponentImpl(settings);
+        this.gameMode = new ModeComponentImpl(levelSettings, qbert, spawner, points, map, sounds);
 
-        this.timer = new TimerComponentImpl(qbert, spawner, points, map, this);
+        this.timer = new TimerComponentImpl(qbert, spawner, points, map, gameMode);
 
         final GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), 
                 new Position2D(Dimensions.getBackgroundPos().getX(), Dimensions.getBackgroundPos().getY()));
@@ -74,12 +76,12 @@ public final class LevelImpl implements Level {
 
     @Override
     public void addObserver(final Game gameObserver) {
-        this.gameObserver = gameObserver;
+        this.gameMode.addObserver(gameObserver);
     }
 
     @Override
     public void notifyEndLevel() {
-        this.gameObserver.changeRound();
+        this.gameMode.notifyEndLevel();
     }
 
     @Override
@@ -103,38 +105,8 @@ public final class LevelImpl implements Level {
     }
 
     @Override
-    public void checkStatus() {
-        int coloredTiles = 0;
-        for (final Tile t : this.map.getTileList()) {
-            if (t.getColor() == this.settings.getColorsNumber()) {
-                coloredTiles++;
-            }
-        }
-
-        if (coloredTiles == this.map.getTileList().stream().count()) {
-            this.changeRound();
-        }
-    }
-
-    @Override
     public int getLives() {
         return qbert.getLivesNumber();
-    }
-
-    @Override
-    public void changeRound() {
-        this.points.score(this.settings.getRoundScore(), qbert);
-        this.points.score(PointComponentImpl.UNUSED_DISK_SCORE * map.getDiskList().size(), qbert);
-
-        this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
-
-        this.sounds.setWinningARoundSound();
-
-        //TODO: Start of animation
-        timer.freezeEverything(() -> {
-            //TODO: End of animation
-            this.notifyEndLevel();
-        }, TimerComponentImpl.ROUND_ANIMATION_TIME);
     }
 
     @Override

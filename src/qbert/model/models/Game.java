@@ -159,7 +159,7 @@ public class Game implements Model {
 
     @Override
     public final boolean hasFinished() {
-        return this.lives <= 0 || (levelNumber == LEVELSNUMBER && roundNumber == ROUNDSNUMBER);
+        return this.lives <= 0 || (levelNumber == LEVELSNUMBER && roundNumber == (ROUNDSNUMBER + 1));
     }
 
     /**
