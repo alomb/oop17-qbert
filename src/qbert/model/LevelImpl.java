@@ -144,6 +144,7 @@ public final class LevelImpl implements Level {
                 Stream.of(this.background),
                 Stream.of(this.qbert),
                 map.getTileList().stream(),
+                map.getDiskList().stream(),
                 spawner.getGameCharacters().stream()
         ).flatMap(i -> i);
 
