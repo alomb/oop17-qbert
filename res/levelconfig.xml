@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LEVELS>
 	<LEVEL1>
-		<ROUND1 colors="1" reversible="false" disks="2" qbertSpeed="0.65">
+		<ROUND1 colors="1" reversible="false" disks="2" qbertSpeed="0.65" roundScore="1000">
 			<RedBall speed="0.70" quantity="1" spawningTime="3000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="6000" standingTime="500"/>
 		</ROUND1>
-		<ROUND2 colors="1" reversible="false" disks="2" qbertSpeed="0.65">
+		<ROUND2 colors="1" reversible="false" disks="2" qbertSpeed="0.65" roundScore="1250">
 			<RedBall speed="0.70" quantity="1" spawningTime="3000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="6000" standingTime="500"/>
 		</ROUND2>
-		<ROUND3 colors="1" reversible="false" disks="2" qbertSpeed="0.65">
+		<ROUND3 colors="1" reversible="false" disks="2" qbertSpeed="0.65" roundScore="1500">
 			<Coily speed="0.65" quantity="1" spawningTime="3000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="6000" standingTime="500"/>
 			<Wrongway speed="0.70" quantity="1" spawningTime="10000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="25000" standingTime="500"/>
 		</ROUND3>
-		<ROUND4 colors="1" reversible="false" disks="2" qbertSpeed="0.65">
+		<ROUND4 colors="1" reversible="false" disks="2" qbertSpeed="0.65" roundScore="1750">
 			<RedBall speed="0.70" quantity="1" spawningTime="3000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="6000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="9000" standingTime="500"/>
@@ -23,27 +23,27 @@
 		</ROUND4>
 	</LEVEL1>
 	<LEVEL2>
-		<ROUND1 colors="1" reversible="false" disks="3" qbertSpeed="0.65">
+		<ROUND1 colors="1" reversible="false" disks="3" qbertSpeed="0.65" roundScore="2000">
 			<Coily speed="0.65" quantity="1" spawningTime="3000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="6000" standingTime="500"/>
 			<Wrongway speed="0.70" quantity="1" spawningTime="9000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="12000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="30000" standingTime="500"/>
 		</ROUND1>
-		<ROUND2 colors="1" reversible="false" disks="3" qbertSpeed="0.65">
+		<ROUND2 colors="1" reversible="false" disks="3" qbertSpeed="0.65" roundScore="2250">
 			<Coily speed="0.65" quantity="1" spawningTime="3000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="6000" standingTime="500"/>
 			<Wrongway speed="0.70" quantity="1" spawningTime="9000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="12000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="30000" standingTime="500"/>
 		</ROUND2>
-		<ROUND3 colors="1" reversible="false" disks="2" qbertSpeed="0.65"> 
+		<ROUND3 colors="1" reversible="false" disks="2" qbertSpeed="0.65" roundScore="2500"> 
 			<RedBall speed="0.70" quantity="1" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="9000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="35000" standingTime="500"/>
 		</ROUND3>
-		<ROUND4 colors="1" reversible="false" disks="2" qbertSpeed="0.65">
+		<ROUND4 colors="1" reversible="false" disks="2" qbertSpeed="0.65" roundScore="2750">
 			<RedBall speed="0.70" quantity="1" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
@@ -53,20 +53,20 @@
 		</ROUND4>
 	</LEVEL2>
 	<LEVEL3>
-		<ROUND1 colors="1" reversible="false" disks="4" qbertSpeed="0.65">
+		<ROUND1 colors="1" reversible="false" disks="4" qbertSpeed="0.65" roundScore="3000">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="9000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="40000" standingTime="500"/>
 		</ROUND1>
-		<ROUND2 colors="1" reversible="false" disks="4" qbertSpeed="0.65">
+		<ROUND2 colors="1" reversible="false" disks="4" qbertSpeed="0.65" roundScore="3250">
 			<Coily speed="0.65" quantity="1" spawningTime="2000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Wrongway speed="0.70" quantity="1" spawningTime="9000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="12000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="40000" standingTime="500"/>
 		</ROUND2>
-		<ROUND3 colors="1" reversible="false" disks="3" qbertSpeed="0.65">
+		<ROUND3 colors="1" reversible="false" disks="3" qbertSpeed="0.65" roundScore="3500">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
@@ -74,7 +74,7 @@
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="14000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="45000" standingTime="500"/>
 		</ROUND3>
-		<ROUND4 colors="1" reversible="false" disks="3" qbertSpeed="0.65">
+		<ROUND4 colors="1" reversible="false" disks="3" qbertSpeed="0.65" roundScore="3750">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
@@ -84,13 +84,13 @@
 		</ROUND4>
 	</LEVEL3>
 	<LEVEL4>
-		<ROUND1 colors="2" reversible="false" disks="6" qbertSpeed="0.65">
+		<ROUND1 colors="2" reversible="false" disks="6" qbertSpeed="0.65" roundScore="4000">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="9000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="50000" standingTime="500"/>
 		</ROUND1>
-		<ROUND2 colors="2" reversible="false" disks="6" qbertSpeed="0.65">
+		<ROUND2 colors="2" reversible="false" disks="6" qbertSpeed="0.65" roundScore="4250">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
@@ -98,13 +98,13 @@
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="14000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="50000" standingTime="500"/>
 		</ROUND2>
-		<ROUND3 colors="2" reversible="false" disks="5" qbertSpeed="0.65">
+		<ROUND3 colors="2" reversible="false" disks="5" qbertSpeed="0.65" roundScore="4500">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="60000" standingTime="500"/>
 		</ROUND3>
-		<ROUND4 colors="2" reversible="false" disks="4" qbertSpeed="0.65">
+		<ROUND4 colors="2" reversible="false" disks="4" qbertSpeed="0.65" roundScore="4750">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
@@ -114,19 +114,19 @@
 		</ROUND4>
 	</LEVEL4>
 	<LEVEL5>
-		<ROUND1 colors="2" reversible="false" disks="7" qbertSpeed="0.65">
+		<ROUND1 colors="2" reversible="false" disks="7" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="65000" standingTime="500"/>
 		</ROUND1>
-		<ROUND2 colors="2" reversible="false" disks="6" qbertSpeed="0.65">
+		<ROUND2 colors="2" reversible="false" disks="6" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="65000" standingTime="500"/>
 		</ROUND2>
-		<ROUND3 colors="2" reversible="false" disks="6" qbertSpeed="0.65">
+		<ROUND3 colors="2" reversible="false" disks="6" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
@@ -134,7 +134,7 @@
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="14000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="70000" standingTime="500"/>
 		</ROUND3>
-		<ROUND4 colors="2" reversible="false" disks="5" qbertSpeed="0.65">
+		<ROUND4 colors="2" reversible="false" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
@@ -144,7 +144,7 @@
 		</ROUND4>
 	</LEVEL5>
 	<LEVEL6>
-		<ROUND1 colors="2" reversible="false" disks="5" qbertSpeed="0.65">
+		<ROUND1 colors="2" reversible="false" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>
@@ -152,7 +152,7 @@
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="13000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="70000" standingTime="500"/>
 		</ROUND1>
-		<ROUND2 colors="2" reversible="false" disks="5" qbertSpeed="0.65">
+		<ROUND2 colors="2" reversible="false" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>
@@ -160,7 +160,7 @@
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="13000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="70000" standingTime="500"/>
 		</ROUND2>
-		<ROUND3 colors="2" reversible="false" disks="5" qbertSpeed="0.65">
+		<ROUND3 colors="2" reversible="false" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>
@@ -168,7 +168,7 @@
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="13000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="75000" standingTime="500"/>
 		</ROUND3>
-		<ROUND4 colors="2" reversible="false" disks="5" qbertSpeed="0.65">
+		<ROUND4 colors="2" reversible="false" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>
@@ -178,7 +178,7 @@
 		</ROUND4>
 	</LEVEL6>
 	<LEVEL7>
-		<ROUND1 colors="1" reversible="true" disks="5" qbertSpeed="0.65">
+		<ROUND1 colors="1" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
@@ -186,7 +186,7 @@
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="14000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="75000" standingTime="500"/>
 		</ROUND1>
-		<ROUND2 colors="1" reversible="true" disks="5" qbertSpeed="0.65">
+		<ROUND2 colors="1" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
@@ -194,7 +194,7 @@
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="14000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="75000" standingTime="500"/>
 		</ROUND2>
-		<ROUND3 colors="1" reversible="true" disks="5" qbertSpeed="0.65">
+		<ROUND3 colors="1" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
@@ -202,7 +202,7 @@
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="14000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="80000" standingTime="500"/>
 		</ROUND3>
-		<ROUND4 colors="1" reversible="true" disks="5" qbertSpeed="0.65">
+		<ROUND4 colors="1" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="2" spawningTime="2000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="5000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="8000" standingTime="500"/>
@@ -212,7 +212,7 @@
 		</ROUND4>
 	</LEVEL7>
 	<LEVEL8>
-		<ROUND1 colors="2" reversible="true" disks="5" qbertSpeed="0.65">
+		<ROUND1 colors="2" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>
@@ -220,7 +220,7 @@
 			<Wrongway speed="0.70" quantity="1" spawningTime="13000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="85000" standingTime="500"/>
 		</ROUND1>
-		<ROUND2 colors="2" reversible="true" disks="5" qbertSpeed="0.65">
+		<ROUND2 colors="2" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>
@@ -228,7 +228,7 @@
 			<Wrongway speed="0.70" quantity="1" spawningTime="13000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="85000" standingTime="500"/>
 		</ROUND2>
-		<ROUND3 colors="2" reversible="true" disks="5" qbertSpeed="0.65">
+		<ROUND3 colors="2" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>
@@ -236,7 +236,7 @@
 			<Wrongway speed="0.70" quantity="1" spawningTime="13000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="90000" standingTime="500"/>
 		</ROUND3>
-		<ROUND4 colors="2" reversible="true" disks="5" qbertSpeed="0.65">
+		<ROUND4 colors="2" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>
@@ -246,7 +246,7 @@
 		</ROUND4>
 	</LEVEL8>
 	<LEVEL9>
-		<ROUND1 colors="3" reversible="true" disks="5" qbertSpeed="0.65">
+		<ROUND1 colors="3" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>
@@ -254,7 +254,7 @@
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="13000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="95000" standingTime="500"/>
 		</ROUND1>
-		<ROUND2 colors="3" reversible="true" disks="5" qbertSpeed="0.65">
+		<ROUND2 colors="3" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
 			<Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
 			<Ugg speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>
@@ -262,7 +262,7 @@
 			<SamAndSlick speed="0.70" quantity="1" spawningTime="13000" standingTime="500"/>
 			<GreenBall speed="0.70" quantity="1" spawningTime="100000" standingTime="500"/>
 		</ROUND2>
-		<ROUND3 colors="3" reversible="true" disks="5" qbertSpeed="0.65">
+		<ROUND3 colors="3" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
             <Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
             <Ugg speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>
@@ -270,7 +270,7 @@
             <SamAndSlick speed="0.70" quantity="1" spawningTime="13000" standingTime="500"/>
             <GreenBall speed="0.70" quantity="1" spawningTime="105000" standingTime="500"/>
         </ROUND3>
-        <ROUND4 colors="3" reversible="true" disks="5" qbertSpeed="0.65">
+        <ROUND4 colors="3" reversible="true" disks="5" qbertSpeed="0.65" roundScore="5000">
 			<RedBall speed="0.70" quantity="3" spawningTime="1000" standingTime="500"/>
             <Coily speed="0.65" quantity="1" spawningTime="4000" standingTime="500"/>
             <Ugg speed="0.70" quantity="1" spawningTime="7000" standingTime="500"/>

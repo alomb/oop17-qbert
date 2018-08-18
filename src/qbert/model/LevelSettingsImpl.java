@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Map;
 
 import qbert.model.characters.CharactersList;
-import qbert.model.components.PointComponentImpl;
 import qbert.model.spawner.EnemyInfoImpl;
 
 /**
@@ -30,16 +29,17 @@ public final class LevelSettingsImpl implements LevelSettings {
      * @param disksNumber the number of the disks of the current level/round
      * @param mapInfo the map containing enemies information
      * @param qBertSpeed the player speed
+     * @param roundScore the score gained at the end of the round
      */
     public LevelSettingsImpl(final int colorsNumber, final boolean reverse, final BufferedImage background, 
-            final Map<Integer, BufferedImage> colorMap, final int disksNumber, final Map<CharactersList, EnemyInfoImpl> mapInfo, final float qBertSpeed) {
+            final Map<Integer, BufferedImage> colorMap, final int disksNumber, final Map<CharactersList, EnemyInfoImpl> mapInfo, final float qBertSpeed, final int roundScore) {
         this.colorsNumber = colorsNumber;
         this.colorReversible = reverse;
         this.backgroundImage = background;
         this.colorMap = colorMap;
         this.disksNumber = disksNumber;
         this.mapInfo = mapInfo;
-        this.roundScore = PointComponentImpl.ROUND_SCORE;
+        this.roundScore = roundScore;
         this.qBertSpeed = qBertSpeed;
     }
 
