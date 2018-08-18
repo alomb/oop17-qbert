@@ -42,7 +42,7 @@ public abstract class UpdateManager {
     /**
      * @param elapsed the time passed since the last game cycle
      */
-    public abstract void update(final float elapsed);
+    public abstract void update(float elapsed);
 
     /**
      * @param elapsed the time passed since the last game cycle
@@ -125,7 +125,6 @@ public abstract class UpdateManager {
 
             //Check if entity is just landed 
             if (e.getCurrentState() instanceof LandState) {
-
                 //Checking if entity collides with Qbert falling out the map sides
                 e.checkCollision(qbert, points, timer, (qbert, entity) -> 
                     ((qbert.getCurrentPosition().getX() - 1 == entity.getNextPosition().getX() 
