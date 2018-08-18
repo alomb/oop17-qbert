@@ -51,6 +51,11 @@ public abstract class UpdateManager {
     protected void updateCollisions(final float elapsed) {
         spawner.updateGameCharacters(spawner.getGameCharacters().stream().peek(e -> {
             e.checkCollision(qbert, points, timer, new StandardCollision(false));
+
+            if (e.isDead()) {
+                //Notify Spawner
+                spawner.death(e);
+            }
         }).filter(e -> !e.isDead()).collect(Collectors.toList()));
 
         if (spawner.getCoily().isPresent()) {
@@ -135,11 +140,6 @@ public abstract class UpdateManager {
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(logicPos)) {
                     e.setCurrentState(new FallState(e));
-                    e.setCurrentState(new DeathState(e));
-
-                    if (e instanceof Coily) {
-                        this.points.score(PointComponentImpl.COILY_FALL_SCORE, qbert);
-                    }
                 } else {
                     if (!e.checkCollision(qbert, points, timer, (qbert, entity) -> qbert.getCurrentPosition().equals(entity.getNextPosition()) && !qbert.isMoving())) {
                         e.land(this.map, this.points);
@@ -163,6 +163,7 @@ public abstract class UpdateManager {
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(logicPos)) {
                     e.setCurrentState(new FallState(e));
+                    this.points.score(PointComponentImpl.COILY_FALL_SCORE, qbert);
                 } else {
                     if (!e.checkCollision(qbert, points, timer, (qbert, entity) -> qbert.getCurrentPosition().equals(entity.getNextPosition()) && !qbert.isMoving())) {
                         e.land(this.map, this.points);
