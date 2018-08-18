@@ -3,7 +3,6 @@ package qbert.model.components;
 import java.util.stream.Collectors;
 
 import qbert.model.Level;
-import qbert.model.characters.Coily;
 import qbert.model.characters.DownUpwardCharacter;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.DeathState;

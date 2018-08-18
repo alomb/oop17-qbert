@@ -1,16 +1,8 @@
 package qbert.model.components;
 
-import java.util.stream.Collectors;
-
 import qbert.model.Level;
-import qbert.model.characters.Coily;
-import qbert.model.characters.DownUpwardCharacter;
 import qbert.model.characters.Player;
-import qbert.model.characters.states.DeathState;
-import qbert.model.characters.states.FallState;
-import qbert.model.characters.states.LandState;
 import qbert.model.spawner.Spawner;
-import qbert.model.utilities.Position2D;
 
 public class StandardUpdate extends UpdateManager {
     

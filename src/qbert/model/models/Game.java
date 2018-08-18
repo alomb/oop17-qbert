@@ -6,6 +6,7 @@ import java.util.List;
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
 import qbert.model.Level;
+import qbert.model.LevelImpl;
 import qbert.model.LevelSettings;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.MoveState;
@@ -170,7 +171,7 @@ public class Game implements Model {
         this.levelAndRound.addData("ROUND: " + this.roundNumber);
 
         final LevelSettings ls = controller.getLevelSettings(this.levelNumber, this.roundNumber);
-        this.gameLevel = new Level(ls, lives, score, this.controller);
+        this.gameLevel = new LevelImpl(ls, lives, score, this.controller);
         this.gameLevel.addObserver(this);
     }
 
