@@ -6,6 +6,7 @@ import java.util.List;
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
 import qbert.model.Level;
+import qbert.model.LevelImpl;
 import qbert.model.LevelSettings;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.MoveState;
@@ -79,10 +80,10 @@ public class Game implements Model {
      * The method used by the current {@link Level} to advise that must be instantiated a new level.
      */
     public final void changeRound() {
-        if (this.roundNumber >= ROUNDSNUMBER) {
+        if (this.roundNumber >= ROUNDSNUMBER && this.levelNumber < LEVELSNUMBER) {
             this.roundNumber = 1;
             this.levelNumber++;
-        } else {
+        } else if (this.roundNumber < ROUNDSNUMBER && this.levelNumber <= LEVELSNUMBER) {
             this.roundNumber++;
         }
 
@@ -158,7 +159,7 @@ public class Game implements Model {
 
     @Override
     public final boolean hasFinished() {
-        return this.lives <= 0 || (levelNumber == LEVELSNUMBER && roundNumber == ROUNDSNUMBER);
+        return this.lives <= 0;
     }
 
     /**
@@ -170,7 +171,7 @@ public class Game implements Model {
         this.levelAndRound.addData("ROUND: " + this.roundNumber);
 
         final LevelSettings ls = controller.getLevelSettings(this.levelNumber, this.roundNumber);
-        this.gameLevel = new Level(ls, lives, score, this.controller);
+        this.gameLevel = new LevelImpl(ls, lives, score, this.controller);
         this.gameLevel.addObserver(this);
     }
 
