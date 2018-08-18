@@ -1,6 +1,6 @@
 /svg/BackgroundBlue.svg+BackgroundBlue.png
 /svg/BackgroundBrown.svg+BackgroundBrown.png
-/svg/BackgroundGreen.svg+BackgroundGreen.png 
+/svg/BackgroundGreen.svg+BackgroundGreen.png
 /svg/BackgroundGrey.svg+BackgroundGrey.png
 /svg/CoilyBackMove.svg+CoilyBackMove.png
 /svg/CoilyBackStand.svg+CoilyBackStand.png
