@@ -1,11 +1,8 @@
 package qbert.model;
 
-import java.awt.image.BufferedImage;
 import java.util.List;
 
-import qbert.model.characters.Character;
 import qbert.model.characters.Player;
-import qbert.model.components.MapComponent;
 import qbert.model.models.Game;
 import qbert.model.components.graphics.Renderable;
 
@@ -17,16 +14,6 @@ public interface Level {
     void addObserver(Game gameObserver);
 
     void notifyEndLevel();
-
-    /**
-     * @return Component managing the map of the level
-     */
-    MapComponent getMap();
-
-    /**
-     * @return The background sprite of the map
-     */
-    BufferedImage getBackground();
 
     /**
      * @return Instance of {@link Qbert}

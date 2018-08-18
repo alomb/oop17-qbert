@@ -85,16 +85,6 @@ public final class LevelImpl implements Level {
     }
 
     @Override
-    public MapComponent getMap() {
-        return this.map;
-    }
-
-    @Override
-    public BufferedImage getBackground() {
-        return this.settings.getBackgroundImage();
-    }
-
-    @Override
     public Player getQBert() {
         return this.qbert;
     }

@@ -80,10 +80,10 @@ public class Game implements Model {
      * The method used by the current {@link Level} to advise that must be instantiated a new level.
      */
     public final void changeRound() {
-        if (this.roundNumber >= ROUNDSNUMBER) {
+        if (this.roundNumber >= ROUNDSNUMBER && this.levelNumber < LEVELSNUMBER) {
             this.roundNumber = 1;
             this.levelNumber++;
-        } else {
+        } else if (this.roundNumber < ROUNDSNUMBER && this.levelNumber <= LEVELSNUMBER) {
             this.roundNumber++;
         }
 
@@ -159,7 +159,7 @@ public class Game implements Model {
 
     @Override
     public final boolean hasFinished() {
-        return this.lives <= 0 || (levelNumber == LEVELSNUMBER && roundNumber == (ROUNDSNUMBER + 1));
+        return this.lives <= 0;
     }
 
     /**
