@@ -1,4 +1,4 @@
-package qbert.model.components;
+package qbert.model.update;
 
 import java.util.stream.Collectors;
 
@@ -8,21 +8,29 @@ import qbert.model.characters.Player;
 import qbert.model.characters.states.DeathState;
 import qbert.model.characters.states.FallState;
 import qbert.model.characters.states.LandState;
+import qbert.model.components.MapComponent;
+import qbert.model.components.PointComponent;
+import qbert.model.components.PointComponentImpl;
+import qbert.model.components.StandardCollision;
+import qbert.model.components.TimerComponent;
+import qbert.model.components.TimerComponentImpl;
 import qbert.model.spawner.Spawner;
 import qbert.model.utilities.Position2D;
 
-public abstract class UpdateManager {
+/**
+ * Implementation of the updates of the various entities.
+ */
+public abstract class UpdateManager implements UpdateStrategy {
 
-    protected final Player qbert; 
-    protected final Spawner spawner;
-    protected final PointComponent points;
-    protected final MapComponent map;
-    protected final TimerComponent timer;
+    private final Player qbert; 
+    private final Spawner spawner;
+    private final PointComponent points;
+    private final MapComponent map;
+    private final TimerComponent timer;
 
     private Level level;
 
     /**
-     * Constructor of class TimerComponent.
      * @param qbert Instance of {@link Qbert}
      * @param spawner Instance of {@link SpawnerImpl}
      * @param points Instance of {@link PointComponent}
@@ -40,9 +48,39 @@ public abstract class UpdateManager {
     }
 
     /**
-     * @param elapsed the time passed since the last game cycle
+     * @return instance of {@link Player}
      */
-    public abstract void update(float elapsed);
+    public Player getQbert() {
+        return this.qbert;
+    }
+
+    /**
+     * @return instance of {@link Spawner}
+     */
+    public Spawner getSpawner() {
+        return this.spawner;
+    }
+
+    /**
+     * @return instance of {@link PointComponent}
+     */
+    public PointComponent getPointComponent() {
+        return this.points;
+    }
+
+    /**
+     * @return instance of {@link MapComponent}
+     */
+    public MapComponent getMapComponent() {
+        return this.map;
+    }
+
+    /**
+     * @return instance of {@link TimerComponent}
+     */
+    public TimerComponent getTimerComponent() {
+        return this.timer;
+    }
 
     /**
      * @param elapsed the time passed since the last game cycle

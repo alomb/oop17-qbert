@@ -3,6 +3,10 @@ package qbert.model.components;
 import qbert.model.Level;
 import qbert.model.characters.Player;
 import qbert.model.spawner.Spawner;
+import qbert.model.update.FreezeAll;
+import qbert.model.update.FreezeEntities;
+import qbert.model.update.FreezeNone;
+import qbert.model.update.UpdateManager;
 
 /**
  * Component managing informations about the game timers and updates all the entities.
@@ -16,7 +20,7 @@ public class TimerComponentImpl implements TimerComponent {
     /**
      * Duration of the death animation expressed in milliseconds.
      */
-    public static final int DEATH_ANIMATION_TIME = 4000;
+    public static final int DEATH_ANIMATION_TIME = 2000;
 
     /**
      * Duration of the round change animation expressed in milliseconds.
@@ -43,8 +47,8 @@ public class TimerComponentImpl implements TimerComponent {
         this.spawner = spawner;
         this.points = points;
         this.map = map;
-        this.um = new StandardUpdate(qbert, spawner, points, map, this, level);
-        
+        this.um = new FreezeNone(qbert, spawner, points, map, this, level);
+
         //TODO: Remove
         this.level = level;
     }
@@ -63,7 +67,7 @@ public class TimerComponentImpl implements TimerComponent {
     public void freezeEntities(final int timeout) {
         this.um = new FreezeEntities(qbert, spawner, points, map, this, level);
         this.setTimeout(() -> {
-            this.um = new StandardUpdate(qbert, spawner, points, map, this, level);
+            this.um = new FreezeNone(qbert, spawner, points, map, this, level);
         }, timeout);
     }
 
@@ -76,7 +80,7 @@ public class TimerComponentImpl implements TimerComponent {
         this.um = new FreezeAll(qbert, spawner, points, map, this, level);
         this.setTimeout(() -> {
             runnable.run();
-            this.um = new StandardUpdate(qbert, spawner, points, map, this, level);
+            this.um = new FreezeNone(qbert, spawner, points, map, this, level);
         }, timeout);
     }
 
