@@ -15,7 +15,7 @@ public class RankingBuilder {
     private Date date;
     /**
      * Construct.
-     * @param builder for initzialize attribute of object
+     * @param builder for initialize attribute of object
      */
     public RankingBuilder(final Builder builder) {
         score = builder.scoreB;
@@ -43,7 +43,6 @@ public class RankingBuilder {
         private Integer scoreB;
         private String nameB = "";
         private Date dateB = new Date();
-//        private String[][] alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         private String[][] alphabet = {{"A", "B", "C", "D", "E", "F", "G"}, {"H", "I", "L", "M", "N", "O", "P"}, {"Q", "R", "S", "T", "U", "V", "Z"}};
 
         /**
@@ -69,9 +68,9 @@ public class RankingBuilder {
          * @return the entire object
          */
         public Builder addChar(final Integer row, final Integer column) {
-//            if (nameB.length() <= NCHARACTER) {
+            if (nameB.length() <= NCHARACTER) {
                 nameB += alphabet[row][column];
-//            }
+            }
             return this;
         }
         /**

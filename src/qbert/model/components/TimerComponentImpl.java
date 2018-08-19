@@ -1,12 +1,11 @@
 package qbert.model.components;
 
-import qbert.model.Level;
 import qbert.model.characters.Player;
 import qbert.model.spawner.Spawner;
 import qbert.model.update.FreezeAll;
 import qbert.model.update.FreezeEntities;
 import qbert.model.update.FreezeNone;
-import qbert.model.update.UpdateManager;
+import qbert.model.update.UpdateStrategy;
 
 /**
  * Component managing informations about the game timers and updates all the entities.
@@ -32,14 +31,14 @@ public class TimerComponentImpl implements TimerComponent {
     private final PointComponent points;
     private final MapComponent map;
     private final ModeComponent mode;
-    private UpdateManager um;
+    private UpdateStrategy um;
 
     /**
-     * Constructor of class TimerComponent.
      * @param qbert Instance of {@link Qbert}
      * @param spawner Instance of {@link SpawnerImpl}
      * @param points Instance of {@link PointComponent}
-     * @param map Instance of {@link MapComponen}
+     * @param map Instance of {@link MapComponent}
+     * @param mode Instance of {@link ModeComponent}
      */
     public TimerComponentImpl(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final ModeComponent mode) {
         this.qbert = qbert;
@@ -50,30 +49,22 @@ public class TimerComponentImpl implements TimerComponent {
         this.um = new FreezeNone(qbert, spawner, points, map, this, mode);
     }
 
-    /**
-     * @param elapsed the time passed since the last game cycle
-     */
-    public void update(final float elapsed) {
+    @Override
+    public final void update(final float elapsed) {
         um.update(elapsed);
     }
 
-    /**
-     * Freezes all the enemy entities for a certain amount of time.
-     * @param timeout Amount of time expressed in milliseconds
-     */
-    public void freezeEntities(final int timeout) {
+
+    @Override
+    public final void freezeEntities(final int timeout) {
         this.um = new FreezeEntities(qbert, spawner, points, map, this, mode);
         this.setTimeout(() -> {
             this.um = new FreezeNone(qbert, spawner, points, map, this, mode);
         }, timeout);
     }
 
-    /**
-     * Freezes the game for a certain amount of time.
-     * @param runnable Callback function
-     * @param timeout Amount of time expressed in milliseconds
-     */
-    public void freezeEverything(final Runnable runnable, final int timeout) {
+    @Override
+    public final void freezeEverything(final Runnable runnable, final int timeout) {
         this.um = new FreezeAll(qbert, spawner, points, map, this, mode);
         this.setTimeout(() -> {
             runnable.run();
@@ -86,12 +77,13 @@ public class TimerComponentImpl implements TimerComponent {
      * @param runnable Callback function
      * @param timeout Time expressed in milliseconds
      */
-    public void setTimeout(final Runnable runnable, final int timeout) {
+    private void setTimeout(final Runnable runnable, final int timeout) {
         new Thread(() -> {
             try {
                 Thread.sleep(timeout);
                 runnable.run();
-            } catch (Exception e) {}
+            } catch (Exception e) { }
+            //TODO: Catch?
         }).start();
     }
 }

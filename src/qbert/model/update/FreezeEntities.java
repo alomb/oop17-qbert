@@ -1,6 +1,5 @@
 package qbert.model.update;
 
-import qbert.model.Level;
 import qbert.model.characters.Player;
 import qbert.model.components.MapComponent;
 import qbert.model.components.ModeComponent;
@@ -19,6 +18,7 @@ public class FreezeEntities extends UpdateManager {
      * @param spawner Instance of {@link SpawnerImpl}
      * @param points Instance of {@link PointComponent}
      * @param map Instance of {@link MapComponent}
+     * @param timer Instance of {@link TimerComponent}
      * @param mode Instance of {@link MapComponent}
      */
     public FreezeEntities(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final TimerComponent timer,

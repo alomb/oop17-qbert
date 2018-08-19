@@ -22,11 +22,4 @@ public interface TimerComponent {
      * @param timeout Amount of time expressed in milliseconds
      */
     void freezeEverything(Runnable runnable, int timeout);
-
-    /**
-     * Utility function that starts a timer which execute a function at the end of the given time.
-     * @param runnable Callback function
-     * @param timeout Time expressed in milliseconds
-     */
-    void setTimeout(Runnable runnable, int timeout);
 }

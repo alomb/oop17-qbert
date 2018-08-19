@@ -42,12 +42,11 @@ public final class LevelImpl implements Level {
     private final Player qbert;
     private final Spawner spawner;
     private final PointComponent points;
-    private MapComponent map;
     private final TimerComponent timer;
     private final ModeComponent gameMode;
     private final Renderable background;
-
     private final LevelSettings settings;
+    private MapComponent map;
 
     /**
      * Constructor of class LevelImpl.
