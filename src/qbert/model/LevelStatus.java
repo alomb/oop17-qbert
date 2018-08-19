@@ -1,11 +1,12 @@
-package qbert.model.components;
+package qbert.model;
 
+import qbert.model.components.TimerComponent;
 import qbert.model.models.Game;
 
 /**
  * Interface for handling the round winning conditions and actions.
  */
-public interface ModeComponent {
+public interface LevelStatus {
 
     /**
      * Checks if the player has won the round.
@@ -19,8 +20,14 @@ public interface ModeComponent {
      */
     void changeRound(TimerComponent timer);
 
+    /**
+     * @param gameObserver Instance of class {@link Game} than needs to be notified at the end of a level.
+     */
     void addObserver(Game gameObserver);
 
+    /**
+     * Informs @{link Game} of the end of the current round.
+     */
     void notifyEndLevel();
 
 }

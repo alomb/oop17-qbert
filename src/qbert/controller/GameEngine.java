@@ -86,7 +86,7 @@ public class GameEngine implements Loop {
             try {
                 Thread.sleep(GameEngine.PERIOD - dt);
             } catch (final Exception ex) {
-                ex.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
     }

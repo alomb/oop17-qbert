@@ -11,8 +11,6 @@ import qbert.controller.Controller;
 import qbert.model.characters.Player;
 import qbert.model.components.MapComponent;
 import qbert.model.components.MapComponentImpl;
-import qbert.model.components.ModeComponent;
-import qbert.model.components.ModeComponentImpl;
 import qbert.model.components.PointComponent;
 import qbert.model.components.PointComponentImpl;
 import qbert.model.components.TimerComponent;
@@ -43,7 +41,7 @@ public final class LevelImpl implements Level {
     private final Spawner spawner;
     private final PointComponent points;
     private final TimerComponent timer;
-    private final ModeComponent gameMode;
+    private final LevelStatus status;
     private final Renderable background;
     private final LevelSettings settings;
     private MapComponent map;
@@ -69,9 +67,9 @@ public final class LevelImpl implements Level {
             controller.forceQuit(USER_MESSAGE);
         }
 
-        this.gameMode = new ModeComponentImpl(levelSettings, qbert, spawner, points, map, sounds);
+        this.status = new LevelStatusImpl(levelSettings, qbert, spawner, points, map, sounds);
 
-        this.timer = new TimerComponentImpl(qbert, spawner, points, map, gameMode);
+        this.timer = new TimerComponentImpl(qbert, spawner, points, map, status);
 
         final GraphicComponent backgroundGC = new GenericGC(this.settings.getBackgroundImage(), 
                 new Position2D(Dimensions.getBackgroundPos().getX(), Dimensions.getBackgroundPos().getY()));
@@ -80,12 +78,12 @@ public final class LevelImpl implements Level {
 
     @Override
     public void addObserver(final Game gameObserver) {
-        this.gameMode.addObserver(gameObserver);
+        this.status.addObserver(gameObserver);
     }
 
     @Override
     public void notifyEndLevel() {
-        this.gameMode.notifyEndLevel();
+        this.status.notifyEndLevel();
     }
 
     @Override

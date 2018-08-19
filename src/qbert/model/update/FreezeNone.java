@@ -1,8 +1,8 @@
 package qbert.model.update;
 
+import qbert.model.LevelStatus;
 import qbert.model.characters.Player;
 import qbert.model.components.MapComponent;
-import qbert.model.components.ModeComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.TimerComponent;
 import qbert.model.spawner.Spawner;
@@ -19,11 +19,11 @@ public class FreezeNone extends UpdateManager {
      * @param points Instance of {@link PointComponent}
      * @param map Instance of {@link MapComponent}
      * @param timer Instance of {@link TimerComponent}
-     * @param mode Instance of {@link MapComponent}
+     * @param status Instance of {@link MapComponent}
      */
     public FreezeNone(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final TimerComponent timer,
-            final ModeComponent mode) {
-        super(qbert, spawner, points, map, timer, mode);
+            final LevelStatus status) {
+        super(qbert, spawner, points, map, timer, status);
     }
 
     /**
