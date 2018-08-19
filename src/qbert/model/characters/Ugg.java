@@ -22,7 +22,7 @@ public class Ugg extends LeftwardCharacter {
     }
 
     @Override
-    public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
+    protected final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
         qbert.setDead(true);
         qbert.getPlayerSoundComponent().setDeathSound();
     }

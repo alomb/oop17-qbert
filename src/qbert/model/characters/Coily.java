@@ -70,7 +70,7 @@ public class Coily extends CharacterImpl implements Snake {
     }
 
     @Override
-    public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
+    protected final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
         qbert.setDead(true);
         if (this.adult) {
             this.sounds.setKillSound();
