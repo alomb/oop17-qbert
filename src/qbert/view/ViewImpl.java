@@ -24,6 +24,7 @@ import qbert.view.scenes.SceneGame;
 import qbert.view.scenes.SceneGameOver;
 import qbert.view.scenes.SceneIntro;
 import qbert.view.scenes.SceneMenu;
+import qbert.view.scenes.SceneMode;
 import qbert.view.scenes.SceneRanking;
 
 /**
@@ -64,6 +65,7 @@ public class ViewImpl implements View {
         this.addScene(new SceneMenu(w, h, controller), GameStatus.MENU);
         this.addScene(new SceneRanking(w, h, controller), GameStatus.RANKING);
         this.addScene(new SceneGameOver(w, h, controller), GameStatus.GAMEOVER);
+        this.addScene(new SceneMode(w, h, controller), GameStatus.MODE);
 
         if (!this.scenes.keySet().equals(GameStatus.getAll())) {
             Logger.getGlobal().log(Level.SEVERE, "Not all the game status have been initialized. Program aborted");

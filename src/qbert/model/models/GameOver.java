@@ -19,10 +19,6 @@ public class GameOver implements Model {
     private Builder ranking = new RankingBuilder.Builder();
     private int index;
     private int indexC;
-//    private static final int MAXVALUE = 28;
-//    private static final int MINVALUE = 0;
-//    private static final int EXIT = 27;
-//    private static final int CONFIRM = 28;
     private static final int MAXVALUEFIRSTCOLUMN = 9;
     private static final int MAXVALUEOTHERCOLUMN = 6;
     private static final int MINVALUE = 0;
