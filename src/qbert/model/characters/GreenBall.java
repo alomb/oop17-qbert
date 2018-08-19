@@ -25,7 +25,7 @@ public class GreenBall extends DownwardCharacter {
     }
 
     @Override
-    public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
+    protected final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
         timer.freezeEntities(TimerComponentImpl.GREEN_BALL_FREEZE_TIME);
         points.score(PointComponentImpl.KILL_GREEN_BALL_SCORE, qbert);
         this.setCurrentState(new DeathState(this));

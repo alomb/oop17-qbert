@@ -1,4 +1,4 @@
-package qbert.model.components;
+package qbert.model.collision;
 
 import qbert.model.characters.Player;
 
@@ -6,11 +6,11 @@ import java.util.function.BiPredicate;
 
 import qbert.model.characters.Character;
 
-public class StandardCollision implements BiPredicate<Player, Character> {
+public class CompositeCollision implements BiPredicate<Player, Character> {
 
     private final boolean pauseEntities;
 
-    public StandardCollision(final boolean pauseEntities) {
+    public CompositeCollision(final boolean pauseEntities) {
         this.pauseEntities = pauseEntities;
     }
 

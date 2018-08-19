@@ -33,8 +33,7 @@ public class ModeComponentImpl implements ModeComponent {
         this.points.score(this.settings.getRoundScore(), qbert);
         this.points.score(PointComponentImpl.UNUSED_DISK_SCORE * map.getDiskList().size(), qbert);
 
-        this.spawner.getGameCharacters().forEach(c -> c.setCurrentState(new DeathState(c)));
-
+        this.spawner.killAll();
         this.sounds.setWinningARoundSound();
 
         //TODO: Start of animation

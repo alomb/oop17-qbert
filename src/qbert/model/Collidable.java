@@ -23,11 +23,4 @@ public interface Collidable {
      */
     boolean checkCollision(Player qbert, PointComponent points, TimerComponent timer, BiPredicate<Player, Character> collision);
 
-    /**
-     * Event happening on the collision between the entity and {@link Qbert}.
-     * @param qbert {@link Player} reference for dealing with deadly collisions
-     * @param points reference to {@link PointComponent} to eventually score points in collisions
-     * @param timer reference to {@link TimerComponent} for dealing with time flow changing collisions
-     */
-    void collide(Player qbert, PointComponent points, TimerComponent timer);
 }

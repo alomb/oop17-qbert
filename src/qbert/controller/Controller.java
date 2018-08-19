@@ -76,9 +76,11 @@ public interface Controller {
     void terminate();
 
     /**
-     * Method used to abort the application during its setup phase.
+     * Display the message then close the window in the {@link View} and terminate the {@link GameEngine}
+     * closing the application.
+     * @param errorMessage the message to be displayed
      */
-    void setAbort();
+    void forceQuit(String errorMessage);
 
     /**
      * @param soundEffect the {@link SoundEffectFile} value representing the .wav file to be loaded

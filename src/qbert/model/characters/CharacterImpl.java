@@ -133,8 +133,13 @@ public abstract class CharacterImpl implements Character {
         return false;
     }
 
-    @Override
-    public abstract void collide(Player qbert, PointComponent points, TimerComponent timer);
+    /**
+     * Event happening on the collision between the entity and {@link Qbert}.
+     * @param qbert {@link Player} reference for dealing with deadly collisions
+     * @param points reference to {@link PointComponent} to eventually score points in collisions
+     * @param timer reference to {@link TimerComponent} for dealing with time flow changing collisions
+     */
+    protected abstract void collide(Player qbert, PointComponent points, TimerComponent timer);
 
     @Override
     public final int getZIndex() {
