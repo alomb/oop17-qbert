@@ -177,7 +177,6 @@ Per l'implementazione degli effetti sonori si è cercato di procedere in maniera
 \label{img:GerarchiaSound}
 \end{figure}
 
-\iffalse ------------ PARTE MIA --------------- \fi
 \begin{flushright}
 \item\subsubsection{Alessandro Stockman - Sviluppo di Level}
 \end{flushright}
@@ -185,17 +184,14 @@ Per l'implementazione degli effetti sonori si è cercato di procedere in maniera
 La classe \emph{Level} è stata pensata con un ruolo principale nella gestione delle meccaniche di gioco. Per evitare la creazione di una classe monolitica contente aspetti completamente diversificati tra loro è stato scelto di sviluppare un insieme di classi \emph{Component}.
 In particolare vengono sviluppati un \emph{MapComponent} per la gestione di aspetti riguardanti il mondo di gioco (tile, dischi, controllo cadute, ...). 
 Un \emph{PointComponent} per la gestione dei punti e delle vite guadagnate con essi, contenente i valori costanti dei punteggi ottenuti al verificarsi di dati avvenimenti.
-Un \emph{TimerComponent}, gestore dei vari update alle entità di gioco.
-Un \emph{ModeComponent}...
+Un \emph{TimerComponent}, gestore dei vari update alle entità di gioco, approfondito più avanti.
 
-\iffalse ------------------ IMG --------------------
 \begin{figure}[H]
 \centering{}
 \includegraphics[width=\linewidth]{img/LevelArchitecture}
 \caption{Gerarchia dei Component di Level}
 \label{img:LevelArchitecture}
 \end{figure}
-\fi
 
 \begin{flushright}
 \item\subsubsection{Alessandro Stockman - Gestione delle Collisioni}
@@ -211,13 +207,21 @@ In questa maniera si introduce la possibilità di rendere più semplice l'introd
 \label{img:CheckCollision}
 \end{figure}
 
-\iffalse ------------ STRATEGY PER CHECK COLLISION? --------------- \fi
+Durante la fasi di analisi si è optato per un controllo delle collisioni a livello puramente logico, senza quindi controllare le posizioni fisiche degli sprite nella finestra ma solo la loro posizione in coordinate all'interno della mappa. Nonostante l'appartente comodità di questo tipo di gestione in contesto simile si è presentata la necessità di dover verificare più volte la presenza di collisioni nel corso di un solo ciclo di update. Per semplificare il processo si è deciso di utilizzare il pattern \textbf{Strategy}, realizzato con l'implementazione dell'interfaccia funzionale \emph{BiPredicate<X, Y>} utilizzata come \emph{BiPredicate<Player, Character>}. La classe implementativa della strategia viene istanziata e passata come parametro al metodo checkCollision(), che facendo un test sull'istanza può determinare se ci sia una collisione in atto.
+
+\begin{figure}[H]
+\centering{}
+\includegraphics[width=\linewidth]{img/CollisionStrategy}
+\caption{Implementazione del Pattern Strategy per la gestione delle collisioni}
+\label{img:CollisionStrategy}
+\end{figure}
 
 \begin{flushright}
 \item\subsubsection{Alessandro Stockman - Flusso temporale del gioco}
 \end{flushright}
 
 Per gestire in maniera comoda le alterazioni del flusso temporale durante il gioco (freeze dei nemici in seguito alla cattura di \emph{GreenBall}, attesa di pochi secondi dopo una morte o vincita del livello, ...) si è optato per la realizzazione del pattern \textbf{Strategy} al fine di dare la possibilità al metodo update() di \emph{TimerComponent} di implementare diversi algoritmi a seconda delle necessità.
+Questa gestione permette inoltre di poter introdurre ottimalmente nuovi algoritmi di update senza alterare enormemente il codice.
 
 \begin{figure}[H]
 \centering{}
@@ -225,8 +229,6 @@ Per gestire in maniera comoda le alterazioni del flusso temporale durante il gio
 \caption{Implementazione dei vari algoritmi di Update}
 \label{img:UpdateStrategy}
 \end{figure}
-
-\iffalse ------------ FINE PARTE MIA --------------- \fi
 
 \begin{flushright}
 \item\subsubsection{Andrea Giulianini - Gestione Risoluzione/Immagini}
@@ -289,7 +291,8 @@ Nello specifico la divisione dei compiti è stata la seguente:
 
 	\hypertarget{target}{\item \textbf{Meluzzi Marco}}: Per la realizzazione della configurazione dei vari round di gioco, ho deciso di memorizzare le informazioni di interesse in un file .xml, per sfruttare i vantaggi derivanti dall'utilizzo del linguaggio di markup. A tal fine ho sfruttato ed approfondito personalmente la libreria \href{http://www.jdom.org}{JDOM 2.0.6}, che permette un accesso e una gestione molto semplice del file. Nello specifico, questo viene trattato secondo una visione gerarchica ad albero per cui, dopo aver istanziato il builder e con il metodo build(String arg0) aver ottenuto il Document che rappresenta il file, lo si può scorrere partendo dal suo elemento nella radice, ottenibile con il metodo getRootElement(), per passare poi ai livelli sottostanti mediante l'uso iterato di getChild(). Giunti ad un qualsiasi livello di profondità, il metodo getAttributeValue(String attname) permette di ottenere il valore corrispondente al parametro passato come argomento. Nel caso specifico in esame, una volta lette le informazioni inerenti a un dato round, ho proceduto a ricavare la lista dei nodi figli - rappresentanti i personaggi del round - con la chiamata a getChildren() e a crearne un iteratore, in modo da ciclare i nodi con gli usuali metodi dell'interfaccia \emph{Iterator} e ottenerne i parametri corrispondenti.
 
-	\item \textbf{Stockman Alessandro}: Ho fatto largo utilizzo di stream nell'interezza dell'applicazione, ad esempio nella gestione del controllo delle collisioni, dove ho utilizzato anche lambda expressions al loro interno, o nel raggruppamento dei vari elementi di gioco renderizzabili in un unica lista nel metodo getRenderables() della classe \emph{LevelImpl}.
+	\item \textbf{Stockman Alessandro}: Ho fatto largo utilizzo di stream nell'interezza dell'applicazione, ad esempio nella gestione del controllo delle collisioni, dove ho utilizzato anche lambda expressions al loro interno, o nel raggruppamento dei vari elementi di gioco renderizzabili in un unica lista nel metodo getRenderables() della classe \emph{LevelImpl} che vengono successivamente disegnati sulla view ordinati per l'indice restituito dal metodo getZIndex() dell'interfaccia \emph{Renderable} utilizzando una lambda expression.
+	Inoltre dove necessario, come per esempio nella gestione del nemico Coily o in quella dei Dischi sulla mappa, ho utilizzato Optional non potendo garantire a priori la presenza delle istanze.
 	Nella necessità di realizzare un timer con callback al suo termine ho utilizzato un piccolo snippet di codice trovato sul web (\href{https://stackoverflow.com/questions/26311470/what-is-the-equivalent-of-javascript-settimeout-in-java}{link}) che propone lo stesso comportamento della funzione setTimeout() di JavaScript.
 
 \chapter{Commenti finali}
