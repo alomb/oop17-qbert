@@ -1,6 +1,7 @@
 package qbert.controller;
 
 import org.jdom2.JDOMException;
+import java.io.IOException;
 import qbert.model.LevelSettings;
 
 /**
@@ -13,8 +14,9 @@ public interface LevelConfigurationReader {
      * @param levelNumber the level that must be loaded
      * @param roundNumber the round that must be loaded
      * @throws JDOMException when some jdom library error occur
+     * @throws IOException when some input/output error occur
      */
-    void readLevelConfiguration(int levelNumber, int roundNumber) throws JDOMException;
+    void readLevelConfiguration(int levelNumber, int roundNumber) throws JDOMException, IOException;
 
     /**
      * @return the current {@link LevelSettingsImpl}

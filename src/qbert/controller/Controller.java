@@ -60,12 +60,12 @@ public interface Controller {
     Integer getScore();
 
     /**
-     * @return from the current ranking
+     * @return the map modelling the general ranking
      */
     Map<String, Integer> getRank();
+
     /**
-     * @param string 
-     * 
+     * @param string the ranking to be added to the file
      */
     void addRank(String string);
 

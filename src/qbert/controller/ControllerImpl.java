@@ -40,6 +40,9 @@ import qbert.view.View;
  * The implementation of {@link Controller}.
  */
 public class ControllerImpl implements Controller {
+
+    private static final String USER_MESSAGE = "Application aborted. Please look at log file for more information.";
+
     private final String urlFile = System.getProperty("user.home") + "/qbert/ranking.txt";
     private LevelConfigurationReader lcr;
     private GameEngine gameEngine;
@@ -62,7 +65,7 @@ public class ControllerImpl implements Controller {
             this.lcr = new LevelConfigurationReaderImpl();
         } catch (IOException e) {
             Logger.getGlobal().log(Level.SEVERE, e.getMessage());
-            this.forceQuit("Application aborted, please look at log file for more informations");
+            this.forceQuit(USER_MESSAGE);
         }
 
         if (!aborted) {
@@ -72,31 +75,6 @@ public class ControllerImpl implements Controller {
         }
     }
 
-    /**
-     * Check if file ranking is empty or not.
-     */
-    private boolean isEmptyFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
-            if (br.readLine() == null) {
-               return true;
-            }
-            return false;
-        } catch (FileNotFoundException e) {
-            File file = new File(urlFile);
-            //Create the file
-            try {
-                file.createNewFile();
-                return true;
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-            }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return false;
-    }
     @Override
     public final void setupGameEngine() {
         if (!this.aborted) {
@@ -112,9 +90,10 @@ public class ControllerImpl implements Controller {
             lcr.readLevelConfiguration(level, round);
         } catch (JDOMException e) {
             Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-            this.forceQuit(e.getMessage());
+            this.forceQuit(USER_MESSAGE);
         } catch (IOException e) {
-            this.forceQuit(e.getMessage());
+            Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+            this.forceQuit(USER_MESSAGE);
         }
         return lcr.getLevelSettings();
     }
@@ -126,9 +105,11 @@ public class ControllerImpl implements Controller {
 
     @Override
     public final void changeScene(final GameStatus newGameStatus) {
-        this.statusManager.setCurrentStatus(newGameStatus);
-        this.view.setScene(this.statusManager.getCurrentStatus());
-        this.gameEngine.setup(this.statusManager.getModel());
+        if (!this.aborted) {
+            this.statusManager.setCurrentStatus(newGameStatus);
+            this.view.setScene(this.statusManager.getCurrentStatus());
+            this.gameEngine.setup(this.statusManager.getModel());
+        }
     }
 
     @Override
@@ -151,53 +132,52 @@ public class ControllerImpl implements Controller {
     public final Integer getScore() {
         return this.gamePoint.poll();
     }
-    /**
-     * With this method we can know the ranking, read file and insert all in map.
-     */
-    public Map<String, Integer> getRank() {
-        Map<String, Integer> rank = new TreeMap<String, Integer>();
+
+    @Override
+    public final Map<String, Integer> getRank() {
+        final Map<String, Integer> rank = new TreeMap<String, Integer>();
         try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
             String line;
             if (!isEmptyFile()) {
-                while ((line = br.readLine()) != null) {
+                line = br.readLine();
+                while (line != null) {
                     rank.put(line.split("\\?")[0], Integer.parseInt(line.split("\\?")[1]));
+                    line = br.readLine();
                 }
             }
         } catch (FileNotFoundException e) {
-            File file = new File(urlFile);
+            final File file = new File(urlFile);
             //Create the file
             try {
                 file.createNewFile();
             } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+                Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+                this.forceQuit(USER_MESSAGE);
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+            this.forceQuit(USER_MESSAGE);
         }
         //Convert map to a List
-        List<Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(rank.entrySet());
+        final List<Entry<String, Integer>> list = new LinkedList<Map.Entry<String, Integer>>(rank.entrySet());
 
         //Sorting the list with a comparator
         Collections.sort(list, new Comparator<Entry<String, Integer>>() {
-                public int compare(Map.Entry<String, Integer> o1, final Map.Entry<String, Integer> o2) {
+                public int compare(final Map.Entry<String, Integer> o1, final Map.Entry<String, Integer> o2) {
                         return (o2.getValue()).compareTo(o1.getValue());
                 }
         });
 
         //Convert sortedMap back to Map
-        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
-        for (Entry<String, Integer> entry : list) {
+        final Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+        for (final Entry<String, Integer> entry : list) {
                 sortedMap.put(entry.getKey(), entry.getValue());
         }
         return sortedMap;
     }
-    /**
-     * We can write in file with that method read builder object and write that.
-     * @param s to write in file
-     */
-    public void addRank(final String s) {
+
+    @Override
+    public final void addRank(final String s) {
         Writer output;
         try {
             output = new BufferedWriter(new FileWriter(urlFile, true));
@@ -208,8 +188,8 @@ public class ControllerImpl implements Controller {
             }
             output.close();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+            this.forceQuit(USER_MESSAGE);
         }
     }
 
@@ -230,7 +210,6 @@ public class ControllerImpl implements Controller {
         this.aborted = true;
     }
 
-
     @Override
     public final Clip uploadClip(final SoundEffectFile soundEffect) {
         Clip clip = null;
@@ -242,7 +221,7 @@ public class ControllerImpl implements Controller {
             clip.open(inputStream);
             inputStream.close();
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            Logger.getGlobal().log(Level.WARNING, e.getMessage(), e);
         }
         return clip;
     }
@@ -250,6 +229,29 @@ public class ControllerImpl implements Controller {
     @Override
     public final void emptyClipQueue(final Queue<Clip> queue) {
         this.view.play(queue);
+    }
+
+    /**
+     * Check if ranking file is empty or not.
+     */
+    private boolean isEmptyFile() {
+        try (BufferedReader br = new BufferedReader(new FileReader(urlFile))) {
+            return br.readLine() == null;
+        } catch (FileNotFoundException e) {
+            final File file = new File(urlFile);
+            //Create the file
+            try {
+                file.createNewFile();
+                return true;
+            } catch (IOException e1) {
+                Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+                this.forceQuit(USER_MESSAGE);
+            }
+        } catch (IOException e) {
+            Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+            this.forceQuit(USER_MESSAGE);
+        }
+        return false;
     }
 
 }
