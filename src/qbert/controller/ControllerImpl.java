@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
@@ -34,7 +35,6 @@ import qbert.model.LevelSettings;
 import qbert.model.models.GUILogic;
 import qbert.model.components.graphics.Renderable;
 import qbert.view.View;
-import qbert.view.ViewImpl;
 
 /**
  * The implementation of {@link Controller}.
@@ -42,34 +42,36 @@ import qbert.view.ViewImpl;
 public class ControllerImpl implements Controller {
     private final String urlFile = System.getProperty("user.home") + "/qbert/ranking.txt";
     private LevelConfigurationReader lcr;
-    private final GameEngine gameEngine;
-    private final GameStatusManager statusManager;
+    private GameEngine gameEngine;
+    private GameStatusManager statusManager;
 
     private final BlockingQueue<Integer> gamePoint = new ArrayBlockingQueue<>(1);
 
     private final View view;
-    private boolean abort;
+    private boolean aborted;
 
     /**
      * @param firstGameStatus the first application's {@link GameStatus}
+     * @param view the application {@link View}
      */
-    public ControllerImpl(final GameStatus firstGameStatus) {
-        this.abort = false;
+    public ControllerImpl(final GameStatus firstGameStatus, final View view) {
+        this.aborted = false;
+        this.view = view;
+
         try {
             this.lcr = new LevelConfigurationReaderImpl();
         } catch (IOException e) {
-            this.abort = true;
-            e.printStackTrace();
+            Logger.getGlobal().log(Level.SEVERE, e.getMessage());
+            this.forceQuit("Application aborted, please look at log file for more informations");
         }
 
-        this.statusManager = new GameStatusManagerImpl(firstGameStatus, this);
-        this.view = new ViewImpl(this);
-        this.gameEngine = new GameEngine(this.view);
-
-        if (this.abort) {
-            this.terminate();
+        if (!aborted) {
+            this.view.initialize(this);
+            this.statusManager = new GameStatusManagerImpl(firstGameStatus, this);
+            this.gameEngine = new GameEngine(this.view);
         }
     }
+
     /**
      * Check if file ranking is empty or not.
      */
@@ -97,7 +99,7 @@ public class ControllerImpl implements Controller {
     }
     @Override
     public final void setupGameEngine() {
-        if (!this.abort) {
+        if (!this.aborted) {
             this.changeScene(this.statusManager.getCurrentStatus());
             this.gameEngine.mainLoop();
         }
@@ -110,9 +112,9 @@ public class ControllerImpl implements Controller {
             lcr.readLevelConfiguration(level, round);
         } catch (JDOMException e) {
             Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
-            this.terminate();
+            this.forceQuit(e.getMessage());
         } catch (IOException e) {
-            this.terminate();
+            this.forceQuit(e.getMessage());
         }
         return lcr.getLevelSettings();
     }
@@ -131,12 +133,12 @@ public class ControllerImpl implements Controller {
 
     @Override
     public final List<GUILogic> getGUI() {
-        return this.statusManager.getModel().getGUI();
+        return this.statusManager != null ? this.statusManager.getModel().getGUI() : new ArrayList<>();
     }
 
     @Override
     public final List<Renderable> getRenderables() {
-        return this.statusManager.getModel().getRenderables();
+        return this.statusManager != null ? this.statusManager.getModel().getRenderables() : new ArrayList<>();
     }
 
     @Override
@@ -219,13 +221,15 @@ public class ControllerImpl implements Controller {
         if (this.gameEngine != null) {
             this.gameEngine.stop();
         }
-        this.abort = true;
     }
 
     @Override
-    public final void setAbort() {
-        this.abort = true;
+    public final void forceQuit(final String errorMessage) {
+        this.view.showErrorMessageBox(errorMessage);
+        this.terminate();
+        this.aborted = true;
     }
+
 
     @Override
     public final Clip uploadClip(final SoundEffectFile soundEffect) {

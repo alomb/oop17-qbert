@@ -30,6 +30,9 @@ import qbert.model.components.graphics.RightwardCharacterGC;
 
 import java.io.IOException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * The implementation of {@link EnemyFactory} interface.
  */
@@ -57,7 +60,9 @@ public class EnemyFactoryImpl implements EnemyFactory {
         try {
             this.sprites = Sprites.getInstance();
         } catch (IOException e) {
-            controller.terminate();
+            Logger.getGlobal().log(Level.SEVERE, e.getMessage());
+            controller.forceQuit("Application closed with errors, please look at log file for more informations");
+            controller.forceQuit(e.getMessage());
         }
 
         this.spawningPointLeftX = Math.round(new Float(Dimensions.getWindowWidth() / 2f) - Dimensions.getCubeWidth());

@@ -6,7 +6,7 @@ import qbert.model.utilities.Position2D;
 import qbert.model.components.graphics.LeftwardCharacterGC;
 
 /**
- * An enemy who falls from the left and move leftward until it falls on the other side
+ * An enemy who falls from the right and move leftward until it falls on the other side
  * of the field.
  */
 public class Ugg extends LeftwardCharacter {
