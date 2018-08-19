@@ -23,8 +23,7 @@ public class GameOver implements Model {
     private static final int MAXVALUEOTHERCOLUMN = 6;
     private static final int MAXROWOTHERCOLUMN = 7;
     private static final int MINVALUE = 0;
-    private static final int EXIT = 7;
-    private static final int CONFIRM = 8;
+    private static final int CONFIRM = 7;
     private static final int COLUMN = 3;
 
     private final GUILogic guiLeft;
@@ -54,7 +53,6 @@ public class GameOver implements Model {
         this.guiLeft.addData("E");
         this.guiLeft.addData("F");
         this.guiLeft.addData("G");
-        this.guiLeft.addData("EXIT");
         this.guiLeft.addData("CONFIRM");
         this.guiCenter = new GUILogicImpl(TextPosition.CENTER);
         this.guiCenter.addData("H");
@@ -123,7 +121,7 @@ public class GameOver implements Model {
 
     @Override
     public final void moveLeft() {
-        if (this.indexC > 0) {
+        if (this.indexC > 0 && this.index != this.CONFIRM) {
             this.deselectAll();
             this.indexC--;
             this.color();
@@ -132,7 +130,7 @@ public class GameOver implements Model {
 
     @Override
     public final void moveRight() {
-        if (this.indexC < this.COLUMN - 1) {
+        if (this.indexC < this.COLUMN - 1 && this.index != this.CONFIRM) {
             this.deselectAll();
             this.indexC++;
             this.color();
@@ -155,9 +153,7 @@ public class GameOver implements Model {
             this.ranking.addChar(this.indexC, this.index);
             this.guiFoot.removeAllData();
             this.guiFoot.addData("Your name is : " + this.ranking.getName());
-        } else if (this.index == GameOver.EXIT) { 
-            this.controller.changeScene(GameStatus.MENU);
-        } else if (this.index == GameOver.CONFIRM) {
+        } else if (this.index == GameOver.CONFIRM && this.ranking.getName() != " ") {
             this.controller.addRank(this.ranking.build().toString());
             this.controller.changeScene(GameStatus.MENU);
         }
