@@ -1,7 +1,6 @@
 package qbert.model.models;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
  
 /**
@@ -9,10 +8,9 @@ import java.util.Date;
  */
 public class RankingBuilder {
  
-    private Integer score;
-    private String name;
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    private Date date;
+    private final Integer score;
+    private final String name;
+    private final Date date;
     /**
      * Construct.
      * @param builder for initialize attribute of object
@@ -25,7 +23,9 @@ public class RankingBuilder {
 
     @Override
     public final String toString() {
-        return this.name + '#' + this.dateFormat.format(this.date) + '?' + this.score;
+        final DateFormat dateFormat = DateFormat.getDateTimeInstance();
+        return this.name + '#' + dateFormat.format(this.date
+                ) + '?' + this.score;
     }
 
     /**
@@ -43,13 +43,10 @@ public class RankingBuilder {
         private Integer scoreB;
         private String nameB = "";
         private Date dateB = new Date();
-        private String[][] alphabet = {{"A", "B", "C", "D", "E", "F", "G"}, {"H", "I", "L", "M", "N", "O", "P"}, {"Q", "R", "S", "T", "U", "V", "Z"}};
+        private final String[][] alphabet = {{"A", "B", "C", "D", "E", "F", "G"}, 
+                {"H", "I", "L", "M", "N", "O", "P"}, 
+                {"Q", "R", "S", "T", "U", "V", "Z"}};
 
-        /**
-         * Constructor.
-         */
-        public Builder() {
-        }
 
         /**
          * Add score to the object.

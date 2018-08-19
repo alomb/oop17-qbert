@@ -314,13 +314,14 @@ Nello specifico la divisione dei compiti è stata la seguente:
 
 \section{Difficoltà incontrate e commenti per i docenti}
 
+La difficoltà principale nella realizzazione del progetto è stata quella di eleborare l'architettura della applicazione, in quanto mancava una esperienza pratica sull'argomento e per alcuni membri del gruppo la costruzione di una applicazione completa, usando un linguaggio orientato agli oggetti, era una esperienza totalmente nuova. Rispetto ad altri argomenti trattati molto approfonditamente, e quindi sotto il nostro pieno controllo, l'architettura ci ha posto troppi interrogativi e molto timore nelle scelte fatte.
 
 \appendix
 \chapter{Guida utente}
 
 \subsubsection{Scopo del gioco}
 
-Il giocatore ha come obiettivo quello di colorare tutti i cubi della mappa del colore target che di volta in volta viene indicato in alto a sinistra nella schermata di gioco e accumulare in questo modo più punti possibili. Procedendo con i livelli, i cubi potrebbero diventare reversibili, vale a dire che una volta raggiunto il colore target per un cubo, un ulteriore salto su di esso lo farebbe tornare al colore di partenza. Ad ostacolare o, in alcuni casi, aiutare il giocatore c'è una schiera di diversi personaggi, che si muovono e si comportano in maniera differente sulla mappa:
+Il giocatore ha come obiettivo quello di colorare tutti i cubi della mappa di un certo colore che di volta in volta viene indicato in alto a sinistra nella schermata di gioco e accumulare in questo modo più punti possibili. Procedendo con i livelli, i cubi potrebbero diventare reversibili, vale a dire che una volta raggiunto il giusto colore, un ulteriore salto sulla sua superficie lo farebbe tornare al colore di partenza. Ad ostacolare o, in alcuni casi, aiutare il giocatore c'è una schiera di diversi personaggi, che si muovono e si comportano in maniera differente sulla mappa:
 
 
 \begin{figure}[H]
@@ -329,7 +330,7 @@ Il giocatore ha come obiettivo quello di colorare tutti i cubi della mappa del c
 		\label{img:Q*Bert}
 		\textbf{Q*Bert}
 
-		Protagonista che il player deve comandare: può cambiare colore ai cubi saltando in quattro direzioni diverse: in alto a destra, in alto a sinistra, in basso a destra e in basso a sinistra. Possiede un numero limitato di vite, che può incrementare raggiunta una certa soglia di punteggio. Cadere oltre i bordi della mappa, o entrare in contatto con uno dei suoi nemici, gli fa perdere una vita.
+		Protagonista che il giocatore deve comandare: può cambiare il colore dei cubi saltando in quattro direzioni diverse: in alto a destra, in alto a sinistra, in basso a destra e in basso a sinistra. Possiede un numero limitato di vite, che può incrementare raggiunta una certa soglia di punteggio. Cadere oltre i bordi della mappa, o entrare in contatto con uno dei suoi nemici, gli fa perdere una vita.
 
 \end{figure}
 
@@ -382,7 +383,7 @@ Il giocatore ha come obiettivo quello di colorare tutti i cubi della mappa del c
 		\label{img:Sam&Slick}
 		\textbf{Sam e Slick}
 
-		Questi due personaggi ostacolano Q*Bert cercando di annullare il lavoro fino a quel momento svolto: il loro atterrare sui cubi provocherà il ritorno al colore di partenza. Diversamente dagli altri nemici, però, questi possono essere uccisi semplicemente toccandoli.
+		Questi due personaggi ostacolano Q*Bert cercando di annullare il lavoro fino a quel momento svolto: il loro atterrare sui cubi provocherà l'effetto opposto a quello di Q*Bert facendolo retrocedere al colore precedente. Diversamente dagli altri nemici, però, questi possono essere uccisi semplicemente toccandoli.
 
 \end{figure}
 
@@ -392,7 +393,7 @@ Il giocatore ha come obiettivo quello di colorare tutti i cubi della mappa del c
 		\label{img:Disk}
 		\textbf{Disk}
 
-		Saltando su uno di questi dischi che appariranno in posizioni random sui bordi della mappa, Q*Bert verrà trasportato in cima alla piramide e tutti i personaggi sulla mappa scompariranno. Inoltre, se Coily si trova vicino nel momento del salto sul disco, nel tentativo di seguirlo cadrà dalla mappa.
+		Saltando su uno di questi dischi che appariranno in posizioni random sui bordi della mappa, Q*Bert verrà trasportato in cima alla piramide e tutti i personaggi sulla mappa, eccetto Coily, scompariranno. Inoltre, se Coily si trova vicino nel momento del salto sul disco, nel tentativo di seguirlo cadrà dalla mappa.
 
 \end{figure}
 
@@ -417,8 +418,8 @@ Per muovere Q*Bert sulla piramide è sufficiente utilizzare i tasti freccia dell
 
 \begin{itemize}
 	\item Gamma E., Helm R., Johnson R., Vlissides J., \emph{Design Patterns. Elementi per il riuso di software a oggetti}, Milano, Pearson Paravia Bruno Mondadori, 2002, Prima edizione italiana.
-	\item \href{http://gameprogrammingpatterns.com/}{http://gameprogrammingpatterns.com/}
-	\item \href{https://sourcemaking.com/design\_patterns}{https://sourcemaking.com/design\_patterns}
+	\item Robert Nystrom, \emph{Game Programming Patterns} \href{http://gameprogrammingpatterns.com/}{http://gameprogrammingpatterns.com/}
+	\item \emph{Design Patterns. Explained Simply} \href{https://sourcemaking.com/design\_patterns}{https://sourcemaking.com/design\_patterns}
 
 \end{itemize}
 

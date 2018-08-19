@@ -36,12 +36,12 @@ public class SceneRanking extends SceneImpl {
         final int xOffset = 50;
         final int titleYOffset = 10;
         final int centerYOffset = 30;
-        final int footYOffset = 80;
+        final int footYOffset = 90;
 
         this.addSection(TextPosition.TITLE, 
                 new GUISectionImpl(SceneColor.YELLOW.getColor(), Optional.empty(), xOffset, titleYOffset, true, TextSize.LARGE));
         this.addSection(TextPosition.CENTER, 
-                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.of(SceneColor.RED.getColor()), xOffset, centerYOffset, true, TextSize.SMALL));
+                new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.empty(), xOffset, centerYOffset, true, TextSize.SMALL));
         this.addSection(TextPosition.FOOT, 
                 new GUISectionImpl(SceneColor.GREEN.getColor(), Optional.empty(), xOffset, footYOffset, true, TextSize.SMALL));
     }

@@ -16,14 +16,14 @@ import qbert.model.models.RankingBuilder.Builder;
  */
 public class GameOver implements Model {
 
-    private Builder ranking = new RankingBuilder.Builder();
+    private final Builder ranking = new RankingBuilder.Builder();
     private int index;
     private int indexC;
     private static final int MAXVALUEFIRSTCOLUMN = 9;
     private static final int MAXVALUEOTHERCOLUMN = 6;
     private static final int MAXROWOTHERCOLUMN = 7;
     private static final int MINVALUE = 0;
-    private static final int CONFIRM = 7;
+    private static final int CONFIRMVALUE = 7;
     private static final int COLUMN = 3;
 
     private final GUILogic guiLeft;
@@ -74,7 +74,6 @@ public class GameOver implements Model {
         this.footBaseString = "Your name is :";
 
         this.guiFoot = new GUILogicImpl(TextPosition.FOOT);
-        this.guiFoot.addData(this.footBaseString);
 
         this.guiList = new ArrayList<>();
         this.guiList.add(guiTitle);
@@ -85,11 +84,13 @@ public class GameOver implements Model {
 
         this.controller = controller;
     }
+
     private void deselectAll() {
         this.guiLeft.deselectAll();
         this.guiCenter.deselectAll();
         this.guiRight.deselectAll();
     }
+
     private void color() {
         if (this.indexC == 0) {
             this.guiLeft.selectSet(IntStream.range(this.index, this.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
@@ -107,6 +108,8 @@ public class GameOver implements Model {
         this.indexC = 0;
         this.deselectAll();
         this.color();
+        this.guiFoot.removeAllData();
+        this.guiFoot.addData(this.footBaseString);
         this.ranking.addScore(this.controller.getScore());
     }
 
@@ -121,7 +124,7 @@ public class GameOver implements Model {
 
     @Override
     public final void moveLeft() {
-        if (this.indexC > 0 && this.index != this.CONFIRM) {
+        if (this.indexC > 0 && this.index != GameOver.CONFIRMVALUE) {
             this.deselectAll();
             this.indexC--;
             this.color();
@@ -130,7 +133,7 @@ public class GameOver implements Model {
 
     @Override
     public final void moveRight() {
-        if (this.indexC < this.COLUMN - 1 && this.index != this.CONFIRM) {
+        if (this.indexC < GameOver.COLUMN - 1 && this.index != GameOver.CONFIRMVALUE) {
             this.deselectAll();
             this.indexC++;
             this.color();
@@ -153,7 +156,7 @@ public class GameOver implements Model {
             this.ranking.addChar(this.indexC, this.index);
             this.guiFoot.removeAllData();
             this.guiFoot.addData("Your name is : " + this.ranking.getName());
-        } else if (this.index == GameOver.CONFIRM && this.ranking.getName() != " ") {
+        } else if (this.index == GameOver.CONFIRMVALUE && !this.ranking.getName().equals(" ")) {
             this.controller.addRank(this.ranking.build().toString());
             this.controller.changeScene(GameStatus.MENU);
         }

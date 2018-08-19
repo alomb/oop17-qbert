@@ -141,7 +141,13 @@ public class ControllerImpl implements Controller {
             if (!isEmptyFile()) {
                 line = br.readLine();
                 while (line != null) {
-                    rank.put(line.split("\\?")[0], Integer.parseInt(line.split("\\?")[1]));
+                    //return the best score associated to a name
+                    final String name = line.split("\\?")[0];
+                    final Integer score = Integer.parseInt(line.split("\\?")[1]);
+                    if (rank.containsKey(name) && rank.get(name) <= score
+                            || !rank.containsKey(name)) {
+                        rank.put(name, score);
+                    }
                     line = br.readLine();
                 }
             }
