@@ -177,9 +177,57 @@ Per l'implementazione degli effetti sonori si è cercato di procedere in maniera
 \label{img:GerarchiaSound}
 \end{figure}
 
-<<<<<<< HEAD
 \iffalse ------------ PARTE MIA --------------- \fi
-=======
+\begin{flushright}
+\item\subsubsection{Alessandro Stockman - Sviluppo di Level}
+\end{flushright}
+
+La classe \emph{Level} è stata pensata con un ruolo principale nella gestione delle meccaniche di gioco. Per evitare la creazione di una classe monolitica contente aspetti completamente diversificati tra loro è stato scelto di sviluppare un insieme di classi \emph{Component}.
+In particolare vengono sviluppati un \emph{MapComponent} per la gestione di aspetti riguardanti il mondo di gioco (tile, dischi, controllo cadute, ...). 
+Un \emph{PointComponent} per la gestione dei punti e delle vite guadagnate con essi, contenente i valori costanti dei punteggi ottenuti al verificarsi di dati avvenimenti.
+Un \emph{TimerComponent}, gestore dei vari update alle entità di gioco.
+Un \emph{ModeComponent}...
+
+\iffalse ------------------ IMG --------------------
+\begin{figure}[H]
+\centering{}
+\includegraphics[width=\linewidth]{img/LevelArchitecture}
+\caption{Gerarchia dei Component di Level}
+\label{img:LevelArchitecture}
+\end{figure}
+\fi
+
+\begin{flushright}
+\item\subsubsection{Alessandro Stockman - Gestione delle Collisioni}
+\end{flushright}
+
+Data la necessità di realizzare un set di personaggi con caratteristiche differenti tra di loro e più in particolare con diversi tipi di reazioni comportamentali alla collisione con il giocatore si è scelto di utilizzare il \textbf{Template Method} checkCollision() nella classe astratta \emph{CharacterImpl} per permettere ad ogni personaggio di implementare un'azione personalizzata all'esecuzione di collide() sfruttando i vari \emph{Component} che gli vengono passati.
+In questa maniera si introduce la possibilità di rendere più semplice l'introduzione di personaggi nel gioco con nuovi effetti che possono manipolare il flusso del gioco.
+
+\begin{figure}[H]
+\centering{}
+\includegraphics[width=\linewidth]{img/CheckCollision}
+\caption{Schema dettagliato della gestione comportamentale delle collisioni}
+\label{img:CheckCollision}
+\end{figure}
+
+\iffalse ------------ STRATEGY PER CHECK COLLISION? --------------- \fi
+
+\begin{flushright}
+\item\subsubsection{Alessandro Stockman - Flusso temporale del gioco}
+\end{flushright}
+
+Per gestire in maniera comoda le alterazioni del flusso temporale durante il gioco (freeze dei nemici in seguito alla cattura di \emph{GreenBall}, attesa di pochi secondi dopo una morte o vincita del livello, ...) si è optato per la realizzazione del pattern \textbf{Strategy} al fine di dare la possibilità al metodo update() di \emph{TimerComponent} di implementare diversi algoritmi a seconda delle necessità.
+
+\begin{figure}[H]
+\centering{}
+\includegraphics[width=\linewidth]{img/UpdateStrategy}
+\caption{Implementazione dei vari algoritmi di Update}
+\label{img:UpdateStrategy}
+\end{figure}
+
+\iffalse ------------ FINE PARTE MIA --------------- \fi
+
 \begin{flushright}
 \item\subsubsection{Andrea Giulianini - Gestione Risoluzione/Immagini}
 \end{flushright}
@@ -216,58 +264,7 @@ Si voleva gestire l'inserimento del nome a fine partita dell'utente, quindi ho d
 
 \chapter{Sviluppo}
 \section{Testing automatizzato}
->>>>>>> dd918be3a353c856e098493ef977998509e01951
 
-\begin{flushright}
-\item\subsubsection{Alessandro Stockman - Sviluppo di Level}
-\end{flushright}
-
-La classe \emph{Level} è stata pensata con un ruolo principale nella gestione delle meccaniche di gioco. Per evitare la creazione di una classe monolitica contente aspetti completamente diversificati tra loro è stato scelto di sviluppare un insieme di classi \emph{Component}.
-In particolare vengono sviluppati un \emph{MapComponent} per la gestione di aspetti riguardanti il mondo di gioco (tile, dischi, controllo cadute, ...). 
-Un \emph{PointComponent} per la gestione dei punti e delle vite guadagnate con essi, contenente i valori costanti dei punteggi ottenuti al verificarsi di dati avvenimenti.
-Un \emph{TimerComponent}, gestore dei vari update alle entità di gioco.
-Un \emph{ModeComponent}...
-
-\iffalse ------------------ IMG --------------------
-\begin{figure}[H]
-\centering{}
-\includegraphics[width=\linewidth]{img/LevelArchitecture}
-\caption{Gerarchia dei Component di Level}
-\label{img:LevelArchitecture}
-\end{figure}
-
-\fi
-
-\begin{flushright}
-\item\subsubsection{Alessandro Stockman - Gestione delle Collisioni}
-\end{flushright}
-
-Data la necessità di realizzare un set di personaggi con caratteristiche differenti tra di loro e più in particolare con diversi tipi di reazioni comportamentali alla collisione con il giocatore si è scelto di utilizzare il \textbf{Template Method} checkCollision() nella classe astratta \emph{CharacterImpl} per permettere ad ogni personaggio di implementare un'azione personalizzata all'esecuzione di collide() sfruttando i vari \emph{Component} che gli vengono passati.
-In questa maniera si introduce la possibilità di rendere più semplice l'introduzione di personaggi nel gioco con nuovi effetti che possono manipolare il flusso del gioco.
-
-\begin{figure}[H]
-\centering{}
-\includegraphics[width=\linewidth]{img/CheckCollision}
-\caption{Schema dettagliato della gestione comportamentale delle collisioni}
-\label{img:CheckCollision}
-\end{figure}
-
-\iffalse ------------ STRATEGY PER CHECK COLLISION? --------------- \fi
-
-\begin{flushright}
-\item\subsubsection{Alessandro Stockman - Flusso temporale del gioco}
-\end{flushright}
-
-Per gestire in maniera comoda le alterazioni del flusso temporale durante il gioco (freeze dei nemici in seguito alla cattura di \emph{GreenBall}, attesa di pochi secondi dopo una morte o vincita del livello, ...) si è optato per la realizzazione del pattern \textbf{Strategy} al fine di dare la possibilità al metodo update() di \emph{TimerComponent} di implementare diversi algoritmi a seconda delle necessità.
-
-\begin{figure}[H]
-\centering{}
-\includegraphics[width=\linewidth]{img/UpdateStrategy}
-\caption{Implementazione dei vari algoritmi di Update}
-\label{img:UpdateStrategy}
-\end{figure}
-
-\iffalse ------------ FINE PARTE MIA --------------- \fi
 
 \section{Metodologia di lavoro}
 
