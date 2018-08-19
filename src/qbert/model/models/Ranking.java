@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
@@ -20,6 +18,8 @@ public class Ranking implements Model {
     private final List<GUILogic> guiList;
     private final Controller controller;
 
+    private static final int ROWS = 10;
+
     /**
      * Initialize GUI data and logic.
      * @param controller the game controller.
@@ -32,7 +32,7 @@ public class Ranking implements Model {
         this.guiBody = new GUILogicImpl(TextPosition.CENTER);
 
         guiFoot = new GUILogicImpl(TextPosition.FOOT);
-        guiFoot.addData("Move with arrow key");
+        guiFoot.addData("Press enter to exit");
 
         this.guiList = new ArrayList<>();
         this.guiList.add(guiTitle);
@@ -46,16 +46,16 @@ public class Ranking implements Model {
     public final void initialize() {
         final Map<String, Integer> rank;
         this.guiBody.removeAllData();
-        this.guiBody.selectSet(IntStream.range(0, 1).mapToObj(i -> i).collect(Collectors.toSet()));
         rank = controller.getRank();
-        rank.forEach((k, v) -> {
-            this.guiBody.addData("Player: " + k + " Point: " + v);
+        rank.entrySet().stream().limit(ROWS).forEach(k -> {
+            this.guiBody.addData("Player: " + k.getKey() + " Point: " + k.getValue());
         });
         rank.clear();
     }
 
     @Override
     public final void moveDown() {
+
     }
 
     @Override
@@ -69,6 +69,7 @@ public class Ranking implements Model {
 
     @Override
     public final void moveUp() {
+
     }
 
     @Override
