@@ -78,12 +78,12 @@ public final class LevelImpl implements Level {
 
     @Override
     public void addObserver(final Game gameObserver) {
-        this.gameMode.addObserver(gameObserver);
+        this.status.addObserver(gameObserver);
     }
 
     @Override
     public void notifyEndLevel() {
-        this.gameMode.notifyEndLevel();
+        this.status.notifyEndLevel();
     }
 
     @Override
