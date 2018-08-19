@@ -219,7 +219,6 @@ public class ControllerImpl implements Controller {
             final AudioInputStream inputStream = AudioSystem.getAudioInputStream(
                     new BufferedInputStream(ControllerImpl.class.getResourceAsStream("/sounds/" + soundEffect.getFile().toString())));
             clip.open(inputStream);
-            inputStream.close();
         } catch (Exception e) {
             Logger.getGlobal().log(Level.WARNING, e.getMessage(), e);
         }
