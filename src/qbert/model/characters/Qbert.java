@@ -104,7 +104,7 @@ public class Qbert extends CharacterImpl implements Player {
     }
 
     @Override
-    public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
+    protected final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
         throw new UnsupportedOperationException();
     }
 }

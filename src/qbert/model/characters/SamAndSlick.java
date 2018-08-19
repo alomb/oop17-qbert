@@ -30,7 +30,7 @@ public class SamAndSlick extends DownwardCharacter {
     }
 
     @Override
-    public final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
+    protected final void collide(final Player qbert, final PointComponent points, final TimerComponent timer) {
         points.score(PointComponentImpl.KILL_SAM_SLICK_SCORE, qbert);
         this.setCurrentState(new DeathState(this));
     }
