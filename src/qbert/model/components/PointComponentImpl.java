@@ -38,11 +38,6 @@ public class PointComponentImpl implements PointComponent {
     public static final int UNUSED_DISK_SCORE = 50;
 
     /**
-     * Points gained every round ending.
-     */
-    public static final int ROUND_SCORE = 1500;
-
-    /**
      * Amount of points to be scored to get the first bonus life.
      */
     public static final int INITIAL_LIFE_THRESHOLD = 8000;

@@ -45,9 +45,14 @@ public interface Spawner {
     Optional<Snake> getCoily();
 
     /**
-     * This method manages Coily's death.
+     * This method forces Coily's death.
      */
     void killCoily();
+
+    /**
+     * Method that forces all the character's death.
+     */
+    void killAll();
 
     /**
      * @param gc the list of {@link Character} to be updated

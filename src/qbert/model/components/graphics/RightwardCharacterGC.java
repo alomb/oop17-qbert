@@ -1,11 +1,11 @@
 package qbert.model.components.graphics;
 
+import qbert.model.components.graphics.animations.ComposedAnimation;
+import qbert.model.components.graphics.animations.StandingAnimation;
+import qbert.model.components.graphics.animations.StraightMovementAnimation;
 import qbert.model.sprites.OneSideCharacterSprites;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.ComposedAnimation;
-import qbert.view.characters.StraightMovementAnimation;
-import qbert.view.characters.StandingAnimation;
 
 /**
  * GC stands graphic component, this implementation is used to manage characters whose movements are unidirectional and 

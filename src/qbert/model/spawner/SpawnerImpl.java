@@ -5,12 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import qbert.controller.Controller;
 import qbert.model.characters.Character;
 import qbert.model.characters.CharactersList;
 import qbert.model.characters.Player;
 import qbert.model.characters.Snake;
+import qbert.model.characters.states.DeathState;
 import qbert.model.characters.states.SpawnState;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
@@ -116,10 +118,23 @@ public final class SpawnerImpl implements Spawner {
     public Optional<Snake> getCoily() {
         return this.coily;
     }
+
+    @Override
+    public void killAll() {
+        this.updateGameCharacters(this.getGameCharacters().stream().peek(e -> {
+            e.setCurrentState(new DeathState(e));
+            this.death(e);
+        }).filter(e -> !e.isDead()).collect(Collectors.toList()));
+        this.killCoily();
+    }
+
     @Override
     public void killCoily() {
-        this.death(this.coily.get());
-        this.coily = Optional.empty();
+        if (this.coily.isPresent()) {
+            this.coily.get().setCurrentState(new DeathState(this.coily.get()));
+            this.death(this.coily.get());
+            this.coily = Optional.empty();
+        }
     }
 
     @Override

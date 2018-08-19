@@ -11,17 +11,22 @@ import qbert.model.components.TimerComponent;
 /**
  * Interface used for entities which can collide with {@link Qbert} and generate some consequences.
  */
-public interface Collidable {
+public abstract class CollidableImpl implements Collidable {
+
+    @Override
+    public final boolean checkCollision(final Player qbert, final Character entity, final PointComponent points, final TimerComponent timer, final BiPredicate<Player, Character> collision) {
+        if (collision.test(qbert, entity)) {
+            this.collide(qbert, points, timer);
+            return true;
+        }
+        return false;
+    }
 
     /**
-     * Checks if {@link Player} and given {@link Character} collided.
+     * Event happening on the collision between the entity and {@link Qbert}.
      * @param qbert {@link Player} reference for dealing with deadly collisions
-     * @param entity {@link Character} the entity than needs to be checked for the collision
      * @param points reference to {@link PointComponent} to eventually score points in collisions
      * @param timer reference to {@link TimerComponent} for dealing with time flow changing collisions
-     * @param collision Set of condition for the collision check
-     * @return true if the collision happened
      */
-    boolean checkCollision(Player qbert, Character entity, PointComponent points, TimerComponent timer, BiPredicate<Player, Character> collision);
-
+    protected abstract void collide(Player qbert, PointComponent points, TimerComponent timer);
 }

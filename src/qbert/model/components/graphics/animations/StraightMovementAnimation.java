@@ -1,4 +1,4 @@
-package qbert.view.characters;
+package qbert.model.components.graphics.animations;
 
 import qbert.model.utilities.Position2D;
 
@@ -44,8 +44,8 @@ public class StraightMovementAnimation extends MovementAnimationImpl {
     @Override
     public final Position2D next() {
 
-        final Position2D nextPos = new Position2D(this.getCurrentPosition().getX() + ((int) (this.getAnimationSpeed() * Math.cos(angle))), 
-                this.getCurrentPosition().getY() + ((int) (this.getAnimationSpeed() * Math.sin(angle))));
+        final Position2D nextPos = new Position2D(this.getCurrentPosition().getX() + ((int) Math.cos(angle)), 
+                this.getCurrentPosition().getY() + ((int) Math.sin(angle)));
 
         if (this.upward && nextPos.getY() < this.getTargetPosition().getY()) {
             return new Position2D(this.getTargetPosition());

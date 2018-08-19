@@ -78,7 +78,7 @@ public interface Controller {
     /**
      * Method used to abort the application during its setup phase.
      */
-    void abort();
+    void setAbort();
 
     /**
      * @param soundEffect the {@link SoundEffectFile} value representing the .wav file to be loaded

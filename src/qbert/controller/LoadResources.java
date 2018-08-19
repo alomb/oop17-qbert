@@ -11,8 +11,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.logging.XMLFormatter;
 
 import org.apache.batik.transcoder.TranscoderInput;
 import org.apache.batik.transcoder.TranscoderOutput;
@@ -30,6 +34,19 @@ public class LoadResources {
 
     private boolean loadCompleted;
 
+    private static final String SEPARATOR = System.getProperty("file.separator");
+    private static final String USER_HOME = System.getProperty("user.home");
+    private static final String QBERT_FOLDER = USER_HOME 
+            + SEPARATOR
+            + "qbert";
+    private static final String SPRITES_FOLDER = QBERT_FOLDER
+            + SEPARATOR
+            + "sprites";
+    private static final String IMAGE_CONFIG_FILE_NAME = "/imageconfig.txt";
+
+    private static final Logger LOGGER = Logger.getGlobal();
+    private static final String LOGGER_FILE_NAME = "Log.xml";
+
     /**
      * Initialize variables.
      */
@@ -41,11 +58,9 @@ public class LoadResources {
      * @return true if all the resources have been correctly istantiated
      */
     public final boolean load() {
-        final String imgPath = System.getProperty("user.home") + "/qbert/img/";
-        final String imageConfigFileName = "/imageconfig.txt";
 
         try {
-            final File directory = new File(imgPath);
+            final File directory = new File(SPRITES_FOLDER);
             if (!directory.exists()) {
                 final boolean directoryCreated = directory.mkdirs();
                 if (!directoryCreated) {
@@ -53,7 +68,7 @@ public class LoadResources {
                 }
             }
 
-            final File[] files = new File(imgPath).listFiles();
+            final File[] files = new File(SPRITES_FOLDER).listFiles();
 
             if (files != null) {
                 for (final File file : files) {
@@ -67,18 +82,34 @@ public class LoadResources {
             return false;
         }
 
-        new LoggerManager();
+        for (final Handler h : LOGGER.getHandlers()) {
+            LOGGER.removeHandler(h);
+        }
+
+        FileHandler fh = null;
+        try {
+            fh = new FileHandler(QBERT_FOLDER + LOGGER_FILE_NAME);
+            fh.setFormatter(new XMLFormatter());
+            LOGGER.addHandler(fh);
+        } catch (SecurityException e) {
+            this.setConsoleHandler();
+            e.printStackTrace();
+        } catch (IOException e) {
+            this.setConsoleHandler();
+            e.printStackTrace();
+        }
+        LOGGER.setLevel(Level.ALL);
 
         final Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 
         Dimensions.setWindowHeight(Math.round(new Float(d.height)));
         Dimensions.setWindowWidth(Math.round(new Float(d.width)));
 
-        final InputStream imageConfigIn = LoadResources.class.getResourceAsStream(imageConfigFileName);
+        final InputStream imageConfigIn = LoadResources.class.getResourceAsStream(IMAGE_CONFIG_FILE_NAME);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(imageConfigIn))) {
             String line = br.readLine();
             while (line != null) {
-                convertSvgToPng(line.split("\\+")[0], imgPath + line.split("\\+")[1]);
+                convertSvgToPng(line.split("\\+")[0], SPRITES_FOLDER + SEPARATOR + line.split("\\+")[1]);
                 line = br.readLine();
             }
         } catch (FileNotFoundException e) {
@@ -122,5 +153,13 @@ public class LoadResources {
             Logger.getGlobal().log(Level.SEVERE, "Error on svg to png conversion\". Program aborted");
             this.loadCompleted = false;
         }
+    }
+
+    /**
+     * Add the logger a console handler.
+     */
+    private void setConsoleHandler() {
+        LOGGER.addHandler(new ConsoleHandler());
+        LOGGER.log(Level.WARNING, "Errors during log file creation, only console handling");
     }
 }

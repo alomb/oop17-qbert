@@ -1,4 +1,4 @@
-package qbert.view.characters;
+package qbert.model.components.graphics.animations;
 
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -31,12 +31,12 @@ public class ComposedAnimation extends MovementAnimationImpl {
     @Override
     public final Position2D next() {
         if (!this.animations.isEmpty()) {
-            if (this.animations.peek().hasNext()) {
+            if (!this.animations.peek().hasNext()) {
                 this.animations.remove();
             }
             /*In all cases updates the animation if it's not finished, or the next one, if it isn't the last.*/
             if (!this.animations.isEmpty()) {
-                return this.animations.peek().updateAnimation(this.getAnimationSpeed());
+                return this.animations.peek().updateAnimation(1);
             }
         }
         return this.getTargetPosition();

@@ -1,9 +1,9 @@
 package qbert.model.components.graphics;
 
+import qbert.model.components.graphics.animations.StraightMovementAnimation;
 import qbert.model.sprites.OneSideCharacterSprites;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.StraightMovementAnimation;
 
 /**
  * The implementation of {@link CoilyGC}.

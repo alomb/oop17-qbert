@@ -28,6 +28,7 @@ import qbert.model.components.graphics.PlayerGC;
 import qbert.model.components.graphics.PlayerGCImpl;
 import qbert.model.components.graphics.RightwardCharacterGC;
 
+import java.io.IOException;
 import java.util.Random;
 /**
  * The implementation of {@link EnemyFactory} interface.
@@ -45,19 +46,28 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     private final Controller controller;
 
+    private Sprites sprites;
+
     /**
      * Initialize some variables.
      * @param controller the game {@link Controller}
      */
     public EnemyFactoryImpl(final Controller controller) {
+
+        try {
+            this.sprites = Sprites.getInstance();
+        } catch (IOException e) {
+            controller.terminate();
+        }
+
         this.spawningPointLeftX = Math.round(new Float(Dimensions.getWindowWidth() / 2f) - Dimensions.getCubeWidth());
         this.spawningPointRightX = Math.round(new Float(Dimensions.getWindowWidth() / 2f));
 
         this.spawningLogPointLeft = new Position2D(Dimensions.MAP_SPAWNING_POINT_LEFT_X, Dimensions.MAP_SPAWNING_POINT_LEFT_Y);
         this.spawningLogPointRight = new Position2D(Dimensions.MAP_SPAWNING_POINT_RIGHT_X, Dimensions.MAP_SPAWNING_POINT_RIGHT_Y);
 
-        final int qbertFrontSpriteHeight = Sprites.getInstance().getQbertFrontSprites().getStandSprite().getHeight();
-        final int qbertFrontSpriteWidth = Sprites.getInstance().getQbertFrontSprites().getStandSprite().getWidth();
+        final int qbertFrontSpriteHeight = this.sprites.getQbertFrontSprites().getStandSprite().getHeight();
+        final int qbertFrontSpriteWidth = this.sprites.getQbertFrontSprites().getStandSprite().getWidth();
 
         this.spawningQBert = new Position2D(Math.round(new Float(Dimensions.getWindowWidth()) / 2f) - Math.round(new Float(qbertFrontSpriteWidth) / 2f), 
                 Dimensions.getBackgroundPos().getY() - qbertFrontSpriteHeight);
@@ -68,8 +78,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
     public final Player createQbert(final float speed, final int qbertLives) {
-        final Sprites sprites = Sprites.getInstance();
-        final PlayerGC graphics = new PlayerGCImpl(sprites.getQbertFrontSprites(), sprites.getQbertBackSprites(), 
+        final PlayerGC graphics = new PlayerGCImpl(this.sprites.getQbertFrontSprites(), this.sprites.getQbertBackSprites(), 
                 sprites.getQbertSpecialSprites(), new Position2D(spawningQBert));
         final PlayerSC sounds = new QbertSC(this.controller);
 
@@ -78,12 +87,11 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
     public final Snake createCoily(final float speed, final int standingTime, final Player qbert) {
-        final Sprites sprites = Sprites.getInstance();
-        final Position2D randomPos = this.getRandomPos(sprites.getPurpleBallSprites().getMoveSprite().getHeight());
+        final Position2D randomPos = this.getRandomPos(this.sprites.getPurpleBallSprites().getMoveSprite().getHeight());
         final Position2D logicalPos = this.getLogicalPos(randomPos);
 
-
-        final CoilyGC graphics = new CoilyGCImpl(sprites.getPurpleBallSprites(), sprites.getCoilyFrontSprites(), sprites.getCoilyBackSprites(), randomPos);
+        final CoilyGC graphics = new CoilyGCImpl(this.sprites.getPurpleBallSprites(), this.sprites.getCoilyFrontSprites(), 
+                this.sprites.getCoilyBackSprites(), randomPos);
         final CharacterSC sounds = new DownUpwardCharacterSC(this.controller);
 
         return new Coily(logicalPos, speed, graphics, sounds, standingTime, qbert);
@@ -91,7 +99,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
     public final Character createRedBall(final float speed, final int standingTime) {
-        final OneSideCharacterSprites sprites = Sprites.getInstance().getRedBallSprites();
+        final OneSideCharacterSprites sprites = this.sprites.getRedBallSprites();
         final Position2D randomPos = this.getRandomPos(sprites.getMoveSprite().getHeight());
         final Position2D logicalPos = this.getLogicalPos(randomPos);
         final CharacterGC graphics = new DownwardCharacterGC(sprites, randomPos);
@@ -101,18 +109,18 @@ public class EnemyFactoryImpl implements EnemyFactory {
 
     @Override
     public final Character createGreenBall(final float speed, final int standingTime) {
-        final OneSideCharacterSprites sprites = Sprites.getInstance().getGreenBallSprites();
+        final OneSideCharacterSprites sprites = this.sprites.getGreenBallSprites();
         final Position2D randomPos = this.getRandomPos(sprites.getMoveSprite().getHeight());
         final Position2D logicalPos = this.getLogicalPos(randomPos);
-        final CharacterGC graphics = new DownwardCharacterGC(Sprites.getInstance().getGreenBallSprites(), randomPos);
+        final CharacterGC graphics = new DownwardCharacterGC(this.sprites.getGreenBallSprites(), randomPos);
 
         return new GreenBall(logicalPos, speed, graphics, standingTime);
     }
 
     @Override
     public final Character createSamAndSlick(final float speed, final int standingTime) {
-        final OneSideCharacterSprites slickS = Sprites.getInstance().getSlickSprites();
-        final OneSideCharacterSprites samS = Sprites.getInstance().getSamSprites();
+        final OneSideCharacterSprites slickS = this.sprites.getSlickSprites();
+        final OneSideCharacterSprites samS = this.sprites.getSamSprites();
         final Position2D randomPos = this.getRandomPos(slickS.getMoveSprite().getHeight() > samS.getMoveSprite().getHeight()
                 ? slickS.getMoveSprite().getHeight() : samS.getMoveSprite().getHeight());
         final Position2D logicalPos = this.getLogicalPos(randomPos);
@@ -127,8 +135,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public final Character createWrongway(final float speed, final int standingTime) {
         final Position2D logicalPos = new Position2D(Dimensions.MAP_BOTTOM_EDGE - 1, Dimensions.MAP_BOTTOM_EDGE - 1);
-        final RightwardCharacterGC graphics = new RightwardCharacterGC(Sprites.getInstance().getWrongwaySprites(), 
-                new Position2D(-Sprites.getInstance().getWrongwaySprites().getMoveSprite().getWidth(), Dimensions.getBackgroundPos().getY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
+        final RightwardCharacterGC graphics = new RightwardCharacterGC(this.sprites.getWrongwaySprites(), 
+                new Position2D(-this.sprites.getWrongwaySprites().getMoveSprite().getWidth(), Dimensions.getBackgroundPos().getY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
 
         return new Wrongway(logicalPos, speed, graphics, standingTime);
     }
@@ -136,8 +144,8 @@ public class EnemyFactoryImpl implements EnemyFactory {
     @Override
     public final Character createUgg(final float speed, final int standingTime) {
         final Position2D logicalPos = new Position2D(Dimensions.MAP_COLUMNS - 1, Dimensions.MAP_BOTTOM_EDGE - 1);
-        final LeftwardCharacterGC graphics = new LeftwardCharacterGC(Sprites.getInstance().getUggSprites(), 
-                new Position2D(Dimensions.getWindowWidth() + Sprites.getInstance().getWrongwaySprites().getMoveSprite().getWidth(), Dimensions.getBackgroundPos().getY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
+        final LeftwardCharacterGC graphics = new LeftwardCharacterGC(this.sprites.getUggSprites(), 
+                new Position2D(Dimensions.getWindowWidth() + this.sprites.getWrongwaySprites().getMoveSprite().getWidth(), Dimensions.getBackgroundPos().getY() + Dimensions.getBackgroundHeight() - Dimensions.getCubeHeight()));
 
         return new Ugg(logicalPos, speed, graphics, standingTime);
     }

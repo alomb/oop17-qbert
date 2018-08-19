@@ -1,10 +1,10 @@
 package qbert.model.components.graphics;
 
+import qbert.model.components.graphics.animations.ComposedAnimation;
+import qbert.model.components.graphics.animations.DisplaceAnimation;
 import qbert.model.sprites.OneSideCharacterSprites;
 import qbert.model.sprites.SpecialCharacterSprites;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.DisplaceAnimation;
-import qbert.view.characters.ComposedAnimation;
 
 /**
  * GC stands for graphic component, this implementation is used to manage the {@link Player}.

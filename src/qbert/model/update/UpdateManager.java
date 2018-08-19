@@ -1,60 +1,104 @@
-package qbert.model.components;
+package qbert.model.update;
 
 import java.util.stream.Collectors;
 
-import qbert.model.Level;
-import qbert.model.characters.Coily;
 import qbert.model.characters.DownUpwardCharacter;
 import qbert.model.characters.Player;
 import qbert.model.characters.states.DeathState;
 import qbert.model.characters.states.FallState;
 import qbert.model.characters.states.LandState;
+import qbert.model.collision.DiagonalCollision;
+import qbert.model.collision.CompositeCollision;
+import qbert.model.collision.StompCollision;
+import qbert.model.collision.PassiveStompCollision;
+import qbert.model.components.MapComponent;
+import qbert.model.components.ModeComponent;
+import qbert.model.components.PointComponent;
+import qbert.model.components.PointComponentImpl;
+import qbert.model.components.TimerComponent;
+import qbert.model.components.TimerComponentImpl;
 import qbert.model.spawner.Spawner;
 import qbert.model.utilities.Position2D;
 
-public abstract class UpdateManager {
+/**
+ * Implementation of the updates of the various entities.
+ */
+public abstract class UpdateManager implements UpdateStrategy {
 
-    protected final Player qbert; 
-    protected final Spawner spawner;
-    protected final PointComponent points;
-    protected final MapComponent map;
-    protected final TimerComponent timer;
-
-    private Level level;
+    private final Player qbert; 
+    private final Spawner spawner;
+    private final PointComponent points;
+    private final MapComponent map;
+    private final TimerComponent timer;
+    private final ModeComponent gameMode;
 
     /**
-     * Constructor of class TimerComponent.
      * @param qbert Instance of {@link Qbert}
      * @param spawner Instance of {@link SpawnerImpl}
      * @param points Instance of {@link PointComponent}
-     * @param map Instance of {@link MapComponen}
+     * @param map Instance of {@link MapComponent}
+     * @param timer Instance of {@link TimerComponent}
+     * @param mode Instance of {@link ModeComponent}
      */
-    public UpdateManager(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final TimerComponent timer, Level level) {
+    public UpdateManager(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final TimerComponent timer, final ModeComponent mode) {
         this.qbert = qbert;
         this.spawner = spawner;
         this.points = points;
         this.map = map;
         this.timer = timer;
-
-        //TODO: Remove
-        this.level = level;
+        this.gameMode = mode;
     }
 
     /**
-     * @param elapsed the time passed since the last game cycle
+     * @return instance of {@link Player}
      */
-    public abstract void update(final float elapsed);
+    public Player getQbert() {
+        return this.qbert;
+    }
+
+    /**
+     * @return instance of {@link Spawner}
+     */
+    public Spawner getSpawner() {
+        return this.spawner;
+    }
+
+    /**
+     * @return instance of {@link PointComponent}
+     */
+    public PointComponent getPointComponent() {
+        return this.points;
+    }
+
+    /**
+     * @return instance of {@link MapComponent}
+     */
+    public MapComponent getMapComponent() {
+        return this.map;
+    }
+
+    /**
+     * @return instance of {@link TimerComponent}
+     */
+    public TimerComponent getTimerComponent() {
+        return this.timer;
+    }
 
     /**
      * @param elapsed the time passed since the last game cycle
      */
     protected void updateCollisions(final float elapsed) {
         spawner.updateGameCharacters(spawner.getGameCharacters().stream().peek(e -> {
-            e.checkCollision(qbert, points, timer, new StandardCollision(false));
+            e.checkCollision(qbert, e, points, timer, new CompositeCollision(false));
+
+            if (e.isDead()) {
+                //Notify Spawner
+                spawner.death(e);
+            }
         }).filter(e -> !e.isDead()).collect(Collectors.toList()));
 
         if (spawner.getCoily().isPresent()) {
-            spawner.getCoily().get().checkCollision(qbert, points, timer, new StandardCollision(false));
+            spawner.getCoily().get().checkCollision(qbert,  spawner.getCoily().get(), points, timer, new CompositeCollision(false));
         }
     }
 
@@ -65,15 +109,8 @@ public abstract class UpdateManager {
         if (qbert.isDead()) {
             qbert.setCurrentState(new DeathState(qbert));
                 timer.freezeEverything(() -> {
-                    //TODO: Temporary
                     qbert.looseLife();
-                    spawner.updateGameCharacters(spawner.getGameCharacters().stream().peek(e -> {
-                        e.setCurrentState(new DeathState(e));
-                        spawner.death(e);
-                    }).filter(e -> !e.isDead()).collect(Collectors.toList()));
-                    if (spawner.getCoily().isPresent()) {
-                        spawner.killCoily();
-                    }
+                    spawner.killAll();
                     spawner.respawnQbert();
                 }, TimerComponentImpl.DEATH_ANIMATION_TIME);
         }
@@ -93,20 +130,14 @@ public abstract class UpdateManager {
                     qbert.setCurrentState(new FallState(qbert));
                 }
             } else {
-                boolean found = false;
-                for (final qbert.model.characters.Character e : spawner.getGameCharacters()) {
-                    if (e.checkCollision(qbert, points, timer, 
-                            (qbert, entity) -> qbert.getNextPosition().equals(e.getCurrentPosition()) 
-                            && (e.getCurrentState() instanceof LandState || !e.isMoving()))
-                    ) {
-                        found = true;
-                    }
-                }
-                if (!found) {
+                spawner.getGameCharacters().forEach(e -> 
+                    e.checkCollision(qbert, e, points, timer, new StompCollision())
+                );
+
+                if (!qbert.isDead()) {
                     qbert.land(this.map, this.points);
                     qbert.setCurrentState(qbert.getStandingState());
-                    //TODO: Remove
-                    level.checkStatus();
+                    gameMode.checkStatus(this.timer);
                 }
             }
         }
@@ -123,25 +154,14 @@ public abstract class UpdateManager {
 
             //Check if entity is just landed 
             if (e.getCurrentState() instanceof LandState) {
-
                 //Checking if entity collides with Qbert falling out the map sides
-                e.checkCollision(qbert, points, timer, (qbert, entity) -> 
-                    ((qbert.getCurrentPosition().getX() - 1 == entity.getNextPosition().getX() 
-                    ||  qbert.getCurrentPosition().getX() + 1 == entity.getNextPosition().getX()) 
-                    && qbert.getCurrentPosition().getY() + 1 == entity.getNextPosition().getY()) 
-                    && !qbert.isMoving()
-                );
+                e.checkCollision(qbert, e, points, timer, new DiagonalCollision());
 
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(logicPos)) {
                     e.setCurrentState(new FallState(e));
-                    e.setCurrentState(new DeathState(e));
-
-                    if (e instanceof Coily) {
-                        this.points.score(PointComponentImpl.COILY_FALL_SCORE, qbert);
-                    }
                 } else {
-                    if (!e.checkCollision(qbert, points, timer, (qbert, entity) -> qbert.getCurrentPosition().equals(entity.getNextPosition()) && !qbert.isMoving())) {
+                    if (!e.checkCollision(qbert, e, points, timer, new PassiveStompCollision())) {
                         e.land(this.map, this.points);
                         e.setCurrentState(e.getStandingState());
                     }
@@ -155,25 +175,25 @@ public abstract class UpdateManager {
         }).filter(e -> !e.isDead()).collect(Collectors.toList())); /* togliere parentesi se modifico */
 
         if (spawner.getCoily().isPresent()) {
-            final DownUpwardCharacter e = spawner.getCoily().get();
-            final Position2D logicPos = e.getNextPosition();
+            final DownUpwardCharacter coily = spawner.getCoily().get();
+            final Position2D logicPos = coily.getNextPosition();
 
             //Check if entity is just landed 
-            if (e.getCurrentState() instanceof LandState) {
+            if (coily.getCurrentState() instanceof LandState) {
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(logicPos)) {
-                    e.setCurrentState(new FallState(e));
+                    coily.setCurrentState(new FallState(coily));
+                    this.points.score(PointComponentImpl.COILY_FALL_SCORE, qbert);
                 } else {
-                    if (!e.checkCollision(qbert, points, timer, (qbert, entity) -> qbert.getCurrentPosition().equals(entity.getNextPosition()) && !qbert.isMoving())) {
-                        e.land(this.map, this.points);
-                        e.setCurrentState(e.getStandingState());
+                    if (!coily.checkCollision(qbert, coily, points, timer, new PassiveStompCollision())) {
+                        coily.land(this.map, this.points);
+                        coily.setCurrentState(coily.getStandingState());
                     }
                 }
             }
 
-            if (e.isDead()) {
-                //Notify Spawner
-                spawner.death(e);
+            if (coily.isDead()) {
+                spawner.killCoily();
             }
         }
     }

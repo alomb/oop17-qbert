@@ -1,17 +1,12 @@
 package qbert.model.components;
 
-import java.util.stream.Collectors;
-
 import qbert.model.Level;
-import qbert.model.characters.Coily;
-import qbert.model.characters.DownUpwardCharacter;
 import qbert.model.characters.Player;
-import qbert.model.characters.Snake;
-import qbert.model.characters.states.DeathState;
-import qbert.model.characters.states.FallState;
-import qbert.model.characters.states.LandState;
 import qbert.model.spawner.Spawner;
-import qbert.model.utilities.Position2D;
+import qbert.model.update.FreezeAll;
+import qbert.model.update.FreezeEntities;
+import qbert.model.update.FreezeNone;
+import qbert.model.update.UpdateManager;
 
 /**
  * Component managing informations about the game timers and updates all the entities.
@@ -25,7 +20,7 @@ public class TimerComponentImpl implements TimerComponent {
     /**
      * Duration of the death animation expressed in milliseconds.
      */
-    public static final int DEATH_ANIMATION_TIME = 4000;
+    public static final int DEATH_ANIMATION_TIME = 2000;
 
     /**
      * Duration of the round change animation expressed in milliseconds.
@@ -36,9 +31,8 @@ public class TimerComponentImpl implements TimerComponent {
     private final Spawner spawner;
     private final PointComponent points;
     private final MapComponent map;
+    private final ModeComponent mode;
     private UpdateManager um;
-
-    private Level level;
 
     /**
      * Constructor of class TimerComponent.
@@ -47,15 +41,13 @@ public class TimerComponentImpl implements TimerComponent {
      * @param points Instance of {@link PointComponent}
      * @param map Instance of {@link MapComponen}
      */
-    public TimerComponentImpl(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, Level level) {
+    public TimerComponentImpl(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final ModeComponent mode) {
         this.qbert = qbert;
         this.spawner = spawner;
         this.points = points;
         this.map = map;
-        this.um = new StandardUpdate(qbert, spawner, points, map, this, level);
-
-        //TODO: Remove
-        this.level = level;
+        this.mode = mode;
+        this.um = new FreezeNone(qbert, spawner, points, map, this, mode);
     }
 
     /**
@@ -70,22 +62,22 @@ public class TimerComponentImpl implements TimerComponent {
      * @param timeout Amount of time expressed in milliseconds
      */
     public void freezeEntities(final int timeout) {
-        this.um = new FreezeEntities(qbert, spawner, points, map, this, level);
+        this.um = new FreezeEntities(qbert, spawner, points, map, this, mode);
         this.setTimeout(() -> {
-            this.um = new StandardUpdate(qbert, spawner, points, map, this, level);
+            this.um = new FreezeNone(qbert, spawner, points, map, this, mode);
         }, timeout);
     }
 
     /**
-     * Freezes everything for a certain amount of time.
+     * Freezes the game for a certain amount of time.
      * @param runnable Callback function
      * @param timeout Amount of time expressed in milliseconds
      */
     public void freezeEverything(final Runnable runnable, final int timeout) {
-        this.um = new FreezeAll(qbert, spawner, points, map, this, level);
+        this.um = new FreezeAll(qbert, spawner, points, map, this, mode);
         this.setTimeout(() -> {
             runnable.run();
-            this.um = new StandardUpdate(qbert, spawner, points, map, this, level);
+            this.um = new FreezeNone(qbert, spawner, points, map, this, mode);
         }, timeout);
     }
 
@@ -99,9 +91,7 @@ public class TimerComponentImpl implements TimerComponent {
             try {
                 Thread.sleep(timeout);
                 runnable.run();
-            } catch (Exception e) {
-                System.err.println(e);
-            }
+            } catch (Exception e) {}
         }).start();
     }
 }

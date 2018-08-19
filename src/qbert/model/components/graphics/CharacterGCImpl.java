@@ -3,8 +3,9 @@ package qbert.model.components.graphics;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
+
+import qbert.model.components.graphics.animations.MovementAnimation;
 import qbert.model.utilities.Position2D;
-import qbert.view.characters.MovementAnimation;
 
 /**
  * A generic implementation of {@link CharacterGC}.
@@ -116,6 +117,6 @@ public abstract class CharacterGCImpl implements CharacterGC {
 
     @Override
     public final void updateGraphics(final float graphicsSpeed) {
-        this.setPosition(this.animation.updateAnimation(graphicsSpeed));
+        this.setPosition(this.animation.updateAnimation(Math.round(graphicsSpeed)));
     }
 }

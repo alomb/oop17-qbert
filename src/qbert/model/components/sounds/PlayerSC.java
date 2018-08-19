@@ -6,11 +6,6 @@ package qbert.model.components.sounds;
 public interface PlayerSC extends CharacterSC {
 
     /**
-     * This method adds the sound effect associated with the player's hop to the queue.
-     */
-    void setHopSound();
-
-    /**
      * This method adds the sound effect associated with the player's hop on the disk to the queue.
      */
     void setOnDiskSound();
