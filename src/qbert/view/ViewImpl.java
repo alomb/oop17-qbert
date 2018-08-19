@@ -3,6 +3,7 @@ package qbert.view;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.logging.Logger;
 
 import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -36,11 +38,20 @@ public class ViewImpl implements View {
     private Scene scene;
     private final Map<GameStatus, Scene> scenes;
 
+    private final int w;
+    private final int h;
+
     /**
-     * @param controller the game controller.
+     * Initialize the frame and the window.
      */
-    public ViewImpl(final Controller controller) {
-        final int w = Dimensions.getWindowWidth(), h = Dimensions.getWindowHeight();
+    public ViewImpl() {
+        final Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+
+        Dimensions.setWindowHeight(Math.round(new Float(d.height)));
+        h = Dimensions.getWindowHeight();
+        Dimensions.setWindowWidth(Math.round(new Float(d.width)));
+        w = Dimensions.getWindowWidth();
+
         this.frame = new JFrame("Qbert");
         fixedPanel = new JPanel(new CardLayout());
         frame.getContentPane().add(this.fixedPanel);
@@ -48,6 +59,11 @@ public class ViewImpl implements View {
         frame.setMinimumSize(new Dimension(w, h));
         frame.setResizable(false);
 
+        this.scenes = new HashMap<>();
+    }
+
+    @Override
+    public final void initialize(final Controller controller) {
         frame.addWindowListener(new WindowAdapter() {
             public void windowClosing(final WindowEvent ev) {
                 controller.terminate();
@@ -57,8 +73,6 @@ public class ViewImpl implements View {
             }
         });
 
-        this.scenes = new HashMap<>();
-
         this.addScene(new SceneIntro(w, h, controller), GameStatus.INTRODUCTION);
         this.addScene(new SceneGame(w, h, controller), GameStatus.GAMEPLAY);
         this.addScene(new SceneMenu(w, h, controller), GameStatus.MENU);
@@ -66,12 +80,13 @@ public class ViewImpl implements View {
         this.addScene(new SceneGameOver(w, h, controller), GameStatus.GAMEOVER);
 
         if (!this.scenes.keySet().equals(GameStatus.getAll())) {
-            Logger.getGlobal().log(Level.SEVERE, "Not all the game status have been initialized. Program aborted");
-            controller.setAbort();
+            final String errorMessage = "Not all the game status have been initialized. Program aborted";
+            Logger.getGlobal().log(Level.SEVERE, errorMessage);
+            controller.forceQuit(errorMessage);
+        } else {
+            frame.pack();
+            frame.setVisible(true);
         }
-
-        frame.pack();
-        frame.setVisible(true);
     }
 
     @Override
@@ -107,7 +122,14 @@ public class ViewImpl implements View {
 
     @Override
     public final void closeWindow() {
+        this.frame.setVisible(false);
         this.frame.dispose();
+    }
+
+    @Override
+    public final void showErrorMessageBox(final String message) {
+        JOptionPane.showMessageDialog(null, message, "ERROR", JOptionPane.ERROR_MESSAGE);
+        this.closeWindow();
     }
 
     @Override

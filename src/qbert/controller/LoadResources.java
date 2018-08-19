@@ -1,8 +1,6 @@
 package qbert.controller;
 
-import java.awt.Dimension;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -88,7 +86,7 @@ public class LoadResources {
 
         FileHandler fh = null;
         try {
-            fh = new FileHandler(QBERT_FOLDER + LOGGER_FILE_NAME);
+            fh = new FileHandler(QBERT_FOLDER + SEPARATOR + LOGGER_FILE_NAME);
             fh.setFormatter(new XMLFormatter());
             LOGGER.addHandler(fh);
         } catch (SecurityException e) {
@@ -99,11 +97,6 @@ public class LoadResources {
             e.printStackTrace();
         }
         LOGGER.setLevel(Level.ALL);
-
-        final Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
-
-        Dimensions.setWindowHeight(Math.round(new Float(d.height)));
-        Dimensions.setWindowWidth(Math.round(new Float(d.width)));
 
         final InputStream imageConfigIn = LoadResources.class.getResourceAsStream(IMAGE_CONFIG_FILE_NAME);
         try (BufferedReader br = new BufferedReader(new InputStreamReader(imageConfigIn))) {
