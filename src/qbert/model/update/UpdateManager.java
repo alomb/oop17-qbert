@@ -78,13 +78,6 @@ public abstract class UpdateManager implements UpdateStrategy {
     }
 
     /**
-     * @return instance of {@link TimerComponent}
-     */
-    public TimerComponent getTimerComponent() {
-        return this.timer;
-    }
-
-    /**
      * @param elapsed the time passed since the last game cycle
      */
     protected void updateCollisions(final float elapsed) {
