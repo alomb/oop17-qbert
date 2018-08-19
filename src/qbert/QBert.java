@@ -27,7 +27,7 @@ public final class QBert {
             controller.setupGameEngine();
         } else {
             view.showErrorMessageBox("Error during resource loading. Check log file for more"
-                    + " informations");
+                    + " information.");
         }
     }
 

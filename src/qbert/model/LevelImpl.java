@@ -3,6 +3,7 @@ package qbert.model;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -36,6 +37,8 @@ import qbert.model.components.sounds.SoundComponent;
  */
 public final class LevelImpl implements Level {
 
+    private static final String USER_MESSAGE = "Application aborted. Please look at log file for more information.";
+
     private final Player qbert;
     private final Spawner spawner;
     private final PointComponent points;
@@ -63,8 +66,8 @@ public final class LevelImpl implements Level {
         try {
             this.map = new MapComponentImpl(settings);
         } catch (IOException e) {
-            controller.forceQuit("Application closed with errors, please look at log file for more informations");
-            controller.forceQuit(e.getMessage());
+            Logger.getGlobal().log(java.util.logging.Level.SEVERE, e.getMessage(), e);
+            controller.forceQuit(USER_MESSAGE);
         }
 
         this.gameMode = new ModeComponentImpl(levelSettings, qbert, spawner, points, map, sounds);

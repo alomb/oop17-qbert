@@ -38,6 +38,8 @@ import java.util.logging.Logger;
  */
 public class EnemyFactoryImpl implements EnemyFactory {
 
+    private static final String USER_MESSAGE = "Application aborted. Please look at log file for more information.";
+
     private final int spawningPointLeftX;
     private final int spawningPointRightX;
 
@@ -61,8 +63,7 @@ public class EnemyFactoryImpl implements EnemyFactory {
             this.sprites = Sprites.getInstance();
         } catch (IOException e) {
             Logger.getGlobal().log(Level.SEVERE, e.getMessage());
-            controller.forceQuit("Application closed with errors, please look at log file for more informations");
-            controller.forceQuit(e.getMessage());
+            controller.forceQuit(USER_MESSAGE);
         }
 
         this.spawningPointLeftX = Math.round(new Float(Dimensions.getWindowWidth() / 2f) - Dimensions.getCubeWidth());

@@ -80,7 +80,7 @@ public class ViewImpl implements View {
         this.addScene(new SceneGameOver(w, h, controller), GameStatus.GAMEOVER);
 
         if (!this.scenes.keySet().equals(GameStatus.getAll())) {
-            final String errorMessage = "Not all the game status have been initialized. Program aborted";
+            final String errorMessage = "Program aborted. Not all the game status have been initialized.";
             Logger.getGlobal().log(Level.SEVERE, errorMessage);
             controller.forceQuit(errorMessage);
         } else {

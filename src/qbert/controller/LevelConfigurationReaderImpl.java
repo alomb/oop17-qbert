@@ -8,8 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -38,8 +36,7 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
     private final Sprites sprites;
 
     /**
-     * @throws IOException 
-     * 
+     * @throws IOException when some input/output error occur
      */
     public LevelConfigurationReaderImpl() throws IOException {
         this.mapInfo = new HashMap<>();
@@ -49,36 +46,32 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
     }
 
     @Override
-    public void readLevelConfiguration(final int levelNumber, final int roundNumber) throws JDOMException {
-        try {
-            final SAXBuilder builder = new SAXBuilder();
-            final Document document = 
-                    builder.build(getClass().getResource("/levelconfig.xml").toString());
+    public void readLevelConfiguration(final int levelNumber, final int roundNumber) throws JDOMException, IOException {
+        final SAXBuilder builder = new SAXBuilder();
+        final Document document = builder.build(getClass().getResource("/levelconfig.xml").toString());
 
-            final Element root = document.getRootElement();
-            final Element level = root.getChild("LEVEL" + levelNumber);
-            final Element round = level.getChild("ROUND" + roundNumber);
-            this.colorsNumber = Integer.parseInt(round.getAttributeValue("colors"));
-            this.reversible = Boolean.parseBoolean(round.getAttributeValue("reversible"));
-            this.disksNumber = Integer.parseInt(round.getAttributeValue("disks"));
-            this.qbertSpeed = Float.parseFloat(round.getAttributeValue("qbertSpeed"));
-            this.roundScore = Integer.parseInt(round.getAttributeValue("roundScore"));
+        final Element root = document.getRootElement();
+        final Element level = root.getChild("LEVEL" + levelNumber);
+        final Element round = level.getChild("ROUND" + roundNumber);
+        this.colorsNumber = Integer.parseInt(round.getAttributeValue("colors"));
+        this.reversible = Boolean.parseBoolean(round.getAttributeValue("reversible"));
+        this.disksNumber = Integer.parseInt(round.getAttributeValue("disks"));
+        this.qbertSpeed = Float.parseFloat(round.getAttributeValue("qbertSpeed"));
+        this.roundScore = Integer.parseInt(round.getAttributeValue("roundScore"));
 
-            final List<Element> children = round.getChildren();
-            final Iterator<Element> it = children.iterator();
+        final List<Element> children = round.getChildren();
+        final Iterator<Element> it = children.iterator();
 
-            while (it.hasNext()) {
-                final Element character = (Element) it.next();
-                final String name = character.getName();
-                final float speed = Float.parseFloat(character.getAttributeValue("speed"));
-                final int quantity = Integer.parseInt(character.getAttributeValue("quantity"));
-                final int spawningTime = Integer.parseInt(character.getAttributeValue("spawningTime"));
-                final int standingTime = Integer.parseInt(character.getAttributeValue("standingTime"));
+        while (it.hasNext()) {
+            final Element character = (Element) it.next();
+            final String name = character.getName();
+            final float speed = Float.parseFloat(character.getAttributeValue("speed"));
+            final int quantity = Integer.parseInt(character.getAttributeValue("quantity"));
+            final int spawningTime = Integer.parseInt(character.getAttributeValue("spawningTime"));
+            final int standingTime = Integer.parseInt(character.getAttributeValue("standingTime"));
 
-                this.mapInfo.put(CharactersList.getEnumConstantByValue(name), new EnemyInfoImpl(speed, quantity, spawningTime, standingTime));
-            }
-        } catch (IOException e) {
-            Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
+            this.mapInfo.put(CharactersList.getEnumConstantByValue(name),
+                    new EnemyInfoImpl(speed, quantity, spawningTime, standingTime));
         }
     }
 
@@ -88,7 +81,8 @@ public final class LevelConfigurationReaderImpl implements LevelConfigurationRea
         final Map<Integer, BufferedImage> colorMap = this.colorComposition.getColorComposition(colorsNumber);
         final BufferedImage background = this.colorComposition.getBackgroundImage();
 
-        return new LevelSettingsImpl(this.colorsNumber, this.reversible, background, colorMap, this.disksNumber, mapInfo, this.qbertSpeed, this.roundScore);
+        return new LevelSettingsImpl(this.colorsNumber, this.reversible, background, colorMap, this.disksNumber,
+                mapInfo, this.qbertSpeed, this.roundScore);
     }
 
     private void setColorComposition() {

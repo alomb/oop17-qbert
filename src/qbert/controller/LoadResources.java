@@ -53,7 +53,7 @@ public class LoadResources {
     }
 
     /**
-     * @return true if all the resources have been correctly istantiated
+     * @return true if all the resources have been correctly instantiated
      */
     public final boolean load() {
 
@@ -76,7 +76,7 @@ public class LoadResources {
                 }
             }
         } catch (SecurityException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
             return false;
         }
 
@@ -91,10 +91,10 @@ public class LoadResources {
             LOGGER.addHandler(fh);
         } catch (SecurityException e) {
             this.setConsoleHandler();
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         } catch (IOException e) {
             this.setConsoleHandler();
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
         LOGGER.setLevel(Level.ALL);
 
@@ -106,9 +106,9 @@ public class LoadResources {
                 line = br.readLine();
             }
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.SEVERE, e.getMessage(), e);
         }
 
         return this.loadCompleted;
@@ -143,7 +143,7 @@ public class LoadResources {
             streamPng.flush();
             streamPng.close();
         } catch (final Exception e) {
-            Logger.getGlobal().log(Level.SEVERE, "Error on svg to png conversion\". Program aborted");
+            LOGGER.log(Level.SEVERE, "Application aborted. Error on svg to png conversion");
             this.loadCompleted = false;
         }
     }
