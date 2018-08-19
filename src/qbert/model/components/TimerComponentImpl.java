@@ -34,11 +34,11 @@ public class TimerComponentImpl implements TimerComponent {
     private UpdateStrategy um;
 
     /**
-     * Constructor of class TimerComponent.
      * @param qbert Instance of {@link Qbert}
      * @param spawner Instance of {@link SpawnerImpl}
      * @param points Instance of {@link PointComponent}
-     * @param map Instance of {@link MapComponen}
+     * @param map Instance of {@link MapComponent}
+     * @param mode Instance of {@link ModeComponent}
      */
     public TimerComponentImpl(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final ModeComponent mode) {
         this.qbert = qbert;
@@ -82,7 +82,8 @@ public class TimerComponentImpl implements TimerComponent {
             try {
                 Thread.sleep(timeout);
                 runnable.run();
-            } catch (Exception e) {}
+            } catch (Exception e) { }
+            //TODO: Catch?
         }).start();
     }
 }
