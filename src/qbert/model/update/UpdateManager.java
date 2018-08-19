@@ -7,11 +7,14 @@ import qbert.model.characters.Player;
 import qbert.model.characters.states.DeathState;
 import qbert.model.characters.states.FallState;
 import qbert.model.characters.states.LandState;
+import qbert.model.collision.DiagonalCollision;
+import qbert.model.collision.CompositeCollision;
+import qbert.model.collision.StompCollision;
+import qbert.model.collision.PassiveStompCollision;
 import qbert.model.components.MapComponent;
 import qbert.model.components.ModeComponent;
 import qbert.model.components.PointComponent;
 import qbert.model.components.PointComponentImpl;
-import qbert.model.components.StandardCollision;
 import qbert.model.components.TimerComponent;
 import qbert.model.components.TimerComponentImpl;
 import qbert.model.spawner.Spawner;
@@ -86,7 +89,7 @@ public abstract class UpdateManager implements UpdateStrategy {
      */
     protected void updateCollisions(final float elapsed) {
         spawner.updateGameCharacters(spawner.getGameCharacters().stream().peek(e -> {
-            e.checkCollision(qbert, points, timer, new StandardCollision(false));
+            e.checkCollision(qbert, points, timer, new CompositeCollision(false));
 
             if (e.isDead()) {
                 //Notify Spawner
@@ -95,7 +98,7 @@ public abstract class UpdateManager implements UpdateStrategy {
         }).filter(e -> !e.isDead()).collect(Collectors.toList()));
 
         if (spawner.getCoily().isPresent()) {
-            spawner.getCoily().get().checkCollision(qbert, points, timer, new StandardCollision(false));
+            spawner.getCoily().get().checkCollision(qbert, points, timer, new CompositeCollision(false));
         }
     }
 
@@ -106,15 +109,8 @@ public abstract class UpdateManager implements UpdateStrategy {
         if (qbert.isDead()) {
             qbert.setCurrentState(new DeathState(qbert));
                 timer.freezeEverything(() -> {
-                    //TODO: Temporary
                     qbert.looseLife();
-                    spawner.updateGameCharacters(spawner.getGameCharacters().stream().peek(e -> {
-                        e.setCurrentState(new DeathState(e));
-                        spawner.death(e);
-                    }).filter(e -> !e.isDead()).collect(Collectors.toList()));
-                    if (spawner.getCoily().isPresent()) {
-                        spawner.killCoily();
-                    }
+                    spawner.killAll();
                     spawner.respawnQbert();
                 }, TimerComponentImpl.DEATH_ANIMATION_TIME);
         }
@@ -135,10 +131,7 @@ public abstract class UpdateManager implements UpdateStrategy {
                 }
             } else {
                 spawner.getGameCharacters().forEach(e -> 
-                    e.checkCollision(qbert, points, timer, (qbert, entity) -> 
-                        qbert.getNextPosition().equals(e.getCurrentPosition()) 
-                        && (e.getCurrentState() instanceof LandState || !e.isMoving())
-                    )
+                    e.checkCollision(qbert, points, timer, new StompCollision())
                 );
 
                 if (!qbert.isDead()) {
@@ -162,18 +155,13 @@ public abstract class UpdateManager implements UpdateStrategy {
             //Check if entity is just landed 
             if (e.getCurrentState() instanceof LandState) {
                 //Checking if entity collides with Qbert falling out the map sides
-                e.checkCollision(qbert, points, timer, (qbert, entity) -> 
-                    ((qbert.getCurrentPosition().getX() - 1 == entity.getNextPosition().getX() 
-                    ||  qbert.getCurrentPosition().getX() + 1 == entity.getNextPosition().getX()) 
-                    && qbert.getCurrentPosition().getY() + 1 == entity.getNextPosition().getY()) 
-                    && !qbert.isMoving()
-                );
+                e.checkCollision(qbert, points, timer, new DiagonalCollision());
 
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(logicPos)) {
                     e.setCurrentState(new FallState(e));
                 } else {
-                    if (!e.checkCollision(qbert, points, timer, (qbert, entity) -> qbert.getCurrentPosition().equals(entity.getNextPosition()) && !qbert.isMoving())) {
+                    if (!e.checkCollision(qbert, points, timer, new PassiveStompCollision())) {
                         e.land(this.map, this.points);
                         e.setCurrentState(e.getStandingState());
                     }
@@ -187,26 +175,25 @@ public abstract class UpdateManager implements UpdateStrategy {
         }).filter(e -> !e.isDead()).collect(Collectors.toList())); /* togliere parentesi se modifico */
 
         if (spawner.getCoily().isPresent()) {
-            final DownUpwardCharacter e = spawner.getCoily().get();
-            final Position2D logicPos = e.getNextPosition();
+            final DownUpwardCharacter coily = spawner.getCoily().get();
+            final Position2D logicPos = coily.getNextPosition();
 
             //Check if entity is just landed 
-            if (e.getCurrentState() instanceof LandState) {
+            if (coily.getCurrentState() instanceof LandState) {
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(logicPos)) {
-                    e.setCurrentState(new FallState(e));
+                    coily.setCurrentState(new FallState(coily));
                     this.points.score(PointComponentImpl.COILY_FALL_SCORE, qbert);
                 } else {
-                    if (!e.checkCollision(qbert, points, timer, (qbert, entity) -> qbert.getCurrentPosition().equals(entity.getNextPosition()) && !qbert.isMoving())) {
-                        e.land(this.map, this.points);
-                        e.setCurrentState(e.getStandingState());
+                    if (!coily.checkCollision(qbert, points, timer, new PassiveStompCollision())) {
+                        coily.land(this.map, this.points);
+                        coily.setCurrentState(coily.getStandingState());
                     }
                 }
             }
 
-            if (e.isDead()) {
-                //Notify Spawner
-                spawner.death(e);
+            if (coily.isDead()) {
+                spawner.killCoily();
             }
         }
     }

@@ -69,7 +69,7 @@ public class TimerComponentImpl implements TimerComponent {
     }
 
     /**
-     * Freezes everything for a certain amount of time.
+     * Freezes the game for a certain amount of time.
      * @param runnable Callback function
      * @param timeout Amount of time expressed in milliseconds
      */
@@ -91,9 +91,7 @@ public class TimerComponentImpl implements TimerComponent {
             try {
                 Thread.sleep(timeout);
                 runnable.run();
-            } catch (Exception e) {
-                System.err.println(e);
-            }
+            } catch (Exception e) {}
         }).start();
     }
 }
