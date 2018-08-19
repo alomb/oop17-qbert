@@ -1,12 +1,10 @@
 package qbert.model.characters;
 
-import java.util.function.BiPredicate;
-
+import qbert.model.CollidableImpl;
 import qbert.model.characters.states.CharacterState;
 import qbert.model.characters.states.FallState;
 import qbert.model.components.MapComponent;
 import qbert.model.components.PointComponent;
-import qbert.model.components.TimerComponent;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 import qbert.model.components.graphics.CharacterGC;
@@ -20,7 +18,7 @@ import qbert.model.components.graphics.CharacterGC;
  * 
  * Subclasses could change collision behavior modifying collide and land methods that normally don't provide any specific operations.
  */
-public abstract class CharacterImpl implements Character {
+public abstract class CharacterImpl extends CollidableImpl implements Character {
 
     private Position2D currentPos;
     private Position2D nextPos;
@@ -123,18 +121,6 @@ public abstract class CharacterImpl implements Character {
     public void land(final MapComponent map, final PointComponent points) {
         //Do nothing
     }
-
-    @Override
-    public final boolean checkCollision(final Player qbert, final PointComponent points, final TimerComponent timer, final BiPredicate<Player, Character> collision) {
-        if (collision.test(qbert, this)) {
-            this.collide(qbert, points, timer);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public abstract void collide(Player qbert, PointComponent points, TimerComponent timer);
 
     @Override
     public final int getZIndex() {
