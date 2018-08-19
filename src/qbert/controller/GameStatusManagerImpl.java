@@ -9,7 +9,6 @@ import qbert.model.models.Game;
 import qbert.model.models.GameOver;
 import qbert.model.models.Introduction;
 import qbert.model.models.Menu;
-import qbert.model.models.Mode;
 import qbert.model.models.Model;
 import qbert.model.models.Ranking;
 
@@ -33,7 +32,6 @@ public class GameStatusManagerImpl implements GameStatusManager {
         this.models.put(GameStatus.RANKING, new Ranking(controller));
         this.models.put(GameStatus.GAMEPLAY, new Game(controller));
         this.models.put(GameStatus.GAMEOVER, new GameOver(controller));
-        this.models.put(GameStatus.MODE, new Mode(controller));
 
         this.currentGameStatus = firstGameStatus;
 
