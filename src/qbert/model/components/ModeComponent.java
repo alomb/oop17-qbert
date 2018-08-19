@@ -19,8 +19,14 @@ public interface ModeComponent {
      */
     void changeRound(TimerComponent timer);
 
+    /**
+     * @param gameObserver Instance of class {@link Game} than needs to be notified at the end of a level.
+     */
     void addObserver(Game gameObserver);
 
+    /**
+     * Informs @{link Game} of the end of the current round.
+     */
     void notifyEndLevel();
 
 }

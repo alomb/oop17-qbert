@@ -46,9 +46,7 @@ public class ModeComponentImpl implements ModeComponent {
         this.spawner.killAll();
         this.sounds.setWinningARoundSound();
 
-        //TODO: Start of animation
         timer.freezeEverything(() -> {
-            //TODO: End of animation
             this.notifyEndLevel();
         }, TimerComponentImpl.ROUND_ANIMATION_TIME);
     }
@@ -69,12 +67,12 @@ public class ModeComponentImpl implements ModeComponent {
     }
 
     @Override
-    public void addObserver(final Game gameObserver) {
+    public final void addObserver(final Game gameObserver) {
         this.gameObserver = gameObserver;
     }
 
     @Override
-    public void notifyEndLevel() {
+    public final void notifyEndLevel() {
         this.gameObserver.changeRound();
     }
 }

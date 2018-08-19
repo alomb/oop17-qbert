@@ -82,8 +82,10 @@ public class TimerComponentImpl implements TimerComponent {
             try {
                 Thread.sleep(timeout);
                 runnable.run();
-            } catch (Exception e) { }
-            //TODO: Catch?
+            } catch (Exception e) { 
+                runnable.run();
+                Thread.currentThread().interrupt();
+            }
         }).start();
     }
 }
