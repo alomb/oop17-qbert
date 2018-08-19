@@ -17,7 +17,6 @@ public class Ranking implements Model {
     private final GUILogic guiBody;
     private final List<GUILogic> guiList;
     private final Controller controller;
-
     private static final int ROWS = 10;
 
     /**
