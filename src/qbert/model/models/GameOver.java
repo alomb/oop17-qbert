@@ -19,12 +19,9 @@ public class GameOver implements Model {
     private Builder ranking = new RankingBuilder.Builder();
     private int index;
     private int indexC;
-//    private static final int MAXVALUE = 28;
-//    private static final int MINVALUE = 0;
-//    private static final int EXIT = 27;
-//    private static final int CONFIRM = 28;
     private static final int MAXVALUEFIRSTCOLUMN = 9;
     private static final int MAXVALUEOTHERCOLUMN = 6;
+    private static final int MAXROWOTHERCOLUMN = 7;
     private static final int MINVALUE = 0;
     private static final int EXIT = 7;
     private static final int CONFIRM = 8;
@@ -98,9 +95,9 @@ public class GameOver implements Model {
     private void color() {
         if (this.indexC == 0) {
             this.guiLeft.selectSet(IntStream.range(this.index, this.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
-        } else if (this.indexC == 1 && this.index < 7) { 
+        } else if (this.indexC == 1 && this.index < MAXROWOTHERCOLUMN) { 
             this.guiCenter.selectSet(IntStream.range(this.index, this.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
-        } else if (this.indexC == 2 && this.index < 7) { 
+        } else if (this.indexC == 2 && this.index < MAXROWOTHERCOLUMN) { 
             this.guiRight.selectSet(IntStream.range(this.index, this.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
         }
     }
@@ -125,7 +122,7 @@ public class GameOver implements Model {
     }
 
     @Override
-    public void moveLeft() {
+    public final void moveLeft() {
         if (this.indexC > 0) {
             this.deselectAll();
             this.indexC--;
@@ -134,7 +131,7 @@ public class GameOver implements Model {
     }
 
     @Override
-    public void moveRight() {
+    public final void moveRight() {
         if (this.indexC < this.COLUMN - 1) {
             this.deselectAll();
             this.indexC++;
@@ -154,7 +151,7 @@ public class GameOver implements Model {
     @Override
     public final void confirm() {
 
-        if (this.index >= 0 && this.index < 7 && this.indexC <= 3) {
+        if (this.index >= 0 && this.index < MAXROWOTHERCOLUMN && this.indexC <= 3) {
             this.ranking.addChar(this.indexC, this.index);
             this.guiFoot.removeAllData();
             this.guiFoot.addData("Your name is : " + this.ranking.getName());
