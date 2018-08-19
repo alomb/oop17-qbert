@@ -39,12 +39,11 @@ public final class LevelImpl implements Level {
     private final Player qbert;
     private final Spawner spawner;
     private final PointComponent points;
-    private MapComponent map;
     private final TimerComponent timer;
     private final ModeComponent gameMode;
     private final Renderable background;
-
     private final LevelSettings settings;
+    private MapComponent map;
 
     /**
      * Constructor of class LevelImpl.
@@ -63,7 +62,8 @@ public final class LevelImpl implements Level {
         try {
             this.map = new MapComponentImpl(settings);
         } catch (IOException e) {
-            controller.terminate();
+            controller.forceQuit("Application closed with errors, please look at log file for more informations");
+            controller.forceQuit(e.getMessage());
         }
 
         this.gameMode = new ModeComponentImpl(levelSettings, qbert, spawner, points, map, sounds);

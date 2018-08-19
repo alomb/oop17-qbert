@@ -3,11 +3,13 @@ package qbert.model.components;
 import qbert.model.LevelSettings;
 import qbert.model.Tile;
 import qbert.model.characters.Player;
-import qbert.model.characters.states.DeathState;
 import qbert.model.components.sounds.SoundComponent;
 import qbert.model.models.Game;
 import qbert.model.spawner.Spawner;
 
+/**
+ * Component for handling the round winning conditions and actions.
+ */
 public class ModeComponentImpl implements ModeComponent {
 
     private final LevelSettings settings;
@@ -19,6 +21,14 @@ public class ModeComponentImpl implements ModeComponent {
 
     private Game gameObserver;
 
+    /**
+     * @param settings Instance of {@link LevelSettings}
+     * @param qbert Instance of {@link Qbert}
+     * @param spawner Instance of {@link Spawner}
+     * @param points Instance of {@link PointComponent}
+     * @param map Instance of {@link MapComponent}
+     * @param sounds Instance of {@link SoundComponent}
+     */
     public ModeComponentImpl(final LevelSettings settings, final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final SoundComponent sounds) {
         this.qbert = qbert;
         this.settings = settings;
@@ -29,7 +39,7 @@ public class ModeComponentImpl implements ModeComponent {
     }
 
     @Override
-    public final void changeRound(TimerComponent timer) {
+    public final void changeRound(final TimerComponent timer) {
         this.points.score(this.settings.getRoundScore(), qbert);
         this.points.score(PointComponentImpl.UNUSED_DISK_SCORE * map.getDiskList().size(), qbert);
 
@@ -45,7 +55,7 @@ public class ModeComponentImpl implements ModeComponent {
 
 
     @Override
-    public final void checkStatus(TimerComponent timer) {
+    public final void checkStatus(final TimerComponent timer) {
         int coloredTiles = 0;
         for (final Tile t : map.getTileList()) {
             if (t.getColor() == this.settings.getColorsNumber()) {

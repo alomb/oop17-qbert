@@ -89,7 +89,7 @@ public abstract class UpdateManager implements UpdateStrategy {
      */
     protected void updateCollisions(final float elapsed) {
         spawner.updateGameCharacters(spawner.getGameCharacters().stream().peek(e -> {
-            e.checkCollision(qbert, e, points, timer, new CompositeCollision(false));
+            e.checkCollision(qbert, points, timer, new CompositeCollision(false));
 
             if (e.isDead()) {
                 //Notify Spawner
@@ -98,7 +98,7 @@ public abstract class UpdateManager implements UpdateStrategy {
         }).filter(e -> !e.isDead()).collect(Collectors.toList()));
 
         if (spawner.getCoily().isPresent()) {
-            spawner.getCoily().get().checkCollision(qbert,  spawner.getCoily().get(), points, timer, new CompositeCollision(false));
+            spawner.getCoily().get().checkCollision(qbert, points, timer, new CompositeCollision(false));
         }
     }
 
@@ -131,7 +131,7 @@ public abstract class UpdateManager implements UpdateStrategy {
                 }
             } else {
                 spawner.getGameCharacters().forEach(e -> 
-                    e.checkCollision(qbert, e, points, timer, new StompCollision())
+                    e.checkCollision(qbert, points, timer, new StompCollision())
                 );
 
                 if (!qbert.isDead()) {
@@ -155,13 +155,13 @@ public abstract class UpdateManager implements UpdateStrategy {
             //Check if entity is just landed 
             if (e.getCurrentState() instanceof LandState) {
                 //Checking if entity collides with Qbert falling out the map sides
-                e.checkCollision(qbert, e, points, timer, new DiagonalCollision());
+                e.checkCollision(qbert, points, timer, new DiagonalCollision());
 
                 //Checking if entity is outside the map
                 if (this.map.isOnVoid(logicPos)) {
                     e.setCurrentState(new FallState(e));
                 } else {
-                    if (!e.checkCollision(qbert, e, points, timer, new PassiveStompCollision())) {
+                    if (!e.checkCollision(qbert, points, timer, new PassiveStompCollision())) {
                         e.land(this.map, this.points);
                         e.setCurrentState(e.getStandingState());
                     }
@@ -185,7 +185,7 @@ public abstract class UpdateManager implements UpdateStrategy {
                     coily.setCurrentState(new FallState(coily));
                     this.points.score(PointComponentImpl.COILY_FALL_SCORE, qbert);
                 } else {
-                    if (!coily.checkCollision(qbert, coily, points, timer, new PassiveStompCollision())) {
+                    if (!coily.checkCollision(qbert, points, timer, new PassiveStompCollision())) {
                         coily.land(this.map, this.points);
                         coily.setCurrentState(coily.getStandingState());
                     }
