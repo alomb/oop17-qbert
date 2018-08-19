@@ -32,11 +32,7 @@ public enum GameStatus {
     /**
      * Let the user conclude a match.
      */
-    GAMEOVER,
-    /**
-     * Before start game choice mode and difficult.
-     */
-    MODE;
+    GAMEOVER;
 
     /**
      * @return all the {@link GameStatus}
