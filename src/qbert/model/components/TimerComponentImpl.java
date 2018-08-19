@@ -1,5 +1,6 @@
 package qbert.model.components;
 
+import qbert.model.LevelStatus;
 import qbert.model.characters.Player;
 import qbert.model.spawner.Spawner;
 import qbert.model.update.FreezeAll;
@@ -30,7 +31,7 @@ public class TimerComponentImpl implements TimerComponent {
     private final Spawner spawner;
     private final PointComponent points;
     private final MapComponent map;
-    private final ModeComponent mode;
+    private final LevelStatus status;
     private UpdateStrategy um;
 
     /**
@@ -38,15 +39,15 @@ public class TimerComponentImpl implements TimerComponent {
      * @param spawner Instance of {@link SpawnerImpl}
      * @param points Instance of {@link PointComponent}
      * @param map Instance of {@link MapComponent}
-     * @param mode Instance of {@link ModeComponent}
+     * @param status Instance of {@link LevelStatus}
      */
-    public TimerComponentImpl(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final ModeComponent mode) {
+    public TimerComponentImpl(final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final LevelStatus status) {
         this.qbert = qbert;
         this.spawner = spawner;
         this.points = points;
         this.map = map;
-        this.mode = mode;
-        this.um = new FreezeNone(qbert, spawner, points, map, this, mode);
+        this.status = status;
+        this.um = new FreezeNone(qbert, spawner, points, map, this, status);
     }
 
     @Override
@@ -57,18 +58,18 @@ public class TimerComponentImpl implements TimerComponent {
 
     @Override
     public final void freezeEntities(final int timeout) {
-        this.um = new FreezeEntities(qbert, spawner, points, map, this, mode);
+        this.um = new FreezeEntities(qbert, spawner, points, map, this, status);
         this.setTimeout(() -> {
-            this.um = new FreezeNone(qbert, spawner, points, map, this, mode);
+            this.um = new FreezeNone(qbert, spawner, points, map, this, status);
         }, timeout);
     }
 
     @Override
     public final void freezeEverything(final Runnable runnable, final int timeout) {
-        this.um = new FreezeAll(qbert, spawner, points, map, this, mode);
+        this.um = new FreezeAll(qbert, spawner, points, map, this, status);
         this.setTimeout(() -> {
             runnable.run();
-            this.um = new FreezeNone(qbert, spawner, points, map, this, mode);
+            this.um = new FreezeNone(qbert, spawner, points, map, this, status);
         }, timeout);
     }
 

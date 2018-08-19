@@ -1,11 +1,12 @@
-package qbert.model.components;
+package qbert.model;
 
+import qbert.model.components.TimerComponent;
 import qbert.model.models.Game;
 
 /**
  * Interface for handling the round winning conditions and actions.
  */
-public interface ModeComponent {
+public interface LevelStatus {
 
     /**
      * Checks if the player has won the round.

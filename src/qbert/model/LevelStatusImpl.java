@@ -1,8 +1,11 @@
-package qbert.model.components;
+package qbert.model;
 
-import qbert.model.LevelSettings;
-import qbert.model.Tile;
 import qbert.model.characters.Player;
+import qbert.model.components.MapComponent;
+import qbert.model.components.PointComponent;
+import qbert.model.components.PointComponentImpl;
+import qbert.model.components.TimerComponent;
+import qbert.model.components.TimerComponentImpl;
 import qbert.model.components.sounds.SoundComponent;
 import qbert.model.models.Game;
 import qbert.model.spawner.Spawner;
@@ -10,7 +13,7 @@ import qbert.model.spawner.Spawner;
 /**
  * Component for handling the round winning conditions and actions.
  */
-public class ModeComponentImpl implements ModeComponent {
+public class LevelStatusImpl implements LevelStatus {
 
     private final LevelSettings settings;
     private final Player qbert; 
@@ -29,7 +32,7 @@ public class ModeComponentImpl implements ModeComponent {
      * @param map Instance of {@link MapComponent}
      * @param sounds Instance of {@link SoundComponent}
      */
-    public ModeComponentImpl(final LevelSettings settings, final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final SoundComponent sounds) {
+    public LevelStatusImpl(final LevelSettings settings, final Player qbert, final Spawner spawner, final PointComponent points, final MapComponent map, final SoundComponent sounds) {
         this.qbert = qbert;
         this.settings = settings;
         this.spawner = spawner;
