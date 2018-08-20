@@ -32,8 +32,9 @@ import org.jdom2.JDOMException;
 
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
-import qbert.model.components.graphics.Renderable;
 import qbert.model.scenes.GUILogic;
+import qbert.model.scenes.RankingBuilder;
+import qbert.model.components.graphics.Renderable;
 import qbert.view.View;
 
 /**
@@ -175,14 +176,14 @@ public class ControllerImpl implements Controller {
     }
 
     @Override
-    public final void addRank(final String s) {
+    public final void addRank(final RankingBuilder s) {
         Writer output;
         try {
             output = new BufferedWriter(new FileWriter(urlFile, true));
             if (!isEmptyFile()) {
-                output.append("\r\n" + s);
+                output.append("\r\n" + s.toString());
             } else {
-                output.append(s);
+                output.append(s.toString());
             }
             output.close();
         } catch (IOException e) {
