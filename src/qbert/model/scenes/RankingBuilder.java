@@ -64,7 +64,7 @@ public class RankingBuilder {
          * @return the entire object
          */
         public Builder addChar(final Integer row, final Integer column) {
-            if (nameB == " ") {
+            if (nameB.equals(" ")) {
                 nameB = alphabet[row][column];
             } else if (nameB.length() <= NCHARACTER) {
                 nameB += alphabet[row][column];
