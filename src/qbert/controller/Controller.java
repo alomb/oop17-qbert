@@ -9,6 +9,7 @@ import javax.sound.sampled.Clip;
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
 import qbert.model.models.GUILogic;
+import qbert.model.models.RankingBuilder;
 import qbert.model.components.graphics.Renderable;
 
 /**
@@ -65,9 +66,9 @@ public interface Controller {
     Map<String, Integer> getRank();
 
     /**
-     * @param string the ranking to be added to the file
+     * @param rankingBuilder the ranking to be added to the file
      */
-    void addRank(String string);
+    void addRank(RankingBuilder rankingBuilder);
 
     /**
      * Close the window in the {@link View} and terminate the {@link GameEngine}

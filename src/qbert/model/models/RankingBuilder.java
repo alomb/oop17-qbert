@@ -47,7 +47,6 @@ public class RankingBuilder {
                 {"H", "I", "L", "M", "N", "O", "P"}, 
                 {"Q", "R", "S", "T", "U", "V", "Z"}};
 
-
         /**
          * Add score to the object.
          * @param i is score
@@ -65,7 +64,9 @@ public class RankingBuilder {
          * @return the entire object
          */
         public Builder addChar(final Integer row, final Integer column) {
-            if (nameB.length() <= NCHARACTER) {
+            if (nameB == " ") {
+                nameB = alphabet[row][column];
+            } else if (nameB.length() <= NCHARACTER) {
                 nameB += alphabet[row][column];
             }
             return this;
