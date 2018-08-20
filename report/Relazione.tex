@@ -270,6 +270,7 @@ In caso positivo esegue addChar, appena il nome è completo, quindi arriva l'inp
 \chapter{Sviluppo}
 \section{Testing automatizzato}
 
+Sono stati eseguiti anche dei test manuali sui sistemi operativi Windows, Mac OS e Linux, riscontrando il corretto funzionamento della applicazione, fatta eccezione per il suono che su Linux smette di funzionare dopo un po. Inizialmente il problema si presentava anche eseguendo il JAR su Windows, ma a seguito di alcune modifiche sulla lettura delle risorse è stato risolto, mentre per Linux anche dopo una lunga ricerca non siamo riusciti a risolverlo. Provando la applicazione in risoluzioni differenti può accadere che su alcune, le facce superiori dei cubi della mappa vengano sfasate, questo è causato dal fatto che le dimensioni delle immagini e le coordinate dei pixel sullo schermo essendo numeri interi non hanno la stessa precisione dei calcoli fatti per posizionarle.
 
 \section{Metodologia di lavoro}
 
@@ -311,7 +312,7 @@ Mi sono concentrato su lettura e scrittura su file e su tutte quelle interfaccie
 
 Non credo che lavorerò più sul progetto, non avendomi conquistato, ma credo comunque che l'epserienza maturata mi abbia aiutato a riflettere di più sulla fase di progettazione e della sua importanza.
 
-	\item \textbf{Lombardi Alessandro}: Mi posso reputare complessivamente soddisfatto del lavoro da me svolto durante tutte le fasi del progetto, oltre che divertente, è stata una esperienza tutto sommato costruttiva. La scelta di un videogioco credo abbia permesso la creazione di un mondo virtuale pieno di dettagli, la maggior parte da costruire e progettare partendo da zero, stimolando l'ingegno e l'interesse nel creare il meglio possibile complesse gerarchie, come quelle dei personaggi, dove penso di aver svolto principalmente un esercizio avanzato sulle fondamenta della programmazione ad oggetti. Nella realizzazione degli aspetti grafici invece mi sono interessato ad argomenti più particolari o ho fatto la conoscenza di alcuni totalmente nuovi. Sia per le motivazioni precedentemente dette che probabilmente per una divisione del lavoro inconsapevolmente poco equilibrata sul lato qualitativo, ovvero divisa in parti concentrate su funzionalità completamente differenti una dall'altra, penso che una grande mancanza nella mia parte sia stata quella di non aver usato alcuna libreria. Personalmente ho mantenuto sempre un dialogo, quasi costante, con i singoli membri del gruppo, trovandomi spesso a fare da ponte nella comunicazione degli aggiornamenti o tenere traccia della realizzazione del progetto, è anche questa una parte dell'esperienza formativa del progetto. Sono soddisfatto che il gruppo sia sempre stato disponibile ad aiutarmi e farsi aiutare. Non credo che lavorerò ulteriormente a questo progetto, anche se può darsi che in futuro lo riprenda come spunto.
+	\item \textbf{Lombardi Alessandro}: Mi posso reputare complessivamente soddisfatto del lavoro da svolto durante tutte le fasi del progetto, oltre che divertente, è stata una esperienza tutto sommato costruttiva. La scelta di un videogioco credo abbia permesso la creazione di un mondo virtuale pieno di dettagli, la maggior parte da costruire e progettare partendo da zero, stimolando l'ingegno e l'interesse nel creare il meglio possibile complesse gerarchie. Nella creazione dei personaggi penso di aver svolto principalmente un esercizio avanzato sulle fondamenta della programmazione ad oggetti, cercando il più possibile di riutilizzare il codice e di strutturarlo il meglio possibile. Nella realizzazione degli aspetti grafici invece mi sono interessato ad argomenti più particolari o ho fatto la conoscenza di alcuni totalmente nuovi. In entrambi i casi ho colto l'occasione per leggere materiale riguardante i pattern di programmazione e conoscere nuovi argomenti. Sia per le motivazioni precedentemente dette che probabilmente per una divisione del lavoro inconsapevolmente poco equilibrata sul lato qualitativo, ovvero divisa in parti con contenuti completamente differenti una dall'altra, penso che una grande mancanza nella mia parte sia stata quella di non aver usato alcuna libreria. Personalmente ho mantenuto sempre un dialogo, quasi costante, con i singoli membri del gruppo, trovandomi spesso a fare da ponte nella comunicazione degli aggiornamenti o tenere traccia della realizzazione del progetto, è anche questa una parte dell'esperienza formativa del progetto. Sono soddisfatto che il gruppo sia sempre stato disponibile ad aiutarmi e farsi aiutare. Non credo che lavorerò ulteriormente a questo progetto, anche se può darsi che in futuro lo riprenda come spunto.
 
 	\item \textbf{Meluzzi Marco}: Reputo l'esperienza di realizzazione di questo progetto senz'altro formativa, più per l'avere imparato come si deve procedere quando si lavora in un team che per l'aver appreso metodologie vincenti di progettazione, cosa che, personalmente, sento l'esigenza di dover apprendere da una figura esterna, almeno per acquisire le basi necessarie che consentano poi di crescere e migliorarsi autonomamente. Essendo infatti questo un progetto di discreta complessità, è stato per me, soprattutto nella fase iniziale, abbastanza faticoso gestire l'architettura generale e approcciarmi ad essa, specialmente quando era necessario entrare nell'ottica di quanto già prodotto dagli altri, nel momento in cui le parti realizzate singolarmente dovevano interfacciarsi e comunicare direttamente. Ho fatto presente al gruppo questa mia necessità alla quale i miei compagni hanno sempre cercato di porre rimedio aiutandomi nella comprensione generale e poter quindi procedere. D'altro canto, aver dovuto affrontare queste difficoltà è servito a rendere nel complesso il codice il più possibile coerente nelle sue parti, sfruttando laddove possibile tecniche di progettazione già utilizzate all'interno del progetto e rivelatesi convenienti.
 	
@@ -329,6 +330,8 @@ La difficoltà principale nella realizzazione del progetto è stata quella di el
 
 \appendix
 \chapter{Guida utente}
+
+\section{Il gioco}
 
 \subsubsection{Scopo del gioco}
 
@@ -372,7 +375,7 @@ Il giocatore ha come obiettivo quello di colorare tutti i cubi della mappa di un
 		\label{img:GreenBall}
 		\textbf{GreenBall}
 
-		Le palle verdi assumono lo stesso comportamento delle palle rosse, ma sono un aiuto per Q*Bert: toccandole, infatti, il tempo di gioco viene frizzato per qualche secondo, permettendo a Q*Bert di saltare per la mappa in relativa sicurezza.
+		Le palle verdi assumono lo stesso comportamento delle palle rosse, ma sono un aiuto per Q*Bert: toccandole, infatti, il tempo di gioco viene fermato per qualche secondo, permettendo a Q*Bert di saltare per la mappa in relativa sicurezza.
 
 \end{figure}
 
@@ -417,13 +420,42 @@ Per muovere Q*Bert sulla piramide è sufficiente utilizzare i tasti freccia dell
 	\item \textbf{$\leftarrow$}: movimento in alto a sinistra
 	\item \textbf{$\uparrow$}: movimento in alto a destra
 	\item \textbf{$\downarrow$}: movimento in basso a sinistra
+	\item \textbf enter: avanzamento di livello (lasciato per una questione di debug)
 \end{itemize}
 
-\subsubsection{Menu iniziale}
+\section{Screenshot}
+
+\subsubsection{Schermata iniziale}
+
+\begin{figure}[H]
+\centering{}
+\includegraphics[width=\linewidth]{img/SchermataIniziale.png}
+\label{img:SchermataIniziale}
+\end{figure}
 
 \subsubsection{Schermata di gioco}
 
-\subsubsection{Punteggi}
+\begin{figure}[H]
+\centering{}
+\includegraphics[width=\linewidth]{img/Gameplay.png}
+\label{img:Gameplay}
+\end{figure}
+
+\subsubsection{Classifica}
+
+\begin{figure}[H]
+\centering{}
+\includegraphics[width=\linewidth]{img/Classifica.png}
+\label{img:Classifica}
+\end{figure}
+
+\subsubsection{Game Over}
+
+\begin{figure}[H]
+\centering{}
+\includegraphics[width=\linewidth]{img/GameOver.png}
+\label{img:GameOver}
+\end{figure}
 
 \chapter{Bibliografia}
 
