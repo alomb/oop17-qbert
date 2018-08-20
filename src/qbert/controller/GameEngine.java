@@ -1,7 +1,7 @@
 package qbert.controller;
 
 import qbert.controller.input.Command;
-import qbert.model.models.Model;
+import qbert.model.scenes.Model;
 
 import java.util.Optional;
 

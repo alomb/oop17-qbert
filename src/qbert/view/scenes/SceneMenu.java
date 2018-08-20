@@ -7,7 +7,7 @@ import qbert.controller.Controller;
 import qbert.controller.input.Confirm;
 import qbert.controller.input.MoveDown;
 import qbert.controller.input.MoveUp;
-import qbert.model.models.TextPosition;
+import qbert.model.scenes.TextPosition;
 
 /**
  * An implementation of {@link Scene} for the game menu scene.

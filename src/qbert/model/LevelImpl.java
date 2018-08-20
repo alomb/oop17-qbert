@@ -15,7 +15,6 @@ import qbert.model.components.PointComponent;
 import qbert.model.components.PointComponentImpl;
 import qbert.model.components.TimerComponent;
 import qbert.model.components.TimerComponentImpl;
-import qbert.model.models.Game;
 import qbert.model.spawner.Spawner;
 import qbert.model.spawner.SpawnerImpl;
 import qbert.model.utilities.Dimensions;
@@ -27,6 +26,7 @@ import qbert.model.components.graphics.Renderable;
 import qbert.model.components.graphics.RenderableObject;
 import qbert.model.components.sounds.GameSC;
 import qbert.model.components.sounds.SoundComponent;
+import qbert.model.scenes.Game;
 
 /**
  * Implementation of interface {@link Level}.

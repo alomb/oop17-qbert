@@ -6,11 +6,9 @@ import qbert.model.utilities.Position2D;
 import qbert.model.components.graphics.CharacterGC;
 
 /**
- * This class models an enemy who falls from the sky to the map and starts jumping
- * randomly downwards until it drops off the edge. A contact with Qbert is lethal for 
- * the player.
- * 
- * If it hits Qbert he will loose a life.
+ * This class models an enemy who falls from the up into the map and starts jumping
+ * randomly downwards until it drops off the edge. A contact with {@link Qbert} is lethal for 
+ * the player, making him loose a life.
  */
 public class RedBall extends DownwardCharacter {
 

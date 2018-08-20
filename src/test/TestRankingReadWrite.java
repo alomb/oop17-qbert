@@ -46,7 +46,7 @@ public class TestRankingReadWrite {
     }
     /**
      * A test method for {@link RankingBuilder} and {@link Ranking}.
-     * Test work only if file "ranking.txt" is empty
+     * Test work only if file "ranking.txt"  is empty
      */
     @Test
     public void testRanking() {

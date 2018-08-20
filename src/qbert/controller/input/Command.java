@@ -1,6 +1,6 @@
 package qbert.controller.input;
 
-import qbert.model.models.Model;
+import qbert.model.scenes.Model;
 
 /**
  * A command object invokes methods of the receiver (the object affected by the execution of certain commands)

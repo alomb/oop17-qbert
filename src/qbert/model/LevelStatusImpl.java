@@ -7,7 +7,7 @@ import qbert.model.components.PointComponentImpl;
 import qbert.model.components.TimerComponent;
 import qbert.model.components.TimerComponentImpl;
 import qbert.model.components.sounds.SoundComponent;
-import qbert.model.models.Game;
+import qbert.model.scenes.Game;
 import qbert.model.spawner.Spawner;
 
 /**

@@ -1,4 +1,4 @@
-package qbert.model.models;
+package qbert.model.scenes;
 
 import java.util.List;
 import java.util.Set;
