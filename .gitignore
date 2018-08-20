@@ -1,5 +1,5 @@
 /doc
 /bin
 /res/png/*
-/report/*.pdf
+*.pdf
 *.synctex.gz
