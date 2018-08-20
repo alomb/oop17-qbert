@@ -16,10 +16,9 @@ import java.util.Map;
  * A class with some jUnit tests for {@link Ranking}.
  */
 public class TestRankingReadWrite {
-    private Map<String, Integer> mapRank;
-    private Builder rank;
-    private ViewImpl testvi = new ViewImpl();
-    private ControllerImpl controller = new ControllerImpl(GameStatus.MENU, testvi);
+    private final Builder rank;
+    private final ViewImpl testvi = new ViewImpl();
+    private final ControllerImpl controller = new ControllerImpl(GameStatus.MENU, testvi);
     /**
      * The constructor create a {@link RankingBuilder}.
      */
@@ -50,6 +49,7 @@ public class TestRankingReadWrite {
      */
     @Test
     public void testRanking() {
+        Map<String, Integer> mapRank;
         rank.addChar(0, 1);
         rank.addChar(0, 2);
         rank.addChar(0, 3);

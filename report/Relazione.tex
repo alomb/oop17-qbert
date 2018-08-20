@@ -270,6 +270,10 @@ In caso positivo esegue addChar, appena il nome è completo, quindi arriva l'inp
 \chapter{Sviluppo}
 \section{Testing automatizzato}
 
+Nelle classi di testing sono stati testati gli stati dei personaggi, per controllare anche la corretta esecuzione delle animazioni e delle transizioni indipendenti e il builder per aggiungere nuovi punteggi e la lettura da file di questi.
+
+E' necessario predisporre delle cartelle con le immagini prima di eseguire i test, quindi giocare lanciare almeno una volta l'applicativo
+
 Sono stati eseguiti anche dei test manuali sui sistemi operativi Windows, Mac OS e Linux, riscontrando il corretto funzionamento della applicazione, fatta eccezione per il suono che su Linux smette di funzionare dopo un po. Inizialmente il problema si presentava anche eseguendo il JAR su Windows, ma a seguito di alcune modifiche sulla lettura delle risorse è stato risolto, mentre per Linux anche dopo una lunga ricerca non siamo riusciti a risolverlo. Provando la applicazione in risoluzioni differenti può accadere che su alcune, le facce superiori dei cubi della mappa vengano sfasate, questo è causato dal fatto che le dimensioni delle immagini e le coordinate dei pixel sullo schermo essendo numeri interi non hanno la stessa precisione dei calcoli fatti per posizionarle.
 
 \section{Metodologia di lavoro}
@@ -337,6 +341,7 @@ La difficoltà principale nella realizzazione del progetto è stata quella di el
 
 Il giocatore ha come obiettivo quello di colorare tutti i cubi della mappa di un certo colore che di volta in volta viene indicato in alto a sinistra nella schermata di gioco e accumulare in questo modo più punti possibili. Procedendo con i livelli, i cubi potrebbero diventare reversibili, vale a dire che una volta raggiunto il giusto colore, un ulteriore salto sulla sua superficie lo farebbe tornare al colore di partenza. Ad ostacolare o, in alcuni casi, aiutare il giocatore c'è una schiera di diversi personaggi, che si muovono e si comportano in maniera differente sulla mappa:
 
+\subsubsection{I personaggi}
 
 \begin{figure}[H]
 		\item
@@ -411,7 +416,7 @@ Il giocatore ha come obiettivo quello di colorare tutti i cubi della mappa di un
 
 \end{figure}
 
-\subsubsection{Controlli}
+\section{Controlli e File}
 
 Per muovere Q*Bert sulla piramide è sufficiente utilizzare i tasti freccia della tastiera:
 
@@ -422,6 +427,8 @@ Per muovere Q*Bert sulla piramide è sufficiente utilizzare i tasti freccia dell
 	\item \textbf{$\downarrow$}: movimento in basso a sinistra
 	\item \textbf enter: avanzamento di livello (lasciato per una questione di debug)
 \end{itemize}
+
+Tutte le risorse quali i punteggi, il log e le immagini in formato PNG sono salvate nella cartella qbert nella home.
 
 \section{Screenshot}
 
