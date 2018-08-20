@@ -157,7 +157,7 @@ public class GameOver implements Model {
             this.guiFoot.removeAllData();
             this.guiFoot.addData("Your name is : " + this.ranking.getName());
         } else if (this.index == GameOver.CONFIRMVALUE && !this.ranking.getName().equals(" ")) {
-            this.controller.addRank(this.ranking.build().toString());
+            this.controller.addRank(this.ranking.build());
             this.controller.changeScene(GameStatus.MENU);
         }
     }
