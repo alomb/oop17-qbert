@@ -1,9 +1,10 @@
-package qbert.model.models;
+package qbert.model.scenes;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
@@ -12,27 +13,37 @@ import qbert.model.components.graphics.Renderable;
 /**
  * The implementation of {@link Model} for application menu scene logic.
  */
-public class Ranking implements Model {
+public class Menu implements Model {
 
+    private static int index;
+    private static final int MAXVALUE = 2;
+    private static final int MINVALUE = 0;
+    private static final int PLAY = 0;
+    private static final int RANKING = 1;
+    private static final int EXIT = 2;
     private final GUILogic guiBody;
+
     private final List<GUILogic> guiList;
     private final Controller controller;
-
-    private static final int ROWS = 10;
 
     /**
      * Initialize GUI data and logic.
      * @param controller the game controller.
      */
-    public Ranking(final Controller controller) {
+    public Menu(final Controller controller) {
         final GUILogic guiTitle;
         final GUILogic guiFoot;
+
         guiTitle = new GUILogicImpl(TextPosition.TITLE);
-        guiTitle.addData("TOP SCORES:");
+        guiTitle.addData("Q*BERT");
+
         this.guiBody = new GUILogicImpl(TextPosition.CENTER);
+        this.guiBody.addData("PLAY");
+        this.guiBody.addData("RANKING");
+        this.guiBody.addData("EXIT");
 
         guiFoot = new GUILogicImpl(TextPosition.FOOT);
-        guiFoot.addData("Press enter to exit");
+        guiFoot.addData("Move with arrow key");
 
         this.guiList = new ArrayList<>();
         this.guiList.add(guiTitle);
@@ -44,22 +55,21 @@ public class Ranking implements Model {
 
     @Override
     public final void initialize() {
-        final Map<String, Integer> rank;
-        this.guiBody.removeAllData();
-        rank = controller.getRank();
-        rank.entrySet().stream().limit(ROWS).forEach(k -> {
-            this.guiBody.addData("Player: " + k.getKey() + " Point: " + k.getValue());
-        });
-        rank.clear();
+        this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
     }
 
     @Override
     public final void moveDown() {
-
+        if (Menu.index < Menu.MAXVALUE) {
+            this.guiBody.deselectAll();
+            Menu.index++;
+            this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
+        }
     }
 
     @Override
     public void moveLeft() {
+
     }
 
     @Override
@@ -69,12 +79,22 @@ public class Ranking implements Model {
 
     @Override
     public final void moveUp() {
-
+        if (Menu.index > Menu.MINVALUE) {
+            this.guiBody.deselectAll();
+            Menu.index--;
+            this.guiBody.selectSet(IntStream.range(Menu.index, Menu.index + 1).mapToObj(i -> i).collect(Collectors.toSet()));
+        }
     }
 
     @Override
     public final void confirm() {
-        this.controller.changeScene(GameStatus.MENU);
+        if (Menu.index == Menu.PLAY) {
+            this.controller.changeScene(GameStatus.INTRODUCTION); 
+        } else if (Menu.index == Menu.RANKING) {
+            this.controller.changeScene(GameStatus.RANKING); 
+        } else if (Menu.index == Menu.EXIT) {
+            this.controller.terminate();
+        }
     }
 
     @Override

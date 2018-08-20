@@ -15,8 +15,8 @@ import java.util.Optional;
 import javax.swing.JPanel;
 
 import qbert.controller.Controller;
-import qbert.model.models.GUILogic;
-import qbert.model.models.TextPosition;
+import qbert.model.scenes.GUILogic;
+import qbert.model.scenes.TextPosition;
 import qbert.model.utilities.Dimensions;
 import qbert.model.utilities.Position2D;
 

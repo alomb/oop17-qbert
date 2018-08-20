@@ -112,6 +112,7 @@ public abstract class UpdateManager implements UpdateStrategy {
                     qbert.looseLife();
                     spawner.killAll();
                     spawner.respawnQbert();
+                    qbert.update(elapsed);
                 }, TimerComponentImpl.DEATH_ANIMATION_TIME);
         }
 
@@ -123,7 +124,7 @@ public abstract class UpdateManager implements UpdateStrategy {
             if (this.map.isOnVoid(qLogicPos)) {
                 if (this.map.checkForDisk(qbert)) {
                     this.spawner.getGameCharacters().forEach(c -> {
-                        c.setCurrentState(new DeathState(c)); /////////////////////////
+                        c.setCurrentState(new DeathState(c));
                     });
                     this.qbert.getPlayerSoundComponent().setOnDiskSound();
                 } else {

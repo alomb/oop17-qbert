@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import qbert.controller.Controller;
 import qbert.controller.input.Confirm;
-import qbert.model.models.TextPosition;
+import qbert.model.scenes.TextPosition;
 
 /**
  * An implementation of {@link Scene} for the game introductive scene.

@@ -3,7 +3,7 @@ package qbert.model.characters.states;
 import qbert.model.characters.Character;
 
 /**
- * A dumb {@link CharacterState} used to advise that the associated {@link Character} is death.
+ * A simple {@link CharacterState} used to advise that the associated {@link Character} is death.
  */
 public class DeathState extends CharacterStateImpl {
 

@@ -3,7 +3,7 @@ package qbert.model.characters.states;
 import qbert.model.characters.Character;
 
 /**
- * A dumb {@link CharacterState} used to advise that the relative {@link Character} is landed on a block after a jump or spawn.
+ * A simple {@link CharacterState} used to advise that the relative {@link Character} is landed after a jump or spawn.
  */
 public class LandState extends CharacterStateImpl {
 

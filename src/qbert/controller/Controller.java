@@ -8,8 +8,8 @@ import javax.sound.sampled.Clip;
 
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
-import qbert.model.models.GUILogic;
 import qbert.model.components.graphics.Renderable;
+import qbert.model.scenes.GUILogic;
 
 /**
  * The application controller, responsible of communication between {@link View} and current

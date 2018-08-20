@@ -12,7 +12,7 @@ import qbert.model.components.graphics.DownUpwardCharacterGC;
 import qbert.model.components.graphics.PlayerGC;
 
 /**
- * This class models the main character of the game controlled by the user.
+ * This class models the main character of the game controlled by the player.
  */
 public class Qbert extends CharacterImpl implements Player {
 
