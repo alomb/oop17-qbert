@@ -1,4 +1,4 @@
-package qbert.model.models;
+package qbert.model.scenes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,7 +9,7 @@ import java.util.stream.IntStream;
 import qbert.controller.Controller;
 import qbert.controller.GameStatus;
 import qbert.model.components.graphics.Renderable;
-import qbert.model.models.RankingBuilder.Builder;
+import qbert.model.scenes.RankingBuilder.Builder;
 
 /**
  * The implementation of {@link Model} for application {@link SceneGameOver} scene logic.

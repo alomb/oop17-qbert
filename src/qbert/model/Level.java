@@ -3,8 +3,8 @@ package qbert.model;
 import java.util.List;
 
 import qbert.model.characters.Player;
-import qbert.model.models.Game;
 import qbert.model.components.graphics.Renderable;
+import qbert.model.scenes.Game;
 
 /**
  * Interface for managing core aspects of the game.

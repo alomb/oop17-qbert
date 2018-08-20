@@ -10,8 +10,7 @@ import qbert.model.components.graphics.Renderable;
 import qbert.model.components.graphics.CharacterGC;
 
 /**
- * An interface representing a visible and movable game character. It provides
- * the most common functionalities.
+ * An interface representing a visible and movable game character.
  */
 public interface Character extends GameObject, Renderable, Collidable {
 

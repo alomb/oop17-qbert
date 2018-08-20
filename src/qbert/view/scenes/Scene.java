@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.event.KeyListener;
 import java.util.Optional;
 
-import qbert.model.models.TextPosition;
+import qbert.model.scenes.TextPosition;
 
 /**
  * The interface for a common application scene.

@@ -1,7 +1,7 @@
 package qbert.model;
 
 import qbert.model.components.TimerComponent;
-import qbert.model.models.Game;
+import qbert.model.scenes.Game;
 
 /**
  * Interface for handling the round winning conditions and actions.

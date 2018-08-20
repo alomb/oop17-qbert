@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import qbert.model.models.Game;
-import qbert.model.models.GameOver;
-import qbert.model.models.Introduction;
-import qbert.model.models.Menu;
-import qbert.model.models.Model;
-import qbert.model.models.Ranking;
+import qbert.model.scenes.Game;
+import qbert.model.scenes.GameOver;
+import qbert.model.scenes.Introduction;
+import qbert.model.scenes.Menu;
+import qbert.model.scenes.Model;
+import qbert.model.scenes.Ranking;
 
 /**
  * The implementation of {@link GameStatusManager}.

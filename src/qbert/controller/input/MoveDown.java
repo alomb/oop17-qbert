@@ -1,6 +1,6 @@
 package qbert.controller.input;
 
-import qbert.model.models.Model;
+import qbert.model.scenes.Model;
 
 /**
  * The command used to manage the down-arrow key.

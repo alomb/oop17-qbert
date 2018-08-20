@@ -32,8 +32,8 @@ import org.jdom2.JDOMException;
 
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
-import qbert.model.models.GUILogic;
 import qbert.model.components.graphics.Renderable;
+import qbert.model.scenes.GUILogic;
 import qbert.view.View;
 
 /**
@@ -44,9 +44,8 @@ public class ControllerImpl implements Controller {
     private static final String USER_MESSAGE = "Application aborted. Please look at log file for more information.";
 
     private final String urlFile = System.getProperty("user.home") + "/qbert/ranking.txt";
-    private LevelConfigurationReader lcr;
-    private GameEngine gameEngine;
-    private GameStatusManager statusManager;
+    private final GameEngine gameEngine;
+    private final GameStatusManager statusManager;
 
     private final BlockingQueue<Integer> gamePoint = new ArrayBlockingQueue<>(1);
 
@@ -59,20 +58,11 @@ public class ControllerImpl implements Controller {
      */
     public ControllerImpl(final GameStatus firstGameStatus, final View view) {
         this.aborted = false;
+
         this.view = view;
-
-        try {
-            this.lcr = new LevelConfigurationReaderImpl();
-        } catch (IOException e) {
-            Logger.getGlobal().log(Level.SEVERE, e.getMessage());
-            this.forceQuit(USER_MESSAGE);
-        }
-
-        if (!aborted) {
-            this.view.initialize(this);
-            this.statusManager = new GameStatusManagerImpl(firstGameStatus, this);
-            this.gameEngine = new GameEngine(this.view);
-        }
+        this.view.initialize(this);
+        this.statusManager = new GameStatusManagerImpl(firstGameStatus, this);
+        this.gameEngine = new GameEngine(this.view);
     }
 
     @Override
@@ -85,9 +75,11 @@ public class ControllerImpl implements Controller {
 
     @Override
     public final LevelSettings getLevelSettings(final int level, final int round) {
+        LevelConfigurationReader lcr;
         try {
-            this.lcr = new LevelConfigurationReaderImpl();
+            lcr = new LevelConfigurationReaderImpl();
             lcr.readLevelConfiguration(level, round);
+            return lcr.getLevelSettings();
         } catch (JDOMException e) {
             Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
             this.forceQuit(USER_MESSAGE);
@@ -95,7 +87,7 @@ public class ControllerImpl implements Controller {
             Logger.getGlobal().log(Level.SEVERE, e.getMessage(), e);
             this.forceQuit(USER_MESSAGE);
         }
-        return lcr.getLevelSettings();
+        return null;
     }
 
     @Override

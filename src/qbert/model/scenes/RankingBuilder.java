@@ -1,4 +1,4 @@
-package qbert.model.models;
+package qbert.model.scenes;
 
 import java.text.DateFormat;
 import java.util.Date;

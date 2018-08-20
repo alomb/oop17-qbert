@@ -25,7 +25,7 @@ public class Coily extends CharacterImpl implements Snake {
     private boolean adult;
 
     /**
-     * @param startPos the first {@link Position2D} of the {@link DownUpwardCharacte} in the map
+     * @param startPos the first {@link Position2D} of the {@link DownUpwardCharacter} in the map
      * @param speed the {@link DownUpwardCharacter} movement speed
      * @param graphics the {@link DownUpwardCharacter}'s {@link CoilyGC}
      * @param sounds the {@link DownUpwardCharacter}'s {@link CharacterSC}

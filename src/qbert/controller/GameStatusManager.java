@@ -1,6 +1,6 @@
 package qbert.controller;
 
-import qbert.model.models.Model;
+import qbert.model.scenes.Model;
 
 /**
  * The responsible of {@link GameStatus} management and {@link Model} replacement.
