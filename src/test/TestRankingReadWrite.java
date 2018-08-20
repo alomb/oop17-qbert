@@ -4,8 +4,8 @@ import org.junit.Test;
 
 import qbert.controller.ControllerImpl;
 import qbert.controller.GameStatus;
-import qbert.model.models.RankingBuilder;
-import qbert.model.models.RankingBuilder.Builder;
+import qbert.model.scenes.RankingBuilder;
+import qbert.model.scenes.RankingBuilder.Builder;
 import qbert.view.ViewImpl;
 
 import static org.junit.Assert.assertEquals;

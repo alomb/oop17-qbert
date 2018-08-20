@@ -8,8 +8,8 @@ import javax.sound.sampled.Clip;
 
 import qbert.controller.input.Command;
 import qbert.model.LevelSettings;
-import qbert.model.models.GUILogic;
-import qbert.model.models.RankingBuilder;
+import qbert.model.scenes.GUILogic;
+import qbert.model.scenes.RankingBuilder;
 import qbert.model.components.graphics.Renderable;
 
 /**
