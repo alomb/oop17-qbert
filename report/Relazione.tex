@@ -91,9 +91,9 @@ Il dialogo fra Controller e View è più stabile in quanto è la View stessa ad 
 
 \section{Design dettagliato}
 
-\begin{flushright}
-\item\subsubsection{Alessandro Lombardi - Logica dei personaggi}
-\end{flushright}
+\subsection{Alessandro Lombardi}
+
+\subsubsection{Logica dei personaggi}
 
 I personaggi svolgono diverse azioni e fanno diverse scelte durante il loro ciclo di vita. Per evitare una gestione troppo cablata e poco mantenibile delle specifiche situazioni è stato scelto di utilizzare lo \textbf{State Pattern}. Il pattern State evita l'utilizzo di monolitici  blocchi condizionali all'interno delle classi dei singoli personaggi per la scelta e l’esecuzione di una azione piuttosto che un’altra, frammentando lo svolgimento delle singole azioni a classi specifiche che sono riutilizzabili e facilmente intercambiabili tra loro. Inoltre, permette di gestire meglio l'esecuzione delle animazioni e la simulazione delle attese che un personaggio fa fra un'azione e l'altra. Nella pratica ogni personaggio viene aggiornato col passare del tempo tramite il metodo update(float dt), ma questo delega completamente i propri compiti allo stato attuale.
 
@@ -116,9 +116,7 @@ E' importante sottolineare che gli stati vengono inizializzati passando il \emph
 \label{img:GerarchiaCharacters}
 \end{figure}
 
-\begin{flushright}
-\item\subsubsection{Alessandro Lombardi - Animazione dei personaggi}
-\end{flushright}
+\subsubsection{Animazione dei personaggi}
 
 Durante la fase di analisi è stato scelto di dividere quella che era la posizione "logica" del personaggio, ovvero la posizione nella griglia immaginaria disegnata dalle facce dei cubi del terreno di gioco, da quella "fisica", ovvero la coordinata del pixel nella finestra di gioco, dove si posiziona l'angolo in alto a sinistra dell'immagine rettangolare del personaggio. Questo ha comportato anche una divisione degli aspetti grafici da quelli logici e la scelta di considerare i movimenti come il salto, la caduta etc.. vere e proprie animazioni. La gestione dei dati necessari alla renderizzazione grafica dei personaggi, quali la posizione, lo sprite e la dimensione di questo, sono gestiti dalle classi che implementano \emph{CharacterGC}. Nella concezione del Graphic Component mi sono ispirato alla definizione di Component Pattern, un pattern molto comune nello sviluppo di videogiochi, sfruttando soprattutto la sua capacità di dividere le molteplici caratteristiche di natura diversa appartenenti allo stesso oggetto di gioco. Nel rispetto della architettura MVC, è importante precisare che i graphic component non svolgono nessuna operazione grafica. La gerarchia dei Character Graphic Component si basa sul riutilizzo del codice in comune e sulle animazioni supportate, \emph{CharacterGC} fornisce i metodi per la gestione delle animazioni e presenta quelle base. Le interfacce e le classi per la gestione della grafica di Coily e Qbert supportano animazioni per muoversi anche verso l'alto oltre che gestire gli sprite per il fronte e il dietro dei personaggi. Da notare come Coily sfrutti il metodo setFrontSprites(OneSideCharacterSprites frontSprites) per trasformarsi dalla palla viola che è inizialmente alla sua forma finale.
 
@@ -138,9 +136,9 @@ Le animazioni dei personaggi sono state sviluppate sfruttando il pattern \textbf
 \label{img:AnimazioniPersonaggi}
 \end{figure}
 
-\begin{flushright}
-\item\subsubsection{Marco Meluzzi - Lettura da file della configurazione dei livelli}
-\end{flushright}
+\subsection{Marco Meluzzi}
+
+\subsubsection{Lettura da file della configurazione dei livelli}
 
 Per gestire le informazioni riguardanti la configurazione dei livelli e dei round dei quali si compone il gioco si è scelto di memorizzarle su file, per garantire una maggiore flessibilità delle stesse, anche nell'ottica di possibili cambiamenti. A tale scopo si è scelto di utilizzare un file .xml per l'espressività intrinseca al linguaggio di markup, reso ancor più semplice da gestire grazie all'impiego di un'apposita libreria, JDOM (illustrata nel dettaglio in \hyperlink{target}{seguito}). Per l'aumento graduale della difficoltà nell'avanzamento del gameplay si è scelto di replicare il più fedelmente possibile la configurazione di gioco dell'originale, almeno per quanto riguarda le tipologie di nemici da affrontare in ciascun round. In particolare, il metodo readLevelConfiguration(int levelNumber, int roundNumber), dopo aver ottenuto le informazioni necessarie al caricamento del round specifico, riempie una mappa costituita da elementi che hanno per chiave un personaggio (gestito tramite enumerazione) che il player deve affrontare e per valore una istanza della classe \emph{EnemyInfoImpl} contenente i valori di interesse per quel determinato soggetto che saranno validi per l'intera durata del round, vale a dire: la sua velocità, il numero di personaggi di quel tipo specifico che devono essere presenti "contemporaneamente" sulla mappa, la frequenza con la quale compaiono su di essa e il tempo di standing, necessario per gestire l'animazione. Questa mappa, insieme alle informazioni riguardanti più nello specifico l'ambiente di gioco, tra cui il numero di colori da impostare sui cubi, l'eventuale reversibilità degli stessi e il numero dei dischi, viene passata alla classe \emph{LevelSettingsImpl}, che conterrà quindi tutti i dati utili al caricamento del round corrente. Vengono altresì forniti alla classe sopra citata il colore dello sfondo e dei vari tile, elementi che andranno a costituire lo schema cromatico del round, scelto randomicamente tra configurazioni precedentemente stabilite dal singleton \emph{Sprites} e gestite attraverso \emph{ColorCompositionImpl}.
 
@@ -151,9 +149,7 @@ Per gestire le informazioni riguardanti la configurazione dei livelli e dei roun
 \label{img:ComposizioneLivelli}
 \end{figure}
 
-\begin{flushright}
-\item\subsubsection{Marco Meluzzi - Spawning}
-\end{flushright}
+\subsubsection{Spawning}
 
 La logica di spawning dei personaggi sulla mappa viene gestita dal metodo update(float dt) della classe \emph{SpawnerImpl}. Servendosi della mappa precedentemente realizzata da \emph{LevelConfigurationReaderImpl}, ad ogni ciclo del game loop viene controllato per ogni personaggio se il tempo trascorso dal suo ultimo spawning, ottenuto dal metodo getElapsedTime() di \emph{EnemyInfoImpl}, eccede la frequenza stessa di spawning, ottenuta da getSpawningTime(). In caso negativo si aggiorna il tempo trascorso attraverso incElapsedTime(float dt) e si passano in rassegna gli altri personaggi; altrimenti, viene resettato il timer associato a quel particolare personaggio e ne viene controllata la sua presenza sulla mappa. Solo se l'ammontare di quella particolare tipologia di personaggio correntemente sulla mappa (metodo getCurrentQuantity()) è inferiore al numero di sue presenze contemporanee permesse (metodo getTotalQuantity()) si procede con l'effettivo spawning. La composizione dei personaggi con le informazioni reperite da file avviene contestualmente, servendosi del pattern \textbf{Factory Method}, in modo da incapsulare le istanziazioni delle classi concrete. I personaggi così istanziati vengono aggiunti ad una lista di \emph{Character}, che esternamente verrà utilizzata e via via aggiornata da \emph{UpdateManager}, che si occupa altresì di richiamare il metodo death(Character character) di \emph{SpawnerImpl} che aggiorna (decrementandolo) il computo delle istanze della tipologia di personaggio in questione attualmente sulla mappa.
 
@@ -164,9 +160,7 @@ La logica di spawning dei personaggi sulla mappa viene gestita dal metodo update
 \label{img:CreazioneNemiciESpawner}
 \end{figure}
 
-\begin{flushright}
-\item\subsubsection{Marco Meluzzi - Effetti sonori}
-\end{flushright}
+\subsubsection{Effetti sonori}
 
 Per l'implementazione degli effetti sonori si è cercato di procedere in maniera analoga alla gerarchia realizzata per la gestione dei dati necessari alla renderizzazione grafica dei personaggi. Si è quindi sviluppata l'interfaccia base \emph{SoundComponent} che esplicita i metodi comuni a tutte le sottointerfacce e che rappresenta l'interfaccia necessaria alle classi concrete che gestiscono i suoni legati all'avvio del gioco e ai round. Scendendo nella gerarchia vi sono poi le interfacce \emph{CharacterSC}, riguardante i personaggi che si muovono sulla mappa, e \emph{PlayerSC} che gestisce i suoni legati a Qbert. Le classi che lo richiedono si compongono quindi di un oggetto Sound Component responsabile della gestione dei suoni ad esse associati, mentre, quando ciò è possibile, la gestione dei suoni è associata direttamente agli stati legati ai personaggi. Ogni volta che nel model si verifica un evento a cui deve corrispondere la riproduzione di un effetto sonoro, viene creata la Clip corrispondente mediante il metodo uploadClip(SoundEffectFile soundEffect) di \emph{ControllerImpl} che carica il suono da file e lo inserisce in una coda. A questo punto, chiamando il metodo notifyPlaySound() e passando attraverso il metodo emptyClipQueue(Queue$\langle Clip \rangle$ queue) di \emph{ControllerImpl}, viene invocato il metodo play(Queue$\langle Clip \rangle$ clipToPlay) in \emph{ViewImpl} che riproduce effettivamente il suono rimuovendolo dalla coda.
 
@@ -177,9 +171,9 @@ Per l'implementazione degli effetti sonori si è cercato di procedere in maniera
 \label{img:GerarchiaSound}
 \end{figure}
 
-\begin{flushright}
-\item\subsubsection{Alessandro Stockman - Sviluppo di Level}
-\end{flushright}
+\subsection{Alessandro Stockman}
+
+\subsubsection{Sviluppo di Level}
 
 La classe \emph{Level} è stata pensata con un ruolo principale nella gestione delle meccaniche di gioco. Per evitare la creazione di una classe monolitica contente aspetti completamente diversificati tra loro è stato scelto di sviluppare un insieme di classi \emph{Component}.
 In particolare vengono sviluppati un \emph{MapComponent} per la gestione di aspetti riguardanti il mondo di gioco (tile, dischi, controllo cadute, ...).
@@ -193,9 +187,7 @@ Un \emph{TimerComponent}, gestore dei vari update alle entità di gioco, approfo
 \label{img:LevelArchitecture}
 \end{figure}
 
-\begin{flushright}
-\item\subsubsection{Alessandro Stockman - Gestione delle Collisioni}
-\end{flushright}
+\subsubsection{Gestione delle Collisioni}
 
 Data la necessità di realizzare un set di personaggi con caratteristiche differenti tra di loro e più in particolare con diversi tipi di reazioni comportamentali alla collisione con il giocatore si è scelto di utilizzare il \textbf{Template Method} checkCollision() nella classe astratta \emph{CharacterImpl} per permettere ad ogni personaggio di implementare un'azione personalizzata all'esecuzione di collide() sfruttando i vari \emph{Component} che gli vengono passati.
 In questa maniera si introduce la possibilità di rendere più semplice l'introduzione di personaggi nel gioco con nuovi effetti che possono manipolare il flusso del gioco.
@@ -216,9 +208,7 @@ Durante la fasi di analisi si è optato per un controllo delle collisioni a live
 \label{img:CollisionStrategy}
 \end{figure}
 
-\begin{flushright}
-\item\subsubsection{Alessandro Stockman - Flusso temporale del gioco}
-\end{flushright}
+\subsubsection{Flusso temporale del gioco}
 
 Per gestire in maniera comoda le alterazioni del flusso temporale durante il gioco (freeze dei nemici in seguito alla cattura di \emph{GreenBall}, attesa di pochi secondi dopo una morte o vincita del livello, ...) si è optato per la realizzazione del pattern \textbf{Strategy} al fine di dare la possibilità al metodo update() di \emph{TimerComponent} di implementare diversi algoritmi a seconda delle necessità.
 Questa gestione permette inoltre di poter introdurre ottimalmente nuovi algoritmi di update senza alterare enormemente il codice.
@@ -230,17 +220,15 @@ Questa gestione permette inoltre di poter introdurre ottimalmente nuovi algoritm
 \label{img:UpdateStrategy}
 \end{figure}
 
-\begin{flushright}
-\item\subsubsection{Andrea Giulianini - Gestione Risoluzione/Immagini}
-\end{flushright}
+\subsection{Andrea Giulianini}
+
+\subsubsection{Gestione Risoluzione/Immagini}
 
 Per far si che l'interfaccia fosse il più responsive possibile avevamo bisogno di alcune informazioni, ci serviva sapere quanti pixel componevano il display su cui sarebbe dovuta girare l'applicazione.
 
 Avendo creato le immagini che compongono il gioco in un formato vettoriale (SVG) potevamo tramite l'utilizzo di varie librerie (\emph{Batik} con tutte le sue dipendenze) creare immagini raster di dimensioni e pesantezza adeguate all'interfaccia su cui sarebbe girata l'applicazione. Quindi vengono caricati tutti i nomi dei file da convertire un file \emph{imageconfig.txt}, creando quindi una classe specifica \emph{LoadResources} vado ad effetture al lancio dell' applicazione la conversione delle immagini, posizionando l'output ottenuto raster in una cartella specifica nella directory \emph{home/qbert} dell'utente.
 
-\begin{flushright}
-\item\subsubsection{Andrea Giulianini - Gestione degli Input}
-\end{flushright}
+\subsubsection{Gestione degli Input}
 
 Per gestire gli input dell'utente, siccome questi sarebbero cambiati per ogni sezione del gioco, si è deciso di applicare il \textbf{Pattern Command}. Creo così l'interfaccia e le varie classi che andranno poi a gestire ogni singolo input possibile da tastiera. L'input viene chiamato dalla \emph{Scene}, la gestione poi del comando poi passerà al \emph{Controller} e succesivamente al \emph{GameEngine} che notificherà l'arrivo del comando al rispettivo model della scena, tutti questi passaggi avvengono tramite il notifyCommand(), il model gestirà il comando.
 
@@ -251,9 +239,7 @@ Per gestire gli input dell'utente, siccome questi sarebbero cambiati per ogni se
 \label{img:GerarchiaSound}
 \end{figure}
 
-\begin{flushright}
-\item\subsubsection{Andrea Giulianini - Gestione del Ranking}
-\end{flushright}
+\subsubsection{Gestione del Ranking}
 
 Si voleva gestire l'inserimento del nome a fine partita dell'utente, quindi ho deciso di creare una classe per la gestione dei dati che dovranno poi andare scritti sul file nel quale vengono memorizzati quest'ultimi. Siccome l'aggiunta del nome utente avviene tramite l'inserimento di sigoli caratteri selezionandoli a schermo, ho optato per una costruzione usando il \textbf{Pattern Builder}.
 Quindi il model appena riceve dal \textbf{Pattern Command} l'input vede se deve aggiungere una lettera al nome.
